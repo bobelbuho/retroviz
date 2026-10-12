@@ -1,0 +1,548 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Rétroviz, assistant automobile</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#E7EBEF; --surface:#FFFFFF; --sunk:#F2F4F7; --ink:#14213D; --muted:#56637A; --line:#C8D0DA;
+  --accent:#1F4E8C; --accent-ink:#FFFFFF;
+  --green:#2E8B4A; --amber:#D9930F; --red:#C33A2E; --grey:#8A95A6;
+  --font:"Barlow", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --cond:"Barlow Condensed", "Arial Narrow", "Barlow", sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0F151E; --surface:#17202C; --sunk:#1D2836; --ink:#E5EAF1; --muted:#97A3B6; --line:#2B3748;
+    --accent:#6FA0E0; --accent-ink:#0F151E;
+    --green:#4CB46A; --amber:#F0AE30; --red:#E86455; --grey:#7D889A;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0F151E; --surface:#17202C; --sunk:#1D2836; --ink:#E5EAF1; --muted:#97A3B6; --line:#2B3748;
+  --accent:#6FA0E0; --accent-ink:#0F151E;
+  --green:#4CB46A; --amber:#F0AE30; --red:#E86455; --grey:#7D889A;
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);font-size:17px;line-height:1.5;-webkit-font-smoothing:antialiased}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.wrap{max-width:880px;margin:0 auto;padding:28px 20px 48px}
+
+header{display:flex;flex-wrap:wrap;align-items:flex-end;gap:8px 24px;margin-bottom:24px}
+.brand{font-family:var(--cond);font-weight:700;font-size:clamp(56px,11vw,92px);line-height:.85;letter-spacing:-.01em;margin:0}
+.tagline{color:var(--muted);margin:0 0 6px;max-width:34ch}
+
+.modes{display:grid;grid-template-columns:repeat(3,1fr);border:2px solid var(--ink);border-radius:10px;overflow:hidden;margin-bottom:28px}
+.mode{background:var(--surface);border:0;border-left:2px solid var(--ink);padding:14px 16px;text-align:left;cursor:pointer}
+.mode:first-child{border-left:0}
+.mode strong{display:block;font-family:var(--cond);font-size:22px;font-weight:700;line-height:1.1}
+.mode span{display:block;font-size:14px;color:var(--muted);margin-top:2px}
+.mode[aria-selected="true"]{background:var(--ink);color:var(--bg)}
+.mode[aria-selected="true"] span{color:var(--bg);opacity:.8}
+@media (max-width:600px){
+  .modes{grid-template-columns:1fr}
+  .mode{border-left:0;border-top:2px solid var(--ink)}
+  .mode:first-child{border-top:0}
+}
+
+.panel[hidden]{display:none}
+.intro{margin:0 0 16px;max-width:62ch}
+label.f{display:block;font-weight:600;font-size:14px;margin-bottom:4px}
+.field{width:100%;background:var(--surface);border:1.5px solid var(--line);border-radius:8px;padding:10px 12px}
+.field:focus{border-color:var(--accent);outline:none;box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 25%,transparent)}
+.veh{margin-bottom:16px;max-width:480px}
+.hint{font-size:14px;color:var(--muted);margin:4px 0 0}
+
+.examples{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 20px}
+.ex{background:transparent;border:1.5px dashed var(--line);border-radius:999px;padding:6px 14px;font-size:15px;cursor:pointer;color:var(--muted)}
+.ex:hover{border-color:var(--accent);color:var(--ink)}
+
+.thread{display:flex;flex-direction:column;gap:14px;margin-bottom:16px}
+.msg-user{align-self:flex-end;max-width:80%;background:var(--accent);color:var(--accent-ink);padding:10px 14px;border-radius:14px 14px 4px 14px;white-space:pre-wrap}
+.msg-ai{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+.msg-ai .note{font-size:14px;color:var(--muted);margin-top:10px;font-style:italic}
+.thinking{color:var(--muted);font-style:italic}
+
+.level{display:flex;align-items:center;gap:12px;margin:-2px 0 12px;padding:10px 12px;border-radius:8px;background:var(--sunk);font-weight:600}
+.lamp{width:22px;height:22px;border-radius:50%;flex:none;background:var(--c);box-shadow:0 0 0 4px color-mix(in srgb,var(--c) 22%,transparent),0 0 14px color-mix(in srgb,var(--c) 60%,transparent)}
+.level small{display:block;font-weight:400;color:var(--muted);font-size:14px}
+
+.md h3,.md h4{font-family:var(--cond);font-size:21px;font-weight:700;margin:18px 0 6px;line-height:1.15}
+.md h3:first-child,.md h4:first-child{margin-top:0}
+.md p{margin:0 0 10px}
+.md ul,.md ol{margin:0 0 10px;padding-left:22px}
+.md li{margin:3px 0}
+.md code{background:var(--sunk);padding:1px 5px;border-radius:4px;font-size:.92em}
+.md > :last-child{margin-bottom:0}
+
+.composer{display:flex;gap:10px;align-items:flex-end;position:sticky;bottom:0;background:var(--bg);padding:10px 0 4px}
+.composer textarea{flex:1;resize:vertical;min-height:52px;max-height:220px}
+.btn{background:var(--accent);color:var(--accent-ink);border:0;border-radius:8px;padding:12px 18px;font-weight:700;cursor:pointer;white-space:nowrap}
+.btn:disabled{opacity:.5;cursor:default}
+.btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
+.btn.stop{background:var(--red);color:#fff}
+.rowbtns{display:flex;gap:10px;flex-wrap:wrap}
+.notice{background:var(--sunk);border-left:4px solid var(--amber);padding:10px 14px;border-radius:6px;margin:0 0 16px}
+.notice[hidden]{display:none}
+
+/* Achat */
+.form{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px;margin-bottom:24px}
+.form .s2{grid-column:span 2}
+.form .full{grid-column:1/-1}
+@media (max-width:700px){.form{grid-template-columns:1fr 1fr}.form .s2{grid-column:1/-1}}
+
+.report[hidden]{display:none}
+.verdict{display:grid;grid-template-columns:auto 1fr;gap:6px 22px;align-items:center;margin-bottom:28px}
+.score{font-family:var(--cond);font-weight:700;font-size:84px;line-height:.9;grid-row:span 2}
+.score small{font-size:34px;color:var(--muted)}
+.tag{display:inline-block;justify-self:start;padding:4px 12px;border-radius:999px;font-weight:700;color:#fff;background:var(--c)}
+.vtitle{font-family:var(--cond);font-size:28px;font-weight:700;margin:0 0 4px;line-height:1.1}
+.sect{margin:0 0 28px}
+.sect h3{font-family:var(--cond);font-size:24px;font-weight:700;margin:0 0 10px;line-height:1.1}
+
+.odo{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px 18px 14px}
+.track{position:relative;height:56px;margin:8px 6px 28px}
+.track .rail{position:absolute;left:0;right:0;top:26px;height:6px;border-radius:3px;background:var(--line)}
+.track .done{position:absolute;left:0;top:26px;height:6px;border-radius:3px;background:var(--ink)}
+.track .dot{position:absolute;top:21px;width:16px;height:16px;margin-left:-8px;border-radius:50%;background:var(--c);border:2px solid var(--surface);cursor:pointer;padding:0}
+.track .dot.maint{border-radius:3px}
+.track .now{position:absolute;top:0;bottom:-6px;width:3px;margin-left:-1.5px;background:var(--ink)}
+.track .now span{position:absolute;top:-4px;left:8px;white-space:nowrap;font-weight:700;font-size:14px}
+.track .now.flip span{left:auto;right:8px}
+.track .tick{position:absolute;top:40px;font-size:12px;color:var(--muted);transform:translateX(-50%);white-space:nowrap}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13px;color:var(--muted)}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--c);margin-right:5px;vertical-align:0}
+.legend i.sq{border-radius:2px}
+
+.items{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.item{background:var(--surface);border:1px solid var(--line);border-left:5px solid var(--c);border-radius:8px;padding:12px 14px}
+.item.flash{animation:flash 1.2s ease}
+@keyframes flash{0%{box-shadow:0 0 0 4px var(--accent)}100%{box-shadow:0 0 0 0 transparent}}
+.item .top{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font-weight:700}
+.item .km{font-weight:600;color:var(--muted);font-size:15px}
+.item p{margin:4px 0 0}
+.item .cost{font-size:15px;color:var(--muted);margin-top:4px}
+.group-label{font-weight:700;margin:16px 0 8px}
+
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media (max-width:600px){.two{grid-template-columns:1fr}}
+.box{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 18px}
+.box h3{font-size:21px}
+.box ul{margin:0;padding-left:20px}
+.box li{margin:4px 0}
+.checks{list-style:none;padding:0;margin:0}
+.checks li{display:flex;gap:10px;align-items:flex-start;padding:6px 0;border-bottom:1px solid var(--line)}
+.checks li:last-child{border-bottom:0}
+.checks input{width:20px;height:20px;margin-top:2px;flex:none;accent-color:var(--accent)}
+.checks label{cursor:pointer}
+.checks input:checked + label{color:var(--muted);text-decoration:line-through}
+.caveat{font-size:15px;color:var(--muted);border-left:3px solid var(--line);padding-left:12px}
+
+footer{margin-top:40px;font-size:14px;color:var(--muted);border-top:1px solid var(--line);padding-top:14px}
+@media (prefers-reduced-motion: reduce){.item.flash{animation:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1 class="brand">Rétroviz</h1>
+    <p class="tagline"><strong style="color:var(--ink);font-size:20px">Regardez dans le rétro, roulez l'esprit tranquille.</strong><br>Comprendre une panne, diagnostiquer comme un pro, acheter une occasion sans mauvaise surprise.</p>
+  </header>
+
+  <div class="modes" role="tablist" aria-label="Choisir un mode">
+    <button class="mode" role="tab" data-mode="particulier" aria-selected="true"><strong>J'ai une panne</strong><span>Comprendre et savoir quoi faire</span></button>
+    <button class="mode" role="tab" data-mode="pro" aria-selected="false"><strong>Diagnostic pro</strong><span>Codes défaut, mesures, procédures</span></button>
+    <button class="mode" role="tab" data-mode="achat" aria-selected="false"><strong>J'achète une voiture</strong><span>Qualités, défauts, pannes à venir</span></button>
+  </div>
+
+  <p class="notice" id="notice" hidden></p>
+
+  <!-- Chat (particulier + pro) -->
+  <section class="panel" id="chatPanel">
+    <p class="intro" id="chatIntro"></p>
+    <div class="veh">
+      <label class="f" for="vehicle">Votre véhicule</label>
+      <input class="field" id="vehicle" placeholder="Ex. Peugeot 308 1.2 PureTech 130, 2017, 98 000 km">
+      <p class="hint">Facultatif, mais les réponses sont bien plus précises avec.</p>
+    </div>
+    <div class="examples" id="examples"></div>
+    <div class="thread" id="thread" aria-live="polite"></div>
+    <div class="composer">
+      <textarea class="field" id="input" rows="2"></textarea>
+      <button class="btn" id="sendBtn">Envoyer</button>
+      <button class="btn stop" id="stopBtn" hidden>Arrêter</button>
+    </div>
+    <div class="rowbtns" style="margin-top:8px"><button class="btn ghost" id="resetBtn" hidden>Nouvelle conversation</button></div>
+  </section>
+
+  <!-- Achat -->
+  <section class="panel" id="achatPanel" hidden>
+    <p class="intro">Renseignez la voiture que vous regardez. Rétroviz liste ses qualités et ses défauts, place les pannes connues sur son compteur et vous dit quoi contrôler avant de signer.</p>
+    <form class="form" id="achatForm" novalidate>
+      <div><label class="f" for="a_marque">Marque *</label><input class="field" id="a_marque" required placeholder="Renault"></div>
+      <div><label class="f" for="a_modele">Modèle *</label><input class="field" id="a_modele" required placeholder="Clio IV"></div>
+      <div><label class="f" for="a_annee">Année</label><input class="field" id="a_annee" inputmode="numeric" placeholder="2016"></div>
+      <div><label class="f" for="a_km">Kilométrage *</label><input class="field" id="a_km" inputmode="numeric" required placeholder="112 000"></div>
+      <div class="s2"><label class="f" for="a_moteur">Motorisation</label><input class="field" id="a_moteur" placeholder="1.5 dCi 90, 0.9 TCe 90…"></div>
+      <div><label class="f" for="a_boite">Boîte</label>
+        <select class="field" id="a_boite"><option value="">Je ne sais pas</option><option>Manuelle</option><option>Automatique</option></select></div>
+      <div><label class="f" for="a_prix">Prix demandé (€)</label><input class="field" id="a_prix" inputmode="numeric" placeholder="8 900"></div>
+      <div class="s2"><label class="f" for="a_usage">Votre usage</label>
+        <select class="field" id="a_usage"><option value="">Non précisé</option><option>Surtout en ville, petits trajets</option><option>Mixte</option><option>Beaucoup d'autoroute, gros rouleur</option></select></div>
+      <div class="s2" style="align-self:end"><button class="btn" id="achatBtn" type="submit" style="width:100%">Analyser ce véhicule</button></div>
+      <p class="hint full" id="achatMsg" style="margin:0"></p>
+    </form>
+    <div class="report" id="report" hidden></div>
+  </section>
+
+  <footer>Rétroviz donne des pistes, pas un diagnostic certifié : ses informations peuvent être incomplètes ou inexactes. Au moindre doute sur les freins, la direction, un voyant rouge ou une odeur de carburant, arrêtez-vous et contactez un professionnel.</footer>
+</div>
+
+<script>
+(function(){
+const $ = s => document.querySelector(s);
+/* Connexion au serveur local (server.js), qui appelle l'API Claude avec votre clé. */
+function parseJSON(text){
+  const t = text.trim();
+  try { return JSON.parse(t); } catch {}
+  const fence = t.match(/```(?:json)?\s*([\s\S]*?)```/);
+  if(fence){ try { return JSON.parse(fence[1]); } catch {} }
+  const a = t.search(/[\[{]/), b = Math.max(t.lastIndexOf("}"), t.lastIndexOf("]"));
+  if(a !== -1 && b > a){ try { return JSON.parse(t.slice(a, b+1)); } catch {} }
+  throw {code:"invalid_json", message:"Réponse non lisible", text};
+}
+function makeSample(){
+  async function call(messages, opts = {}){
+    let res;
+    try{
+      res = await fetch("/api/chat", {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({messages}), signal:opts.signal});
+    }catch(e){ throw {code: e.name === "AbortError" ? "cancelled" : "offline", message:String(e)}; }
+    if(!res.ok){
+      let j = {}; try { j = await res.json(); } catch {}
+      throw {code: j.code || "upstream_error", message: j.error || res.statusText};
+    }
+    const reader = res.body.getReader(), dec = new TextDecoder();
+    let text = "";
+    try{
+      for(;;){
+        const {done, value} = await reader.read();
+        if(done) break;
+        const delta = dec.decode(value, {stream:true});
+        if(delta){ text += delta; if(opts.onText) opts.onText({text, delta}); }
+      }
+    }catch(e){ throw {code: e.name === "AbortError" ? "cancelled" : "upstream_error", message:String(e), text: text || undefined}; }
+    if(!text.trim()) throw {code:"empty_completion", message:"Réponse vide"};
+    return {text, truncated:false};
+  }
+  const sample = (input, opts) => call(typeof input === "string" ? [{role:"user", content:input}] : input, opts);
+  sample.json = async (input, opts) => parseJSON((await sample(input, opts)).text);
+  return sample;
+}
+const samplePromise = Promise.resolve(makeSample());
+
+const SAFETY = `Sécurité, règle absolue : pour les freins, la direction, les airbags, une odeur d'essence, de la fumée, une surchauffe, un voyant rouge (huile, température, freins, batterie qui s'allume en roulant) ou une perte de puissance brutale sur autoroute, tu recommandes l'arrêt ou le garage et tu n'encourages jamais une réparation risquée par un non-professionnel. Tu n'affirmes jamais une certitude que tu n'as pas : tu parles de causes « probables ».`;
+
+const MODES = {
+  particulier: {
+    intro: "Décrivez ce que fait votre voiture avec vos mots. Rétroviz vous dit si vous pouvez rouler, ce qui se passe probablement, ce que vous pouvez vérifier vous-même et quand aller au garage.",
+    placeholder: "Ex. un voyant orange moteur s'est allumé et la voiture broute à l'accélération",
+    examples: ["Ma voiture tremble au ralenti", "Bruit de grincement quand je freine", "Voyant moteur orange allumé", "La voiture ne démarre plus, ça fait clic clic", "Odeur de brûlé après un trajet"],
+    rules: `Tu es Rétroviz, un assistant automobile qui aide des particuliers sans connaissances mécaniques, en français, avec un ton rassurant et clair.
+
+Format obligatoire :
+- La toute première ligne de ta réponse est exactement l'une de : "NIVEAU: VERT" (peut rouler normalement), "NIVEAU: ORANGE" (peut rouler prudemment, garage à prévoir rapidement), "NIVEAU: ROUGE" (ne pas rouler, s'arrêter dès que possible, faire remorquer), "NIVEAU: INCONNU" (pas assez d'informations).
+- Si les informations sont insuffisantes, mets NIVEAU: INCONNU et pose 2 à 4 questions courtes et simples (voyants, bruit, quand ça arrive, depuis quand, kilométrage).
+- Sinon, organise ta réponse avec ces titres markdown "### " : "Ce qui se passe probablement" (2 à 4 causes, de la plus probable à la moins probable, expliquées simplement), "Ce que vous pouvez vérifier vous-même" (uniquement des vérifications sans risque : niveaux, voyants, observation), "Quand aller au garage" (urgence, et la phrase à dire au garagiste pour décrire le problème), "Ordre de prix" (fourchettes indicatives en euros, en précisant que ça varie selon le modèle et le garage).
+- Explique chaque terme technique en quelques mots. Reste concis.
+
+${SAFETY}`
+  },
+  pro: {
+    intro: "Pour les mécaniciens et techniciens. Donnez un code défaut, des symptômes ou des valeurs relevées : Rétroviz propose une stratégie de diagnostic, des mesures et les défauts connus du modèle.",
+    placeholder: "Ex. P0299 sur 1.6 HDi 110 FAP, sous-suralimentation en charge, turbo neuf il y a 20 000 km",
+    examples: ["P0420 sur une essence de 2014, sondes OK", "P0087 pression rail trop basse sur 2.0 TDI", "Défaut intermittent CAN U0100", "Démarreur qui cliquette, batterie 12,4 V", "Valeurs de référence d'un débitmètre au ralenti"],
+    rules: `Tu es Rétroviz, un assistant de diagnostic automobile pour professionnels (mécaniciens, techniciens, électriciens auto), en français. Ton interlocuteur a un outil de diagnostic, un multimètre, parfois un oscilloscope et un manomètre.
+
+Réponds avec un registre technique précis, structuré avec des titres markdown "### " adaptés, typiquement : "Interprétation" (signification du code ou des symptômes, conditions de déclenchement), "Causes probables" (classées par fréquence, en signalant les défauts connus ou récurrents sur ce moteur ou ce modèle quand tu les connais), "Stratégie de diagnostic" (étapes ordonnées, de la plus rapide et la moins coûteuse à la plus lourde, avec les paramètres à lire en données dynamiques et les mesures à faire), "Valeurs de référence" (ordres de grandeur typiques, en précisant qu'elles doivent être confirmées par les données constructeur), "Pièges courants".
+Si le véhicule ou le contexte manque, demande-le brièvement (moteur exact, code moteur, kilométrage, historique). N'invente jamais de numéro de note technique, de référence pièce ou de valeur exacte dont tu n'es pas sûr : dis clairement quand une donnée est à vérifier.
+
+${SAFETY}`
+  }
+};
+
+const LEVELS = {
+  VERT:   {c:"var(--green)", t:"Vous pouvez rouler", s:"Restez attentif à l'évolution du problème."},
+  ORANGE: {c:"var(--amber)", t:"Prévoyez le garage rapidement", s:"Roulez avec prudence, évitez les longs trajets."},
+  ROUGE:  {c:"var(--red)",   t:"Arrêtez-vous, ne roulez pas", s:"Mettez-vous en sécurité et faites remorquer le véhicule."},
+  INCONNU:{c:"var(--grey)",  t:"Il me faut quelques précisions", s:"Répondez aux questions ci-dessous."}
+};
+
+const convo = {particulier: [], pro: []};
+let mode = "particulier", ctl = null, busy = false;
+
+/* ---------- utilitaires ---------- */
+function esc(s){return String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function inline(s){return esc(s).replace(/\*\*(.+?)\*\*/g,"<strong>$1</strong>").replace(/`([^`]+)`/g,"<code>$1</code>").replace(/(^|[^*])\*([^*\s][^*]*?)\*(?!\*)/g,"$1<em>$2</em>");}
+function md(src){
+  const out = []; let list = null, para = [];
+  const flushP = () => { if(para.length){ out.push("<p>"+inline(para.join(" "))+"</p>"); para = []; } };
+  const flushL = () => { if(list){ out.push(`<${list.t}>`+list.items.map(i=>"<li>"+inline(i)+"</li>").join("")+`</${list.t}>`); list = null; } };
+  for(const raw of src.split("\n")){
+    const line = raw.trimEnd();
+    let m;
+    if(!line.trim()){ flushP(); flushL(); continue; }
+    if((m = line.match(/^#{1,6}\s+(.*)/))){ flushP(); flushL(); out.push("<h3>"+inline(m[1])+"</h3>"); continue; }
+    if((m = line.match(/^\s*[-*•]\s+(.*)/))){ flushP(); if(!list || list.t!=="ul"){ flushL(); list={t:"ul",items:[]}; } list.items.push(m[1]); continue; }
+    if((m = line.match(/^\s*\d+[.)]\s+(.*)/))){ flushP(); if(!list || list.t!=="ol"){ flushL(); list={t:"ol",items:[]}; } list.items.push(m[1]); continue; }
+    if(list && /^\s{2,}/.test(raw)){ list.items[list.items.length-1] += " " + line.trim(); continue; }
+    flushL(); para.push(line.trim());
+  }
+  flushP(); flushL();
+  return out.join("");
+}
+function errorText(code){
+  switch(code){
+    case "not_granted": case "sampling_disabled": case "not_declared": case "capability_disabled": case "capability_removed":
+      return "L'accès à Claude n'est pas autorisé pour cette page. Rechargez-la et acceptez la demande d'accès pour utiliser Rétroviz.";
+    case "auth": return "Clé API manquante ou invalide. Vérifiez le fichier .env puis relancez le serveur.";
+    case "offline": return "Le serveur ne répond pas. Vérifiez qu'il tourne bien (npm start dans le terminal).";
+    case "rate_limited": return "Trop de demandes en peu de temps. Patientez un instant puis réessayez.";
+    case "session_expired": return "Votre session a expiré. Reconnectez-vous à Claude puis réessayez.";
+    case "refused": return "Cette demande n'a pas pu être traitée. Reformulez-la.";
+    case "prompt_too_large": return "La conversation est trop longue. Démarrez une nouvelle conversation.";
+    case "invalid_json": return "L'analyse n'a pas pu être mise en forme. Relancez-la.";
+    default: return "La connexion a été interrompue. Renvoyez votre demande.";
+  }
+}
+function showNotice(t){ const n=$("#notice"); n.textContent=t; n.hidden=!t; }
+const fmtKm = n => Math.round(n).toLocaleString("fr-FR") + " km";
+const toInt = s => { const n = parseInt(String(s).replace(/[^\d]/g,""),10); return isNaN(n) ? null : n; };
+
+/* ---------- modes ---------- */
+function setMode(m){
+  if(busy && ctl) ctl.abort();
+  mode = m;
+  document.querySelectorAll(".mode").forEach(b => b.setAttribute("aria-selected", String(b.dataset.mode===m)));
+  const chat = m !== "achat";
+  $("#chatPanel").hidden = !chat; $("#achatPanel").hidden = chat;
+  if(chat){
+    $("#chatIntro").textContent = MODES[m].intro;
+    $("#input").placeholder = MODES[m].placeholder;
+    $("#examples").innerHTML = MODES[m].examples.map(e=>`<button class="ex" type="button">${esc(e)}</button>`).join("");
+    renderThread();
+  }
+}
+document.querySelectorAll(".mode").forEach(b => b.addEventListener("click", () => setMode(b.dataset.mode)));
+$("#examples").addEventListener("click", e => { const b=e.target.closest(".ex"); if(b){ $("#input").value=b.textContent; $("#input").focus(); }});
+
+/* ---------- chat ---------- */
+function parseLevel(text){
+  const m = text.match(/^\s*NIVEAU\s*:\s*(VERT|ORANGE|ROUGE|INCONNU)\s*\n?/i);
+  if(m) return {level:m[1].toUpperCase(), body:text.slice(m[0].length)};
+  if(/^\s*N(I(V(E(A(U(\s*:?\s*\w*)?)?)?)?)?)?$/i.test(text)) return {level:null, body:""};
+  return {level:null, body:text};
+}
+function aiHTML(msg){
+  if(msg.pending) return `<p class="thinking">Rétroviz réfléchit…</p>`;
+  let level=null, body=msg.content;
+  if(msg.mode==="particulier"){ const p=parseLevel(msg.content); level=p.level; body=p.body; }
+  let h = "";
+  if(level && LEVELS[level]){ const L=LEVELS[level]; h += `<div class="level" style="--c:${L.c}"><span class="lamp"></span><div>${L.t}<small>${L.s}</small></div></div>`; }
+  h += `<div class="md">${md(body)}</div>`;
+  if(msg.note) h += `<p class="note">${esc(msg.note)}</p>`;
+  return h;
+}
+function renderThread(){
+  const list = convo[mode] || [];
+  $("#thread").innerHTML = list.map(t => t.role==="user"
+    ? `<div class="msg-user">${esc(t.content)}</div>`
+    : `<div class="msg-ai">${aiHTML(t)}</div>`).join("");
+  $("#examples").hidden = list.length > 0;
+  $("#resetBtn").hidden = list.length === 0 || busy;
+}
+function updateLast(msg){
+  const nodes = $("#thread").querySelectorAll(".msg-ai");
+  const last = nodes[nodes.length-1]; if(last) last.innerHTML = aiHTML(msg);
+}
+function setBusy(b){
+  busy=b; $("#sendBtn").hidden=b; $("#stopBtn").hidden=!b; $("#achatBtn").disabled=b;
+  $("#resetBtn").hidden = b || (convo[mode]||[]).length===0;
+}
+
+async function send(){
+  const text = $("#input").value.trim();
+  if(!text || busy || mode==="achat") return;
+  const sample = await samplePromise;
+  if(!sample){ showNotice("Le serveur ne répond pas. Lancez-le avec npm start."); return; }
+  showNotice("");
+  const m = mode, list = convo[m];
+  list.push({role:"user", content:text});
+  const asst = {role:"assistant", content:"", pending:true, mode:m};
+  list.push(asst);
+  $("#input").value = "";
+  renderThread(); setBusy(true);
+  asst._node = null;
+  const veh = $("#vehicle").value.trim();
+  const rules = MODES[m].rules + (veh ? `\n\nVéhicule indiqué par l'utilisateur : ${veh}` : `\n\nVéhicule : non précisé (demande-le si c'est utile).`);
+  const history = list.slice(0,-1).filter(t => t.content && !t.failed).slice(-12).map(t => ({role:t.role, content:t.content}));
+  ctl = new AbortController();
+  try{
+    const r = await sample([{role:"user", content:rules}, ...history], {
+      cache:false, signal:ctl.signal,
+      onText:({text}) => { asst.content=text; asst.pending=false; if(mode===m) updateLast(asst); }
+    });
+    asst.content = r.text; asst.pending=false;
+    if(r.truncated) asst.note = "Réponse coupée : posez une question plus ciblée.";
+  }catch(e){
+    asst.pending=false;
+    if(e && e.text){ asst.content = e.text; asst.note = e.code==="cancelled" ? "Réponse arrêtée." : errorText(e && e.code); }
+    else { asst.failed = true; asst.content = ""; if(e && e.code!=="cancelled") showNotice(errorText(e && e.code)); }
+    if(asst.failed){ list.pop(); }
+  }finally{
+    ctl=null; setBusy(false); if(mode===m) renderThread();
+  }
+}
+$("#sendBtn").addEventListener("click", send);
+$("#stopBtn").addEventListener("click", () => ctl && ctl.abort());
+$("#input").addEventListener("keydown", e => { if(e.key==="Enter" && !e.shiftKey){ e.preventDefault(); send(); }});
+$("#resetBtn").addEventListener("click", () => { convo[mode]=[]; renderThread(); $("#input").focus(); });
+
+/* ---------- achat ---------- */
+const GRAV = {faible:"var(--green)", moyenne:"var(--amber)", elevee:"var(--red)"};
+const RECO = {bon_choix:{c:"var(--green)",t:"Bon choix"}, prudence:{c:"var(--amber)",t:"À acheter avec prudence"}, a_eviter:{c:"var(--red)",t:"Plutôt à éviter"}};
+
+$("#achatForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  if(busy) return;
+  const v = id => $("#"+id).value.trim();
+  const km = toInt(v("a_km"));
+  if(!v("a_marque") || !v("a_modele") || km===null){ $("#achatMsg").textContent = "Indiquez au moins la marque, le modèle et le kilométrage."; return; }
+  $("#achatMsg").textContent = "";
+  const sample = await samplePromise;
+  if(!sample){ showNotice("Le serveur ne répond pas. Lancez-le avec npm start."); return; }
+  showNotice("");
+  const car = {
+    marque:v("a_marque"), modele:v("a_modele"), annee:v("a_annee"), motorisation:v("a_moteur"),
+    boite:v("a_boite"), km, prix:toInt(v("a_prix")), usage:v("a_usage")
+  };
+  const prompt = `Tu es un expert automobile indépendant spécialisé dans les véhicules d'occasion. Tu conseilles un particulier français avant un achat. Analyse ce véhicule :
+- Marque : ${car.marque}
+- Modèle : ${car.modele}
+- Année : ${car.annee || "non précisée"}
+- Motorisation : ${car.motorisation || "non précisée"}
+- Boîte : ${car.boite || "non précisée"}
+- Kilométrage actuel : ${car.km} km
+- Prix demandé : ${car.prix ? car.prix+" €" : "non précisé"}
+- Usage prévu par l'acheteur : ${car.usage || "non précisé"}
+
+Réponds uniquement avec un objet JSON de cette forme exacte :
+{"vehicule":"désignation précise retenue (génération, motorisation)","note":7,"recommandation":"bon_choix|prudence|a_eviter","resume":"2 ou 3 phrases","avis_prix":"avis sur le prix demandé, ou chaîne vide s'il n'est pas donné","avis_usage":"adéquation avec l'usage prévu, ou chaîne vide","qualites":["..."],"defauts":["..."],"pannes":[{"km":120000,"titre":"...","detail":"symptômes et explication en une ou deux phrases","cout":"800 à 1 200 €","gravite":"faible|moyenne|elevee","type":"panne|entretien"}],"a_controler":["point précis à vérifier lors de l'essai ou sur le carnet"],"questions_vendeur":["..."],"incertitude":"ce dont tu n'es pas sûr, ou chaîne vide"}
+
+Règles :
+- Langage simple pour un non-spécialiste.
+- "pannes" contient 6 à 10 éléments : les défauts constructeur et pannes récurrentes connus pour cette génération et cette motorisation (type "panne") ET les gros entretiens coûteux comme distribution, embrayage, volant moteur bimasse, FAP, amortisseurs (type "entretien"). "km" est un entier : le kilométrage typique d'apparition ou d'échéance. Inclus des éléments avant ET après le kilométrage actuel.
+- "note" sur 10 juge CE véhicule à CE kilométrage${car.prix ? " et à ce prix" : ""}.
+- 3 à 6 qualités, 3 à 6 défauts, 5 à 8 points à contrôler, 3 à 6 questions au vendeur.
+- Si la motorisation ou la génération est ambiguë, raisonne sur la plus probable et explique-le dans "incertitude". N'invente jamais de rappel constructeur précis dont tu n'es pas certain.`;
+  const rep = $("#report");
+  rep.hidden = false;
+  rep.innerHTML = `<p class="thinking">Rétroviz analyse ce véhicule… cela peut prendre jusqu'à une minute.</p><button class="btn stop" id="achatStop" type="button">Arrêter</button>`;
+  setBusy(true); $("#sendBtn").hidden=false; $("#stopBtn").hidden=true;
+  ctl = new AbortController();
+  $("#achatStop").addEventListener("click", () => ctl && ctl.abort());
+  try{
+    const data = await sample.json(prompt, {signal:ctl.signal});
+    renderReport(data, car);
+  }catch(err){
+    rep.innerHTML = err && err.code==="cancelled" ? "" : `<p class="notice">${esc(errorText(err && err.code))}</p>`;
+    if(err && err.code==="cancelled") rep.hidden = true;
+  }finally{ ctl=null; setBusy(false); $("#sendBtn").hidden=false; $("#stopBtn").hidden=true; }
+});
+
+function renderReport(d, car){
+  const rep = $("#report");
+  const arr = x => Array.isArray(x) ? x.filter(Boolean).map(String) : [];
+  const pannes = (Array.isArray(d.pannes) ? d.pannes : [])
+    .map(p => ({...p, km: toInt(p.km)})).filter(p => p.km !== null && p.titre).sort((a,b)=>a.km-b.km);
+  const note = Math.max(0, Math.min(10, Number(d.note) || 0));
+  const reco = RECO[d.recommandation] || RECO.prudence;
+  const cur = car.km;
+  const maxKm = Math.max(cur + 60000, ...pannes.map(p=>p.km), 100000);
+  const scale = Math.ceil(maxKm/50000)*50000;
+  const pct = k => (k/scale*100).toFixed(2)+"%";
+  const ticks = []; const step = scale > 250000 ? 100000 : 50000;
+  for(let t=0;t<=scale;t+=step) ticks.push(`<span class="tick" style="left:${pct(t)}">${t===0?"0":(t/1000)+" 000"}</span>`);
+  const itemHTML = (p,i) => {
+    const c = GRAV[p.gravite] || "var(--amber)";
+    const when = p.km <= cur ? `vers ${fmtKm(p.km)}` : `vers ${fmtKm(p.km)}, dans ~${fmtKm(p.km-cur)}`;
+    return `<li class="item" id="pn${i}" style="--c:${c}"><div class="top"><span>${esc(p.titre)}${p.type==="entretien"?" (entretien)":""}</span><span class="km">${esc(when)}</span></div>${p.detail?`<p>${esc(p.detail)}</p>`:""}${p.cout?`<div class="cost">Coût indicatif : ${esc(p.cout)}</div>`:""}</li>`;
+  };
+  const past = pannes.map((p,i)=>[p,i]).filter(([p])=>p.km<=cur);
+  const future = pannes.map((p,i)=>[p,i]).filter(([p])=>p.km>cur);
+  const list = (title, items) => `<h3>${title}</h3><ul>${items.map(i=>`<li>${esc(i)}</li>`).join("")}</ul>`;
+  const checks = arr(d.a_controler).map((t,i)=>`<li><input type="checkbox" id="ck${i}"><label for="ck${i}">${esc(t)}</label></li>`).join("");
+
+  rep.innerHTML = `
+    <div class="verdict">
+      <div class="score">${note}<small>/10</small></div>
+      <div><p class="vtitle">${esc(d.vehicule || car.marque+" "+car.modele)}</p><span class="tag" style="--c:${reco.c}">${reco.t}</span></div>
+      <div class="md"><p>${esc(d.resume||"")}</p>${d.avis_prix?`<p><strong>Prix :</strong> ${esc(d.avis_prix)}</p>`:""}${d.avis_usage?`<p><strong>Pour votre usage :</strong> ${esc(d.avis_usage)}</p>`:""}</div>
+    </div>
+
+    <div class="sect">
+      <h3>Son compteur et ce qui l'attend</h3>
+      <div class="odo">
+        <div class="track">
+          <div class="rail"></div>
+          <div class="done" style="width:${pct(cur)}"></div>
+          ${ticks.join("")}
+          ${pannes.map((p,i)=>`<button class="dot${p.type==="entretien"?" maint":""}" data-i="${i}" style="left:${pct(p.km)};--c:${GRAV[p.gravite]||"var(--amber)"}" title="${esc(p.titre)} (${fmtKm(p.km)})" aria-label="${esc(p.titre)}, ${fmtKm(p.km)}"></button>`).join("")}
+          <div class="now${cur/scale>0.7?" flip":""}" style="left:${pct(cur)}"><span>Aujourd'hui ${fmtKm(cur)}</span></div>
+        </div>
+        <div class="legend">
+          <span><i style="--c:var(--green)"></i>Gravité faible</span><span><i style="--c:var(--amber)"></i>Moyenne</span><span><i style="--c:var(--red)"></i>Élevée</span><span><i class="sq" style="--c:var(--grey)"></i>Carré : entretien prévu</span>
+        </div>
+      </div>
+      ${past.length?`<p class="group-label">Déjà dans sa zone de kilométrage : demandez la preuve que c'est fait</p><ul class="items">${past.map(([p,i])=>itemHTML(p,i)).join("")}</ul>`:""}
+      ${future.length?`<p class="group-label">À anticiper dans les prochains kilomètres</p><ul class="items">${future.map(([p,i])=>itemHTML(p,i)).join("")}</ul>`:""}
+    </div>
+
+    <div class="sect two">
+      <div class="box">${list("Qualités", arr(d.qualites))}</div>
+      <div class="box">${list("Défauts", arr(d.defauts))}</div>
+    </div>
+
+    <div class="sect two">
+      <div class="box"><h3>À contrôler pendant l'essai</h3><ul class="checks">${checks}</ul></div>
+      <div class="box">${list("Questions à poser au vendeur", arr(d.questions_vendeur))}</div>
+    </div>
+
+    ${d.incertitude?`<p class="sect caveat">${esc(d.incertitude)}</p>`:""}
+    <p class="sect caveat">Ces informations proviennent des connaissances générales de l'IA : recoupez-les avec un historique d'entretien, un contrôle technique récent et, si possible, l'avis d'un garagiste avant d'acheter.</p>
+    <div class="rowbtns"><button class="btn" type="button" id="askAbout">Poser une question sur ce véhicule</button><button class="btn ghost" type="button" id="newCar">Analyser une autre voiture</button></div>`;
+
+  rep.querySelectorAll(".dot").forEach(b => b.addEventListener("click", () => {
+    const el = $("#pn"+b.dataset.i); if(!el) return;
+    el.scrollIntoView({behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block:"center"});
+    el.classList.remove("flash"); void el.offsetWidth; el.classList.add("flash");
+  }));
+  $("#askAbout").addEventListener("click", () => {
+    $("#vehicle").value = `${d.vehicule || car.marque+" "+car.modele}${car.annee?", "+car.annee:""}, ${fmtKm(cur)}`;
+    setMode("particulier"); $("#input").placeholder = "Ex. le vendeur dit que la distribution est faite, que dois-je vérifier ?"; $("#input").focus();
+  });
+  $("#newCar").addEventListener("click", () => { rep.hidden=true; rep.innerHTML=""; window.scrollTo({top:0}); $("#a_marque").focus(); });
+}
+
+setMode("particulier");
+})();
+</script>
+</body>
+</html>

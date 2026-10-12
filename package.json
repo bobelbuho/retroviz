@@ -1,0 +1,17 @@
+{
+  "name": "retroviz",
+  "version": "0.1.0",
+  "description": "Rétroviz : assistant automobile (pannes, diagnostic pro, aide à l'achat d'occasion)",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "engines": { "node": ">=18" },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.39.0",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2"
+  }
+}
