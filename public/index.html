@@ -1052,6 +1052,9 @@ $("#vehPick").addEventListener("change", e => {
   e.target.value = "";
 });
 
+/* Aide aux symptômes : ouverte sur ordinateur, repliée sur mobile (elle y repousserait la zone de saisie). */
+$("#help").open = matchMedia("(min-width: 641px)").matches;
+
 setMode("particulier");
 })();
 </script>

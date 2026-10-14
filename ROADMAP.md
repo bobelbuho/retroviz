@@ -5,6 +5,7 @@
 - ✅ Comptes utilisateurs (e-mail + mot de passe), conformes au RGPD : export et suppression des données.
 - ✅ Garage virtuel : mes voitures, reliées si possible à une fiche de la base Rétroviz.
 - ✅ Relevés de kilométrage et moyenne de km par mois.
+  - Plus tard : option « compteur changé ou remis à zéro » (aujourd'hui, un relevé inférieur au précédent est refusé).
 - Carnet d'entretien, avec photo ou PDF de facture.
 - Rappels : contrôle technique, assurance, vidange, pneus hiver.
 - Prochains entretiens calculés à partir de la fiche et du carnet.
