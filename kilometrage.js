@@ -28,6 +28,13 @@ export function cleanDate(raw, now = today()) {
   return { date };
 }
 
+// Date AAAA-MM-JJ, passée ou future (ex. échéance d'assurance), entre 1950 et 2100. Renvoie { date } ou { error }.
+export function cleanAnyDate(raw) {
+  const date = isoDate(raw);
+  if (!date || date < "1950-01-01" || date > "2100-12-31") return { error: "Date invalide." };
+  return { date };
+}
+
 // Kilométrage entier. Chiffres seulement, espaces acceptés (« 85 000 ») ;
 // « 85.000 » ou « 85,5 » sont refusés plutôt que mal lus. Renvoie { km } ou { error }.
 export function cleanKm(raw) {

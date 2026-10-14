@@ -31,7 +31,7 @@ describe("validation d'un relevé", () => {
 describe("cohérence et moyenne", () => {
   const R = [{ date: "2025-01-01", km: 50000 }, { date: "2025-07-01", km: 56000 }];
   test("un compteur ne recule pas", () => {
-    assert.match(incoherence(R, { date: "2025-08-01", km: 55000 }), /inférieur à celui du 01\/07\/2025 \(56 000 km\)/);
+    assert.match(incoherence(R, { date: "2025-08-01", km: 55000 }), /inférieur à celui du 01\/07\/2025 \(56\u202f000 km\)/);
     assert.match(incoherence(R, { date: "2025-03-01", km: 60000 }), /supérieur à celui du 01\/07\/2025/);
     assert.equal(incoherence(R, { date: "2025-03-01", km: 52000 }), null);
     // Même date : le relevé remplace l'ancien, on ne le compare pas à lui-même.
@@ -47,7 +47,7 @@ describe("cohérence et moyenne", () => {
     assert.equal(stats([R[0], { date: "2025-01-20", km: 51000 }]).moyenneMensuelle, null);
   });
   test("la désignation pour l'assistant inclut le dernier kilométrage", () => {
-    assert.equal(designation(CLIO, 85000), "Renault Clio IV 1.5 dCi 90, 2016, 85 000 km");
+    assert.equal(designation(CLIO, 85000), "Renault Clio IV 1.5 dCi 90, 2016, 85\u202f000 km");
     assert.equal(designation(CLIO), "Renault Clio IV 1.5 dCi 90, 2016");
   });
 });
@@ -87,7 +87,7 @@ describe("API des relevés", () => {
     assert.equal((await c("POST", "/api/garage", { ...CLIO, km: "85.000" })).status, 400);
     const v = (await c("POST", "/api/garage", { ...CLIO, km: "85 000" })).body.vehicule;
     assert.deepEqual(v.kilometrage, { dernier: { date: today(), km: 85000 }, moyenneMensuelle: null });
-    assert.match(v.designation, /85 000 km$/);
+    assert.match(v.designation, /85\u202f000 km$/);
   });
 
   test("ajouter, remplacer, refuser l'incohérent, supprimer", async () => {

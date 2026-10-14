@@ -8,8 +8,9 @@
   - Plus tard : option « compteur changé ou remis à zéro » (aujourd'hui, un relevé inférieur au précédent est refusé).
 - ✅ Carnet d'entretien, avec photo ou PDF de facture.
   - Plus tard : stockage des factures compatible S3 hébergé en Europe (Scaleway ou OVH), en remplaçant `createLocalStorage` dans `storage.js`.
-- Rappels : contrôle technique, assurance, vidange, pneus hiver.
-- Prochains entretiens calculés à partir de la fiche et du carnet.
+  - Au moment du passage à S3 : nettoyage périodique des factures orphelines (fichiers sans entretien, par exemple après un arrêt du serveur pendant une suppression).
+- ✅ Rappels : contrôle technique, assurance, vidange, pneus hiver, rappels libres (écran « À venir », dans l'appli seulement).
+- ✅ Prochains entretiens calculés à partir de la fiche et du carnet.
 - Valeur indicative estimée par l'IA, avec son évolution dans le temps.
 - Historique des conversations des trois modes.
 
@@ -57,4 +58,5 @@
 ## À faire avant le lancement public
 
 - Vérification de l'adresse e-mail à l'inscription (lien de confirmation).
+- Rappels par e-mail (contrôle technique, vidange, assurance…), une fois l'adresse vérifiée.
 - Ne plus révéler si une adresse est déjà inscrite : l'inscription affiche le même message dans tous les cas, et un e-mail prévient le titulaire de l'adresse.

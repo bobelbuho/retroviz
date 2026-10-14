@@ -9,6 +9,7 @@ import { createAuth } from "./auth.js";
 import { createGarage } from "./garage.js";
 import { createCarnet } from "./carnet.js";
 import { createLocalStorage } from "./storage.js";
+import { createRappels } from "./rappels.js";
 
 const PORT = process.env.PORT || 3000;
 const MODEL = process.env.MODEL || "claude-sonnet-5-5";
@@ -28,7 +29,8 @@ const KB_RULES = `Voici des fiches de la base Rétroviz. Utilise-les en priorit�
 const db = openDb();
 // Factures : stockage local dans storage/uploads/ (variable UPLOAD_DIR pour le changer). Voir storage.js.
 const carnet = createCarnet(db, createLocalStorage());
-const garage = createGarage(db, kb, { carnet });
+const rappels = createRappels(db, kb);
+const garage = createGarage(db, kb, { carnet, rappels });
 
 const client = new Anthropic(); // lit ANTHROPIC_API_KEY dans l'environnement
 const app = express();
@@ -36,6 +38,7 @@ app.use(express.json({ limit: "1mb" }));
 app.use(createAuth(db, { exportData: garage.exportFor, beforeDeleteUser: carnet.beforeDeleteUser }));
 app.use(garage);
 app.use(carnet);
+app.use(rappels);
 app.use(express.static("public"));
 
 // Nettoie la conversation : rôles valides, texte non vide, tours consécutifs du même rôle fusionnés.

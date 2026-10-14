@@ -15,6 +15,8 @@ retroviz/
 ├── garage.js           ← « Mon garage » : les voitures de chaque compte
 ├── kilometrage.js      ← relevés de kilométrage : validation, cohérence, moyenne par mois
 ├── carnet.js           ← carnet d'entretien et factures
+├── avenir.js           ← calcul de « À venir » : rappels et prochains entretiens (sans base de données)
+├── rappels.js          ← routes « À venir » et rappels libres
 ├── storage.js          ← stockage des fichiers (factures) : enregistrer, lire, supprimer
 ├── db.js               ← la base SQLite (comptes, garages)
 ├── storage/            ← la base (retroviz.db) et les factures (uploads/), créés au démarrage, jamais publiés
@@ -82,7 +84,7 @@ Les comptes sont facultatifs : l'assistant reste utilisable sans compte. Le bout
 
 - **Fiche reliée** : à chaque enregistrement, le serveur cherche une fiche de `data/vehicules.json`. Il ne la relie que si le modèle **et** le moteur correspondent, et si l'année tombe dans la période de la fiche (une fiche fausse est pire que pas de fiche). L'utilisateur peut écarter une fiche (« Ce n'est pas ma voiture ») ou en chercher une à nouveau.
 - **Poser une question** : remplit le champ « Votre véhicule » avec la désignation de la voiture et ouvre « J'ai une panne ». Le menu « Mes voitures… » à côté de ce champ fait la même chose depuis les modes de discussion.
-- Les voitures et leurs relevés sont inclus dans l'export des données et effacés avec le compte.
+- Les voitures, leurs relevés, entretiens et rappels libres sont inclus dans l'export des données et effacés avec le compte.
 - **Kilométrage** : chaque voiture a ses relevés (date et kilométrage). Le « Kilométrage actuel » saisi à l'ajout devient le premier relevé. Un relevé à la même date remplace le précédent. Un relevé incohérent est refusé : un compteur ne recule pas. La **moyenne de km par mois** est calculée entre le premier et le dernier relevé, s'ils sont espacés d'au moins 30 jours. Le dernier kilométrage est ajouté à la désignation envoyée à l'assistant.
 - Routes (connexion requise) : `GET /api/garage`, `POST /api/garage`, `PUT /api/garage/:id`, `DELETE /api/garage/:id`, et pour les relevés `GET` et `POST /api/garage/:id/releves`, `DELETE /api/garage/:id/releves/:rid`.
 
@@ -101,6 +103,29 @@ Depuis la carte d'une voiture, « Ouvrir le carnet » liste ses entretiens, du p
 - **Stockage** : tout passe par `storage.js` et ses trois fonctions `save`, `read` et `remove`. Pour passer à un stockage compatible S3 hébergé en Europe (Scaleway, OVH), il suffit d'écrire un autre `createXxxStorage` avec les mêmes fonctions et de le choisir dans `server.js`. La variable `UPLOAD_DIR` du `.env` change le dossier local.
 - **Routes** (connexion requise) : `GET` et `POST /api/garage/:id/entretiens`, `PUT` et `DELETE /api/garage/:id/entretiens/:eid`, et pour la facture `PUT` (fichier brut dans le corps, nom d'origine dans l'en-tête `X-Filename`), `GET` et `DELETE /api/garage/:id/entretiens/:eid/facture`.
 
+## À venir : rappels et prochains entretiens
+
+Depuis la carte d'une voiture, « Tout ce qui arrive » ouvre l'écran « À venir ». Il regroupe les rappels et les prochains entretiens, du plus urgent au plus lointain.
+
+- **Statuts** :
+  - **En retard** (rouge) ;
+  - **Bientôt** (orange : moins de 30 jours ou de 1 000 km) ;
+  - **Plus tard** ;
+  - **À vérifier** : entretien de la fiche déjà dépassé sans trace dans le carnet, il a peut-être été fait par un ancien propriétaire ;
+  - **À surveiller** : panne connue, jamais présentée comme certaine ;
+  - **À compléter** : il manque une information.
+- **Contrôle technique** : premier contrôle avant les 4 ans (d'après la date de première mise en circulation, case B de la carte grise), puis tous les 2 ans. Le dernier contrôle noté dans le carnet sert de nouvelle référence. C'est une estimation, à vérifier sur le procès-verbal.
+- **Assurance** : date d'échéance saisie, renouvelée chaque année.
+- **Vidange** : intervalle en km et en mois. Par défaut, c'est celui de la fiche Rétroviz liée, sinon 15 000 km ou 12 mois, modifiable. La prochaine se calcule depuis la dernière vidange du carnet.
+- **Pneus hiver** (facultatif) : monter avant le 1er novembre, démonter à partir du 1er avril, avec un rappel de la loi Montagne.
+- **Rappels libres** : un titre, avec une date ou un kilométrage.
+- **Prochains entretiens** : ceux de la fiche liée (bougies, distribution…), tous les N km. Si le carnet en contient un, le suivant est recalculé à partir de lui. La date est estimée grâce à la moyenne de km par mois.
+- **Pannes connues** : celles de la fiche, « à surveiller » vers leur kilométrage typique.
+- **Sur la carte de la voiture** : une ligne résume le plus urgent, et un badge rouge compte ce qui est en retard.
+- **« C'est fait »** : ouvre l'ajout d'un entretien pré-rempli dans le carnet. Pour un rappel libre, celui-ci est supprimé une fois l'entretien enregistré.
+- Les rappels ne s'affichent que dans l'application pour l'instant.
+- **Routes** (connexion requise) : `GET /api/garage/:id/avenir`, `POST /api/garage/:id/rappels`, `DELETE /api/garage/:id/rappels/:rid`.
+
 ## Où modifier quoi
 
 - Le comportement de l'IA (ton, structure des réponses, règles de sécurité) : les textes `rules` et `SAFETY` dans `public/index.html`.
@@ -111,5 +136,5 @@ Depuis la carte d'une voiture, « Ouvrir le carnet » liste ses entretiens, du p
 - La consigne donnée à l'IA sur l'usage des fiches : la constante `KB_RULES` dans `server.js`.
 - La recherche (scores, taille maximale du contexte `MAX_CONTEXT`) : `knowledge.js`. Lancez `npm test` après toute modification.
 - Les comptes (longueur minimale du mot de passe, durée de session, blocage après échecs) : les constantes en haut de `auth.js`. Lancez `npm test` après toute modification.
-- Le garage (nombre maximal de voitures, champs, règle de rattachement à une fiche `matchFiche`) : `garage.js`. Les relevés (écart minimal pour la moyenne, nombre maximal, contrôles) : `kilometrage.js`. Le carnet (types d'entretien, limites) : `carnet.js`. Les types de fichiers acceptés et la taille maximale : `storage.js`. Lancez `npm test` après toute modification.
+- Le garage (nombre maximal de voitures, champs, règle de rattachement à une fiche `matchFiche`) : `garage.js`. Les relevés (écart minimal pour la moyenne, nombre maximal, contrôles) : `kilometrage.js`. Le carnet (types d'entretien, limites) : `carnet.js`. Les règles « À venir » (seuils « bientôt », vidange par défaut, contrôle technique, pneus hiver) : `avenir.js`. Les types de fichiers acceptés et la taille maximale : `storage.js`. Lancez `npm test` après toute modification.
 - L'apparence (couleurs claires et sombres, tailles de texte, espacements, arrondis) : les variables en haut du `<style>` de `public/index.html`, documentées dans [DESIGN.md](DESIGN.md). Tout nouvel écran suit ce système.

@@ -60,7 +60,26 @@ CREATE TABLE IF NOT EXISTS entretiens (
   updated_at     TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now'))
 );
 CREATE INDEX IF NOT EXISTS entretiens_vehicle ON entretiens(vehicle_id, date);
+CREATE TABLE IF NOT EXISTS rappels (
+  id         INTEGER PRIMARY KEY,
+  vehicle_id INTEGER NOT NULL REFERENCES vehicles(id) ON DELETE CASCADE,
+  titre      TEXT NOT NULL,
+  date       TEXT,                       -- AAAA-MM-JJ, ou NULL
+  km         INTEGER,                    -- ou NULL (au moins l'un des deux)
+  created_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now'))
+);
 `;
+
+// Colonnes ajoutées après la création des tables : ajoutées aux bases existantes au démarrage.
+const MIGRATIONS = {
+  vehicles: {
+    mise_en_circulation: "TEXT", // case B de la carte grise
+    assurance_echeance: "TEXT",
+    pneus_hiver: "INTEGER NOT NULL DEFAULT 0",
+    vidange_km: "INTEGER",       // NULL : fiche Rétroviz ou valeur par défaut
+    vidange_mois: "INTEGER",
+  },
+};
 
 // Ouvre (et crée si besoin) la base. ":memory:" pour les tests.
 export function openDb(file = process.env.DB_PATH || DEFAULT_DB_PATH) {
@@ -68,5 +87,11 @@ export function openDb(file = process.env.DB_PATH || DEFAULT_DB_PATH) {
   const db = new DatabaseSync(file);
   db.exec("PRAGMA foreign_keys = ON; PRAGMA journal_mode = WAL;");
   db.exec(SCHEMA);
+  for (const [table, cols] of Object.entries(MIGRATIONS)) {
+    const existing = new Set(db.prepare(`PRAGMA table_info(${table})`).all().map(c => c.name));
+    for (const [col, def] of Object.entries(cols)) {
+      if (!existing.has(col)) db.exec(`ALTER TABLE ${table} ADD COLUMN ${col} ${def}`);
+    }
+  }
   return db;
 }

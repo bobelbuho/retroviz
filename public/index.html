@@ -265,6 +265,28 @@ label.f{display:block;font-weight:var(--fw-semibold);font-size:var(--fs-sm);marg
 .kmlist li span{white-space:nowrap}
 .kmlist li span:last-of-type{margin-left:auto;font-weight:var(--fw-semibold)}
 .kmlist .btn{padding:0 var(--sp-2)}
+/* à venir : statuts (le rouge et l'orange gardent leur sens : en retard, bientôt) */
+.pill{display:inline-flex;align-items:center;gap:6px;padding:2px var(--sp-3);border-radius:var(--r-pill);font-size:var(--fs-xs);font-weight:var(--fw-bold);background:var(--soft);color:var(--muted);white-space:nowrap}
+.pill::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--c,var(--grey))}
+.pill[data-s="retard"]{--c:var(--red);background:color-mix(in srgb,var(--red) 12%,var(--surface));color:var(--red-ink)}
+.pill[data-s="bientot"]{--c:var(--amber);background:color-mix(in srgb,var(--amber) 14%,var(--surface));color:var(--amber-ink)}
+.pill[data-s="plus_tard"]{--c:var(--green)}
+.pill[data-s="verifier"],.pill[data-s="surveiller"]{--c:var(--primary)}
+.badge{display:inline-block;vertical-align:middle;margin-left:var(--sp-2);padding:2px var(--sp-2);border-radius:var(--r-pill);background:var(--red);color:var(--on-red);font-size:var(--fs-xs);font-weight:var(--fw-bold);line-height:1.4}
+.avl{list-style:none;margin:var(--sp-5) 0 0;padding:0;display:grid;gap:var(--sp-3)}
+.av{background:var(--surface);border-radius:var(--r-lg);padding:var(--sp-4) var(--sp-5);box-shadow:var(--shadow);border-left:4px solid var(--c,transparent)}
+.av[data-s="retard"]{--c:var(--red)}
+.av[data-s="bientot"]{--c:var(--amber)}
+.av-top{display:flex;align-items:center;gap:var(--sp-2);flex-wrap:wrap;margin-bottom:var(--sp-2)}
+.av-cat{font-size:var(--fs-xs);color:var(--muted);text-transform:uppercase;letter-spacing:.04em;font-weight:var(--fw-semibold)}
+.av-t{display:block;font-size:var(--fs-lg);line-height:var(--lh-tight)}
+.av-when{margin:var(--sp-1) 0 0;font-weight:var(--fw-semibold)}
+.av-txt{margin:var(--sp-2) 0 0;color:var(--muted);font-size:var(--fs-sm)}
+.av .hint{margin-top:var(--sp-2)}
+.av .rowbtns{margin:var(--sp-3) 0 0 calc(-1 * var(--sp-1))}
+.formsec{grid-column:1/-1;font-size:var(--fs-md);font-weight:var(--fw-bold);margin:var(--sp-3) 0 0;padding-top:var(--sp-4);border-top:1px solid var(--line)}
+@media (max-width:420px){.av{padding:var(--sp-4)}}
+
 /* carnet d'entretien */
 .back{margin:0 0 var(--sp-3) calc(-1 * var(--sp-3))}
 .carnet-head h2{font-size:var(--fs-2xl);font-weight:var(--fw-bold);margin:0;line-height:var(--lh-tight)}
@@ -431,9 +453,31 @@ footer{margin-top:var(--sp-7);font-size:var(--fs-xs);color:var(--muted);padding-
         <div class="s2" id="g_kmWrap"><label class="f" for="g_km">Kilométrage actuel</label><input class="field" id="g_km" inputmode="numeric" maxlength="9" placeholder="85 000" aria-describedby="g_km_hint"><p class="hint" id="g_km_hint">Facultatif. Il sera votre premier relevé.</p></div>
         <div><label class="f" for="g_boite">Boîte</label>
           <select class="field" id="g_boite"><option value="">Je ne sais pas</option><option value="manuelle">Manuelle</option><option value="automatique">Automatique</option></select></div>
+        <h3 class="formsec">Rappels <span class="hint" style="font-weight:400">(facultatif)</span></h3>
+        <div class="s2"><label class="f" for="g_mec">Date de première mise en circulation</label><input class="field" type="date" id="g_mec" aria-describedby="g_mec_hint"><p class="hint" id="g_mec_hint">Case B de la carte grise. Sert à estimer le contrôle technique.</p></div>
+        <div class="s2"><label class="f" for="g_assur">Échéance de l'assurance</label><input class="field" type="date" id="g_assur"></div>
+        <div><label class="f" for="g_vkm">Vidange tous les… (km)</label><input class="field" id="g_vkm" inputmode="numeric" maxlength="7" placeholder="15 000" aria-describedby="g_v_hint"></div>
+        <div><label class="f" for="g_vmois">…ou tous les (mois)</label><input class="field" id="g_vmois" inputmode="numeric" maxlength="2" placeholder="12" aria-describedby="g_v_hint"></div>
+        <p class="hint s2" id="g_v_hint" style="align-self:center;margin:0">Laissez vide pour la valeur de la fiche Rétroviz, ou 15 000 km et 12 mois.</p>
+        <div class="full"><label class="check"><input type="checkbox" id="g_hiver"><span>Me rappeler de monter et démonter les pneus hiver</span></label></div>
         <p class="hint full" id="carMsg" style="margin:0" role="alert"></p>
         <div class="formbtns"><button class="btn" type="submit" id="carSave">Enregistrer</button><button class="btn ghost" type="button" id="carCancel">Annuler</button></div>
       </form>
+      </div>
+      <!-- À venir pour une voiture -->
+      <div id="avenirView" hidden>
+        <button class="btn ghost small back" type="button" id="avenirBack">← Mon garage</button>
+        <div class="carnet-head"><h2 id="avenirTitle" tabindex="-1"></h2><p class="sub" id="avenirSub"></p></div>
+        <button class="btn" type="button" id="rapAdd">Ajouter un rappel</button>
+        <form class="form" id="rapForm" novalidate hidden>
+          <div class="full"><label class="f" for="r_titre">Rappel *</label><input class="field" id="r_titre" maxlength="100" required placeholder="Changer les balais d'essuie-glace"></div>
+          <div class="s2"><label class="f" for="r_date">Date</label><input class="field" type="date" id="r_date"></div>
+          <div class="s2"><label class="f" for="r_km">ou kilométrage</label><input class="field" id="r_km" inputmode="numeric" maxlength="9" placeholder="60 000"></div>
+          <p class="hint full" id="rapMsg" style="margin:0" role="alert"></p>
+          <div class="formbtns"><button class="btn" type="submit" id="rapSave">Enregistrer</button><button class="btn ghost" type="button" id="rapCancel">Annuler</button></div>
+        </form>
+        <ul class="avl" id="avl"></ul>
+        <p class="hint" style="margin-top:var(--sp-5)">Rappels affichés seulement dans Rétroviz pour l'instant. Les dates estimées dépendent de votre moyenne de kilomètres par mois.</p>
       </div>
       <!-- Carnet d'entretien d'une voiture -->
       <div id="carnetView" hidden>
@@ -958,12 +1002,14 @@ api("GET", "/api/auth/me").then(r => { if(r.ok){ user = r.user; renderAcct(); lo
 /* ---------- mon garage ---------- */
 let cars = [], editing = null; // editing : id de la voiture modifiée, "new" pour un ajout, null sinon
 let kmOpen = null, kmData = {};
+let avenirOf = null, avenir = {items:[]}, rapOpen = false;  // voiture dont « À venir » est ouvert
+let entRappelId = null;  // rappel libre à supprimer une fois l'entretien « C'est fait » enregistré
 let carnetOf = null, carnet = {entretiens:[], total:0}, entEditing = null; // voiture du carnet ouvert ; entretien modifié ("new" pour un ajout)  // voiture dont les relevés sont dépliés ; relevés chargés, par voiture
 const STATUT = s => s === "verifie" ? "vérifiée" : "à vérifier";
 async function loadGarage(){
   cars = [];
   if(user){ const r = await api("GET", "/api/garage"); if(r.ok) cars = r.vehicules; }
-  editing = null; kmOpen = null; kmData = {}; carnetOf = null; renderGarage();
+  editing = null; kmOpen = null; kmData = {}; carnetOf = null; avenirOf = null; renderGarage();
 }
 const fmtNum = n => Number(n).toLocaleString("fr-FR");
 const fmtDate = d => new Date(d + "T00:00:00").toLocaleDateString("fr-FR", {day:"numeric", month:"long", year:"numeric"});
@@ -1009,12 +1055,16 @@ function carnetLineHTML(c){
 function renderGarage(){
   $("#garageOut").hidden = !!user; $("#garageIn").hidden = !user;
   const inCarnet = !!user && carnetOf !== null && !!carById(carnetOf);
-  $("#garageList").hidden = inCarnet; $("#garageIntro").hidden = inCarnet; $("#carnetView").hidden = !inCarnet;
+  const inAvenir = !!user && !inCarnet && avenirOf !== null && !!carById(avenirOf);
+  $("#garageList").hidden = inCarnet || inAvenir; $("#garageIntro").hidden = inCarnet || inAvenir;
+  $("#carnetView").hidden = !inCarnet; $("#avenirView").hidden = !inAvenir;
   if(inCarnet) renderCarnet();
+  if(inAvenir) renderAvenir();
   $("#cars").innerHTML = cars.length ? cars.map(c => `<li class="car" data-id="${c.id}">
-      <h3>${esc(c.surnom || c.marque+" "+c.modele)}</h3>
+      <h3>${esc(c.surnom || c.marque+" "+c.modele)}${c.avenir?.enRetard ? `<span class="badge">${c.avenir.enRetard} en retard</span>` : ""}</h3>
       <p class="sub">${esc(carSub(c))}</p>
       ${kmHTML(c)}
+      ${avenirLineHTML(c)}
       ${carnetLineHTML(c)}
       <p class="fiche">${ficheHTML(c)}</p>
       <div class="rowbtns"><button class="btn soft small" type="button" data-act="ask">Poser une question</button><button class="btn ghost small" type="button" data-act="edit">Modifier</button><button class="btn ghost small" type="button" data-act="del">Supprimer</button></div>
@@ -1025,12 +1075,15 @@ function renderGarage(){
   $("#vehPick").innerHTML = `<option value="">Mes voitures…</option>` + cars.map(c => `<option value="${c.id}">${esc(c.surnom || c.marque+" "+c.modele)}</option>`).join("");
 }
 const carById = id => cars.find(c => c.id === +id);
-const carPayload = c => ({surnom:c.surnom, marque:c.marque, modele:c.modele, motorisation:c.motorisation, annee:c.annee, boite:c.boite});
+const carPayload = c => ({surnom:c.surnom, marque:c.marque, modele:c.modele, motorisation:c.motorisation, annee:c.annee, boite:c.boite,
+  miseEnCirculation:c.miseEnCirculation, assuranceEcheance:c.assuranceEcheance, pneusHiver:c.pneusHiver, vidangeKm:c.vidangeKm, vidangeMois:c.vidangeMois});
 function openCarForm(c){
   editing = c ? c.id : "new";
   $("#g_surnom").value = c?.surnom || ""; $("#g_marque").value = c?.marque || ""; $("#g_modele").value = c?.modele || "";
   $("#g_moteur").value = c?.motorisation || ""; $("#g_annee").value = c?.annee || ""; $("#g_boite").value = c?.boite || "";
   $("#g_km").value = ""; $("#g_kmWrap").hidden = !!c;
+  $("#g_mec").value = c?.miseEnCirculation || ""; $("#g_mec").max = todayISO(); $("#g_assur").value = c?.assuranceEcheance || "";
+  $("#g_vkm").value = c?.vidangeKm ?? ""; $("#g_vmois").value = c?.vidangeMois ?? ""; $("#g_hiver").checked = !!c?.pneusHiver;
   $("#carMsg").textContent = "";
   renderGarage(); $("#g_marque").focus();
 }
@@ -1052,7 +1105,8 @@ $("#carForm").addEventListener("submit", async e => {
   const prev = id ? carById(id) : null;
   $("#carSave").disabled = true;
   const err = await saveCar(id, {surnom:v("g_surnom"), marque:v("g_marque"), modele:v("g_modele"), motorisation:v("g_moteur"),
-    annee:v("g_annee"), boite:v("g_boite"), ficheRefusee: !!prev?.ficheRefusee, ...(!id && v("g_km") ? {km:v("g_km")} : {})});
+    annee:v("g_annee"), boite:v("g_boite"), ficheRefusee: !!prev?.ficheRefusee, ...(!id && v("g_km") ? {km:v("g_km")} : {}),
+    miseEnCirculation:v("g_mec"), assuranceEcheance:v("g_assur"), vidangeKm:v("g_vkm"), vidangeMois:v("g_vmois"), pneusHiver:$("#g_hiver").checked});
   $("#carSave").disabled = false;
   $("#carMsg").textContent = err || "";
 });
@@ -1072,6 +1126,8 @@ $("#cars").addEventListener("click", async e => {
   }else if(act === "refuse" || act === "relink"){
     const err = await saveCar(c.id, {...carPayload(c), ficheRefusee: act === "refuse"});
     if(err) showNotice(err);
+  }else if(act === "avenir"){
+    await openAvenir(c.id);
   }else if(act === "carnet"){
     await openCarnet(c.id);
   }else if(act === "km"){
@@ -1087,6 +1143,116 @@ $("#cars").addEventListener("click", async e => {
     applyReleves(c.id, r);
   }
 });
+/* ---------- à venir ---------- */
+const STATUT_LABEL = {retard:"En retard", bientot:"Bientôt", plus_tard:"Plus tard", verifier:"À vérifier", surveiller:"À surveiller", inconnu:"À compléter"};
+const CAT_LABEL = {rappel:"Rappel", entretien:"Entretien", surveiller:"Panne connue"};
+const monthYear = d => new Date(d + "T00:00:00").toLocaleDateString("fr-FR", {month:"long", year:"numeric"});
+function duree(n){
+  if(n < 45) return `${n} jour${n > 1 ? "s" : ""}`;
+  if(n < 730) return `${Math.round(n / 30.44)} mois`;
+  return `${Math.round(n / 365.25)} ans`;
+}
+function joursTxt(j){
+  if(j < 0) return `en retard de ${duree(-j)}`;
+  if(j === 0) return "aujourd'hui";
+  if(j === 1) return "demain";
+  return `dans ${duree(j)}`;
+}
+/* Quand ? « dans 12 jours (le 26 octobre 2026) · dans 4 000 km » ; la date estimée d'après les km reste approximative. */
+function quandTxt(it){
+  const parts = [];
+  if(it.date && !it.dateEstimee) parts.push(`${joursTxt(it.joursRestants)} (${it.joursRestants < 0 ? "depuis le" : "le"} ${fmtDate(it.date)})`);
+  if(it.km !== null){
+    if(it.kmRestants === null) parts.push(`vers ${fmtNum(it.km)} km`);
+    else if(it.kmRestants < 0) parts.push(it.categorie === "surveiller" ? `zone atteinte (vers ${fmtNum(it.km)} km)` : `dépassé de ${fmtNum(-it.kmRestants)} km (prévu à ${fmtNum(it.km)} km)`);
+    else parts.push(`dans ${fmtNum(it.kmRestants)} km (à ${fmtNum(it.km)} km)`);
+    if(it.dateEstimee && it.kmRestants >= 0) parts.push(`vers ${monthYear(it.date)}`);
+  }
+  return parts.join(" · ");
+}
+const shortTitle = t => t.replace(/\s*\(.*\)\s*$/, "");
+function avenirLineHTML(c){
+  if(!c.avenir) return "";
+  const it = c.avenir.plusUrgent, link = `<button class="link" type="button" data-act="avenir">Tout ce qui arrive</button>`;
+  /* Rien de calculable : la ligne reste, pour accéder à « À venir » et compléter la voiture. */
+  if(!it) return `<div class="kmbox"><p>${c.avenir.aCompleter ? `<span class="pill" data-s="inconnu">À compléter</span> Quelques informations manquent pour vos rappels.` : "Rien de prévu pour l'instant."}</p>${link}</div>`;
+  const court = it.date && !it.dateEstimee ? joursTxt(it.joursRestants)
+    : it.kmRestants !== null ? (it.kmRestants < 0 ? `dépassé de ${fmtNum(-it.kmRestants)} km` : `dans ${fmtNum(it.kmRestants)} km`) : STATUT_LABEL[it.statut].toLowerCase();
+  return `<div class="kmbox"><p><span class="pill" data-s="${it.statut}">${STATUT_LABEL[it.statut]}</span> ${esc(shortTitle(it.titre))} : ${esc(court)}</p>${link}</div>`;
+}
+async function openAvenir(id){
+  const r = await api("GET", `/api/garage/${id}/avenir`);
+  if(!r.ok){ showNotice(r.error); return; }
+  avenir = r; avenirOf = id; carnetOf = null; rapOpen = false; renderGarage();
+  window.scrollTo({top:0}); $("#avenirTitle").focus();
+}
+function avHTML(it){
+  let btns = "";
+  if(it.fait) btns += `<button class="btn soft small" type="button" data-aact="fait">${it.statut === "inconnu" && it.aCompleter === "carnet" ? "Noter la dernière vidange" : "C'est fait"}</button>`;
+  if(it.aCompleter === "vehicule") btns += `<button class="btn ghost small" type="button" data-aact="vehicule">Ajouter la date</button>`;
+  if(it.cle === "assurance") btns += `<button class="btn ghost small" type="button" data-aact="vehicule">Modifier la date</button>`;
+  if(it.cle === "vidange" && it.statut !== "inconnu") btns += `<button class="btn ghost small" type="button" data-aact="vehicule">Changer l'intervalle</button>`;
+  if(it.rappelId) btns += `<button class="btn ghost small" type="button" data-aact="suppr">Supprimer</button>`;
+  const when = quandTxt(it);
+  return `<li class="av" data-cle="${esc(it.cle)}" data-s="${it.statut}">
+    <div class="av-top"><span class="pill" data-s="${it.statut}">${STATUT_LABEL[it.statut]}</span><span class="av-cat">${CAT_LABEL[it.categorie]}</span></div>
+    <strong class="av-t">${esc(it.titre)}</strong>
+    ${when ? `<p class="av-when">${esc(when)}</p>` : ""}
+    ${it.texte ? `<p class="av-txt">${esc(it.texte)}</p>` : ""}
+    ${it.note ? `<p class="hint">${esc(it.note)}</p>` : ""}
+    ${btns ? `<div class="rowbtns">${btns}</div>` : ""}
+  </li>`;
+}
+function renderAvenir(){
+  const c = carById(avenirOf);
+  $("#avenirTitle").textContent = "À venir pour " + (c.surnom || c.marque + " " + c.modele);
+  $("#avenirSub").textContent = avenir.kmAujourdhui !== null
+    ? `Kilométrage estimé aujourd'hui : ${fmtNum(avenir.kmAujourdhui)} km${avenir.moyenneMensuelle ? ` · environ ${fmtNum(avenir.moyenneMensuelle)} km par mois` : " · ajoutez un deuxième relevé pour estimer les dates"}`
+    : "Ajoutez des relevés de kilométrage pour savoir quand arrivent les entretiens.";
+  $("#rapForm").hidden = !rapOpen; $("#rapAdd").hidden = rapOpen;
+  $("#avl").innerHTML = avenir.items.map(avHTML).join("");
+}
+$("#avenirBack").addEventListener("click", () => {
+  const id = avenirOf; avenirOf = null; renderGarage();
+  const link = document.querySelector(`.car[data-id="${id}"] [data-act=avenir]`); if(link) link.focus();
+});
+$("#rapAdd").addEventListener("click", () => {
+  rapOpen = true; ["#r_titre","#r_date","#r_km"].forEach(id => { $(id).value = ""; }); $("#rapMsg").textContent = "";
+  renderAvenir(); $("#r_titre").focus();
+});
+$("#rapCancel").addEventListener("click", () => { rapOpen = false; renderAvenir(); $("#rapAdd").focus(); });
+$("#rapForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  const titre = $("#r_titre").value.trim(), date = $("#r_date").value, km = $("#r_km").value.trim();
+  if(!titre || (!date && !km)){ $("#rapMsg").textContent = "Indiquez le rappel, et une date ou un kilométrage."; return; }
+  $("#rapSave").disabled = true;
+  const r = await api("POST", `/api/garage/${avenirOf}/rappels`, {titre, date, km});
+  $("#rapSave").disabled = false;
+  if(!r.ok){ $("#rapMsg").textContent = r.error; return; }
+  avenir = r; rapOpen = false; await refreshCar(avenirOf); renderAvenir(); $("#rapAdd").focus();
+});
+$("#avl").addEventListener("click", async e => {
+  const b = e.target.closest("[data-aact]"); if(!b) return;
+  const it = avenir.items.find(x => x.cle === b.closest(".av").dataset.cle); if(!it) return;
+  const id = avenirOf, act = b.dataset.aact;
+  if(act === "fait"){
+    /* « C'est fait » : ajout d'un entretien pré-rempli dans le carnet. */
+    await openCarnet(id);
+    openEntForm(null);
+    $("#e_type").value = it.fait.type; $("#e_desc").value = it.fait.description;
+    entRappelId = it.rappelId ?? null;
+  }else if(act === "vehicule"){
+    avenirOf = null; renderGarage(); openCarForm(carById(id));
+    const target = it.cle === "assurance" ? "#g_assur" : it.cle === "vidange" ? "#g_vkm" : "#g_mec";
+    $(target).scrollIntoView({block:"center"}); $(target).focus();
+  }else if(act === "suppr"){
+    if(!confirm(`Supprimer le rappel « ${it.titre} » ?`)) return;
+    const r = await api("DELETE", `/api/garage/${id}/rappels/${it.rappelId}`);
+    if(!r.ok){ showNotice(r.error); return; }
+    avenir = r; await refreshCar(id); renderAvenir();
+  }
+});
+
 /* ---------- carnet d'entretien ---------- */
 async function refreshCar(id){
   const r = await api("GET", "/api/garage");
@@ -1096,7 +1262,7 @@ async function refreshCar(id){
 async function openCarnet(id){
   const r = await api("GET", `/api/garage/${id}/entretiens`);
   if(!r.ok){ showNotice(r.error); return; }
-  carnet = r; carnetOf = id; entEditing = null; renderGarage();
+  carnet = r; carnetOf = id; avenirOf = null; entEditing = null; entRappelId = null; renderGarage();
   window.scrollTo({top:0}); $("#carnetTitle").focus();
 }
 function entHTML(e){
@@ -1145,8 +1311,8 @@ $("#carnetBack").addEventListener("click", () => {
   const id = carnetOf; carnetOf = null; entEditing = null; renderGarage();
   const link = document.querySelector(`.car[data-id="${id}"] [data-act=carnet]`); if(link) link.focus();
 });
-$("#entAdd").addEventListener("click", () => openEntForm(null));
-$("#entCancel").addEventListener("click", () => { entEditing = null; renderCarnet(); $("#entAdd").focus(); });
+$("#entAdd").addEventListener("click", () => { entRappelId = null; openEntForm(null); });
+$("#entCancel").addEventListener("click", () => { entEditing = null; entRappelId = null; renderCarnet(); $("#entAdd").focus(); });
 $("#entForm").addEventListener("submit", async e => {
   e.preventDefault();
   const v = id => $("#"+id).value.trim();
@@ -1165,6 +1331,7 @@ $("#entForm").addEventListener("submit", async e => {
   }
   $("#entSave").disabled = false;
   if(!r.ok){ $("#entMsg").textContent = err; return; }
+  if(entRappelId !== null){ await api("DELETE", `/api/garage/${vid}/rappels/${entRappelId}`); entRappelId = null; }
   await refreshCar(vid);
   const list = await api("GET", `/api/garage/${vid}/entretiens`);
   if(list.ok) carnet = list;

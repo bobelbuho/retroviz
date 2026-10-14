@@ -89,6 +89,10 @@ Les titres de section sont en `--primary`, en gras. Le texte courant ne descend 
 | `.form` | Formulaire en grille de 4 colonnes (`.s2` = 2 colonnes, `.full` = toute la largeur). |
 | `.car`, `.box`, `.msg-ai`, `.odo` | Cartes : `--surface`, `--r-lg`, `--shadow`, sans bordure. |
 | `.help`, `.empty`, `.notice`, `.fiche` | Blocs d'information : fond `--soft`, sans bordure. |
+| `.pill` | Statut d'un élément (`data-s` : `retard` rouge, `bientot` orange, `plus_tard` vert, `verifier`/`surveiller` bleu, `inconnu` gris). Pastille de couleur et texte : l'information ne passe jamais par la couleur seule. |
+| `.badge` | Compteur rouge à côté d'un titre (« 2 en retard »). Réservé à ce qui est en retard. |
+| `.av` | Élément de « À venir » : carte avec filet gauche rouge ou orange seulement pour « en retard » et « bientôt ». |
+| `.formsec` | Sous-titre de section dans un formulaire en grille. |
 | `.ent` | Entretien du carnet : carte avec le type en titre, le coût à droite, la date, le kilométrage et le garage en `--muted`. |
 | `.check` | Case à cocher avec son libellé (cible de 20 px, couleur `--primary`). |
 | `.back` | Lien de retour (« ← Mon garage ») en `.btn.ghost.small`, en haut d'une vue détaillée. |
