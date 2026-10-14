@@ -69,6 +69,7 @@ label.f{display:block;font-weight:600;font-size:14px;margin-bottom:4px}
 .msg-user{align-self:flex-end;max-width:80%;background:var(--accent);color:var(--accent-ink);padding:10px 14px;border-radius:14px 14px 4px 14px;white-space:pre-wrap}
 .msg-ai{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
 .msg-ai .note{font-size:14px;color:var(--muted);margin-top:10px;font-style:italic}
+.src{font-size:13px;color:var(--muted);margin:10px 0 0;padding-top:8px;border-top:1px dashed var(--line)}
 .thinking{color:var(--muted);font-style:italic}
 
 .level{display:flex;align-items:center;gap:12px;margin:-2px 0 12px;padding:10px 12px;border-radius:8px;background:var(--sunk);font-weight:600}
@@ -92,6 +93,32 @@ label.f{display:block;font-weight:600;font-size:14px;margin-bottom:4px}
 .rowbtns{display:flex;gap:10px;flex-wrap:wrap}
 .notice{background:var(--sunk);border-left:4px solid var(--amber);padding:10px 14px;border-radius:6px;margin:0 0 16px}
 .notice[hidden]{display:none}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* Aide débutants : pastilles de symptômes */
+.help{background:var(--surface);border:1px solid var(--line);border-radius:12px;margin:0 0 12px}
+.help[hidden]{display:none}
+.help summary{cursor:pointer;padding:12px 16px;font-weight:600;border-radius:12px}
+.help .cats{padding:0 16px 14px}
+.cat-t{font-family:var(--cond);font-size:19px;font-weight:700;margin:12px 0 6px;line-height:1.15}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{display:inline-flex;align-items:center;gap:6px;background:var(--sunk);border:1.5px solid var(--line);border-radius:999px;padding:7px 14px;font-size:15px;cursor:pointer;text-align:left}
+.chip:hover{border-color:var(--accent)}
+.chip[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.warn{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;background:var(--red);color:#fff;font-size:12px;font-weight:700;flex:none}
+.chip.danger[aria-pressed="true"]{background:var(--red);border-color:var(--red);color:#fff}
+.chip.danger[aria-pressed="true"] .warn{background:#fff;color:var(--red)}
+.help .legend-d{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);margin:12px 0 0}
+.danger-box{background:color-mix(in srgb,var(--red) 12%,var(--surface));border:2px solid var(--red);border-radius:8px;padding:12px 14px;font-weight:700;margin:0 0 12px}
+.danger-box[hidden]{display:none}
+
+/* Fiche rapide pro */
+.proform{display:grid;gap:12px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px;margin:0 0 12px}
+.proform[hidden]{display:none}
+.proform h2{font-family:var(--cond);font-size:22px;font-weight:700;margin:0;line-height:1.1}
+.proform textarea{resize:vertical;min-height:52px}
+
+.copy{margin-top:12px;padding:6px 12px;font-size:14px;font-weight:600}
 
 /* Achat */
 .form{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px;margin-bottom:24px}
@@ -155,12 +182,11 @@ footer{margin-top:40px;font-size:14px;color:var(--muted);border-top:1px solid va
   <header>
     <h1 class="brand">Rétroviz</h1>
     <p class="tagline"><strong style="color:var(--ink);font-size:20px">Regardez dans le rétro, roulez l'esprit tranquille.</strong><br>Comprendre une panne, diagnostiquer comme un pro, acheter une occasion sans mauvaise surprise.</p>
-  </header>
 
   <div class="modes" role="tablist" aria-label="Choisir un mode">
-    <button class="mode" role="tab" data-mode="particulier" aria-selected="true"><strong>J'ai une panne</strong><span>Comprendre et savoir quoi faire</span></button>
-    <button class="mode" role="tab" data-mode="pro" aria-selected="false"><strong>Diagnostic pro</strong><span>Codes défaut, mesures, procédures</span></button>
-    <button class="mode" role="tab" data-mode="achat" aria-selected="false"><strong>J'achète une voiture</strong><span>Qualités, défauts, pannes à venir</span></button>
+    <button class="mode" role="tab" data-mode="particulier" aria-selected="true"><strong>J'ai une panne</strong><span>Pour tous : comprendre et savoir quoi faire</span></button>
+    <button class="mode" role="tab" data-mode="pro" aria-selected="false"><strong>Diagnostic pro</strong><span>Pour les mécaniciens : codes défaut, mesures</span></button>
+    <button class="mode" role="tab" data-mode="achat" aria-selected="false"><strong>J'achète une voiture</strong><span>Pour tous : qualités, défauts, pannes à venir</span></button>
   </div>
 
   <p class="notice" id="notice" hidden></p>
@@ -175,6 +201,19 @@ footer{margin-top:40px;font-size:14px;color:var(--muted);border-top:1px solid va
     </div>
     <div class="examples" id="examples"></div>
     <div class="thread" id="thread" aria-live="polite"></div>
+    <details class="help" id="help" open>
+      <summary>Vous ne savez pas comment décrire le problème ? Touchez ce que vous remarquez.</summary>
+      <div class="cats" id="helpCats"></div>
+    </details>
+    <p class="danger-box" id="dangerBox" role="alert" hidden>Avec ce symptôme, arrêtez-vous dès que possible dans un endroit sûr et coupez le moteur.</p>
+    <form class="proform" id="proForm" novalidate hidden>
+      <h2>Fiche rapide</h2>
+      <div><label class="f" for="p_codes">Codes défaut</label><input class="field" id="p_codes" placeholder="Ex. P0299, P0101"></div>
+      <div><label class="f" for="p_sympt">Symptômes</label><textarea class="field" id="p_sympt" rows="2" placeholder="Ex. perte de puissance en charge au-delà de 2 500 tr/min, mode dégradé"></textarea></div>
+      <div><label class="f" for="p_ctrl">Contrôles déjà faits et valeurs relevées</label><textarea class="field" id="p_ctrl" rows="2" placeholder="Ex. pression turbo demandée 2 200 mbar, mesurée 1 600 mbar ; durites OK ; batterie 12,6 V"></textarea></div>
+      <div class="rowbtns"><button class="btn" type="submit">Lancer le diagnostic</button></div>
+      <p class="hint" id="proMsg" style="margin:0" aria-live="polite"></p>
+    </form>
     <div class="composer">
       <textarea class="field" id="input" rows="2"></textarea>
       <button class="btn" id="sendBtn">Envoyer</button>
@@ -191,7 +230,7 @@ footer{margin-top:40px;font-size:14px;color:var(--muted);border-top:1px solid va
       <div><label class="f" for="a_modele">Modèle *</label><input class="field" id="a_modele" required placeholder="Clio IV"></div>
       <div><label class="f" for="a_annee">Année</label><input class="field" id="a_annee" inputmode="numeric" placeholder="2016"></div>
       <div><label class="f" for="a_km">Kilométrage *</label><input class="field" id="a_km" inputmode="numeric" required placeholder="112 000"></div>
-      <div class="s2"><label class="f" for="a_moteur">Motorisation</label><input class="field" id="a_moteur" placeholder="1.5 dCi 90, 0.9 TCe 90…"></div>
+      <div class="s2"><label class="f" for="a_moteur">Motorisation</label><input class="field" id="a_moteur" placeholder="1.5 dCi 90, 0.9 TCe 90…" aria-describedby="a_moteur_hint"><p class="hint" id="a_moteur_hint">Indiquée sur l'annonce. Laissez vide si vous ne savez pas.</p></div>
       <div><label class="f" for="a_boite">Boîte</label>
         <select class="field" id="a_boite"><option value="">Je ne sais pas</option><option>Manuelle</option><option>Automatique</option></select></div>
       <div><label class="f" for="a_prix">Prix demandé (€)</label><input class="field" id="a_prix" inputmode="numeric" placeholder="8 900"></div>
@@ -223,12 +262,15 @@ function makeSample(){
   async function call(messages, opts = {}){
     let res;
     try{
-      res = await fetch("/api/chat", {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({messages}), signal:opts.signal});
+      res = await fetch("/api/chat", {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({messages, context:opts.context}), signal:opts.signal});
     }catch(e){ throw {code: e.name === "AbortError" ? "cancelled" : "offline", message:String(e)}; }
     if(!res.ok){
       let j = {}; try { j = await res.json(); } catch {}
       throw {code: j.code || "upstream_error", message: j.error || res.statusText};
     }
+    /* Fiches de la base Rétroviz utilisées par le serveur (en-tête X-Retroviz-Sources). */
+    const rawSources = res.headers.get("X-Retroviz-Sources");
+    if(rawSources !== null && opts.onSources){ try { opts.onSources(JSON.parse(decodeURIComponent(rawSources))); } catch {} }
     const reader = res.body.getReader(), dec = new TextDecoder();
     let text = "";
     try{
@@ -283,6 +325,17 @@ const LEVELS = {
   ORANGE: {c:"var(--amber)", t:"Prévoyez le garage rapidement", s:"Roulez avec prudence, évitez les longs trajets."},
   ROUGE:  {c:"var(--red)",   t:"Arrêtez-vous, ne roulez pas", s:"Mettez-vous en sécurité et faites remorquer le véhicule."},
   INCONNU:{c:"var(--grey)",  t:"Il me faut quelques précisions", s:"Répondez aux questions ci-dessous."}
+};
+
+/* Aide « J'ai une panne » : symptômes proposés en pastilles, par catégorie.
+   Un * à la fin du texte = symptôme dangereux (affiche l'encadré rouge « arrêtez-vous »). */
+const HELP = {
+  "Un voyant s'est allumé": ["voyant moteur orange", "voyant huile rouge*", "voyant température rouge*", "voyant freins rouge*", "voyant batterie allumé en roulant", "voyant ABS", "voyant airbag", "voyant pression des pneus", "voyant préchauffage qui clignote"],
+  "J'entends un bruit": ["grincement en freinant", "claquement en tournant le volant", "sifflement en accélérant", "frottement métallique", "ronronnement qui augmente avec la vitesse", "cliquetis du moteur", "bruit sourd sur les bosses", "échappement plus bruyant"],
+  "Elle ne démarre pas": ["ça fait clic clic", "le moteur tourne mais ne démarre pas", "rien ne se passe, aucun bruit", "le démarreur tourne lentement", "elle démarre puis cale", "le volant est bloqué, la clé ne tourne pas"],
+  "Elle se comporte bizarrement": ["elle tremble au ralenti", "elle broute en accélérant", "perte de puissance", "elle cale", "elle tire d'un côté", "le volant vibre", "pédale de frein molle*", "les vitesses passent mal", "l'embrayage patine", "elle consomme plus que d'habitude"],
+  "Odeur, fumée ou fuite": ["odeur d'essence*", "odeur de brûlé", "fumée bleue", "fumée blanche épaisse", "fumée noire", "flaque sous la voiture", "odeur sucrée dans l'habitacle", "de la vapeur sort du capot"],
+  "Quand ça arrive": ["à froid", "à chaud", "au démarrage", "en freinant", "en tournant", "en accélérant", "sur autoroute", "à l'arrêt, au ralenti", "depuis peu", "de temps en temps"]
 };
 
 const convo = {particulier: [], pro: []};
@@ -350,6 +403,14 @@ function parseLevel(text){
   if(/^\s*N(I(V(E(A(U(\s*:?\s*\w*)?)?)?)?)?)?$/i.test(text)) return {level:null, body:""};
   return {level:null, body:text};
 }
+/* « Sources : base Rétroviz – Peugeot 208 1.2 PureTech (à vérifier), code P0300 (à vérifier) » */
+function sourcesText(list){
+  if(!Array.isArray(list) || !list.length) return "Sources : connaissances générales de l'IA";
+  const st = s => s.statut === "verifie" ? "vérifiée" : "à vérifier";
+  return "Sources : base Rétroviz – " + list.map(s => s.type === "code"
+    ? `code ${s.code} (${st(s)})`
+    : `${s.label} (${s.correspondance === "moteur" ? "même moteur, " : ""}${st(s)})`).join(", ");
+}
 function aiHTML(msg){
   if(msg.pending) return `<p class="thinking">Rétroviz réfléchit…</p>`;
   let level=null, body=msg.content;
@@ -358,6 +419,8 @@ function aiHTML(msg){
   if(level && LEVELS[level]){ const L=LEVELS[level]; h += `<div class="level" style="--c:${L.c}"><span class="lamp"></span><div>${L.t}<small>${L.s}</small></div></div>`; }
   h += `<div class="md">${md(body)}</div>`;
   if(msg.note) h += `<p class="note">${esc(msg.note)}</p>`;
+  if(msg.done && msg.sources) h += `<p class="src">${esc(sourcesText(msg.sources))}</p>`;
+  if(msg.done && body.trim()) h += `<button class="btn ghost copy" type="button">Copier la réponse</button>`;
   return h;
 }
 function renderThread(){
@@ -367,7 +430,65 @@ function renderThread(){
     : `<div class="msg-ai">${aiHTML(t)}</div>`).join("");
   $("#examples").hidden = list.length > 0;
   $("#resetBtn").hidden = list.length === 0 || busy;
+  $("#help").hidden = mode !== "particulier";
+  $("#proForm").hidden = mode !== "pro" || list.length > 0;
+  syncChips();
 }
+
+/* Copier une réponse : niveau (s'il y en a un) + texte mis en forme. */
+$("#thread").addEventListener("click", async e => {
+  const b = e.target.closest(".copy"); if(!b) return;
+  const box = b.closest(".msg-ai");
+  const text = [...box.querySelectorAll(".level, .md, .note, .src")].map(n => (n.innerText ?? n.textContent).trim()).filter(Boolean).join("\n\n");
+  try{ await navigator.clipboard.writeText(text); b.textContent = "Copié"; }
+  catch{ b.textContent = "Copie impossible"; }
+  clearTimeout(b._t); b._t = setTimeout(() => { b.textContent = "Copier la réponse"; }, 2000);
+});
+
+/* ---------- aide débutants : pastilles ---------- */
+$("#helpCats").innerHTML = Object.entries(HELP).map(([cat, items], ci) =>
+  `<div role="group" aria-labelledby="cat${ci}"><p class="cat-t" id="cat${ci}">${esc(cat)}</p><div class="chips">${items.map(raw => {
+    const danger = raw.endsWith("*"), s = danger ? raw.slice(0,-1).trim() : raw;
+    return `<button class="chip${danger?" danger":""}" type="button" aria-pressed="false" data-s="${esc(s)}">${danger?`<span class="warn" aria-hidden="true">!</span>`:""}${esc(s)}${danger?`<span class="sr"> (signe d'alerte)</span>`:""}</button>`;
+  }).join("")}</div></div>`).join("") +
+  `<p class="legend-d"><span class="warn" aria-hidden="true">!</span> Signe d'alerte : arrêtez-vous dès que possible.</p>`;
+
+const segments = () => $("#input").value.split(",").map(s => s.trim()).filter(Boolean);
+/* Met les pastilles en accord avec la zone de texte, et affiche l'alerte si besoin. */
+function syncChips(){
+  const segs = new Set(segments().map(s => s.toLowerCase()));
+  let danger = false;
+  $("#helpCats").querySelectorAll("button.chip").forEach(c => {
+    const on = segs.has(c.dataset.s.toLowerCase());
+    c.setAttribute("aria-pressed", String(on));
+    if(on && c.classList.contains("danger")) danger = true;
+  });
+  $("#dangerBox").hidden = !(danger && mode === "particulier");
+}
+$("#helpCats").addEventListener("click", e => {
+  const c = e.target.closest("button.chip"); if(!c) return;
+  const s = c.dataset.s;
+  const segs = segments();
+  $("#input").value = c.getAttribute("aria-pressed") === "true"
+    ? segs.filter(x => x.toLowerCase() !== s.toLowerCase()).join(", ")
+    : [...segs, s].join(", ");
+  syncChips();
+});
+$("#input").addEventListener("input", syncChips);
+
+/* ---------- fiche rapide pro ---------- */
+$("#proForm").addEventListener("submit", e => {
+  e.preventDefault();
+  if(busy) return;
+  const codes = $("#p_codes").value.trim(), sympt = $("#p_sympt").value.trim(), ctrl = $("#p_ctrl").value.trim();
+  if(!codes && !sympt){ $("#proMsg").textContent = "Indiquez au moins un code défaut ou un symptôme."; $("#p_codes").focus(); return; }
+  $("#proMsg").textContent = "";
+  const parts = [];
+  if(codes) parts.push(`Codes défaut : ${codes}`);
+  if(sympt) parts.push(`Symptômes : ${sympt}`);
+  parts.push(`Contrôles déjà faits et valeurs relevées : ${ctrl || "aucun pour l'instant"}`);
+  send(parts.join("\n"));
+});
 function updateLast(msg){
   const nodes = $("#thread").querySelectorAll(".msg-ai");
   const last = nodes[nodes.length-1]; if(last) last.innerHTML = aiHTML(msg);
@@ -377,8 +498,10 @@ function setBusy(b){
   $("#resetBtn").hidden = b || (convo[mode]||[]).length===0;
 }
 
-async function send(){
-  const text = $("#input").value.trim();
+/* Envoie le texte de la zone de saisie, ou le texte fourni (fiche rapide pro). */
+async function send(given){
+  const fromForm = typeof given === "string";
+  const text = (fromForm ? given : $("#input").value).trim();
   if(!text || busy || mode==="achat") return;
   const sample = await samplePromise;
   if(!sample){ showNotice("Le serveur ne répond pas. Lancez-le avec npm start."); return; }
@@ -387,16 +510,23 @@ async function send(){
   list.push({role:"user", content:text});
   const asst = {role:"assistant", content:"", pending:true, mode:m};
   list.push(asst);
-  $("#input").value = "";
+  if(fromForm) ["#p_codes","#p_sympt","#p_ctrl"].forEach(id => { $(id).value = ""; });
+  else $("#input").value = "";
+  if(m === "particulier") $("#help").open = false;
   renderThread(); setBusy(true);
   asst._node = null;
   const veh = $("#vehicle").value.trim();
   const rules = MODES[m].rules + (veh ? `\n\nVéhicule indiqué par l'utilisateur : ${veh}` : `\n\nVéhicule : non précisé (demande-le si c'est utile).`);
   const history = list.slice(0,-1).filter(t => t.content && !t.failed).slice(-12).map(t => ({role:t.role, content:t.content}));
+  /* Recherche dans la base : les 3 derniers messages de l'utilisateur, le plus récent en premier
+     (« et combien ça coûte ? » après « P0300 » retrouve encore la fiche du code). */
+  const recent = list.filter(t => t.role === "user").slice(-3).reverse().map(t => t.content).join("\n");
   ctl = new AbortController();
   try{
     const r = await sample([{role:"user", content:rules}, ...history], {
       cache:false, signal:ctl.signal,
+      context:{vehicule:veh, texte:recent},
+      onSources:s => { asst.sources = s; },
       onText:({text}) => { asst.content=text; asst.pending=false; if(mode===m) updateLast(asst); }
     });
     asst.content = r.text; asst.pending=false;
@@ -407,10 +537,11 @@ async function send(){
     else { asst.failed = true; asst.content = ""; if(e && e.code!=="cancelled") showNotice(errorText(e && e.code)); }
     if(asst.failed){ list.pop(); }
   }finally{
+    asst.done = true;
     ctl=null; setBusy(false); if(mode===m) renderThread();
   }
 }
-$("#sendBtn").addEventListener("click", send);
+$("#sendBtn").addEventListener("click", () => send());
 $("#stopBtn").addEventListener("click", () => ctl && ctl.abort());
 $("#input").addEventListener("keydown", e => { if(e.key==="Enter" && !e.shiftKey){ e.preventDefault(); send(); }});
 $("#resetBtn").addEventListener("click", () => { convo[mode]=[]; renderThread(); $("#input").focus(); });
@@ -451,23 +582,25 @@ Règles :
 - "pannes" contient 6 à 10 éléments : les défauts constructeur et pannes récurrentes connus pour cette génération et cette motorisation (type "panne") ET les gros entretiens coûteux comme distribution, embrayage, volant moteur bimasse, FAP, amortisseurs (type "entretien"). "km" est un entier : le kilométrage typique d'apparition ou d'échéance. Inclus des éléments avant ET après le kilométrage actuel.
 - "note" sur 10 juge CE véhicule à CE kilométrage${car.prix ? " et à ce prix" : ""}.
 - 3 à 6 qualités, 3 à 6 défauts, 5 à 8 points à contrôler, 3 à 6 questions au vendeur.
-- Si la motorisation ou la génération est ambiguë, raisonne sur la plus probable et explique-le dans "incertitude". N'invente jamais de rappel constructeur précis dont tu n'es pas certain.`;
+- Si la motorisation ou la génération est ambiguë, raisonne sur la plus probable et explique-le dans "incertitude". Si tu t'appuies sur une fiche Rétroviz « à vérifier », signale-le aussi dans "incertitude". N'invente jamais de rappel constructeur précis dont tu n'es pas certain.`;
   const rep = $("#report");
   rep.hidden = false;
   rep.innerHTML = `<p class="thinking">Rétroviz analyse ce véhicule… cela peut prendre jusqu'à une minute.</p><button class="btn stop" id="achatStop" type="button">Arrêter</button>`;
   setBusy(true); $("#sendBtn").hidden=false; $("#stopBtn").hidden=true;
   ctl = new AbortController();
   $("#achatStop").addEventListener("click", () => ctl && ctl.abort());
+  const designation = [car.marque, car.modele, car.motorisation, car.annee, car.km+" km"].filter(Boolean).join(" ");
+  let sources = null;
   try{
-    const data = await sample.json(prompt, {signal:ctl.signal});
-    renderReport(data, car);
+    const data = await sample.json(prompt, {signal:ctl.signal, context:{vehicule:designation, texte:""}, onSources:s => { sources = s; }});
+    renderReport(data, car, sources);
   }catch(err){
     rep.innerHTML = err && err.code==="cancelled" ? "" : `<p class="notice">${esc(errorText(err && err.code))}</p>`;
     if(err && err.code==="cancelled") rep.hidden = true;
   }finally{ ctl=null; setBusy(false); $("#sendBtn").hidden=false; $("#stopBtn").hidden=true; }
 });
 
-function renderReport(d, car){
+function renderReport(d, car, sources){
   const rep = $("#report");
   const arr = x => Array.isArray(x) ? x.filter(Boolean).map(String) : [];
   const pannes = (Array.isArray(d.pannes) ? d.pannes : [])
@@ -526,7 +659,8 @@ function renderReport(d, car){
     </div>
 
     ${d.incertitude?`<p class="sect caveat">${esc(d.incertitude)}</p>`:""}
-    <p class="sect caveat">Ces informations proviennent des connaissances générales de l'IA : recoupez-les avec un historique d'entretien, un contrôle technique récent et, si possible, l'avis d'un garagiste avant d'acheter.</p>
+    ${sources ? `<p class="sect src">${esc(sourcesText(sources))}</p>` : ""}
+    <p class="sect caveat">Ces informations peuvent être incomplètes ou inexactes : recoupez-les avec un historique d'entretien, un contrôle technique récent et, si possible, l'avis d'un garagiste avant d'acheter.</p>
     <div class="rowbtns"><button class="btn" type="button" id="askAbout">Poser une question sur ce véhicule</button><button class="btn ghost" type="button" id="newCar">Analyser une autre voiture</button></div>`;
 
   rep.querySelectorAll(".dot").forEach(b => b.addEventListener("click", () => {

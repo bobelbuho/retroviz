@@ -3,6 +3,7 @@
 import "dotenv/config";
 import express from "express";
 import Anthropic from "@anthropic-ai/sdk";
+import { loadKnowledge, buildContext } from "./knowledge.js";
 
 const PORT = process.env.PORT || 3000;
 const MODEL = process.env.MODEL || "claude-sonnet-5-5";
@@ -11,6 +12,12 @@ const MAX_TOKENS = Number(process.env.MAX_TOKENS) || 8000;
 if (!process.env.ANTHROPIC_API_KEY) {
   console.warn("⚠️  ANTHROPIC_API_KEY absente : copiez .env.example en .env et ajoutez votre clé.");
 }
+
+// Base de connaissances (dossier data/), chargée une fois au démarrage.
+const kb = loadKnowledge();
+console.log(`📚 Base Rétroviz : ${kb.vehicules.length} fiche(s) véhicule, ${kb.codes.size} code(s) OBD.`);
+
+const KB_RULES = `Voici des fiches de la base Rétroviz. Utilise-les en priorité. Les fiches "à vérifier" peuvent contenir des erreurs : dis-le si tu t'appuies dessus. Si la base ne couvre pas la question, dis-le et réponds avec tes connaissances générales en le signalant.`;
 
 const client = new Anthropic(); // lit ANTHROPIC_API_KEY dans l'environnement
 const app = express();
@@ -45,7 +52,19 @@ app.post("/api/chat", async (req, res) => {
   const messages = cleanMessages(req.body?.messages);
   if (!messages) return res.status(400).json({ code: "invalid_request", error: "Conversation invalide." });
 
-  const stream = client.messages.stream({ model: MODEL, max_tokens: MAX_TOKENS, messages });
+  // Fiches de la base correspondant au véhicule et au dernier message (champ « context » facultatif).
+  const ctx = req.body?.context;
+  // texte = les 3 derniers messages de l'utilisateur, le plus récent en premier (c'est lui qu'on garde si on coupe).
+  const str = v => (typeof v === "string" ? v.slice(0, 6000) : "");
+  const { text: kbText, sources } = ctx && typeof ctx === "object"
+    ? buildContext({ vehicule: str(ctx.vehicule), texte: str(ctx.texte) }, kb)
+    : { text: "", sources: [] };
+  // Liste des fiches utilisées, en JSON encodé pour rester en ASCII dans l'en-tête HTTP.
+  res.setHeader("X-Retroviz-Sources", encodeURIComponent(JSON.stringify(sources)));
+
+  const params = { model: MODEL, max_tokens: MAX_TOKENS, messages };
+  if (kbText) params.system = `${KB_RULES}\n\n${kbText}`;
+  const stream = client.messages.stream(params);
   res.on("close", () => { if (!res.writableEnded) stream.abort(); });
 
   let started = false;
@@ -67,6 +86,14 @@ app.post("/api/chat", async (req, res) => {
     if (!started) res.status(err?.status || 500).json({ code: errorCode(err?.status), error: err?.message || "Erreur" });
     else res.end();
   }
+});
+
+// Fiche d'un code OBD de la base (ex. /api/codes/P0300).
+app.get("/api/codes/:code", (req, res) => {
+  const code = String(req.params.code).toUpperCase();
+  const fiche = kb.codes.get(code);
+  if (!fiche) return res.status(404).json({ code: "not_found", error: `Code ${code} absent de la base Rétroviz.` });
+  res.json({ statut: "a_verifier", ...fiche });
 });
 
 app.listen(PORT, () => {

@@ -1,0 +1,140 @@
+[
+  {
+    "id": "peugeot-208-1-12-puretech",
+    "marque": "Peugeot",
+    "modele": "208",
+    "generation": "208 I",
+    "alias": ["208 1", "208 phase 1", "208 phase 2"],
+    "annees": "2012-2019",
+    "moteurs": ["1.2 PureTech 82", "1.2 PureTech 110", "1.2 PureTech 130"],
+    "codes_moteur": ["EB2", "EB2F", "EB2DT", "EB2DTS"],
+    "pannes": [
+      { "titre": "Dégradation de la courroie de distribution « humide » (dans l'huile)", "km_typique": 80000, "gravite": "elevee", "symptomes": "Voyant ou alerte pression d'huile, morceaux de courroie dans l'huile, parfois aucun signe avant la casse.", "solution": "Contrôle de l'état de la courroie, remplacement de la courroie et nettoyage ou remplacement de la crépine d'huile si débris.", "cout_indicatif": "800 à 1 500 €" },
+      { "titre": "Pompe à vide de freinage colmatée par des débris de courroie", "km_typique": 90000, "gravite": "elevee", "symptomes": "Pédale de frein dure, assistance de freinage réduite, alerte de freinage.", "solution": "Remplacement de la pompe à vide et traitement de la cause (courroie, crépine).", "cout_indicatif": "300 à 700 €" },
+      { "titre": "Consommation d'huile excessive", "km_typique": 70000, "gravite": "moyenne", "symptomes": "Niveau d'huile qui baisse entre deux vidanges, alerte niveau d'huile, fumée bleutée possible.", "solution": "Mesure de la consommation, contrôle de la segmentation ; décalaminage ou remplacement de la segmentation selon le cas.", "cout_indicatif": "200 à 3 000 € selon l'intervention" },
+      { "titre": "Calamine sur les soupapes et ratés d'allumage (versions turbo à injection directe)", "km_typique": 90000, "gravite": "moyenne", "symptomes": "Moteur qui tremble, voyant moteur, codes de ratés (P0300 à P0303), perte de puissance.", "solution": "Contrôle des bougies et bobines, décalaminage si nécessaire.", "cout_indicatif": "150 à 600 €" },
+      { "titre": "Fuite du boîtier de sortie d'eau / thermostat", "km_typique": 100000, "gravite": "moyenne", "symptomes": "Baisse du niveau de liquide de refroidissement, traces de liquide séché, odeur sucrée.", "solution": "Remplacement du boîtier de sortie d'eau ou du thermostat.", "cout_indicatif": "200 à 450 €" },
+      { "titre": "Bobine d'allumage défaillante", "km_typique": 80000, "gravite": "faible", "symptomes": "À-coups, moteur qui tourne sur deux cylindres, voyant moteur.", "solution": "Remplacement de la bobine concernée, contrôle des bougies.", "cout_indicatif": "80 à 200 €" }
+    ],
+    "entretiens": [
+      { "titre": "Vidange avec une huile à la norme constructeur exacte", "km": 15000, "cout_indicatif": "100 à 180 €" },
+      { "titre": "Bougies d'allumage", "km": 60000, "cout_indicatif": "80 à 150 €" },
+      { "titre": "Courroie de distribution (préconisation constructeur révisée à la baisse : intervalle à confirmer selon l'année et le moteur)", "km": 100000, "cout_indicatif": "700 à 1 200 €" }
+    ],
+    "points_forts": ["Consommation de carburant modérée", "Agréable en ville", "Entretien courant peu coûteux"],
+    "points_faibles": ["Courroie de distribution dans l'huile sensible à la qualité de l'huile", "Consommation d'huile sur certains moteurs", "Historique d'entretien indispensable avant achat"],
+    "sources": [],
+    "statut": "a_verifier",
+    "mise_a_jour": "2026-10-13"
+  },
+  {
+    "id": "renault-clio-4-15-dci",
+    "marque": "Renault",
+    "modele": "Clio",
+    "generation": "Clio IV",
+    "alias": ["clio 4", "clio iv"],
+    "annees": "2012-2019",
+    "moteurs": ["1.5 dCi 75", "1.5 dCi 90", "1.5 dCi 110"],
+    "codes_moteur": ["K9K"],
+    "pannes": [
+      { "titre": "Volant moteur bimasse et embrayage usés", "km_typique": 150000, "gravite": "moyenne", "symptomes": "Vibrations au démarrage et à l'arrêt, claquements au ralenti, embrayage qui patine.", "solution": "Remplacement du kit d'embrayage avec le volant moteur.", "cout_indicatif": "900 à 1 600 €" },
+      { "titre": "Vanne EGR encrassée", "km_typique": 100000, "gravite": "moyenne", "symptomes": "Perte de puissance, fumée noire, voyant moteur, mode dégradé.", "solution": "Nettoyage ou remplacement de la vanne EGR.", "cout_indicatif": "200 à 600 €" },
+      { "titre": "Filtre à particules colmaté (usage urbain)", "km_typique": 120000, "gravite": "moyenne", "symptomes": "Voyant FAP ou moteur, perte de puissance, ventilateur qui tourne après l'arrêt.", "solution": "Régénération sur route ou forcée à l'outil, nettoyage ou remplacement du FAP.", "cout_indicatif": "150 € (régénération) à 2 000 € (remplacement)" },
+      { "titre": "Injecteurs encrassés ou fuyards", "km_typique": 150000, "gravite": "moyenne", "symptomes": "Démarrage difficile, fumée, claquement moteur, à-coups.", "solution": "Test des injecteurs (débit de retour), remplacement des injecteurs défectueux.", "cout_indicatif": "300 à 1 200 €" },
+      { "titre": "Turbo fatigué", "km_typique": 180000, "gravite": "elevee", "symptomes": "Sifflement, perte de puissance, fumée bleue, consommation d'huile.", "solution": "Diagnostic du circuit de suralimentation puis remplacement du turbo si confirmé.", "cout_indicatif": "800 à 1 800 €" },
+      { "titre": "Usure des coussinets de bielle (signalée surtout sur des versions plus anciennes du K9K)", "km_typique": 180000, "gravite": "elevee", "symptomes": "Claquement moteur, baisse de pression d'huile, voyant huile.", "solution": "Contrôle de la pression d'huile ; réparation lourde ou échange moteur si atteint.", "cout_indicatif": "1 500 à 4 000 €" }
+    ],
+    "entretiens": [
+      { "titre": "Vidange et filtres", "km": 20000, "cout_indicatif": "120 à 200 €" },
+      { "titre": "Courroie de distribution et pompe à eau (intervalle à confirmer selon version : souvent 120 000 à 160 000 km ou âge)", "km": 120000, "cout_indicatif": "500 à 900 €" },
+      { "titre": "Kit d'embrayage avec volant moteur", "km": 150000, "cout_indicatif": "900 à 1 600 €" }
+    ],
+    "points_forts": ["Très faible consommation", "Moteur diesel très répandu, pièces faciles à trouver", "Coût d'entretien raisonnable"],
+    "points_faibles": ["Peu adapté aux petits trajets (FAP, EGR)", "Volant moteur bimasse coûteux", "Finition intérieure qui vieillit moyennement"],
+    "sources": [],
+    "statut": "a_verifier",
+    "mise_a_jour": "2026-10-13"
+  },
+  {
+    "id": "volkswagen-golf-7-16-tdi",
+    "marque": "Volkswagen",
+    "modele": "Golf",
+    "generation": "Golf VII",
+    "alias": ["golf 7", "golf vii", "golf mk7", "vw golf", "volkswagen golf"],
+    "annees": "2012-2020",
+    "moteurs": ["1.6 TDI 90", "1.6 TDI 105", "1.6 TDI 110", "1.6 TDI 115"],
+    "codes_moteur": ["EA288", "CLHA", "CXXB", "DDYA"],
+    "pannes": [
+      { "titre": "Vanne EGR ou refroidisseur EGR encrassé", "km_typique": 120000, "gravite": "moyenne", "symptomes": "Perte de puissance, voyant moteur, codes EGR (P0401, P0404).", "solution": "Nettoyage ou remplacement de la vanne ou du refroidisseur EGR.", "cout_indicatif": "300 à 1 000 €" },
+      { "titre": "Filtre à particules colmaté", "km_typique": 150000, "gravite": "moyenne", "symptomes": "Voyant FAP, mode dégradé, régénérations fréquentes.", "solution": "Régénération forcée, nettoyage ou remplacement du FAP.", "cout_indicatif": "150 à 2 000 €" },
+      { "titre": "Capteur de pression différentielle FAP défaillant", "km_typique": 100000, "gravite": "faible", "symptomes": "Voyant moteur, code P2452 ou P2453, régénérations incohérentes.", "solution": "Contrôle des durites puis remplacement du capteur.", "cout_indicatif": "80 à 250 €" },
+      { "titre": "Fuite de pompe à eau", "km_typique": 120000, "gravite": "moyenne", "symptomes": "Baisse du niveau de liquide de refroidissement, traces sous le moteur.", "solution": "Remplacement de la pompe à eau, idéalement avec la distribution.", "cout_indicatif": "300 à 700 €" },
+      { "titre": "Mécatronique de boîte DSG 7 (versions automatiques)", "km_typique": 120000, "gravite": "elevee", "symptomes": "À-coups au démarrage, passages de rapports brutaux, voyant de boîte, mode secours.", "solution": "Diagnostic de la boîte, réparation ou échange de la mécatronique.", "cout_indicatif": "800 à 2 500 €" },
+      { "titre": "Volant moteur bimasse et embrayage (boîte manuelle)", "km_typique": 180000, "gravite": "moyenne", "symptomes": "Vibrations au ralenti, claquements à l'arrêt du moteur.", "solution": "Remplacement du kit d'embrayage avec le volant moteur.", "cout_indicatif": "1 000 à 1 800 €" }
+    ],
+    "entretiens": [
+      { "titre": "Vidange (intervalle fixe ou variable selon le carnet)", "km": 20000, "cout_indicatif": "150 à 250 €" },
+      { "titre": "Courroie de distribution et pompe à eau (intervalle à confirmer dans le carnet)", "km": 150000, "cout_indicatif": "700 à 1 200 €" },
+      { "titre": "Vidange de la boîte DSG (versions automatiques, selon préconisation)", "km": 60000, "cout_indicatif": "200 à 350 €" }
+    ],
+    "points_forts": ["Qualité de construction et confort", "Faible consommation", "Bonne valeur à la revente"],
+    "points_faibles": ["Peu adapté aux petits trajets (FAP, EGR)", "Réparations plus chères que la moyenne", "Boîte DSG à surveiller"],
+    "sources": [],
+    "statut": "a_verifier",
+    "mise_a_jour": "2026-10-13"
+  },
+  {
+    "id": "dacia-sandero-2-09-tce",
+    "marque": "Dacia",
+    "modele": "Sandero",
+    "generation": "Sandero II",
+    "alias": ["sandero 2", "sandero ii", "sandero stepway"],
+    "annees": "2012-2020",
+    "moteurs": ["0.9 TCe 90"],
+    "codes_moteur": ["H4B"],
+    "pannes": [
+      { "titre": "Bobine d'allumage ou bougie défaillante", "km_typique": 60000, "gravite": "faible", "symptomes": "À-coups, moteur qui tremble, voyant moteur, codes de ratés.", "solution": "Remplacement de la bobine et des bougies.", "cout_indicatif": "80 à 250 €" },
+      { "titre": "Défaut de régulation du turbo", "km_typique": 100000, "gravite": "moyenne", "symptomes": "Perte de puissance, mode dégradé, code P0299.", "solution": "Contrôle du circuit d'air et de la commande de wastegate, remplacement si nécessaire.", "cout_indicatif": "150 à 1 200 €" },
+      { "titre": "Allongement de la chaîne de distribution", "km_typique": 150000, "gravite": "elevee", "symptomes": "Bruit de cliquetis au démarrage à froid, voyant moteur, codes de calage d'arbre à cames.", "solution": "Contrôle du calage et remplacement du kit de chaîne si allongement confirmé.", "cout_indicatif": "700 à 1 400 €" },
+      { "titre": "Usure de l'embrayage", "km_typique": 120000, "gravite": "moyenne", "symptomes": "Pédale qui durcit, embrayage qui patine ou point de patinage haut.", "solution": "Remplacement du kit d'embrayage.", "cout_indicatif": "500 à 900 €" },
+      { "titre": "Corrosion du soubassement et des éléments de train arrière", "km_typique": 120000, "gravite": "faible", "symptomes": "Points de rouille visibles, bruits de suspension.", "solution": "Contrôle au pont, traitement ou remplacement des pièces corrodées.", "cout_indicatif": "100 à 600 €" }
+    ],
+    "entretiens": [
+      { "titre": "Vidange et filtres", "km": 20000, "cout_indicatif": "100 à 170 €" },
+      { "titre": "Bougies d'allumage", "km": 60000, "cout_indicatif": "60 à 120 €" },
+      { "titre": "Kit d'embrayage", "km": 120000, "cout_indicatif": "500 à 900 €" }
+    ],
+    "points_forts": ["Prix d'achat et d'entretien bas", "Mécanique simple et répandue", "Habitabilité correcte pour la taille"],
+    "points_faibles": ["Finition et insonorisation sommaires", "Équipements de sécurité limités sur les premières versions", "Petit moteur turbo qui consomme plus qu'annoncé sur autoroute"],
+    "sources": [],
+    "statut": "a_verifier",
+    "mise_a_jour": "2026-10-13"
+  },
+  {
+    "id": "citroen-c3-3-12-puretech",
+    "marque": "Citroën",
+    "modele": "C3",
+    "generation": "C3 III",
+    "alias": ["c3 3", "c3 iii", "nouvelle c3"],
+    "annees": "2016-2023",
+    "moteurs": ["1.2 PureTech 68", "1.2 PureTech 82", "1.2 PureTech 83", "1.2 PureTech 110"],
+    "codes_moteur": ["EB2", "EB2F", "EB2FA", "EB2DT"],
+    "pannes": [
+      { "titre": "Dégradation de la courroie de distribution « humide » (dans l'huile)", "km_typique": 80000, "gravite": "elevee", "symptomes": "Alerte pression d'huile, morceaux de courroie dans l'huile, parfois aucun signe avant la casse.", "solution": "Contrôle de l'état de la courroie, remplacement de la courroie et nettoyage ou remplacement de la crépine si débris.", "cout_indicatif": "800 à 1 500 €" },
+      { "titre": "Pompe à vide de freinage colmatée par des débris de courroie", "km_typique": 90000, "gravite": "elevee", "symptomes": "Pédale de frein dure, assistance de freinage réduite.", "solution": "Remplacement de la pompe à vide et traitement de la cause.", "cout_indicatif": "300 à 700 €" },
+      { "titre": "Consommation d'huile excessive", "km_typique": 70000, "gravite": "moyenne", "symptomes": "Niveau d'huile qui baisse entre deux vidanges, alerte niveau d'huile.", "solution": "Mesure de la consommation, contrôle de la segmentation et intervention adaptée.", "cout_indicatif": "200 à 3 000 € selon l'intervention" },
+      { "titre": "Ratés d'allumage (bobines, bougies, calamine)", "km_typique": 80000, "gravite": "moyenne", "symptomes": "Moteur qui tremble, voyant moteur, codes P0300 à P0303.", "solution": "Contrôle des bougies et bobines, décalaminage si nécessaire.", "cout_indicatif": "100 à 600 €" },
+      { "titre": "Fuite du boîtier de sortie d'eau / thermostat", "km_typique": 100000, "gravite": "moyenne", "symptomes": "Baisse du niveau de liquide de refroidissement, odeur sucrée.", "solution": "Remplacement du boîtier ou du thermostat.", "cout_indicatif": "200 à 450 €" }
+    ],
+    "entretiens": [
+      { "titre": "Vidange avec une huile à la norme constructeur exacte", "km": 15000, "cout_indicatif": "100 à 180 €" },
+      { "titre": "Bougies d'allumage", "km": 60000, "cout_indicatif": "80 à 150 €" },
+      { "titre": "Courroie de distribution (intervalle constructeur révisé : à confirmer selon l'année)", "km": 100000, "cout_indicatif": "700 à 1 200 €" }
+    ],
+    "points_forts": ["Confort de suspension", "Consommation modérée", "Faible coût d'usage courant"],
+    "points_faibles": ["Courroie de distribution dans l'huile sensible à la qualité de l'huile", "Consommation d'huile sur certains moteurs", "Historique d'entretien indispensable avant achat"],
+    "sources": [],
+    "statut": "a_verifier",
+    "mise_a_jour": "2026-10-13"
+  }
+]

@@ -1,0 +1,92 @@
+# Base de connaissances Rétroviz
+
+Ce dossier contient les fiches que le serveur donne à l'IA **avant** qu'elle réponde. Quand une question mentionne un véhicule ou un code défaut présent ici, la fiche est envoyée à l'IA comme source prioritaire, et l'interface affiche sous la réponse quelles fiches ont servi.
+
+Les fichiers sont lus **au démarrage du serveur** : après une modification, arrêtez le serveur (Ctrl+C) et relancez `npm start`. `npm run dev` ne surveille pas les fichiers JSON : il faut aussi le relancer. Si un fichier contient une erreur de syntaxe JSON, le serveur affiche un message `⚠️ Base Rétroviz : … ignoré` et démarre quand même, sans ces fiches.
+
+Après chaque modification, lancez `npm test` : les tests vérifient aussi que les données sont bien formées.
+
+## `obd.json` : codes défaut OBD-II génériques
+
+Un tableau d'objets :
+
+```json
+{
+  "code": "P0300",
+  "libelle": "Ratés d'allumage aléatoires ou multiples détectés",
+  "causes_frequentes": ["Bougies usées", "Bobine(s) d'allumage défaillante(s)"],
+  "verifications": ["Compteurs de ratés par cylindre en données dynamiques"],
+  "statut": "a_verifier",
+  "sources": []
+}
+```
+
+- `code` : lettre P, B, C ou U, puis 4 caractères (ex. `P0300`, `P20EE`, `U0100`). Un code ne doit apparaître qu'une fois.
+- `statut` et `sources` sont facultatifs. Sans `statut`, la fiche est considérée « à vérifier ».
+- Seuls les codes **génériques** (normalisés, identiques pour toutes les marques) ont leur place ici. Les codes constructeur (souvent P1xxx) n'ont pas le même sens selon la marque.
+
+## `vehicules.json` : fiches véhicule
+
+Un tableau d'objets, un par véhicule **et** motorisation :
+
+```json
+{
+  "id": "peugeot-208-1-12-puretech",
+  "marque": "Peugeot",
+  "modele": "208",
+  "generation": "208 I",
+  "alias": ["208 1", "208 phase 1"],
+  "annees": "2012-2019",
+  "moteurs": ["1.2 PureTech 82", "1.2 PureTech 110"],
+  "codes_moteur": ["EB2F", "EB2DT"],
+  "pannes": [
+    { "titre": "…", "km_typique": 80000, "gravite": "elevee", "symptomes": "…", "solution": "…", "cout_indicatif": "800 à 1 500 €" }
+  ],
+  "entretiens": [{ "titre": "Courroie de distribution", "km": 100000, "cout_indicatif": "700 à 1 200 €" }],
+  "points_forts": ["…"],
+  "points_faibles": ["…"],
+  "sources": [],
+  "statut": "a_verifier",
+  "mise_a_jour": "2026-10-13"
+}
+```
+
+| Champ | Rôle |
+|---|---|
+| `id` | Identifiant unique, en minuscules avec des tirets. Il apparaît dans les sources. |
+| `marque`, `modele` | Utilisés pour retrouver la fiche (« 208 », « Clio », « Golf »…). |
+| `generation`, `alias` | Autres façons d'écrire le modèle (« Clio 4 », « Clio IV », « Golf 7 »). `alias` est facultatif. |
+| `annees` | Période au format `AAAA-AAAA`. Une année demandée hors période fait baisser le score. |
+| `moteurs` | Motorisations, au format « cylindrée nom puissance » (ex. `1.5 dCi 90`). La recherche reconnaît aussi la version sans puissance (« 1.5 dCi »). Une cylindrée différente dans la question (ex. « 1.6 HDi » pour une fiche 1.2) écarte la fiche. |
+| `codes_moteur` | Codes moteur constructeur (K9K, EA288…), reconnus dans les questions. |
+| `pannes[].gravite` | `faible`, `moyenne` ou `elevee`. |
+| `km_typique`, `km` | Nombres entiers, sans espace (ex. `120000`). |
+| `statut` | `a_verifier` ou `verifie`. |
+| `mise_a_jour` | Date de la dernière modification, au format `AAAA-MM-JJ`. |
+
+### Comment la recherche fonctionne
+
+Le texte (champ « Votre véhicule », ou le message si ce champ est vide) est mis en minuscules, sans accents. « 1,2 » devient « 1.2 » et « pure tech » équivaut à « puretech ». Une fiche est retenue si le **modèle** ou le **moteur** correspond. Au plus 2 fiches sont envoyées. Si le modèle exact est trouvé, les fiches d'autres modèles qui partagent seulement le moteur sont écartées. Sinon, ces fiches sont envoyées avec la mention « même moteur », et l'IA est priée de n'en utiliser que les informations moteur.
+
+## Ajouter une fiche
+
+1. Copiez une fiche existante dans `vehicules.json` et collez-la à la fin du tableau (attention aux virgules entre les objets).
+2. Changez l'`id` (il doit être unique), puis tous les champs.
+3. Laissez `"statut": "a_verifier"` tant que les informations ne sont pas recoupées.
+4. Mettez la date du jour dans `mise_a_jour`.
+5. Lancez `npm test`, puis relancez le serveur.
+
+## Passer une fiche en « vérifiée »
+
+Une fiche ne passe en `"statut": "verifie"` que si :
+
+1. chaque information (pannes, kilométrages, intervalles d'entretien, coûts) a été recoupée avec une source fiable : documentation constructeur, note technique, base technique professionnelle, rappel officiel, expérience d'atelier documentée… ;
+2. **au moins une source** est indiquée dans `sources`, par exemple :
+   ```json
+   "sources": ["Carnet d'entretien Renault Clio IV (2016), p. 34", "https://…"],
+   ```
+3. `mise_a_jour` porte la date de la vérification.
+
+Les tests (`npm test`) refusent une fiche `verifie` sans source.
+
+Toutes les fiches livrées au départ sont **à vérifier** : elles ont été rédigées à partir de connaissances générales et peuvent contenir des erreurs, en particulier les kilométrages, les intervalles d'entretien et les coûts.

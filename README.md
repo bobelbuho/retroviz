@@ -10,6 +10,12 @@ Assistant automobile avec trois modes : **J'ai une panne** (particuliers), **Dia
 retroviz/
 ├── public/index.html   ← l'interface (HTML, CSS, JavaScript)
 ├── server.js           ← le serveur qui appelle l'API Claude
+├── knowledge.js        ← la recherche dans la base de connaissances
+├── data/               ← la base de connaissances (fiches JSON + mode d'emploi)
+│   ├── obd.json
+│   ├── vehicules.json
+│   └── README.md
+├── test/               ← les tests (npm test)
 ├── package.json        ← les dépendances
 ├── .env.example        ← modèle du fichier de configuration
 └── README.md
@@ -36,10 +42,29 @@ Pendant que vous modifiez le code, `npm run dev` relance le serveur automatiquem
 
 - Ne partagez jamais votre fichier `.env` et ne le publiez pas sur GitHub (il est déjà exclu par `.gitignore`).
 - Le modèle utilisé se change dans `.env` (variable `MODEL`).
-- Les réponses viennent des connaissances générales du modèle d'IA : elles peuvent être incomplètes ou inexactes.
+- Les réponses s'appuient en priorité sur la base Rétroviz quand elle couvre la question, sinon sur les connaissances générales du modèle d'IA : elles peuvent être incomplètes ou inexactes.
+
+## Base de connaissances
+
+Avant chaque réponse, le serveur cherche dans le dossier `data/` les fiches qui correspondent au véhicule et aux codes défaut cités dans le message. Le véhicule vient du champ « Votre véhicule », du formulaire d'achat ou, à défaut, du message lui-même. Les fiches trouvées sont envoyées à l'IA comme **source prioritaire**, avec la consigne de signaler quand elle s'appuie sur une fiche « à vérifier ».
+
+- `data/obd.json` : codes défaut OBD-II génériques (libellé, causes fréquentes, vérifications).
+- `data/vehicules.json` : fiches par véhicule et motorisation (pannes connues avec leur kilométrage, entretiens, points forts et faibles).
+- Chaque fiche a un statut : **à vérifier** (rédigée sans source, peut contenir des erreurs) ou **vérifiée** (au moins une source indiquée). Toutes les fiches livrées au départ sont à vérifier.
+- Sous chaque réponse, une ligne indique les fiches utilisées, par exemple « Sources : base Rétroviz – Peugeot 208 1.2 PureTech (à vérifier), code P0300 (à vérifier) », ou « Sources : connaissances générales de l'IA ».
+- `GET /api/codes/P0300` renvoie la fiche d'un code, en JSON.
+- Le format des fiches, l'ajout d'une fiche et le passage en « vérifiée » sont expliqués dans [data/README.md](data/README.md).
+- Après une modification des fichiers JSON, lancez `npm test`, puis relancez le serveur (les fiches sont lues au démarrage).
+
+La recherche se fait par mots-clés, sans base de données ni vectorisation, dans `knowledge.js`.
 
 ## Où modifier quoi
 
 - Le comportement de l'IA (ton, structure des réponses, règles de sécurité) : les textes `rules` et `SAFETY` dans `public/index.html`.
+- Les symptômes proposés en pastilles dans « J'ai une panne » : la constante `HELP` dans `public/index.html`. Chaque catégorie est une liste de textes ; ajoutez un `*` à la fin d'un texte pour le marquer comme dangereux (il affiche alors l'encadré rouge « arrêtez-vous dès que possible »).
+- La fiche rapide du mode « Diagnostic pro » : le formulaire `proForm` (HTML) et le message qu'il construit (partie « fiche rapide pro » du script).
 - L'analyse d'achat : la variable `prompt` dans la partie « achat » de `public/index.html`.
+- Les fiches de la base de connaissances : `data/vehicules.json` et `data/obd.json` (mode d'emploi dans `data/README.md`).
+- La consigne donnée à l'IA sur l'usage des fiches : la constante `KB_RULES` dans `server.js`.
+- La recherche (scores, taille maximale du contexte `MAX_CONTEXT`) : `knowledge.js`. Lancez `npm test` après toute modification.
 - Les couleurs : les variables `--bg`, `--ink`, `--accent`… en haut du `<style>`.
