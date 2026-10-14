@@ -1727,6 +1727,9 @@ async function loadRTableau(){
     <h3 class="sect" style="margin-bottom:var(--sp-3)">Fiches par statut</h3><div class="kpis">${cartes}</div>
     <h3 class="sect" style="margin-bottom:var(--sp-3)">Retours des utilisateurs (30 derniers jours)</h3>
     <div class="kpis">${kpi(rt.oui || 0, "« oui, ça m'a aidé »")}${kpi(rt.non || 0, "« non »")}${kpi(rt.erreur || 0, "erreurs signalées")}${kpi(r.statistiquesPubliables || 0, "statistiques anonymes publiables (10 véhicules et plus)")}</div>
+    ${(r.passagesObservateur || []).length ? `<h3 class="sect" style="margin-bottom:var(--sp-3)">Derniers passages de l'Observateur</h3>
+      <div style="overflow-x:auto;margin-bottom:var(--sp-6)"><table class="qsf"><thead><tr><th>Date</th><th>Modèle</th><th>Statut</th><th>Sources</th><th>Écartées</th><th>Faits</th><th>Propositions</th><th>Rappels</th><th>Coût</th></tr></thead><tbody>
+      ${r.passagesObservateur.map(p => `<tr><td>${esc(p.debut.slice(0, 10))}</td><td>${esc(p.cible)}</td><td>${esc({termine:"terminé", budget_atteint:"budget atteint", erreur:"erreur", en_cours:"en cours"}[p.statut] || p.statut)}</td><td>${p.sources}</td><td>${p.refusees}</td><td>${p.faits}</td><td>${p.propositions}</td><td>${p.rappels}</td><td>${eur(p.cout_eur)}</td></tr>`).join("")}</tbody></table></div>` : ""}
     ${(r.questionsSansFiche || []).length ? `<h3 class="sect" style="margin-bottom:var(--sp-3)">Voitures les plus demandées sans fiche</h3><ul>${r.questionsSansFiche.map(q => `<li>${esc(q.vehicule)} : ${q.nombre} question${q.nombre > 1 ? "s" : ""}</li>`).join("")}</ul>` : ""}`;
 }
 async function loadRFiches(){

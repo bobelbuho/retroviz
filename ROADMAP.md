@@ -16,8 +16,9 @@
 
 ## Base de connaissances (en cours)
 
-- Voyants du tableau de bord (fiches et icônes).
-- L'Observateur : recherche, extraction, recoupement et propositions d'amélioration de la base, validées dans la page « Relecture ».
+- ✅ Voyants du tableau de bord (fiches et icônes).
+- ✅ L'Observateur : recherche, extraction, recoupement et propositions d'amélioration de la base, validées dans la page « Relecture ».
+  - Pilote avec recherche web sur Clio IV, 208 I et Golf 7 : en attente de la clé API (.env).
 - Marques et modèles : les 30 modèles d'occasion les plus courants en France.
 - Comparateur, glossaire, guide des prix.
 

@@ -45,6 +45,7 @@ const propositions = createPropositions(db, relecture);
 const retours = createRetours(db);
 retours.onSignalement = p => propositions.creer(p); // les signalements arrivent dans la Relecture
 const depenseDuMois = db.prepare("SELECT COALESCE(SUM(cout_eur), 0) AS eur FROM observateur_passages WHERE debut >= ?");
+const derniersPassages = db.prepare("SELECT id, debut, cible, statut, sources, refusees, faits, propositions, rappels, cout_eur FROM observateur_passages ORDER BY id DESC LIMIT 8");
 const tableau = () => ({
   propositions: propositions.enAttente(),
   retours: retours.statsRetours(),
@@ -52,6 +53,7 @@ const tableau = () => ({
   statistiquesPubliables: retours.statistiques().length,
   depenseObservateurMois: Math.round(depenseDuMois.get(new Date().toISOString().slice(0, 7) + "-01").eur * 100) / 100,
   budgetObservateur: Number(process.env.OBSERVER_BUDGET_EUR) || 0,
+  passagesObservateur: derniersPassages.all(),
 });
 const app = express();
 app.use(express.json({ limit: "1mb" }));

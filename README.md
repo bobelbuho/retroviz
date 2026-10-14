@@ -26,10 +26,14 @@ retroviz/
 ├── retours.js          ← retours sous les réponses, questions sans fiche, statistiques anonymes
 ├── storage.js          ← stockage des fichiers (factures) : enregistrer, lire, supprimer
 ├── db.js               ← la base SQLite (comptes, garages)
+├── observateur/        ← l'Observateur : recherche, extraction, recoupement, propositions
+├── scripts/observer.js ← lancement de l'Observateur (npm run observer)
 ├── storage/            ← la base (retroviz.db) et les factures (uploads/), créés au démarrage, jamais publiés
 ├── data/               ← la base de connaissances (fiches JSON + mode d'emploi)
 │   ├── obd.json
 │   ├── vehicules.json
+│   ├── voyants.json
+│   ├── sources.json    ← registre des sources de l'Observateur
 │   └── README.md
 ├── test/               ← les tests (npm test)
 ├── package.json        ← les dépendances
@@ -165,6 +169,30 @@ Depuis la carte d'une voiture, « Estimer la valeur » demande à l'IA une fourc
 - **Questions sans fiche** : quand la base n'a pas de fiche pour la question ou pour la voiture indiquée, seuls la voiture et les codes défaut sont notés.
 - **Statistiques anonymes des carnets** : seulement pour les comptes qui l'ont accepté dans « Mon compte » (désactivé par défaut). Elles ne sont publiées qu'à partir de 10 véhicules, en fourchette arrondie au millier de km (`GET /api/stats/entretiens`).
 - **Confidentialité** : la page `public/confidentialite.html`, en version provisoire, à faire relire par un professionnel.
+
+## L'Observateur
+
+`npm run observer -- --modele "Clio IV"` cherche, extrait et recoupe des informations sur un modèle, puis crée des propositions à valider dans la page « Relecture ». Il ne modifie jamais les fiches directement, sauf pour ajouter les rappels officiels. `npm run observer -- --aide` liste les options : `--pilote`, `--prioritaires`, `--hebdo`, `--simulation`, `--sans-web`, `--planifier`…
+
+- **Registre des sources** (`data/sources.json`) : pour chaque site, son type (officiel, constructeur, presse, pro, forum), son poids, sa méthode (API ou recherche web), s'il est autorisé, et sa limite de requêtes par minute.
+- **Respect des sites** :
+  - `robots.txt` lu pour chaque site ;
+  - un site qui refuse les robots d'IA est considéré comme refusant l'analyse automatisée ;
+  - refus TDM (en-tête, balise, `/.well-known/tdmrep.json`) et balise `noai` respectés ;
+  - pages derrière une connexion ou un abonnement écartées ;
+  - limite de requêtes par site.
+- **Données officielles** (gratuites, sans clé API), API vérifiées le 2026-10-14 :
+  - RappelConso et Safety Gate (rapports hebdomadaires XML) : les rappels qui citent la génération sont ajoutés automatiquement à la fiche, avec la mention « source officielle » et le lien. Ceux qui citent le modèle sans sa génération deviennent des propositions, sauf si leurs dates de production l'excluent.
+  - NHTSA (marché américain) : rappels proposés, en anglais, à vérifier. Seul le nombre de plaintes par organe est utilisé, jamais leur texte.
+  - ADEME : les données ne couvrent que les voitures neuves actuelles.
+- **Recherche web** (outil de recherche web de l'API Claude, limité aux sites autorisés du registre) : quatre questions par modèle et motorisation (pannes, kilométrages, coûts, avis de mécaniciens). Chaque page est ensuite lue par l'Observateur lui-même, qui vérifie d'abord tous les refus.
+- **Extraction** : l'IA transforme chaque page en faits structurés (sujet, type, contenu reformulé, km, coût, URL, type de source). Les faits recopiés mot pour mot sont écartés, et les données personnelles retirées.
+- **Recoupement** :
+  - un fait est « confirmé » par au moins 3 sources indépendantes (un même site ne compte qu'une fois), dont une officielle, constructeur, presse ou pro ;
+  - sinon il est « signalé », avec le nombre de sources ;
+  - les kilométrages ou coûts très différents sont signalés comme contradictions.
+- **Coûts** : budget mensuel `OBSERVER_BUDGET_EUR`. Chaque appel vérifie d'abord son coût maximal, et l'Observateur s'arrête quand le budget est atteint. Chaque passage est journalisé (sources consultées, pages écartées et pourquoi, faits, propositions, rappels, coût) et visible dans le tableau de bord de la Relecture.
+- **Planification** : `npm run observer -- --planifier` explique comment lancer le passage hebdomadaire (`--hebdo`) avec le Planificateur de tâches Windows ou cron.
 
 ## Où modifier quoi
 

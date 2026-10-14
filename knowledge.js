@@ -192,6 +192,7 @@ function vehicleBlock(v, correspondance) {
     }
   }
   if (v.entretiens?.length) lines.push(`Entretiens : ${v.entretiens.map(e => `${e.titre}${km(e.km) ? ` (${km(e.km)})` : ""}${e.cout_indicatif ? `, ${e.cout_indicatif}` : ""}`).join(" ; ")}`);
+  if (v.rappels?.length) lines.push(`Rappels (${v.rappels.length}) : ${v.rappels.slice(0, 6).map(r => `${r.titre} [${r.source}, ${r.mention}${r.date ? `, ${r.date}` : ""}, ${r.url}]`).join(" ; ")}`);
   if (v.points_forts?.length) lines.push(`Points forts : ${join(v.points_forts)}`);
   if (v.points_faibles?.length) lines.push(`Points faibles : ${join(v.points_faibles)}`);
   lines.push(`Sources : ${join(v.sources) || "aucune"}`);
