@@ -463,6 +463,32 @@ dialog.dlg::backdrop{background:var(--overlay)}
 
 footer{margin-top:var(--sp-7);font-size:var(--fs-xs);color:var(--muted);padding-top:var(--sp-4);border-top:1px solid var(--line)}
 @media (prefers-reduced-motion: reduce){.item.flash{animation:none}}
+/* avis de propriétaires */
+.notesf{display:grid;gap:var(--sp-3)}
+.notesf fieldset{border:0;margin:0;padding:0;display:flex;flex-wrap:wrap;align-items:center;gap:var(--sp-1) var(--sp-3)}
+.notesf legend{float:left;min-width:170px;font-weight:var(--fw-semibold);font-size:var(--fs-sm);padding:0}
+.etoiles{display:inline-flex;gap:2px}
+.etoiles input{position:absolute;opacity:0;width:1px;height:1px}
+.etoiles label{display:inline-grid;place-items:center;width:40px;height:40px;border-radius:var(--r-sm);background:var(--soft);color:var(--primary);font-weight:var(--fw-bold);cursor:pointer}
+.etoiles input:checked + label{background:var(--primary);color:var(--on-primary)}
+.etoiles input:focus-visible + label{outline:3px solid var(--primary);outline-offset:2px}
+.pannesf{display:grid;gap:var(--sp-2)}
+.pannesf .ligne{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr) minmax(0,1fr) auto;gap:var(--sp-2);align-items:end}
+@media (max-width:520px){.pannesf .ligne{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.pannesf .ligne > :first-child{grid-column:1/-1}}
+.avl2{list-style:none;margin:0;padding:0;display:grid;gap:var(--sp-3)}
+.avcarte{background:var(--surface);border-radius:var(--r-lg);padding:var(--sp-4) var(--sp-5);box-shadow:var(--shadow)}
+.avcarte .verif{display:inline-flex;align-items:center;gap:var(--sp-1);color:var(--green-ink);font-weight:var(--fw-semibold);font-size:var(--fs-sm)}
+.avcarte .ctx{color:var(--muted);font-size:var(--fs-sm);margin:var(--sp-1) 0 var(--sp-2)}
+.avnotes{display:flex;flex-wrap:wrap;gap:var(--sp-1) var(--sp-3);font-size:var(--fs-sm);margin:0 0 var(--sp-2);padding:0;list-style:none}
+.avnotes strong{color:var(--primary)}
+.avcarte h4{margin:var(--sp-2) 0 0;font-size:var(--fs-sm)}
+.avcarte p{margin:var(--sp-1) 0 0;white-space:pre-wrap}
+.synth{background:var(--soft);border-radius:var(--r-lg);padding:var(--sp-4) var(--sp-5);margin:0 0 var(--sp-4)}
+.synth .barres{display:grid;gap:var(--sp-1);margin:var(--sp-2) 0}
+.synth .barre{display:grid;grid-template-columns:150px 1fr 36px;gap:var(--sp-2);align-items:center;font-size:var(--fs-sm)}
+.synth .barre i{display:block;height:8px;border-radius:var(--r-pill);background:var(--surface);overflow:hidden}
+.synth .barre i b{display:block;height:100%;background:var(--primary);border-radius:var(--r-pill)}
+.sigform{display:grid;gap:var(--sp-2);background:var(--soft);border-radius:var(--r-md);padding:var(--sp-3);margin-top:var(--sp-2)}
 /* partager ou vendre */
 .tsec{background:var(--surface);border-radius:var(--r-lg);padding:var(--sp-5);box-shadow:var(--shadow);margin:0 0 var(--sp-5)}
 .tsec > h3{font-size:var(--fs-xl);font-weight:var(--fw-bold);color:var(--primary);margin:0 0 var(--sp-2);line-height:var(--lh-tight)}
@@ -537,6 +563,10 @@ dialog.dlg.large{width:min(920px,calc(100vw - 2 * var(--gutter)));padding:var(--
         <a class="btn soft" href="/api/account/export" download>Télécharger mes données</a>
         <button class="btn ghost" type="button" id="me_logout">Se déconnecter</button>
       </div>
+      <details style="margin-top:var(--sp-5)" id="me_avisBox">
+        <summary style="cursor:pointer;font-weight:var(--fw-semibold)">Mes avis publiés</summary>
+        <div id="me_avis" style="margin-top:var(--sp-2)"></div>
+      </details>
       <div style="margin-top:var(--sp-5)">
         <label class="check"><input type="checkbox" id="me_stats"><span>Partager anonymement les données de mon carnet d'entretien pour les statistiques Rétroviz</span></label>
         <p class="hint">Par exemple « embrayage changé entre 100 000 et 130 000 km sur 12 véhicules ». Jamais votre adresse, ni le détail de vos entretiens ; une statistique n'est affichée qu'à partir de 10 véhicules. Désactivé par défaut. <a href="/confidentialite.html">En savoir plus</a></p>
@@ -625,7 +655,9 @@ dialog.dlg.large{width:min(920px,calc(100vw - 2 * var(--gutter)));padding:var(--
       <button type="button" role="tab" data-rtab="propositions" aria-selected="false">Propositions</button>
       <button type="button" role="tab" data-rtab="signalements" aria-selected="false">Signalements</button>
       <button type="button" role="tab" data-rtab="questions" aria-selected="false">Questions sans fiche</button>
+      <button type="button" role="tab" data-rtab="avis" aria-selected="false">Avis signalés</button>
     </div>
+    <div id="rAvis" hidden></div>
     <div id="rTableau"></div>
     <div id="rProps" hidden>
       <div class="rfilters"><label class="sr" for="rPStatut">Statut</label>
@@ -732,6 +764,7 @@ dialog.dlg.large{width:min(920px,calc(100vw - 2 * var(--gutter)));padding:var(--
           <button type="button" role="tab" data-vtab="carnet" aria-selected="false">Carnet</button>
           <button type="button" role="tab" data-vtab="avenir" aria-selected="false">À venir</button>
           <button type="button" role="tab" data-vtab="valeur" aria-selected="false">Valeur</button>
+          <button type="button" role="tab" data-vtab="avis" aria-selected="false">Avis</button>
           <button type="button" role="tab" data-vtab="transmettre" aria-selected="false">Partager ou vendre</button>
         </div>
         <div id="vieView"></div>
@@ -785,6 +818,18 @@ dialog.dlg.large{width:min(920px,calc(100vw - 2 * var(--gutter)));padding:var(--
           <div class="formbtns"><button class="btn" type="submit" id="entSave">Enregistrer</button><button class="btn ghost" type="button" id="entCancel">Annuler</button></div>
         </form>
         <ul class="ents" id="ents"></ul>
+      </div>
+      <!-- Avis de propriétaires -->
+      <div id="avisView" hidden>
+        <section class="tsec" aria-labelledby="monAvisTitre">
+          <h3 id="monAvisTitre" tabindex="-1">Votre avis sur cette voiture</h3>
+          <div id="monAvis"></div>
+        </section>
+        <section aria-labelledby="autresTitre">
+          <h3 class="sect" id="autresTitre" style="margin-bottom:var(--sp-3)">Avis des propriétaires</h3>
+          <div id="autresAvis"></div>
+          <p class="hint" style="margin-top:var(--sp-4)">Avis publiés par des propriétaires depuis leur garage Rétroviz, du plus récent au plus ancien, sans contrepartie. <a href="/avis.html" target="_blank" rel="noopener">Comment fonctionnent les avis</a></p>
+        </section>
       </div>
       <!-- Partager le dossier, transférer la voiture -->
       <div id="transView" hidden>
@@ -1306,6 +1351,7 @@ function renderAcct(){
   $("#acct").innerHTML = `<button class="navlink" type="button" id="acctBtn" ${user ? `title="${esc(user.email)}"` : ""}>${user ? "Mon compte" : "Se connecter"}</button>`;
   $("#authView").hidden = !!user; $("#meView").hidden = !user;
   if(user) $("#me_stats").checked = !!user.statsConsent;
+  if(user) $("#me_avisBox").open = false;
   if(user) $("#me_meta").textContent = `${user.email} · compte créé le ${new Date(user.createdAt).toLocaleDateString("fr-FR", {day:"numeric", month:"long", year:"numeric"})}`;
 }
 function setSignup(on){
@@ -1423,6 +1469,9 @@ function renderGarage(){
   const inValeur = !!user && !inCarnet && !inAvenir && valeurOf !== null && !!carById(valeurOf);
   const inVoiture = !!user && voitureOf !== null && !!carById(voitureOf);
   const inTrans = inVoiture && voitureTab === "transmettre" && transOf === voitureOf;
+  const inAvis = inVoiture && voitureTab === "avis" && avisOf === voitureOf;
+  $("#avisView").hidden = !inAvis;
+  if(inAvis) renderAvis();
   const detail = inCarnet || inAvenir || inValeur || inVoiture;
   $("#transView").hidden = !inTrans;
   if(inTrans) renderTransmettre();
@@ -1531,6 +1580,7 @@ let voitureOf = null, voitureTab = "vie", vie = null, badgeV = null;
 const CAR_ICON = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 16.5v-3l2.2-4.5h10l3.3 4.5H21v3z"/><circle cx="7.5" cy="17" r="1.5"/><circle cx="17" cy="17" r="1.5"/></svg>`;
 async function openVoiture(id, tab = "vie"){
   if(tab === "transmettre") return openTransmettre(id);
+  if(tab === "avis") return openAvis(id);
   if(tab === "carnet") return openCarnet(id);
   if(tab === "avenir") return openAvenir(id);
   if(tab === "valeur") return openValeur(id);
@@ -1974,6 +2024,173 @@ document.addEventListener("submit", async e => {
   else { const rr = await api("GET", `/api/garage/${vid}/releves`); if(rr.ok){ kmData[vid] = rr.releves; renderGarage(); } }
 });
 
+/* ---------- avis de propriétaires ---------- */
+const NOTES_AV = {fiabilite:"Fiabilité", cout_entretien:"Coût d'entretien", confort:"Confort", consommation:"Consommation", rapport_qualite_prix:"Rapport qualité-prix"};
+const MOTIFS_SIG = {coordonnees:"Coordonnées ou informations personnelles", injure:"Injure ou propos haineux", hors_sujet:"Hors sujet (ne parle pas de la voiture)", faux:"Avis qui semble faux", autre:"Autre"};
+let avisOf = null, avisData = null, avisListe = null, avisEdition = false;
+async function openAvis(id){
+  const c = carById(id);
+  const [mine, liste] = await Promise.all([api("GET", `/api/garage/${id}/avis`),
+    api("GET", `/api/avis?${new URLSearchParams({marque:c.marque, modele:c.modele, motorisation:c.motorisation || "", fiche:c.fiche?.id || ""})}`)]);
+  if(!mine.ok){ showNotice(mine.error); return; }
+  avisData = mine; avisListe = liste.ok ? liste : null; avisOf = id; avisEdition = false;
+  voitureOf = id; voitureTab = "avis"; carnetOf = null; avenirOf = null; valeurOf = null;
+  renderGarage(); window.scrollTo({top:0}); $("#monAvisTitre").focus();
+}
+const moisTxt = n => n >= 24 ? `${Math.floor(n / 12)} ans` : n >= 12 ? `${Math.floor(n / 12)} an${n >= 24 ? "s" : ""}${n % 12 ? ` et ${n % 12} mois` : ""}` : `${n} mois`;
+/* Un avis : jamais l'identité de l'auteur ; durée de possession, kilomètres, date, badge. */
+function avisCarteHTML(a, {signaler = true, auteur = false} = {}){
+  const ctx = [`Propriétaire depuis ${moisTxt(a.possessionMois)}`, a.kmParcourus != null && `${fmtNum(a.kmParcourus)} km parcourus`, a.kmActuel != null && `${fmtNum(a.kmActuel)} km au compteur`].filter(Boolean).join(" · ");
+  const pannes = a.pannes.length ? `<h4>Pannes rencontrées</h4><ul style="margin:var(--sp-1) 0 0;padding-left:var(--sp-5);font-size:var(--fs-sm)">${a.pannes.map(p => `<li>${esc(p.piece)}${p.km != null ? ` à ${fmtNum(p.km)} km` : ""}${p.cout != null ? `, ${fmtEur0(p.cout)}` : ""}</li>`).join("")}</ul>` : "";
+  return `<article class="avcarte" data-aid="${a.id}">
+    <div class="rowbtns" style="justify-content:space-between"><span class="verif"><span aria-hidden="true">✓</span>Propriétaire vérifié par son garage Rétroviz</span>
+      <span class="hint" style="margin:0">Avis du ${esc(fmtShort(a.publieLe))}${a.modifieLe ? `, modifié le ${esc(fmtShort(a.modifieLe))}` : ""}</span></div>
+    <p class="ctx">${esc(a.voiture)}<br>${esc(ctx)}</p>
+    <ul class="avnotes">${Object.entries(NOTES_AV).map(([k, t]) => `<li>${esc(t)} : <strong>${a.notes[k]}/5</strong></li>`).join("")}</ul>
+    <p style="font-weight:var(--fw-semibold)">${a.recommande ? "Je la recommande" : "Je ne la recommande pas"}</p>
+    ${a.pointsForts ? `<h4>Points forts</h4><p>${esc(a.pointsForts)}</p>` : ""}${a.pointsFaibles ? `<h4>Points faibles</h4><p>${esc(a.pointsFaibles)}</p>` : ""}
+    ${pannes}${a.commentaire ? `<h4>Commentaire</h4><p>${esc(a.commentaire)}</p>` : ""}
+    ${auteur && a.statut === "masque" ? `<p class="avert" style="margin-top:var(--sp-3)">Masqué par la modération le ${esc(fmtShort(a.masqueLe))} : ${esc(a.motifMasque)}. Modifiez-le pour retirer ce qui pose problème ; il sera de nouveau examiné.</p>` : ""}
+    ${signaler ? `<div style="margin-top:var(--sp-2)"><button class="link" type="button" data-signaler="${a.id}">Signaler</button></div>` : ""}
+  </article>`;
+}
+function syntheseHTML(b, titre){
+  const s = b.synthese;
+  if(!s) return "";
+  return `<div class="synth"><strong>${esc(titre)} : ${s.nombre} avis</strong>, ${s.recommandent} % le recommandent.
+    <div class="barres">${Object.entries(NOTES_AV).map(([k, t]) => `<div class="barre"><span>${esc(t)}</span><i aria-hidden="true"><b style="width:${s.moyennes[k] / 5 * 100}%"></b></i><span>${String(s.moyennes[k]).replace(".", ",")}</span></div>`).join("")}</div>
+    ${s.pannes.length ? `<strong>Pannes les plus citées</strong><ul style="margin:var(--sp-1) 0 0;padding-left:var(--sp-5)">${s.pannes.slice(0, 6).map(p => `<li>${esc(p.piece)} : ${p.nombre} avis${p.kmMedian != null ? `, vers ${fmtNum(p.kmMedian)} km` : ""}${p.coutMedian != null ? `, environ ${fmtEur0(p.coutMedian)}` : ""}</li>`).join("")}</ul>` : `<p class="hint">Aucune panne citée par au moins 2 propriétaires.</p>`}</div>`;
+}
+function avisBlocHTML(b, titre, seuil){
+  if(!b || !b.nombre) return "";
+  const intro = b.synthese ? syntheseHTML(b, titre) : `<p class="hint" style="margin:0 0 var(--sp-3)">${esc(titre)} : ${b.nombre} avis. Moyennes et pannes les plus citées à partir de ${seuil} avis.</p>`;
+  return `${intro}<ul class="avl2">${b.avis.map(a => `<li>${avisCarteHTML(a)}</li>`).join("")}</ul>`;
+}
+function avisFormHTML(a){
+  const n = a?.notes || {};
+  const etoiles = (k, t) => `<fieldset><legend>${esc(t)}</legend><span class="etoiles">${[1,2,3,4,5].map(i => `<input type="radio" name="n_${k}" id="n_${k}_${i}" value="${i}" ${n[k] === i ? "checked" : ""}><label for="n_${k}_${i}" title="${i} sur 5">${i}</label>`).join("")}</span></fieldset>`;
+  const ligne = (p, i) => `<div class="ligne"><div><label class="f" for="pp${i}">Pièce ou panne</label><input class="field" id="pp${i}" data-pp="piece" maxlength="60" value="${esc(p?.piece || "")}" placeholder="Embrayage"></div>
+    <div><label class="f" for="pk${i}">À (km)</label><input class="field" id="pk${i}" data-pp="km" inputmode="numeric" maxlength="9" value="${p?.km ?? ""}" placeholder="112 000"></div>
+    <div><label class="f" for="pc${i}">Coût (€)</label><input class="field" id="pc${i}" data-pp="cout" inputmode="decimal" maxlength="8" value="${p?.cout ?? ""}" placeholder="850"></div>
+    <button class="btn ghost small" type="button" data-pdel aria-label="Retirer cette panne">Retirer</button></div>`;
+  return `<form id="avisForm" class="notesf" novalidate>
+    <p class="hint" style="margin:0">Notes de 1 (très mauvais) à 5 (excellent). Votre avis est publié sans votre nom ni votre e-mail.</p>
+    ${Object.entries(NOTES_AV).map(([k, t]) => etoiles(k, t)).join("")}
+    <fieldset><legend>La recommanderiez-vous ?</legend><label class="check"><input type="radio" name="reco" value="oui" ${a?.recommande === true ? "checked" : ""}><span>Oui</span></label><label class="check"><input type="radio" name="reco" value="non" ${a?.recommande === false ? "checked" : ""}><span>Non</span></label></fieldset>
+    <div><span class="f" style="display:block;font-weight:var(--fw-semibold);font-size:var(--fs-sm)">Pannes rencontrées</span><div class="pannesf" id="pannesf">${(a?.pannes?.length ? a.pannes : []).map(ligne).join("")}</div>
+      <button class="btn ghost small" type="button" id="panneAdd" style="margin-top:var(--sp-2)">Ajouter une panne</button></div>
+    <div><label class="f" for="av_forts">Points forts</label><textarea class="field" id="av_forts" rows="2" maxlength="500">${esc(a?.pointsForts || "")}</textarea></div>
+    <div><label class="f" for="av_faibles">Points faibles</label><textarea class="field" id="av_faibles" rows="2" maxlength="500">${esc(a?.pointsFaibles || "")}</textarea></div>
+    <div><label class="f" for="av_com">Commentaire</label><textarea class="field" id="av_com" rows="3" maxlength="1000" aria-describedby="av_com_h">${esc(a?.commentaire || "")}</textarea>
+      <p class="hint" id="av_com_h">Parlez de la voiture. Pas de coordonnées, de plaque ni de nom de personne : l'avis serait refusé.</p></div>
+    <p class="err" id="avisMsg" role="alert" style="color:var(--red-ink);font-weight:var(--fw-semibold);margin:0"></p>
+    <div class="rowbtns"><button class="btn" type="submit">${a ? "Enregistrer les modifications" : "Publier mon avis"}</button>${a ? `<button class="btn ghost" type="button" id="avisAnnuler">Annuler</button>` : ""}</div>
+  </form>`;
+}
+function renderAvis(){
+  const d = avisData, e = d.eligibilite, a = d.avis;
+  if(a && !avisEdition) $("#monAvis").innerHTML = `${avisCarteHTML(a, {signaler:false, auteur:true})}<div class="rowbtns" style="margin-top:var(--sp-3)"><button class="btn soft" type="button" id="avisModifier">Modifier mon avis</button><button class="btn ghost" type="button" id="avisSupprimer">Supprimer</button></div>`;
+  else if(!e.ok && !a) $("#monAvis").innerHTML = `<p>Pour que les avis viennent de vrais propriétaires, Rétroviz demande que la voiture soit dans votre garage depuis au moins ${d.conditions.moisMin} mois, avec au moins ${d.conditions.relevesMin} relevés de kilométrage.</p>
+    <ul>${e.raisons.map(r => `<li>${esc(r.texte)}</li>`).join("")}</ul>`;
+  else $("#monAvis").innerHTML = avisFormHTML(avisEdition ? a : null);
+  const L = avisListe, c = carById(avisOf);
+  const moto = L?.motorisation ? avisBlocHTML(L.motorisation, [c.marque, c.modele, c.motorisation].filter(Boolean).join(" "), L.seuil) : "";
+  const autres = L?.modele && L.modele.nombre > (L.motorisation?.nombre || 0) ? avisBlocHTML(L.modele, `Tout le modèle ${c.marque} ${c.modele}`, L.seuil) : "";
+  $("#autresAvis").innerHTML = moto || autres ? `${moto}${moto && autres ? `<h3 class="sect" style="margin:var(--sp-5) 0 var(--sp-3)">Toutes motorisations</h3>` : ""}${autres}` : `<p class="empty">Pas encore d'avis de propriétaires pour ce modèle.</p>`;
+}
+$("#avisView").addEventListener("click", async e => {
+  const b = e.target.closest("button"); if(!b) return;
+  if(b.id === "panneAdd"){
+    const i = Date.now();
+    $("#pannesf").insertAdjacentHTML("beforeend", `<div class="ligne"><div><label class="f" for="pp${i}">Pièce ou panne</label><input class="field" id="pp${i}" data-pp="piece" maxlength="60" placeholder="Embrayage"></div>
+      <div><label class="f" for="pk${i}">À (km)</label><input class="field" id="pk${i}" data-pp="km" inputmode="numeric" maxlength="9" placeholder="112 000"></div>
+      <div><label class="f" for="pc${i}">Coût (€)</label><input class="field" id="pc${i}" data-pp="cout" inputmode="decimal" maxlength="8" placeholder="850"></div>
+      <button class="btn ghost small" type="button" data-pdel aria-label="Retirer cette panne">Retirer</button></div>`);
+    $(`#pp${i}`).focus(); return;
+  }
+  if(b.hasAttribute("data-pdel")){ b.closest(".ligne").remove(); $("#panneAdd").focus(); return; }
+  if(b.id === "avisModifier"){ avisEdition = true; renderAvis(); document.querySelector("#avisForm input")?.focus(); return; }
+  if(b.id === "avisAnnuler"){ avisEdition = false; renderAvis(); return; }
+  if(b.id === "avisSupprimer"){
+    if(!confirm("Supprimer votre avis ? Il disparaîtra des avis publiés.")) return;
+    const r = await api("DELETE", `/api/garage/${avisOf}/avis`);
+    if(!r.ok){ showNotice(r.error); return; }
+    return openAvis(avisOf);
+  }
+});
+$("#avisView").addEventListener("submit", async e => {
+  if(e.target.id !== "avisForm") return;
+  e.preventDefault();
+  const f = e.target, notes = {};
+  for(const k of Object.keys(NOTES_AV)){
+    const v = f.querySelector(`input[name="n_${k}"]:checked`);
+    if(!v){ $("#avisMsg").textContent = `Donnez une note pour « ${NOTES_AV[k]} ».`; f.querySelector(`input[name="n_${k}"]`).focus(); return; }
+    notes[k] = +v.value;
+  }
+  const reco = f.querySelector('input[name="reco"]:checked');
+  if(!reco){ $("#avisMsg").textContent = "Dites si vous recommanderiez cette voiture."; f.querySelector('input[name="reco"]').focus(); return; }
+  const pannes = [...f.querySelectorAll("#pannesf .ligne")].map(l => ({piece:l.querySelector('[data-pp="piece"]').value, km:l.querySelector('[data-pp="km"]').value, cout:l.querySelector('[data-pp="cout"]').value}));
+  const r = await api("PUT", `/api/garage/${avisOf}/avis`, {notes, recommande:reco.value === "oui", pannes, points_forts:$("#av_forts").value, points_faibles:$("#av_faibles").value, commentaire:$("#av_com").value});
+  if(!r.ok){ $("#avisMsg").textContent = r.error; return; }
+  await openAvis(avisOf);
+  showNotice("Votre avis est publié. Merci : il aidera d'autres conducteurs.");
+});
+/* Signaler un avis : partout où des avis sont affichés. */
+document.addEventListener("click", async e => {
+  const b = e.target.closest("[data-signaler]"); if(!b) return;
+  const box = b.parentElement;
+  if(box.querySelector(".sigform")) return;
+  box.insertAdjacentHTML("beforeend", `<form class="sigform" novalidate><label class="f" for="sig${b.dataset.signaler}">Pourquoi signaler cet avis ?</label>
+    <select class="field" id="sig${b.dataset.signaler}"><option value="">Choisir…</option>${Object.entries(MOTIFS_SIG).map(([k, t]) => `<option value="${k}">${esc(t)}</option>`).join("")}</select>
+    <p class="hint" style="margin:0">Un avis n'est jamais retiré parce qu'il est négatif. Votre signalement est anonyme.</p>
+    <div class="rowbtns"><button class="btn small" type="submit">Envoyer</button><button class="btn ghost small" type="button" data-sigclose>Annuler</button></div><p class="hint" role="status" style="margin:0"></p></form>`);
+  box.querySelector("select").focus();
+});
+document.addEventListener("click", e => { if(e.target.closest("[data-sigclose]")) e.target.closest(".sigform").remove(); });
+document.addEventListener("submit", async e => {
+  const f = e.target.closest(".sigform"); if(!f) return;
+  e.preventDefault();
+  const motif = f.querySelector("select").value, msg = f.querySelector("[role=status]");
+  if(!motif){ msg.textContent = "Choisissez un motif."; return; }
+  const r = await api("POST", `/api/avis/${f.closest("[data-aid]").dataset.aid}/signaler`, {motif});
+  msg.textContent = r.ok ? "Merci, l'avis sera examiné." : r.error;
+  if(r.ok) f.querySelector("button[type=submit]").disabled = true;
+});
+/* Mes avis (Mon compte) : y compris ceux sur une voiture vendue depuis. */
+$("#me_avisBox").addEventListener("toggle", async () => {
+  if(!$("#me_avisBox").open) return;
+  const r = await api("GET", "/api/avis/miens");
+  if(!r.ok){ $("#me_avis").textContent = r.error; return; }
+  $("#me_avis").innerHTML = r.avis.length ? `<ul class="plist">${r.avis.map(a => `<li><span>${esc(a.voiture)}, ${esc(fmtShort(a.publieLe))}${a.statut === "masque" ? ` : <strong>masqué</strong> (${esc(a.motifMasque)})` : ""}</span><button class="btn ghost small" type="button" data-delavis="${a.id}">Supprimer</button></li>`).join("")}</ul>` : `<p class="hint">Aucun avis publié.</p>`;
+});
+$("#me_avis").addEventListener("click", async e => {
+  const b = e.target.closest("[data-delavis]"); if(!b) return;
+  if(!confirm("Supprimer cet avis ?")) return;
+  const r = await api("DELETE", `/api/avis/miens/${b.dataset.delavis}`);
+  if(r.ok) b.closest("li").remove(); else showNotice(r.error);
+});
+/* Relecture : avis signalés. */
+async function loadRAvis(){
+  const r = await api("GET", "/api/admin/avis");
+  if(!r.ok){ $("#rAvis").innerHTML = `<p class="notice">${esc(r.error)}</p>`; return; }
+  const motifs = Object.entries(r.motifs).map(([k, t]) => `<option value="${k}">${esc(t)}</option>`).join("");
+  $("#rAvis").innerHTML = `<p class="intro">Un avis n'est jamais masqué parce qu'il est négatif, sévère ou contraire à la fiche : seulement pour un des motifs de la liste. L'auteur voit le motif dans « Mes avis ».</p>` +
+    (r.avis.length ? `<ul class="avl2">${r.avis.map(a => `<li>${avisCarteHTML(a, {signaler:false})}
+      <div class="sigform"><strong>${a.signalements.length} signalement${a.signalements.length > 1 ? "s" : ""}</strong><ul style="margin:0;padding-left:var(--sp-5)">${a.signalements.map(s => `<li>${esc(s.motif)}${s.detail ? ` : « ${esc(s.detail)} »` : ""} (${esc(fmtShort(s.le))})</li>`).join("")}</ul>
+        <div class="rowbtns"><button class="btn small" type="button" data-rav="garder" data-id="${a.id}">Garder l'avis</button>
+        <label class="sr" for="ram${a.id}">Motif de masquage</label><select class="field" id="ram${a.id}" style="width:auto;flex:1 1 220px"><option value="">Motif de masquage…</option>${motifs}</select>
+        <button class="btn red small" type="button" data-rav="masquer" data-id="${a.id}">Masquer</button></div><p class="hint" role="status" style="margin:0"></p></div></li>`).join("")}</ul>`
+      : `<p class="empty">Aucun avis signalé.</p>`);
+}
+$("#rAvis").addEventListener("click", async e => {
+  const b = e.target.closest("[data-rav]"); if(!b) return;
+  const motif = $(`#ram${b.dataset.id}`).value;
+  if(b.dataset.rav === "masquer" && !motif){ b.closest(".sigform").querySelector("[role=status]").textContent = "Choisissez d'abord un motif."; return; }
+  const r = await api("POST", `/api/admin/avis/${b.dataset.id}`, {action:b.dataset.rav, motif});
+  if(!r.ok){ b.closest(".sigform").querySelector("[role=status]").textContent = r.error; return; }
+  loadRAvis();
+});
+
 /* ---------- partager ou vendre : dossier partagé, transfert, masquage des factures ---------- */
 let transOf = null, trans = null, selP = null, selT = null, dernierLien = null, dernierCode = null;
 const selVide = () => ({factures:new Set(), descriptions:new Set(), garages:false, photo:false, valeur:false});
@@ -2240,7 +2457,8 @@ function setRTab(t){
   rTab = t;
   document.querySelectorAll("[data-rtab]").forEach(b => b.setAttribute("aria-selected", String(b.dataset.rtab === t)));
   $("#rTableau").hidden = t !== "tableau"; $("#rFiches").hidden = t !== "fiches";
-  $("#rProps").hidden = t !== "propositions" && t !== "signalements"; $("#rQuestions").hidden = t !== "questions";
+  $("#rProps").hidden = t !== "propositions" && t !== "signalements"; $("#rQuestions").hidden = t !== "questions"; $("#rAvis").hidden = t !== "avis";
+  if(t === "avis") loadRAvis();
   if(t === "tableau") loadRTableau(); else if(t === "fiches"){ rFiche = null; loadRFiches(); }
   else if(t === "propositions" || t === "signalements") loadRProps(); else if(t === "questions") loadRQuestions();
 }
@@ -2254,7 +2472,7 @@ async function loadRTableau(){
   const kpi = (n, t) => `<div class="kpi"><strong>${n}</strong><span>${t}</span></div>`;
   $("#rTableau").innerHTML = `
     <h3 class="sect" style="margin-bottom:var(--sp-3)">À traiter</h3>
-    <div class="kpis">${kpi(nProps, "propositions en attente")}${kpi(p.signalement || 0, "signalements d'erreur en attente")}
+    <div class="kpis">${kpi(nProps, "propositions en attente")}${kpi(p.signalement || 0, "signalements d'erreur en attente")}${kpi(r.avisSignales || 0, "avis signalés à examiner")}
       ${kpi(eur(r.depenseObservateurMois), `dépensés par l'Observateur ce mois-ci${r.budgetObservateur ? ` (budget ${eur(r.budgetObservateur)})` : " (pas de budget défini)"}`)}</div>
     <h3 class="sect" style="margin-bottom:var(--sp-3)">Fiches par statut</h3><div class="kpis">${cartes}</div>
     <h3 class="sect" style="margin-bottom:var(--sp-3)">Retours des utilisateurs (30 derniers jours)</h3>

@@ -147,6 +147,9 @@ export async function passage(cible, deps, options = {}) {
       // Garder de quoi regrouper les faits à la fin (sinon, extractions payées pour rien).
       const reserve = coutMaxEur(model, { caracteres: 60_000, maxTokens: 8000 }, budget.eurParUsd);
       const faits = [];
+      // Pannes citées par plusieurs avis de propriétaires Rétroviz : regroupées et recoupées avec le reste.
+      for (const f of deps.avis?.faitsPourObservateur({ marque, modele }) || []) faits.push({ ...f, id: faits.length + 1 });
+      if (faits.length) log({ type: "source", message: `${faits.length} panne${faits.length > 1 ? "s" : ""} citée${faits.length > 1 ? "s" : ""} par plusieurs avis de propriétaires Rétroviz` });
       let lues = 0;
       for (const p of pages.values()) {
         if (lues >= opt.maxPages) break;

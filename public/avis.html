@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Crect width=%2232%22 height=%2232%22 rx=%228%22 fill=%22%23123F8C%22/%3E%3Cpath d=%22M6 20v-4l3-6h13l4 6h1v4z%22 fill=%22%23fff%22/%3E%3Ccircle cx=%2211%22 cy=%2221%22 r=%222.5%22 fill=%22%23123F8C%22 stroke=%22%23fff%22 stroke-width=%221.5%22/%3E%3Ccircle cx=%2222%22 cy=%2221%22 r=%222.5%22 fill=%22%23123F8C%22 stroke=%22%23fff%22 stroke-width=%221.5%22/%3E%3C/svg%3E">
+<title>Comment fonctionnent les avis – Rétroviz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+/* Mêmes variables que l'application (voir DESIGN.md). */
+:root{--bg:#F6F9FD;--surface:#FFFFFF;--soft:#E8F0FB;--line:#D8E3F0;--ink:#0E1F3B;--muted:#4E5F78;--primary:#123F8C;--amber-ink:#8A4F00;
+  --font:"Barlow","Segoe UI",Roboto,Helvetica,Arial,sans-serif;--r-lg:16px;color-scheme:light}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#0A1426;--surface:#101D33;--soft:#172A4A;--line:#24375A;--ink:#E6EEF9;--muted:#A3B4CF;--primary:#8DB8F7;--amber-ink:#F4C468;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0A1426;--surface:#101D33;--soft:#172A4A;--line:#24375A;--ink:#E6EEF9;--muted:#A3B4CF;--primary:#8DB8F7;--amber-ink:#F4C468;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);font-size:17px;line-height:1.6}
+main{max-width:760px;margin:0 auto;padding:24px 16px 64px}
+a{color:var(--primary)}
+:focus-visible{outline:3px solid var(--primary);outline-offset:2px}
+h1{font-size:32px;line-height:1.2;margin:16px 0 8px;color:var(--primary)}
+h2{font-size:21px;margin:32px 0 8px;color:var(--primary)}
+.brouillon{background:var(--soft);border-left:4px solid var(--amber-ink);border-radius:8px;padding:12px 16px;margin:16px 0}
+ul{padding-left:22px}
+li{margin:4px 0}
+.muted{color:var(--muted);font-size:15px}
+</style>
+</head>
+<body>
+<main>
+  <p><a href="/">← Retour à Rétroviz</a></p>
+  <h1>Comment fonctionnent les avis</h1>
+  <p class="brouillon"><strong>Version provisoire.</strong> Cette page décrit ce que fait Rétroviz aujourd'hui. Elle sera relue par un professionnel du droit avant tout lancement public.</p>
+
+  <h2>Qui peut publier un avis</h2>
+  <ul>
+    <li>Seulement une personne connectée, depuis une voiture de son garage Rétroviz.</li>
+    <li>La voiture doit être dans son garage depuis <strong>au moins 3 mois</strong> (depuis le transfert, pour une voiture reçue d'un ancien propriétaire), avec <strong>au moins 2 relevés de kilométrage</strong> faits par elle.</li>
+    <li><strong>Un seul avis par voiture</strong> et par propriétaire. Il peut être modifié ou supprimé à tout moment.</li>
+  </ul>
+
+  <h2>Ce que veut dire « Propriétaire vérifié par son garage Rétroviz »</h2>
+  <p>Cette mention signifie que l'avis a été publié depuis un garage Rétroviz qui remplissait les conditions ci-dessus au moment de la publication. <strong>Rétroviz ne contrôle pas la carte grise</strong> ni aucun justificatif de propriété : la mention indique un usage suivi de la voiture dans Rétroviz, pas une preuve de propriété.</p>
+
+  <h2>Ce qui est affiché</h2>
+  <ul>
+    <li>Les notes (fiabilité, coût d'entretien, confort, consommation, rapport qualité-prix), la recommandation, les pannes rencontrées, les points forts et faibles, le commentaire.</li>
+    <li>La durée de possession, les kilomètres parcourus et le kilométrage au compteur, calculés par Rétroviz à partir du garage de l'auteur, au moment de la publication ou de la dernière modification.</li>
+    <li>La date de publication et, le cas échéant, la date de la dernière modification.</li>
+    <li><strong>Jamais l'identité de l'auteur</strong> : ni nom, ni pseudonyme, ni e-mail, ni ville.</li>
+  </ul>
+
+  <h2>Ordre d'affichage et synthèse</h2>
+  <ul>
+    <li>Les avis sont classés <strong>du plus récent au plus ancien</strong> (date de la dernière modification). Aucun avis n'est mis en avant.</li>
+    <li>À partir de <strong>5 avis</strong> sur un modèle ou une motorisation, Rétroviz affiche aussi les notes moyennes, la part de propriétaires qui recommandent la voiture et les pannes citées par au moins 2 avis. En dessous, les avis sont seulement affichés un par un.</li>
+  </ul>
+
+  <h2>Contrepartie</h2>
+  <p>Aucune : Rétroviz ne paie pas les avis, n'offre rien en échange, et aucun constructeur ni garage ne peut acheter, trier ou retirer des avis.</p>
+
+  <h2>Contrôle et modération</h2>
+  <ul>
+    <li><strong>À la publication</strong>, un filtre automatique refuse les avis qui contiennent des coordonnées (e-mail, téléphone, lien, plaque d'immatriculation) ou des injures. L'auteur voit tout de suite la raison du refus et peut corriger son texte.</li>
+    <li><strong>Signalement</strong> : chacun, y compris un professionnel concerné, peut signaler un avis avec un motif (coordonnées, injure, hors sujet, avis qui semble faux, autre). Le signalement est anonyme.</li>
+    <li><strong>Examen</strong> : un modérateur garde l'avis ou le masque. Un avis n'est masqué que pour l'un de ces motifs : coordonnées ou informations personnelles, injures ou propos haineux, hors sujet, contenu illicite (diffamation, dénigrement d'une personne nommée…), avis manifestement faux.</li>
+    <li><strong>Un avis n'est jamais retiré parce qu'il est négatif</strong>, sévère, ou en désaccord avec les fiches Rétroviz.</li>
+    <li>Quand un avis est masqué, son auteur voit le motif et la date dans « Mon compte › Mes avis ». Il peut le modifier ; l'avis est alors examiné de nouveau.</li>
+  </ul>
+
+  <h2>Durée de publication</h2>
+  <p>Un avis reste publié tant que son auteur ne le supprime pas, et au plus <strong>5 ans</strong> après sa dernière modification. Il reste publié si l'auteur vend la voiture ; il disparaît si l'auteur supprime son compte.</p>
+
+  <h2>À quoi servent les avis</h2>
+  <p>Ils sont affichés sur les fiches des modèles et des motorisations. Les pannes citées par plusieurs propriétaires servent aussi à l'Observateur de Rétroviz, comme une source parmi d'autres, de type « propriétaires » : elles ne suffisent jamais seules à confirmer une information de la base.</p>
+
+  <h2>Vos données</h2>
+  <p>Un avis est une donnée personnelle de son auteur, même sans nom affiché : il figure dans son export (« Télécharger mes données ») et il est effacé avec son compte. Voir aussi la page <a href="/confidentialite.html">Confidentialité</a>.</p>
+</main>
+</body>
+</html>

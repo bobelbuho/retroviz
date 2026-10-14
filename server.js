@@ -18,6 +18,7 @@ import { createValeur, anthropicEstimator } from "./valeur.js";
 import { createVie } from "./vie.js";
 import { createBadge } from "./badge.js";
 import { createTransfert } from "./transfert.js";
+import { createAvis } from "./avis.js";
 
 const PORT = process.env.PORT || 3000;
 const MODEL = process.env.MODEL || "claude-sonnet-5-5";
@@ -50,6 +51,7 @@ const transfert = createTransfert(db, { carnet, vie, badge, rappels, valeur, sto
 const exportData = uid => {
   const d = garage.exportFor(uid);
   for (const v of d.vehicules) v.changementsDeProprietaire = transfert.datesTransfert(v.id);
+  d.avis = avis.exportFor(uid); // y compris ceux sur des voitures vendues depuis
   return d;
 };
 // Suppression du compte : factures et photos effacées du stockage.
@@ -57,6 +59,8 @@ const beforeDeleteUser = uid => { const a = carnet.beforeDeleteUser(uid), b = ga
 // Relecture des fiches : réservée aux adresses de ADMIN_EMAILS (séparées par des virgules).
 const relecture = createRelecture({ dataDir: DATA_DIR, kb, admins: parseAdmins(process.env.ADMIN_EMAILS), extraTableau: () => tableau() });
 const propositions = createPropositions(db, relecture);
+// Avis de propriétaires : publication depuis le garage, lecture publique, signalements, modération.
+const avis = createAvis(db, { kb, isAdmin: relecture.isAdmin });
 // Retours sous les réponses, questions sans fiche, statistiques anonymes (avec consentement).
 const retours = createRetours(db);
 retours.onSignalement = p => propositions.creer(p); // les signalements arrivent dans la Relecture
@@ -64,6 +68,7 @@ const depenseDuMois = db.prepare("SELECT COALESCE(SUM(cout_eur), 0) AS eur FROM 
 const derniersPassages = db.prepare("SELECT id, debut, cible, statut, sources, refusees, faits, propositions, rappels, cout_eur FROM observateur_passages ORDER BY id DESC LIMIT 8");
 const tableau = () => ({
   propositions: propositions.enAttente(),
+  avisSignales: avis.aModerer(),
   retours: retours.statsRetours(),
   questionsSansFiche: retours.prioritaires(5),
   statistiquesPubliables: retours.statistiques().length,
@@ -83,6 +88,7 @@ app.use(transfert);
 app.use(badge);
 app.use(relecture);
 app.use(propositions);
+app.use(avis);
 app.use(retours);
 app.use(express.static("public"));
 // pdf.js (navigateur) : conversion des factures PDF en image pour les masquer, sans service extérieur.

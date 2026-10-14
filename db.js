@@ -181,6 +181,42 @@ CREATE TABLE IF NOT EXISTS transferts (
   ancien_achat_km   INTEGER
 );
 CREATE INDEX IF NOT EXISTS transferts_vehicle ON transferts(vehicle_id, statut);
+-- Avis de propriétaires. Jamais affichés avec l'identité de l'auteur ; effacés avec son compte.
+-- Une voiture vendue garde l'avis de l'ancien propriétaire (l'avis reste à son auteur).
+CREATE TABLE IF NOT EXISTS avis (
+  id               INTEGER PRIMARY KEY,
+  user_id          INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  vehicle_id       INTEGER REFERENCES vehicles(id) ON DELETE SET NULL,
+  cle_modele       TEXT NOT NULL,         -- marque + modèle normalisés (ou ceux de la fiche reliée)
+  cle_motorisation TEXT NOT NULL,         -- fiche:<id>, ou marque + modèle + motorisation normalisés
+  fiche_id         TEXT,
+  voiture          TEXT NOT NULL,         -- désignation affichée
+  notes            TEXT NOT NULL,         -- JSON {fiabilite, cout_entretien, confort, consommation, rapport_qualite_prix} de 1 à 5
+  pannes           TEXT NOT NULL,         -- JSON [{piece, km, cout}]
+  points_forts     TEXT NOT NULL DEFAULT '',
+  points_faibles   TEXT NOT NULL DEFAULT '',
+  recommande       INTEGER NOT NULL,
+  commentaire      TEXT NOT NULL DEFAULT '',
+  possession_mois  INTEGER,               -- au moment de la publication ou de la dernière modification
+  km_parcourus     INTEGER,
+  km_actuel        INTEGER,
+  cree_le          TEXT NOT NULL,
+  modifie_le       TEXT NOT NULL,
+  statut           TEXT NOT NULL DEFAULT 'publie', -- publie ou masque (modération)
+  motif_masque     TEXT,
+  masque_le        TEXT,
+  UNIQUE (user_id, vehicle_id)
+);
+CREATE INDEX IF NOT EXISTS avis_cles ON avis(statut, cle_modele, cle_motorisation);
+-- Signalements d'avis : anonymes (aucun compte enregistré).
+CREATE TABLE IF NOT EXISTS avis_signalements (
+  id      INTEGER PRIMARY KEY,
+  avis_id INTEGER NOT NULL REFERENCES avis(id) ON DELETE CASCADE,
+  motif   TEXT NOT NULL,
+  detail  TEXT,
+  traite  INTEGER NOT NULL DEFAULT 0,
+  cree_le TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now'))
+);
 -- Essais de code de transfert ratés : limite par compte et par heure (contre les codes devinés).
 CREATE TABLE IF NOT EXISTS essais_transfert (
   id      INTEGER PRIMARY KEY,

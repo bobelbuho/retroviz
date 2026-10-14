@@ -9,6 +9,7 @@ Assistant automobile avec trois modes : **J'ai une panne** (particuliers), **Dia
 ```
 retroviz/
 ├── public/index.html   ← l'interface (HTML, CSS, JavaScript)
+├── public/avis.html    ← « Comment fonctionnent les avis » (informations exigées par le Code de la consommation)
 ├── public/dossier.html ← page publique d'un dossier partagé (lecture seule, non indexée)
 ├── public/dossier-rendu.js ← rendu du dossier, commun à la page publique et à l'aperçu
 ├── server.js           ← le serveur : assemble les modules et sert l'interface
@@ -26,6 +27,7 @@ retroviz/
 ├── badge.js            ← badge « Voiture bien suivie » : critères et seuils
 ├── energie.js          ← énergie d'une voiture (thermique, hybride, électrique)
 ├── transfert.js        ← dossier partageable, transfert au nouveau propriétaire, notes sur l'historique reçu
+├── avis.js             ← avis de propriétaires : conditions, filtre, synthèse, signalements, modération
 ├── historique.js       ← confiance de l'historique : « saisi le », « modifié le », continuité du kilométrage
 ├── metadonnees.js      ← retire les métadonnées (GPS…) des images avant de les montrer
 ├── relecture.js        ← page « Relecture » (administrateurs) : corriger et valider les fiches
@@ -129,6 +131,18 @@ Onglet « Partager ou vendre » de la page d'une voiture. **Tout ce qui peut ide
 - **Historique verrouillé** : relevés, entretiens, factures et notes reçus ne peuvent être ni modifiés ni supprimés (403). L'acheteur peut ajouter une **note** sur une entrée reçue (500 caractères), visible dans la frise, le carnet et le dossier, et transmise aux propriétaires suivants.
 - **Confiance** : chaque entrée affiche « avec facture » ou « déclaré » ; « saisi le … » si elle a été ajoutée plus de 30 jours après sa date ; « modifié le … » si elle a été modifiée alors que sa date et sa saisie avaient plus de 30 jours (table `modifications` : anciennes et nouvelles valeurs pour date, km, type, coût ; pour la description et le garage, seulement le fait qu'ils ont changé, jamais l'ancien texte ; suppressions comptées). Le dossier résume : « 3 entretiens saisis après coup, dont 2 avec facture », et met en avant le **kilométrage suivi sans interruption** (jamais plus de 6 mois sans kilométrage connu), y compris d'un propriétaire à l'autre.
 - **RGPD** : l'export de l'acheteur contient l'historique reçu et les dates de changement de propriétaire ; supprimer le compte du vendeur ne touche pas une voiture déjà transférée.
+
+## Avis de propriétaires
+
+Onglet « Avis » de la page d'une voiture.
+
+- **Qui publie** : la voiture doit être dans le garage depuis au moins **3 mois calendaires** (depuis le transfert pour une voiture reçue) avec au moins **2 relevés** faits par ce propriétaire (`CONDITIONS` dans `avis.js`). Un avis par voiture et par propriétaire, modifiable et supprimable. Après une vente, l'avis reste à son auteur (« Mon compte › Mes avis »).
+- **Formulaire** : 5 notes de 1 à 5 (fiabilité, coût d'entretien, confort, consommation, rapport qualité-prix), « la recommanderiez-vous ? », pannes (pièce, km, coût), points forts, points faibles, commentaire court.
+- **Filtre automatique** à la publication : e-mail, téléphone, lien, plaque (format AB-123-CD) et injures visant des personnes sont refusés, avec la raison. Un avis négatif sur la voiture passe toujours.
+- **Affichage** : avis de la motorisation et de tout le modèle, du plus récent au plus ancien. À partir de **5 avis** (`SEUIL_SYNTHESE`), moyennes, part qui recommande et pannes citées par au moins 2 avis ; avant, avis un par un. Chaque avis montre la durée de possession, les km parcourus, le km au compteur, la date, la mention « Propriétaire vérifié par son garage Rétroviz », jamais l'identité. Publié au plus 5 ans après la dernière modification.
+- **Modération** : « Signaler » (anonyme, motif obligatoire) ; file « Avis signalés » dans la Relecture ; masquer exige un motif de la liste `MOTIFS_MASQUAGE`, où « négatif » ne figure pas. L'auteur voit le motif ; s'il corrige son avis, il revient dans la file.
+- **Observateur** : les pannes citées par au moins 2 avis du modèle deviennent des faits d'une source de type « proprietaires » (une seule source pour tous les avis, jamais suffisante seule pour confirmer).
+- Routes : `GET/PUT/DELETE /api/garage/:id/avis`, `GET /api/avis?marque=&modele=&motorisation=&fiche=`, `POST /api/avis/:id/signaler`, `GET /api/avis/miens`, `GET/POST /api/admin/avis`.
 
 ## Mon garage
 

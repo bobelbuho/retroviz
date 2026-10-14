@@ -8,6 +8,7 @@ import { loadKnowledge, DATA_DIR } from "../knowledge.js";
 import { createRelecture } from "../relecture.js";
 import { createPropositions } from "../propositions.js";
 import { createRetours } from "../retours.js";
+import { createAvis } from "../avis.js";
 import { today } from "../kilometrage.js";
 import { createWeb } from "../observateur/web.js";
 import { createIA } from "../observateur/ia.js";
@@ -95,7 +96,9 @@ async function main() {
 
   const ligne = l => console.log(`  ${l.type === "refus" ? "⛔" : l.type === "rappel" ? "🛡️ " : l.type === "erreur" ? "⚠️ " : l.type === "cout" ? "💶" : "•"} ${l.message}${l.url ? ` — ${l.url}` : ""}`);
   const ia = web ? createIA({ client: new Anthropic(), model, budget, log: ligne }) : null;
-  const deps = { db, kb, web: createWeb({ sources }), ia, relecture, propositions, budget, sources, model, today, log: ligne };
+  // Avis de propriétaires Rétroviz : une source de plus, de type « proprietaires » (jamais suffisante seule pour confirmer).
+  const avis = createAvis(db, { kb });
+  const deps = { db, kb, web: createWeb({ sources }), ia, relecture, propositions, budget, sources, model, today, avis, log: ligne };
 
   console.log(`🔭 Observateur${o.simulation ? " (simulation : rien n'est écrit)" : ""} — ${uniques.length} modèle(s), budget ${budgetEur ? `${budget.restant().toFixed(2)} € restants ce mois-ci` : "non défini"}, modèle d'IA ${web ? model : "non utilisé"}`);
   const bilans = [];
