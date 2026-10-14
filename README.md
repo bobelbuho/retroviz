@@ -9,7 +9,9 @@ Assistant automobile avec trois modes : **J'ai une panne** (particuliers), **Dia
 ```
 retroviz/
 ├── public/index.html   ← l'interface (HTML, CSS, JavaScript)
-├── server.js           ← le serveur qui appelle l'API Claude
+├── server.js           ← le serveur : assemble les modules et sert l'interface
+├── chat.js             ← l'assistant (/api/chat) : relaie les questions à l'API Claude
+├── prompts.js          ← les consignes de l'IA et la voix de Rétroviz (côté serveur)
 ├── knowledge.js        ← la recherche dans la base de connaissances
 ├── auth.js             ← les comptes (inscription, connexion, export, suppression)
 ├── garage.js           ← « Mon garage » : les voitures de chaque compte
@@ -149,12 +151,12 @@ Depuis la carte d'une voiture, « Estimer la valeur » demande à l'IA une fourc
 
 ## Où modifier quoi
 
-- Le comportement de l'IA (ton, structure des réponses, règles de sécurité) : les textes `rules` et `SAFETY` dans `public/index.html`.
+- La voix de Rétroviz, le comportement de l'IA (ton, structure des réponses, règles de sécurité) et la demande d'analyse d'achat : `prompts.js`. Ces consignes restent sur le serveur : la page n'envoie que le mode choisi, la conversation et la voiture.
 - Les symptômes proposés en pastilles dans « J'ai une panne » : la constante `HELP` dans `public/index.html`. Chaque catégorie est une liste de textes ; ajoutez un `*` à la fin d'un texte pour le marquer comme dangereux (il affiche alors l'encadré rouge « arrêtez-vous dès que possible »).
 - La fiche rapide du mode « Diagnostic pro » : le formulaire `proForm` (HTML) et le message qu'il construit (partie « fiche rapide pro » du script).
 - L'analyse d'achat : la variable `prompt` dans la partie « achat » de `public/index.html`.
 - Les fiches de la base de connaissances : `data/vehicules.json` et `data/obd.json` (mode d'emploi dans `data/README.md`).
-- La consigne donnée à l'IA sur l'usage des fiches : la constante `KB_RULES` dans `server.js`.
+- La consigne donnée à l'IA sur l'usage des fiches : la constante `REGLES_BASE` dans `prompts.js`.
 - La recherche (scores, taille maximale du contexte `MAX_CONTEXT`) : `knowledge.js`. Lancez `npm test` après toute modification.
 - Les comptes (longueur minimale du mot de passe, durée de session, blocage après échecs) : les constantes en haut de `auth.js`. Lancez `npm test` après toute modification.
 - Le garage (nombre maximal de voitures, champs, règle de rattachement à une fiche `matchFiche`) : `garage.js`. Les relevés (écart minimal pour la moyenne, nombre maximal, contrôles) : `kilometrage.js`. Le carnet (types d'entretien, limites) : `carnet.js`. Les règles « À venir » (seuils « bientôt », vidange par défaut, contrôle technique, pneus hiver) : `avenir.js`. La consigne envoyée à l'IA pour la valeur, son schéma JSON et les contrôles de la réponse : `valeur.js`. Les types de fichiers acceptés et la taille maximale : `storage.js`. Lancez `npm test` après toute modification.

@@ -603,10 +603,11 @@ function parseJSON(text){
   throw {code:"invalid_json", message:"Réponse non lisible", text};
 }
 function makeSample(){
-  async function call(messages, opts = {}){
+  /* payload : { mode, messages, vehicule } ou { mode: "achat", achat } */
+  async function call(payload, opts = {}){
     let res;
     try{
-      res = await fetch("/api/chat", {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({messages, context:opts.context}), signal:opts.signal});
+      res = await fetch("/api/chat", {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify(payload), signal:opts.signal});
     }catch(e){ throw {code: e.name === "AbortError" ? "cancelled" : "offline", message:String(e)}; }
     if(!res.ok){
       let j = {}; try { j = await res.json(); } catch {}
@@ -628,39 +629,23 @@ function makeSample(){
     if(!text.trim()) throw {code:"empty_completion", message:"Réponse vide"};
     return {text, truncated:false};
   }
-  const sample = (input, opts) => call(typeof input === "string" ? [{role:"user", content:input}] : input, opts);
+  const sample = (payload, opts) => call(payload, opts);
   sample.json = async (input, opts) => parseJSON((await sample(input, opts)).text);
   return sample;
 }
 const samplePromise = Promise.resolve(makeSample());
 
-const SAFETY = `Sécurité, règle absolue : pour les freins, la direction, les airbags, une odeur d'essence, de la fumée, une surchauffe, un voyant rouge (huile, température, freins, batterie qui s'allume en roulant) ou une perte de puissance brutale sur autoroute, tu recommandes l'arrêt ou le garage et tu n'encourages jamais une réparation risquée par un non-professionnel. Tu n'affirmes jamais une certitude que tu n'as pas : tu parles de causes « probables ».`;
-
+/* Les consignes données à l'IA sont côté serveur (prompts.js) : la page n'envoie que le mode, la conversation et la voiture. */
 const MODES = {
   particulier: {
     intro: "Décrivez le problème avec vos mots : Rétroviz vous dit si vous pouvez rouler et quoi faire.",
     placeholder: "Ex. un voyant orange moteur s'est allumé et la voiture broute à l'accélération",
-    examples: ["Ma voiture tremble au ralenti", "Bruit de grincement quand je freine", "Voyant moteur orange allumé", "La voiture ne démarre plus, ça fait clic clic", "Odeur de brûlé après un trajet"],
-    rules: `Tu es Rétroviz, un assistant automobile qui aide des particuliers sans connaissances mécaniques, en français, avec un ton rassurant et clair.
-
-Format obligatoire :
-- La toute première ligne de ta réponse est exactement l'une de : "NIVEAU: VERT" (peut rouler normalement), "NIVEAU: ORANGE" (peut rouler prudemment, garage à prévoir rapidement), "NIVEAU: ROUGE" (ne pas rouler, s'arrêter dès que possible, faire remorquer), "NIVEAU: INCONNU" (pas assez d'informations).
-- Si les informations sont insuffisantes, mets NIVEAU: INCONNU et pose 2 à 4 questions courtes et simples (voyants, bruit, quand ça arrive, depuis quand, kilométrage).
-- Sinon, organise ta réponse avec ces titres markdown "### " : "Ce qui se passe probablement" (2 à 4 causes, de la plus probable à la moins probable, expliquées simplement), "Ce que vous pouvez vérifier vous-même" (uniquement des vérifications sans risque : niveaux, voyants, observation), "Quand aller au garage" (urgence, et la phrase à dire au garagiste pour décrire le problème), "Ordre de prix" (fourchettes indicatives en euros, en précisant que ça varie selon le modèle et le garage).
-- Explique chaque terme technique en quelques mots. Reste concis.
-
-${SAFETY}`
+    examples: ["Ma voiture tremble au ralenti", "Bruit de grincement quand je freine", "Voyant moteur orange allumé", "La voiture ne démarre plus, ça fait clic clic", "Odeur de brûlé après un trajet"]
   },
   pro: {
     intro: "Code défaut, symptômes ou valeurs relevées : Rétroviz propose une stratégie de diagnostic et les défauts connus du modèle.",
     placeholder: "Ex. P0299 sur 1.6 HDi 110 FAP, sous-suralimentation en charge, turbo neuf il y a 20 000 km",
-    examples: ["P0420 sur une essence de 2014, sondes OK", "P0087 pression rail trop basse sur 2.0 TDI", "Défaut intermittent CAN U0100", "Démarreur qui cliquette, batterie 12,4 V", "Valeurs de référence d'un débitmètre au ralenti"],
-    rules: `Tu es Rétroviz, un assistant de diagnostic automobile pour professionnels (mécaniciens, techniciens, électriciens auto), en français. Ton interlocuteur a un outil de diagnostic, un multimètre, parfois un oscilloscope et un manomètre.
-
-Réponds avec un registre technique précis, structuré avec des titres markdown "### " adaptés, typiquement : "Interprétation" (signification du code ou des symptômes, conditions de déclenchement), "Causes probables" (classées par fréquence, en signalant les défauts connus ou récurrents sur ce moteur ou ce modèle quand tu les connais), "Stratégie de diagnostic" (étapes ordonnées, de la plus rapide et la moins coûteuse à la plus lourde, avec les paramètres à lire en données dynamiques et les mesures à faire), "Valeurs de référence" (ordres de grandeur typiques, en précisant qu'elles doivent être confirmées par les données constructeur), "Pièges courants".
-Si le véhicule ou le contexte manque, demande-le brièvement (moteur exact, code moteur, kilométrage, historique). N'invente jamais de numéro de note technique, de référence pièce ou de valeur exacte dont tu n'es pas sûr : dis clairement quand une donnée est à vérifier.
-
-${SAFETY}`
+    examples: ["P0420 sur une essence de 2014, sondes OK", "P0087 pression rail trop basse sur 2.0 TDI", "Défaut intermittent CAN U0100", "Démarreur qui cliquette, batterie 12,4 V", "Valeurs de référence d'un débitmètre au ralenti"]
   }
 };
 
@@ -877,16 +862,11 @@ async function send(given){
   renderThread(); setBusy(true);
   asst._node = null;
   const veh = $("#vehicle").value.trim();
-  const rules = MODES[m].rules + (veh ? `\n\nVéhicule indiqué par l'utilisateur : ${veh}` : `\n\nVéhicule : non précisé (demande-le si c'est utile).`);
   const history = list.slice(0,-1).filter(t => t.content && !t.failed).slice(-12).map(t => ({role:t.role, content:t.content}));
-  /* Recherche dans la base : les 3 derniers messages de l'utilisateur, le plus récent en premier
-     (« et combien ça coûte ? » après « P0300 » retrouve encore la fiche du code). */
-  const recent = list.filter(t => t.role === "user").slice(-3).reverse().map(t => t.content).join("\n");
   ctl = new AbortController();
   try{
-    const r = await sample([{role:"user", content:rules}, ...history], {
+    const r = await sample({mode:m, vehicule:veh, messages:history}, {
       cache:false, signal:ctl.signal,
-      context:{vehicule:veh, texte:recent},
       onSources:s => { asst.sources = s; },
       onText:({text}) => { asst.content=text; asst.pending=false; if(mode===m) updateLast(asst); }
     });
@@ -925,35 +905,15 @@ $("#achatForm").addEventListener("submit", async e => {
     marque:v("a_marque"), modele:v("a_modele"), annee:v("a_annee"), motorisation:v("a_moteur"),
     boite:v("a_boite"), km, prix:toInt(v("a_prix")), usage:v("a_usage")
   };
-  const prompt = `Tu es un expert automobile indépendant spécialisé dans les véhicules d'occasion. Tu conseilles un particulier français avant un achat. Analyse ce véhicule :
-- Marque : ${car.marque}
-- Modèle : ${car.modele}
-- Année : ${car.annee || "non précisée"}
-- Motorisation : ${car.motorisation || "non précisée"}
-- Boîte : ${car.boite || "non précisée"}
-- Kilométrage actuel : ${car.km} km
-- Prix demandé : ${car.prix ? car.prix+" €" : "non précisé"}
-- Usage prévu par l'acheteur : ${car.usage || "non précisé"}
-
-Réponds uniquement avec un objet JSON de cette forme exacte :
-{"vehicule":"désignation précise retenue (génération, motorisation)","note":7,"recommandation":"bon_choix|prudence|a_eviter","resume":"2 ou 3 phrases","avis_prix":"avis sur le prix demandé, ou chaîne vide s'il n'est pas donné","avis_usage":"adéquation avec l'usage prévu, ou chaîne vide","qualites":["..."],"defauts":["..."],"pannes":[{"km":120000,"titre":"...","detail":"symptômes et explication en une ou deux phrases","cout":"800 à 1 200 €","gravite":"faible|moyenne|elevee","type":"panne|entretien"}],"a_controler":["point précis à vérifier lors de l'essai ou sur le carnet"],"questions_vendeur":["..."],"incertitude":"ce dont tu n'es pas sûr, ou chaîne vide"}
-
-Règles :
-- Langage simple pour un non-spécialiste.
-- "pannes" contient 6 à 10 éléments : les défauts constructeur et pannes récurrentes connus pour cette génération et cette motorisation (type "panne") ET les gros entretiens coûteux comme distribution, embrayage, volant moteur bimasse, FAP, amortisseurs (type "entretien"). "km" est un entier : le kilométrage typique d'apparition ou d'échéance. Inclus des éléments avant ET après le kilométrage actuel.
-- "note" sur 10 juge CE véhicule à CE kilométrage${car.prix ? " et à ce prix" : ""}.
-- 3 à 6 qualités, 3 à 6 défauts, 5 à 8 points à contrôler, 3 à 6 questions au vendeur.
-- Si la motorisation ou la génération est ambiguë, raisonne sur la plus probable et explique-le dans "incertitude". Si tu t'appuies sur une fiche Rétroviz « à vérifier », signale-le aussi dans "incertitude". N'invente jamais de rappel constructeur précis dont tu n'es pas certain.`;
   const rep = $("#report");
   rep.hidden = false;
   rep.innerHTML = `<p class="thinking">Rétroviz analyse ce véhicule… cela peut prendre jusqu'à une minute.</p><button class="btn stop" id="achatStop" type="button">Arrêter</button>`;
   setBusy(true); $("#sendBtn").hidden=false; $("#stopBtn").hidden=true;
   ctl = new AbortController();
   $("#achatStop").addEventListener("click", () => ctl && ctl.abort());
-  const designation = [car.marque, car.modele, car.motorisation, car.annee, car.km+" km"].filter(Boolean).join(" ");
   let sources = null;
   try{
-    const data = await sample.json(prompt, {signal:ctl.signal, context:{vehicule:designation, texte:""}, onSources:s => { sources = s; }});
+    const data = await sample.json({mode:"achat", achat:car}, {signal:ctl.signal, onSources:s => { sources = s; }});
     renderReport(data, car, sources);
   }catch(err){
     rep.innerHTML = err && err.code==="cancelled" ? "" : `<p class="notice">${esc(errorText(err && err.code))}</p>`;

@@ -4,7 +4,7 @@
 
 1. **Protéger l'assistant** :
    - compte obligatoire pour utiliser l'assistant ;
-   - consignes de l'IA côté serveur (aujourd'hui dans la page, donc modifiables par l'utilisateur) ;
+   - ✅ consignes de l'IA côté serveur (prompts.js) ;
    - quota de questions par jour et par compte ;
    - limite de dépense mensuelle dans la console Anthropic.
 2. **Réinitialisation du mot de passe** par e-mail, avec un service d'envoi hébergé en Europe. Ce service servira aussi aux rappels et à la vérification de l'adresse.
