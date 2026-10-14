@@ -9,7 +9,8 @@ export const STATUT_LABEL = { verifie: "vérifiée", a_verifier: "à vérifier" 
 const statutOf = f => (f.statut === "verifie" ? "verifie" : "a_verifier");
 
 /* ---------- chargement ---------- */
-function readList(file, log) {
+function readList(file, log, { optional = false } = {}) {
+  if (optional && !fs.existsSync(file)) return [];
   try {
     const data = JSON.parse(fs.readFileSync(file, "utf8"));
     if (!Array.isArray(data)) throw new Error("le fichier doit contenir un tableau [ ... ]");
@@ -27,7 +28,8 @@ export function loadKnowledge(dir = DATA_DIR, log = console.warn) {
   for (const c of readList(path.join(dir, "obd.json"), log)) {
     if (c && c.code) codes.set(String(c.code).toUpperCase(), { ...c, code: String(c.code).toUpperCase() });
   }
-  return { vehicules, codes };
+  const voyants = readList(path.join(dir, "voyants.json"), log, { optional: true }).filter(v => v && v.id && v.nom);
+  return { vehicules, codes, voyants };
 }
 
 let defaultKb = null;
@@ -114,6 +116,48 @@ export function findCodes(text, kb) {
   return detectCodes(text).map(c => codes.get(c)).filter(Boolean);
 }
 
+/* ---------- voyants ---------- */
+// Un nom d'un seul mot (« ABS », « FAP ») ne suffit que si le texte parle de voyant, de témoin ou d'allumage :
+// sinon « codes », « radar » ou « fatigue » feraient remonter des fiches sans rapport.
+const CONTEXTE_VOYANT = ["voyant", "voyants", "temoin", "temoins", "allume", "allumee", "allumes", "s allume", "clignote", "clignotant", "tableau de bord"];
+export function findVoyants(text, kb, max = 2) {
+  const t = prepare(text);
+  if (!t.n) return [];
+  const contexte = CONTEXTE_VOYANT.some(w => t.padded.includes(` ${w} `));
+  const res = [];
+  for (const v of kbOrDefault(kb).voyants || []) {
+    let best = 0;
+    for (const term of [v.nom.replace(/\s*\(.*\)\s*$/, ""), ...(v.autres_noms || [])]) {
+      const n = normalize(term);
+      if (!n || !has(t, term)) continue;
+      const words = n.split(" ").length;
+      if (words < 2 && !contexte) continue;
+      best = Math.max(best, n.length + (words >= 2 ? 10 : 0));
+    }
+    if (!best) continue;
+    // La couleur citée départage (« voyant huile rouge » / « orange »).
+    if ((v.couleurs || []).some(c => t.padded.includes(` ${c} `))) best += 5;
+    res.push({ fiche: v, score: best });
+  }
+  return res.sort((a, b) => b.score - a.score).slice(0, max).map(r => r.fiche);
+}
+
+const URGENCE = { rouge: "rouge : s'arrêter", orange: "orange : garage rapidement", info: "information" };
+const ROULER = { oui: "oui", prudemment: "prudemment", non: "non" };
+function voyantBlock(v) {
+  return [
+    `## Voyant « ${v.nom} » [fiche ${STATUT_LABEL[statutOf(v)]}]`,
+    `Couleurs possibles : ${join(v.couleurs)} ; urgence ${URGENCE[v.urgence] || v.urgence} ; peut-on rouler : ${ROULER[v.rouler] || v.rouler}.`,
+    `Symbole : ${v.symbole}`,
+    `Signification : ${v.signification}`,
+    v.variantes?.length ? `Variantes : ${v.variantes.map(x => `${x.couleur ? x.couleur + ", " : ""}${x.etat} : ${x.sens}`).join(" ; ")}` : "",
+    v.que_faire?.length ? `Que faire : ${join(v.que_faire)}` : "",
+    v.causes?.length ? `Causes fréquentes : ${join(v.causes)}` : "",
+    v.cout ? `Coût indicatif : ${v.cout}` : "",
+    v.incertitudes?.length ? `Incertitudes : ${join(v.incertitudes)}` : "",
+  ].filter(Boolean).join("\n");
+}
+
 /* ---------- contexte pour l'IA ---------- */
 export function vehicleLabel(v) {
   const engines = [...new Set((v.moteurs || []).map(withoutPower))];
@@ -164,7 +208,8 @@ export function buildContext({ vehicule = "", texte = "" } = {}, kb, max = MAX_C
 
   const parts = [
     ...matches.map(m => ({ text: vehicleBlock(m.fiche, m.correspondance), source: { type: "vehicule", id: m.fiche.id, label: vehicleLabel(m.fiche), statut: statutOf(m.fiche), correspondance: m.correspondance } })),
-    ...codeFiches.map(c => ({ text: codeBlock(c), source: { type: "code", code: c.code, statut: statutOf(c) } }))
+    ...codeFiches.map(c => ({ text: codeBlock(c), source: { type: "code", code: c.code, statut: statutOf(c) } })),
+    ...findVoyants(txt, kb).map(v => ({ text: voyantBlock(v), source: { type: "voyant", id: v.id, label: v.nom, statut: statutOf(v) } }))
   ];
   if (!parts.length) return { text: "", sources: [] };
   if (missing.length) parts.push({ text: `Codes absents de la base Rétroviz : ${missing.join(", ")}.`, source: null });

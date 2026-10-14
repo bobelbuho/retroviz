@@ -116,6 +116,29 @@ label.f{display:block;font-weight:var(--fw-semibold);font-size:var(--fs-sm);marg
 .field:focus{border-color:var(--primary);outline:none;box-shadow:0 0 0 3px color-mix(in srgb,var(--primary) 30%,transparent)}
 .hint{font-size:var(--fs-xs);color:var(--muted);margin:var(--sp-1) 0 0}
 .veh{margin-bottom:var(--sp-4)}
+/* Voyants */
+.vic{width:40px;height:40px;flex:none}
+.vtools{display:flex;flex-wrap:wrap;gap:var(--sp-2) var(--sp-3);align-items:center;margin:0 0 var(--sp-4)}
+.vtools .field{flex:1 1 220px}
+.vfilters{display:flex;flex-wrap:wrap;gap:var(--sp-2)}
+.vfilters button{min-height:36px;border:1px solid var(--line);background:var(--surface);border-radius:var(--r-pill);padding:0 var(--sp-3);font-size:var(--fs-sm);cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.vfilters button[aria-pressed="true"]{background:var(--soft);border-color:var(--primary);color:var(--primary);font-weight:var(--fw-semibold)}
+.vfilters i{width:10px;height:10px;border-radius:50%;background:var(--c)}
+.vgrid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:var(--sp-2)}
+@media (max-width:420px){.vgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.vtile{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;gap:var(--sp-2);text-align:center;background:var(--surface);border:1px solid transparent;border-radius:var(--r-md);padding:var(--sp-4) var(--sp-2);cursor:pointer;box-shadow:var(--shadow);font-size:var(--fs-sm);font-weight:var(--fw-semibold);line-height:var(--lh-tight)}
+.vtile:hover{border-color:var(--primary)}
+.vfiche-head{display:flex;gap:var(--sp-4);align-items:center;margin:0 0 var(--sp-4)}
+.vfiche-head .vic{width:72px;height:72px;padding:var(--sp-2);background:var(--surface);border-radius:var(--r-md);box-shadow:var(--shadow)}
+.vfiche-head h2{font-size:var(--fs-2xl);margin:0;line-height:var(--lh-tight)}
+.vfiche-head p{margin:var(--sp-1) 0 0;color:var(--muted);font-size:var(--fs-sm)}
+.vfiche .sect h3{margin-bottom:var(--sp-2)}
+.vfiche ol,.vfiche ul{margin:0;padding-left:22px}
+.vfiche li{margin:var(--sp-1) 0}
+.verif{font-size:var(--fs-xs);color:var(--muted);margin:var(--sp-1) 0 0}
+.chip .vic{width:20px;height:20px}
+.vlink{margin:var(--sp-3) 0 0}
+
 .vehrow{display:flex;gap:var(--sp-2);flex-wrap:wrap}
 .vehrow .field{flex:1 1 260px}
 .vehrow select.field{flex:0 1 200px}
@@ -357,6 +380,7 @@ footer{margin-top:var(--sp-7);font-size:var(--fs-xs);color:var(--muted);padding-
       <div><h1 class="brand">Rétroviz</h1><p class="tagline">Regardez dans le rétro, roulez l'esprit tranquille.</p></div>
     </div>
     <nav class="nav" aria-label="Mon espace">
+      <button class="navlink" type="button" id="voyantsBtn" data-mode="voyants">Voyants</button>
       <button class="navlink" type="button" id="garageBtn" data-mode="garage">Mon garage</button>
       <div class="acct" id="acct"><button class="navlink" type="button" id="acctBtn">Se connecter</button></div>
     </nav>
@@ -457,6 +481,26 @@ footer{margin-top:var(--sp-7);font-size:var(--fs-xs);color:var(--muted);padding-
       <p class="hint full" id="achatMsg" style="margin:0"></p>
     </form>
     <div class="report" id="report" hidden></div>
+  </section>
+
+  <!-- Voyants -->
+  <section class="panel" id="voyantsPanel" hidden>
+    <div id="voyantsListe">
+      <p class="intro">Un voyant s'est allumé ? Retrouvez-le, et voyez tout de suite si vous pouvez rouler.</p>
+      <div class="vtools">
+        <label class="sr" for="vSearch">Rechercher un voyant</label>
+        <input class="field" id="vSearch" type="search" placeholder="Rechercher : huile, pneu, moteur…" autocomplete="off">
+        <div class="vfilters" role="group" aria-label="Filtrer par couleur">
+          <button type="button" data-f="" aria-pressed="true">Tous</button>
+          <button type="button" data-f="rouge" aria-pressed="false"><i style="--c:var(--red)"></i>Rouge</button>
+          <button type="button" data-f="orange" aria-pressed="false"><i style="--c:var(--amber)"></i>Orange</button>
+          <button type="button" data-f="info" aria-pressed="false"><i style="--c:var(--green)"></i>Vert ou bleu</button>
+        </div>
+      </div>
+      <p class="hint" id="vCount" aria-live="polite"></p>
+      <ul class="vgrid" id="vGrid"></ul>
+    </div>
+    <div id="voyantFiche" class="vfiche" hidden></div>
   </section>
 
   <!-- Mon garage -->
@@ -684,9 +728,11 @@ function setMode(m){
   if(busy && ctl) ctl.abort();
   mode = m;
   document.querySelectorAll(".mode").forEach(b => b.setAttribute("aria-selected", String(b.dataset.mode===m)));
-  if(m === "garage") $("#garageBtn").setAttribute("aria-current", "page"); else $("#garageBtn").removeAttribute("aria-current");
+  document.querySelectorAll(".navlink[data-mode]").forEach(b => { if(b.dataset.mode === m) b.setAttribute("aria-current", "page"); else b.removeAttribute("aria-current"); });
   const chat = !!MODES[m];
   $("#chatPanel").hidden = !chat; $("#achatPanel").hidden = m !== "achat"; $("#garagePanel").hidden = m !== "garage";
+  $("#voyantsPanel").hidden = m !== "voyants";
+  if(m === "voyants"){ voyantOuvert = null; renderVoyants(); }
   if(m === "garage") renderGarage();
   if(chat){
     $("#chatIntro").textContent = MODES[m].intro;
@@ -709,8 +755,8 @@ function parseLevel(text){
 function sourcesText(list){
   if(!Array.isArray(list) || !list.length) return "Sources : connaissances générales de l'IA";
   const st = s => s.statut === "verifie" ? "vérifiée" : "à vérifier";
-  return "Sources : base Rétroviz – " + list.map(s => s.type === "code"
-    ? `code ${s.code} (${st(s)})`
+  return "Sources : base Rétroviz – " + list.map(s => s.type === "code" ? `code ${s.code} (${st(s)})`
+    : s.type === "voyant" ? `voyant ${s.label} (${st(s)})`
     : `${s.label} (${s.correspondance === "moteur" ? "même moteur, " : ""}${st(s)})`).join(", ");
 }
 function aiHTML(msg){
@@ -754,6 +800,19 @@ $("#helpCats").innerHTML = Object.entries(HELP).map(([cat, items], ci) =>
     return `<button class="chip${danger?" danger":""}" type="button" aria-pressed="false" data-s="${esc(s)}">${danger?`<span class="warn" aria-hidden="true">!</span>`:""}${esc(s)}${danger?`<span class="sr"> (signe d'alerte)</span>`:""}</button>`;
   }).join("")}</div></div>`).join("") +
   `<p class="legend-d"><span class="warn" aria-hidden="true">!</span> Signe d'alerte : arrêtez-vous dès que possible.</p>`;
+
+/* Pastilles « Un voyant s'est allumé » : icône de la fiche voyant correspondante et lien vers l'écran Voyants. */
+const CHIP_VOYANT = {"voyant moteur orange":"moteur", "voyant huile rouge":"pression-huile", "voyant température rouge":"temperature-moteur", "voyant freins rouge":"freins",
+  "voyant batterie allumé en roulant":"batterie-charge", "voyant ABS":"abs", "voyant airbag":"airbag", "voyant pression des pneus":"pression-pneus", "voyant préchauffage qui clignote":"prechauffage"};
+function decorateChips(){
+  $("#helpCats").querySelectorAll("button.chip").forEach(c => {
+    const v = voyants.find(x => x.id === CHIP_VOYANT[c.dataset.s]);
+    if(v && !c.querySelector(".vic")) c.insertAdjacentHTML("afterbegin", vIcon(v));
+  });
+  const grp = $("#cat0")?.parentElement;
+  if(grp && !grp.querySelector(".vlink")) grp.insertAdjacentHTML("beforeend", `<p class="vlink"><button class="link" type="button" data-goto="voyants">Voir tous les voyants et leurs fiches</button></p>`);
+}
+$("#helpCats").addEventListener("click", e => { if(e.target.closest("[data-goto=voyants]")) setMode("voyants"); });
 
 const segments = () => $("#input").value.split(",").map(s => s.trim()).filter(Boolean);
 /* Met les pastilles en accord avec la zone de texte, et affiche l'alerte si besoin. */
@@ -1077,7 +1136,7 @@ function kmHTML(c){
   return h;
 }
 function ficheHTML(c){
-  if(c.fiche) return `Fiche Rétroviz : <strong>${esc(c.fiche.label)}</strong> (${STATUT(c.fiche.statut)}). <button class="link" type="button" data-act="refuse">Ce n'est pas ma voiture</button>`;
+  if(c.fiche) return `Fiche Rétroviz : <strong>${esc(c.fiche.label)}</strong>${c.fiche.statut === "verifie" ? " (vérifiée)" : " (fiche en cours de vérification)"}. <button class="link" type="button" data-act="refuse">Ce n'est pas ma voiture</button>`;
   if(c.ficheRefusee) return `Fiche Rétroviz écartée à votre demande. <button class="link" type="button" data-act="relink">Chercher à nouveau une fiche</button>`;
   if(!c.motorisation) return `Ajoutez la motorisation pour relier une fiche Rétroviz. <button class="link" type="button" data-act="edit">Ajouter la motorisation</button>`;
   return "Pas encore de fiche Rétroviz pour ce modèle et ce moteur : l'assistant répondra avec ses connaissances générales.";
@@ -1534,6 +1593,75 @@ $("#vehPick").addEventListener("change", e => {
   const c = carById(e.target.value); if(c) $("#vehicle").value = c.designation;
   e.target.value = "";
 });
+
+/* ---------- voyants ---------- */
+let voyants = [], voyantOuvert = null, vFiltre = "";
+const VCOUL = {rouge:"var(--red)", orange:"var(--amber)", vert:"var(--green)", bleu:"var(--primary)", blanc:"var(--muted)"};
+const VCOUL_NOM = {rouge:"rouge", orange:"orange", vert:"vert", bleu:"bleu", blanc:"blanc"};
+/* Icône d'un voyant (SVG des fiches, contrôlé par les tests : seulement path, circle, rect et text). */
+const vIcon = v => `<svg class="vic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color:${VCOUL[v.couleurs[0]] || "var(--ink)"}">${v.icone}</svg>`;
+const plain = s => String(s ?? "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+const URGENCE = {rouge:{c:"var(--red)", t:"Arrêtez-vous dès que possible", s:"Voyant rouge : ne continuez pas sans savoir ce qui se passe."},
+  orange:{c:"var(--amber)", t:"Garage rapidement", s:"Voyant orange : un défaut à faire vérifier sans trop attendre."},
+  info:{c:"var(--green)", t:"Information", s:"Ce témoin vous informe, il ne signale pas une panne."}};
+const ROULER = {oui:"Oui", prudemment:"Oui, prudemment", non:"Non"};
+async function loadVoyants(){
+  const r = await api("GET", "/api/voyants");
+  if(r.ok){ voyants = r.voyants; decorateChips(); if(mode === "voyants") renderVoyants(); }
+}
+function renderVoyants(){
+  $("#voyantsListe").hidden = !!voyantOuvert; $("#voyantFiche").hidden = !voyantOuvert;
+  if(voyantOuvert) return renderVoyantFiche(voyantOuvert);
+  const q = plain($("#vSearch").value.trim());
+  const list = voyants.filter(v => (!vFiltre || (vFiltre === "info" ? v.couleurs.some(c => ["vert","bleu","blanc"].includes(c)) : v.couleurs.includes(vFiltre)))
+    && (!q || plain([v.nom, ...v.autres_noms, v.symbole].join(" ")).includes(q)));
+  $("#vCount").textContent = voyants.length ? `${list.length} voyant${list.length > 1 ? "s" : ""}` : "Chargement des voyants…";
+  $("#vGrid").innerHTML = list.length ? list.map(v => `<li><button class="vtile" type="button" data-v="${esc(v.id)}">${vIcon(v)}<span>${esc(v.nom)}</span></button></li>`).join("")
+    : (voyants.length ? `<li class="empty" style="grid-column:1/-1">Aucun voyant ne correspond. Essayez un autre mot, ou décrivez-le dans « J'ai une panne ».</li>` : "");
+}
+function renderVoyantFiche(v){
+  const U = URGENCE[v.urgence] || URGENCE.info;
+  const list = (t, items, tag = "ul") => items?.length ? `<div class="sect"><h3>${t}</h3><${tag}>${items.map(i => `<li>${esc(i)}</li>`).join("")}</${tag}></div>` : "";
+  $("#voyantFiche").innerHTML = `
+    <button class="btn ghost small back" type="button" id="vBack">← Tous les voyants</button>
+    <div class="vfiche-head">${vIcon(v)}<div><h2 id="vTitre" tabindex="-1">${esc(v.nom)}</h2>
+      <p>${esc(v.couleurs.map(c => VCOUL_NOM[c]).join(" ou "))}${v.autres_noms.length ? " · aussi appelé " + esc(v.autres_noms.slice(0, 3).join(", ")) : ""}</p>
+      ${v.statut !== "verifie" ? `<p class="verif">Fiche en cours de vérification</p>` : ""}</div></div>
+    <div class="level" style="--c:${U.c}"><span class="lamp"></span><div>${U.t}<small>${U.s}</small></div></div>
+    <p class="sect"><strong>Peut-on rouler ?</strong> ${ROULER[v.rouler] || ""}. ${esc(v.signification)}</p>
+    <p class="hint" style="margin:-16px 0 var(--sp-5)">Le symbole : ${esc(v.symbole)}</p>
+    ${list("Que faire maintenant", v.que_faire, "ol")}
+    ${v.variantes.length ? `<div class="sect"><h3>Fixe ou clignotant</h3><ul>${v.variantes.map(x => `<li>${x.couleur ? esc(VCOUL_NOM[x.couleur] || x.couleur) + ", " : ""}${x.etat === "clignotant" ? "clignotant" : "fixe"} : ${esc(x.sens)}</li>`).join("")}</ul></div>` : ""}
+    ${list("Causes fréquentes", v.causes)}
+    <div class="sect"><h3>Ce que ça peut coûter</h3><p style="margin:0">${esc(v.cout)}</p><p class="hint">Prix indicatifs, qui varient selon le modèle et le garage.</p></div>
+    ${v.incertitudes?.length ? `<p class="sect caveat">À savoir : ${esc(v.incertitudes.join(" "))}</p>` : ""}
+    <div class="rowbtns"><button class="btn" type="button" id="vJai">J'ai ce voyant</button></div>`;
+}
+$("#vSearch").addEventListener("input", renderVoyants);
+document.querySelector(".vfilters").addEventListener("click", e => {
+  const b = e.target.closest("button[data-f]"); if(!b) return;
+  vFiltre = b.dataset.f;
+  document.querySelectorAll(".vfilters button").forEach(x => x.setAttribute("aria-pressed", String(x === b)));
+  renderVoyants();
+});
+$("#vGrid").addEventListener("click", e => {
+  const b = e.target.closest("[data-v]"); if(!b) return;
+  voyantOuvert = voyants.find(v => v.id === b.dataset.v); renderVoyants();
+  window.scrollTo({top:0}); $("#vTitre").focus();
+});
+$("#voyantFiche").addEventListener("click", e => {
+  if(e.target.closest("#vBack")){
+    const id = voyantOuvert.id; voyantOuvert = null; renderVoyants();
+    const t = document.querySelector(`.vtile[data-v="${id}"]`); if(t) t.focus();
+  }else if(e.target.closest("#vJai")){
+    /* « J'ai ce voyant » : mode « J'ai une panne », message pré-rempli. */
+    const v = voyantOuvert;
+    setMode("particulier");
+    $("#input").value = `Le voyant « ${v.nom} » (${VCOUL_NOM[v.couleurs[0]]}) est allumé.`;
+    syncChips(); $("#input").focus();
+  }
+});
+loadVoyants();
 
 /* Aide aux symptômes : ouverte sur ordinateur, repliée sur mobile (elle y repousserait la zone de saisie). */
 $("#help").open = matchMedia("(min-width: 641px)").matches;

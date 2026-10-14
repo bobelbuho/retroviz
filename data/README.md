@@ -24,6 +24,42 @@ Chaque fiche, quel que soit le fichier, porte ces champs :
 - Dans l'interface, une fiche `a_verifier` affiche discrètement « Fiche en cours de vérification ».
 - `npm test` vérifie ces règles sur tous les fichiers (`test/donnees.test.js`).
 
+## `voyants.json` : voyants et témoins du tableau de bord
+
+Un tableau d'objets, un par voyant :
+
+```json
+{
+  "id": "pression-huile",
+  "nom": "Pression d'huile",
+  "autres_noms": ["voyant huile", "burette rouge"],
+  "couleurs": ["rouge"],
+  "urgence": "rouge",
+  "rouler": "non",
+  "categorie": "moteur",
+  "symbole": "Une burette d'huile d'où tombe une goutte.",
+  "signification": "Deux phrases au plus, en langage simple.",
+  "que_faire": ["Étape 1", "Étape 2"],
+  "causes": ["Cause fréquente"],
+  "cout": "De 10 à 20 € (…) à plusieurs milliers d'euros (…)",
+  "variantes": [{ "etat": "fixe", "sens": "…" }, { "couleur": "bleu", "etat": "fixe", "sens": "…" }],
+  "icone": "<path d=\"…\"/>",
+  "incertitudes": [],
+  "statut": "a_verifier", "sources": [], "redige_par": "ia", "mise_a_jour": "2026-10-14"
+}
+```
+
+| Champ | Rôle |
+|---|---|
+| `couleurs` | Parmi `rouge`, `orange`, `vert`, `bleu`, `blanc`. La première sert à colorer l'icône. |
+| `urgence` | `rouge` (s'arrêter), `orange` (garage rapidement) ou `info` (information). |
+| `rouler` | `oui`, `prudemment` ou `non`. |
+| `autres_noms` | Façons courantes d'en parler : elles servent à retrouver la fiche dans les questions. Un nom d'un seul mot (« ABS ») ne compte que si la question parle aussi de voyant, de témoin ou d'allumage. Évitez les mots trop vagues (« défaut », « service »). |
+| `variantes` | Fixe ou clignotant, éventuellement selon la couleur. |
+| `icone` | Contenu d'un SVG 24 × 24 (trait de 1,7, couleur `currentColor`), dessiné pour Rétroviz d'après l'esprit des symboles normalisés ISO 2575, sans copier d'image de constructeur. Seuls `path`, `circle`, `rect` et `text` sont autorisés : l'icône est insérée telle quelle dans la page, et les tests refusent tout le reste. |
+
+Les voyants cités dans une question (« voyant huile rouge ») sont envoyés à l'IA comme les autres fiches, au plus 2 à la fois. L'écran « Voyants » de l'interface les affiche tous.
+
 ## `obd.json` : codes défaut OBD-II génériques
 
 Un tableau d'objets :

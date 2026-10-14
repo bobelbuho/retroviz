@@ -168,3 +168,27 @@ describe("chargement des fichiers", () => {
     assert.equal(kb.codes.size, raw.length, "code OBD en double dans obd.json");
   });
 });
+
+describe("voyants", () => {
+  test("les pastilles « Un voyant s'est allumé » retrouvent la bonne fiche", async () => {
+    const { findVoyants } = await import("../knowledge.js");
+    const cas = {
+      "voyant moteur orange": "moteur", "voyant huile rouge": "pression-huile", "voyant température rouge": "temperature-moteur",
+      "voyant freins rouge": "freins", "voyant batterie allumé en roulant": "batterie-charge", "voyant ABS": "abs",
+      "voyant airbag": "airbag", "voyant pression des pneus": "pression-pneus", "voyant préchauffage qui clignote": "prechauffage",
+      "le voyant FAP est allumé": "fap", "j'ai un triangle orange": "alerte-generale",
+    };
+    for (const [texte, id] of Object.entries(cas)) assert.equal(findVoyants(texte, kb)[0]?.id, id, texte);
+  });
+  test("pas de fiche voyant pour des phrases sans rapport", async () => {
+    const { findVoyants } = await import("../knowledge.js");
+    for (const texte of ["codes défaut P0300 sur ma 208", "le radar m'a flashé", "moteur fatigué", "mon FAP est bouché", "prise de courant"]) {
+      assert.deepEqual(findVoyants(texte, kb), [], texte);
+    }
+  });
+  test("la fiche voyant est envoyée à l'IA avec sa source", () => {
+    const { text, sources } = buildContext({ vehicule: "", texte: "voyant huile rouge" }, kb);
+    assert.match(text, /Voyant « Pression d'huile »/);
+    assert.deepEqual(sources, [{ type: "voyant", id: "pression-huile", label: "Pression d'huile", statut: "a_verifier" }]);
+  });
+});

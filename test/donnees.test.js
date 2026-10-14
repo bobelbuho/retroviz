@@ -31,3 +31,29 @@ for (const [fichier, cle] of Object.entries(FICHIERS)) {
     }
   });
 }
+
+test("voyants.json : champs complets, couleurs et urgence valides, icônes SVG sans danger", () => {
+  const voyants = lire("voyants.json");
+  assert.ok(voyants.length >= 60 && voyants.length <= 80, `${voyants.length} voyants (60 à 80 attendus)`);
+  const COULEURS = ["rouge", "orange", "vert", "bleu", "blanc"];
+  // Seuls ces éléments et attributs sont autorisés dans une icône (elle est insérée telle quelle dans la page).
+  const BALISES = /^<\/?(path|circle|rect|text)\b/;
+  const ATTRS = new Set(["d", "cx", "cy", "r", "x", "y", "width", "height", "text-anchor", "font-size", "font-weight", "fill", "stroke", "stroke-dasharray"]);
+  for (const v of voyants) {
+    for (const k of ["nom", "symbole", "signification", "cout"]) assert.ok(typeof v[k] === "string" && v[k].trim(), `${v.id} : ${k}`);
+    for (const k of ["autres_noms", "couleurs", "que_faire", "causes", "variantes"]) assert.ok(Array.isArray(v[k]), `${v.id} : ${k}`);
+    assert.ok(v.couleurs.length && v.couleurs.every(c => COULEURS.includes(c)), `${v.id} : couleurs`);
+    assert.ok(["rouge", "orange", "info"].includes(v.urgence), `${v.id} : urgence`);
+    assert.ok(["oui", "prudemment", "non"].includes(v.rouler), `${v.id} : rouler`);
+    assert.ok(v.que_faire.length > 0, `${v.id} : que faire`);
+    assert.ok(v.signification.split(/[.!?](\s|$)/).filter(s => s && s.trim()).length <= 2, `${v.id} : signification en 2 phrases au plus`);
+    for (const x of v.variantes) assert.ok(["fixe", "clignotant"].includes(x.etat) && x.sens, `${v.id} : variante`);
+    const tags = v.icone.match(/<[^>]+>/g) || [];
+    assert.ok(tags.length > 0, `${v.id} : icône vide`);
+    for (const tag of tags) {
+      assert.match(tag, BALISES, `${v.id} : balise interdite ${tag}`);
+      for (const [, attr] of tag.matchAll(/\s([a-z-]+)=/g)) assert.ok(ATTRS.has(attr), `${v.id} : attribut interdit ${attr}`);
+    }
+    assert.doesNotMatch(v.icone.replace(/<[^>]+>/g, ""), /[<>]/, `${v.id} : texte d'icône suspect`);
+  }
+});

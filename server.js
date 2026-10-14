@@ -22,7 +22,7 @@ if (!process.env.ANTHROPIC_API_KEY) {
 
 // Base de connaissances (dossier data/), chargée une fois au démarrage.
 const kb = loadKnowledge();
-console.log(`📚 Base Rétroviz : ${kb.vehicules.length} fiche(s) véhicule, ${kb.codes.size} code(s) OBD.`);
+console.log(`📚 Base Rétroviz : ${kb.vehicules.length} fiche(s) véhicule, ${kb.codes.size} code(s) OBD, ${kb.voyants.length} voyant(s).`);
 
 const KB_RULES = `Voici des fiches de la base Rétroviz. Utilise-les en priorité. Les fiches "à vérifier" peuvent contenir des erreurs : dis-le si tu t'appuies dessus. Si la base ne couvre pas la question, dis-le et réponds avec tes connaissances générales en le signalant.`;
 
@@ -107,6 +107,12 @@ app.post("/api/chat", async (req, res) => {
     if (!started) res.status(err?.status || 500).json({ code: errorCode(err?.status), error: err?.message || "Erreur" });
     else res.end();
   }
+});
+
+// Voyants du tableau de bord (fiches et icônes), publics.
+app.get("/api/voyants", (req, res) => {
+  res.setHeader("Cache-Control", "public, max-age=300");
+  res.json({ voyants: kb.voyants });
 });
 
 // Fiche d'un code OBD de la base (ex. /api/codes/P0300).
