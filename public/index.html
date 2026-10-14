@@ -840,6 +840,7 @@ async function loadGarage(){
 function ficheHTML(c){
   if(c.fiche) return `Fiche Rétroviz : <strong>${esc(c.fiche.label)}</strong> (${STATUT(c.fiche.statut)}). <button class="link" type="button" data-act="refuse">Ce n'est pas ma voiture</button>`;
   if(c.ficheRefusee) return `Fiche Rétroviz écartée à votre demande. <button class="link" type="button" data-act="relink">Chercher à nouveau une fiche</button>`;
+  if(!c.motorisation) return `Ajoutez la motorisation pour relier une fiche Rétroviz. <button class="link" type="button" data-act="edit">Ajouter la motorisation</button>`;
   return "Pas encore de fiche Rétroviz pour ce modèle et ce moteur : l'assistant répondra avec ses connaissances générales.";
 }
 function renderGarage(){
