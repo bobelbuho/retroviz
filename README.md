@@ -9,6 +9,7 @@ Assistant automobile avec trois modes : **J'ai une panne** (particuliers), **Dia
 ```
 retroviz/
 ├── public/index.html   ← l'interface (HTML, CSS, JavaScript)
+├── public/schema-dessin.js ← dessins SVG du schéma (vue d'ensemble et 8 zones)
 ├── public/avis.html    ← « Comment fonctionnent les avis » (informations exigées par le Code de la consommation)
 ├── public/dossier.html ← page publique d'un dossier partagé (lecture seule, non indexée)
 ├── public/dossier-rendu.js ← rendu du dossier, commun à la page publique et à l'aperçu
@@ -27,6 +28,7 @@ retroviz/
 ├── badge.js            ← badge « Voiture bien suivie » : critères et seuils
 ├── energie.js          ← énergie d'une voiture (thermique, hybride, électrique)
 ├── transfert.js        ← dossier partageable, transfert au nouveau propriétaire, notes sur l'historique reçu
+├── schema.js           ← schéma interactif : pièces de la voiture reliées à sa fiche, « À venir » et son carnet
 ├── avis.js             ← avis de propriétaires : conditions, filtre, synthèse, signalements, modération
 ├── historique.js       ← confiance de l'historique : « saisi le », « modifié le », continuité du kilométrage
 ├── metadonnees.js      ← retire les métadonnées (GPS…) des images avant de les montrer
@@ -43,6 +45,7 @@ retroviz/
 │   ├── obd.json
 │   ├── vehicules.json
 │   ├── voyants.json
+│   ├── pieces.json     ← pièces du schéma (rôle, usure, durée de vie, prix, voyants, mots du glossaire)
 │   ├── sources.json    ← registre des sources de l'Observateur
 │   └── README.md
 ├── test/               ← les tests (npm test)
@@ -131,6 +134,17 @@ Onglet « Partager ou vendre » de la page d'une voiture. **Tout ce qui peut ide
 - **Historique verrouillé** : relevés, entretiens, factures et notes reçus ne peuvent être ni modifiés ni supprimés (403). L'acheteur peut ajouter une **note** sur une entrée reçue (500 caractères), visible dans la frise, le carnet et le dossier, et transmise aux propriétaires suivants.
 - **Confiance** : chaque entrée affiche « avec facture » ou « déclaré » ; « saisi le … » si elle a été ajoutée plus de 30 jours après sa date ; « modifié le … » si elle a été modifiée alors que sa date et sa saisie avaient plus de 30 jours (table `modifications` : anciennes et nouvelles valeurs pour date, km, type, coût ; pour la description et le garage, seulement le fait qu'ils ont changé, jamais l'ancien texte ; suppressions comptées). Le dossier résume : « 3 entretiens saisis après coup, dont 2 avec facture », et met en avant le **kilométrage suivi sans interruption** (jamais plus de 6 mois sans kilométrage connu), y compris d'un propriétaire à l'autre.
 - **RGPD** : l'export de l'acheteur contient l'historique reçu et les dates de changement de propriétaire ; supprimer le compte du vendeur ne touche pas une voiture déjà transférée.
+
+## Schéma interactif
+
+Onglet « Schéma » de la page d'une voiture. Une vue de profil dessinée en SVG avec 8 zones (moteur, transmission, freins, direction et suspension, électricité, échappement et dépollution, pneus, carrosserie) ; un clic ouvre le schéma détaillé de la zone, avec ses pièces numérotées.
+
+- **Trois versions** selon l'énergie de la voiture (`energie.js`) : thermique, hybride (pièces thermiques et électriques), électrique (pas d'échappement, réducteur, batterie de traction, onduleur…).
+- **`data/pieces.json`** (51 pièces, toutes « à vérifier ») : rôle, signes d'usure, durée de vie, prix indicatif (fourchette `prix_eur`), voyants liés, mots du glossaire, mots-clés et types de carnet servant aux liens. Les règles de fiabilité s'appliquent (collection `pieces` de la Relecture).
+- **Pour votre voiture** (`schema.js`) : une pièce est mise en avant (repère orange, rouge si grave ou en retard) quand une panne connue de la fiche reliée la vise, ou qu'un entretien est proche ou en retard. Une panne ne vise que la pièce dont le mot-clé vient **en premier** dans son titre (son sujet) : « ratés d'allumage (versions turbo) » vise l'allumage, pas le turbo. Les entrées liées du carnet sont listées (type ou description).
+- **« J'ai un souci ici »** ouvre « J'ai une panne » avec la voiture et la pièce pré-remplies ; les voyants liés ouvrent leur fiche.
+- **Accessibilité** : zones et repères au clavier (Tab, Entrée, Échap pour revenir), liste des zones et liste de toutes les pièces en texte, équivalentes au dessin.
+- Routes : `GET /api/pieces` (public), `GET /api/garage/:id/schema`.
 
 ## Avis de propriétaires
 

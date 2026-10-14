@@ -19,6 +19,7 @@ import { createVie } from "./vie.js";
 import { createBadge } from "./badge.js";
 import { createTransfert } from "./transfert.js";
 import { createAvis } from "./avis.js";
+import { createSchema } from "./schema.js";
 
 const PORT = process.env.PORT || 3000;
 const MODEL = process.env.MODEL || "claude-sonnet-5-5";
@@ -30,7 +31,7 @@ if (!process.env.ANTHROPIC_API_KEY) {
 
 // Base de connaissances (dossier data/), chargée une fois au démarrage.
 const kb = loadKnowledge();
-console.log(`📚 Base Rétroviz : ${kb.vehicules.length} fiche(s) véhicule, ${kb.codes.size} code(s) OBD, ${kb.voyants.length} voyant(s).`);
+console.log(`📚 Base Rétroviz : ${kb.vehicules.length} fiche(s) véhicule, ${kb.codes.size} code(s) OBD, ${kb.voyants.length} voyant(s), ${kb.pieces.length} pièce(s).`);
 
 // Comptes et garages (fichier storage/retroviz.db par défaut, variable DB_PATH pour le changer).
 const db = openDb();
@@ -85,6 +86,7 @@ app.use(rappels);
 app.use(valeur);
 app.use(vie);
 app.use(transfert);
+app.use(createSchema(db, kb, { rappels })); // schéma interactif des pièces
 app.use(badge);
 app.use(relecture);
 app.use(propositions);

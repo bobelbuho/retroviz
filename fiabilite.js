@@ -9,7 +9,11 @@ export const COLLECTIONS = {
   voyants: { fichier: "voyants.json", cle: "id", titre: f => f.nom, format: "ligne" },
   obd: { fichier: "obd.json", cle: "code", titre: f => `${f.code} – ${f.libelle}`, format: "ligne" },
   vehicules: { fichier: "vehicules.json", cle: "id", titre: f => `${f.marque} ${f.modele} (${(f.moteurs || []).join(", ")})`, format: "indente" },
+  pieces: { fichier: "pieces.json", cle: "id", titre: f => f.nom, format: "indente" },
 };
+// Zones du schéma interactif (l'ordre est celui de l'affichage).
+export const ZONES = ["moteur", "transmission", "freins", "direction-suspension", "electricite", "echappement-depollution", "pneus", "carrosserie"];
+export const ENERGIES_PIECES = ["thermique", "hybride", "hybride_rechargeable", "electrique"];
 
 // Contenu d'une icône de voyant : seulement path, circle, rect et text, avec des attributs de dessin (insérée telle quelle dans la page).
 const BALISES = /^<\/?(path|circle|rect|text)\b/;
@@ -50,6 +54,15 @@ export function problemesFiche(collection, f) {
   }
   if (collection === "obd" && !/^[PBCU][0-3][0-9A-F]{3}$/.test(f.code || "")) p.push("code OBD invalide");
   if (collection === "vehicules" && (!f.marque || !f.modele || !Array.isArray(f.moteurs))) p.push("marque, modèle et moteurs obligatoires");
+  if (collection === "pieces") {
+    for (const k of ["nom", "role", "duree_vie", "prix"]) if (typeof f[k] !== "string" || !f[k].trim()) p.push(`${k} manquant`);
+    if (!ZONES.includes(f.zone)) p.push(`zone : ${ZONES.join(", ")}`);
+    if (!Array.isArray(f.energies) || !f.energies.length || !f.energies.every(e => ENERGIES_PIECES.includes(e))) p.push("energies invalides");
+    for (const k of ["signes_usure", "voyants", "glossaire", "mots_cles", "types_carnet"]) if (!Array.isArray(f[k])) p.push(`${k} : liste`);
+    const fourchette = x => Array.isArray(x) && x.length === 2 && x.every(Number.isFinite) && x[0] <= x[1];
+    if (!fourchette(f.prix_eur)) p.push("prix_eur : [minimum, maximum] en euros");
+    if (f.duree_vie_km !== null && !fourchette(f.duree_vie_km)) p.push("duree_vie_km : [minimum, maximum] en km, ou null");
+  }
   return p;
 }
 

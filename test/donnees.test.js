@@ -4,10 +4,10 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
 import { DATA_DIR } from "../knowledge.js";
-import { COLLECTIONS, problemesFiche, serialiser } from "../fiabilite.js";
+import { COLLECTIONS, problemesFiche, serialiser, ZONES, ENERGIES_PIECES } from "../fiabilite.js";
 
 // Fichiers de fiches et champ servant d'identifiant. Ajouter ici chaque nouveau fichier de data/.
-export const FICHIERS = { "obd.json": "code", "vehicules.json": "id", "voyants.json": "id" };
+export const FICHIERS = { "obd.json": "code", "vehicules.json": "id", "voyants.json": "id", "pieces.json": "id" };
 
 const lire = f => JSON.parse(fs.readFileSync(path.join(DATA_DIR, f), "utf8"));
 
@@ -67,3 +67,13 @@ for (const [collection, def] of Object.entries(COLLECTIONS)) {
     assert.equal(brut, serialiser(collection, fiches), "le fichier doit garder le format écrit par la Relecture");
   });
 }
+
+test("pieces.json : chaque zone a des pièces pour chaque énergie (sauf l'échappement des électriques), voyants existants", () => {
+  const pieces = lire("pieces.json"), voyants = new Set(lire("voyants.json").map(v => v.id));
+  for (const zone of ZONES) for (const e of ENERGIES_PIECES) {
+    if (zone === "echappement-depollution" && e === "electrique") continue;
+    assert.ok(pieces.some(p => p.zone === zone && p.energies.includes(e)), `${zone} sans pièce pour ${e}`);
+  }
+  assert.ok(!pieces.some(p => p.zone === "echappement-depollution" && p.energies.includes("electrique")), "pas d'échappement sur une électrique");
+  for (const p of pieces) for (const v of p.voyants) assert.ok(voyants.has(v), `${p.id} : voyant inconnu ${v}`);
+});

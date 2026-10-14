@@ -463,6 +463,58 @@ dialog.dlg::backdrop{background:var(--overlay)}
 
 footer{margin-top:var(--sp-7);font-size:var(--fs-xs);color:var(--muted);padding-top:var(--sp-4);border-top:1px solid var(--line)}
 @media (prefers-reduced-motion: reduce){.item.flash{animation:none}}
+/* schéma interactif */
+.sch{width:100%;height:auto;display:block;background:var(--surface);border-radius:var(--r-lg);box-shadow:var(--shadow)}
+.sch .sch-zone > *, .sch .sch-piece > :not(.sch-repere){fill:var(--soft);stroke:var(--primary);stroke-width:2;transition:fill .15s}
+.sch .sch-zone{cursor:pointer;outline:none}
+.sch .sch-zone:hover > *, .sch .sch-zone:focus-visible > *, .sch .sch-zone.survol > *{fill:color-mix(in srgb,var(--primary) 28%,var(--surface))}
+.sch .sch-zone:focus-visible > *{stroke-width:4}
+.sch .sch-vitre{fill:var(--surface) !important;opacity:.7}
+.sch .sch-trait{fill:none !important;stroke:var(--primary);stroke-width:2}
+.sch .sch-tube{fill:none !important;stroke-width:8 !important;stroke-linecap:round}
+.sch .sch-tube-fin{fill:none !important;stroke-width:3 !important;stroke-dasharray:6 4}
+.sch .sch-ressort, .sch .sch-ressort-fort{fill:none !important;stroke-width:4 !important;stroke-linejoin:round}
+.sch .sch-ressort-fort{stroke-width:5 !important}
+.sch .sch-pneu{fill:none !important;stroke:var(--ink) !important;stroke-width:12 !important}
+.sch .sch-pneu-fort{fill:none !important;stroke:var(--ink) !important;stroke-width:26 !important;stroke-dasharray:4 2}
+.sch .sch-zone:hover .sch-pneu, .sch .sch-zone:focus-visible .sch-pneu{stroke:var(--primary) !important}
+.sch .sch-courroie{fill:none !important;stroke-width:6 !important}
+.sch .sch-epais{fill:none !important;stroke-width:6 !important;stroke-linecap:round}
+.sch .sch-epais-large{fill:none !important;stroke-width:12 !important;stroke-linecap:round}
+.sch .sch-pointille{fill:none !important;stroke-dasharray:5 5}
+.sch .sch-sol{stroke:var(--line);stroke-width:2}
+.sch .sch-fantome{fill:none;stroke:var(--field-line);stroke-width:2;stroke-dasharray:6 5}
+.sch .sch-fantome-trait{stroke:var(--field-line);stroke-width:3}
+.sch .sch-tube-fond{stroke:var(--field-line);stroke-width:14;stroke-linecap:round}
+.sch .sch-legende{fill:var(--muted);font-size:13px;font-family:var(--font)}
+.sch .sch-piece{cursor:pointer;outline:none}
+.sch .sch-piece:hover > :not(.sch-repere), .sch .sch-piece:focus-visible > :not(.sch-repere), .sch .sch-piece.choisie > :not(.sch-repere){fill:color-mix(in srgb,var(--primary) 30%,var(--surface))}
+.sch .sch-repere circle{fill:var(--primary);stroke:var(--surface);stroke-width:2}
+.sch .sch-repere text, .sch .sch-badge text{fill:var(--on-primary);font:700 14px var(--font)}
+.sch .sch-piece.alerte .sch-repere circle, .sch .sch-badge circle{fill:var(--amber)}
+.sch .sch-piece.grave .sch-repere circle, .sch .sch-badge.grave circle{fill:var(--red)}
+.sch .sch-badge text{fill:var(--on-red)}
+.sch .sch-piece:focus-visible .sch-repere circle, .sch .sch-piece.choisie .sch-repere circle{stroke:var(--ink);stroke-width:3}
+.sch .sch-piece:focus-visible .sch-repere circle{stroke-width:4}
+.zliste{list-style:none;margin:var(--sp-4) 0 0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:var(--sp-2)}
+.zliste button, .pliste button{width:100%;text-align:left;display:flex;gap:var(--sp-2);align-items:center;justify-content:space-between;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);padding:var(--sp-2) var(--sp-3);min-height:var(--tap);cursor:pointer;color:var(--ink)}
+.zliste button:hover, .pliste button:hover, .pliste button[aria-current="true"]{background:var(--soft);border-color:var(--primary)}
+.zliste small, .pliste small{color:var(--muted)}
+.pliste{list-style:none;margin:var(--sp-4) 0 0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:var(--sp-2)}
+.pliste .num{display:inline-grid;place-items:center;min-width:26px;height:26px;border-radius:50%;background:var(--primary);color:var(--on-primary);font-weight:var(--fw-bold);font-size:var(--fs-sm);flex:none}
+.pliste .num.alerte{background:var(--amber);color:var(--on-red)}
+.pliste .num.grave{background:var(--red);color:var(--on-red)}
+.pliste .nom{flex:1}
+.pfiche{background:var(--surface);border-radius:var(--r-lg);padding:var(--sp-5);box-shadow:var(--shadow);margin:var(--sp-4) 0 0}
+.pfiche h4{margin:var(--sp-4) 0 var(--sp-1);font-size:var(--fs-md);color:var(--primary)}
+.pfiche h3{margin:0;font-size:var(--fs-xl)}
+.pfiche h3:focus{outline:none}
+.pfiche ul{margin:0;padding-left:var(--sp-5)}
+.pfiche .pourvous{border-left:4px solid var(--amber);background:color-mix(in srgb,var(--amber) 10%,var(--surface));border-radius:var(--r-sm);padding:var(--sp-2) var(--sp-3);margin:var(--sp-3) 0 0}
+.pfiche .pourvous.grave{border-left-color:var(--red);background:color-mix(in srgb,var(--red) 8%,var(--surface))}
+.pfiche .vlies{display:flex;flex-wrap:wrap;gap:var(--sp-2)}
+.pfiche .vlies button{display:inline-flex;align-items:center;gap:var(--sp-2);background:var(--soft);border:0;border-radius:var(--r-pill);padding:var(--sp-1) var(--sp-3);min-height:36px;cursor:pointer;color:var(--ink);font-size:var(--fs-sm)}
+.pfiche .vlies .vic{width:22px;height:22px}
 /* avis de propriétaires */
 .notesf{display:grid;gap:var(--sp-3)}
 .notesf fieldset{border:0;margin:0;padding:0;display:flex;flex-wrap:wrap;align-items:center;gap:var(--sp-1) var(--sp-3)}
@@ -669,7 +721,7 @@ dialog.dlg.large{width:min(920px,calc(100vw - 2 * var(--gutter)));padding:var(--
       <div id="rListe">
         <div class="rfilters">
           <label class="sr" for="rCol">Collection</label>
-          <select class="field" id="rCol"><option value="">Toutes les collections</option><option value="voyants">Voyants</option><option value="obd">Codes OBD</option><option value="vehicules">Véhicules</option></select>
+          <select class="field" id="rCol"><option value="">Toutes les collections</option><option value="voyants">Voyants</option><option value="obd">Codes OBD</option><option value="vehicules">Véhicules</option><option value="pieces">Pièces</option></select>
           <label class="sr" for="rStatut">Statut</label>
           <select class="field" id="rStatut"><option value="a_verifier">À vérifier</option><option value="verifie">Vérifiées</option><option value="">Tous les statuts</option></select>
           <label class="sr" for="rQ">Rechercher</label>
@@ -764,6 +816,7 @@ dialog.dlg.large{width:min(920px,calc(100vw - 2 * var(--gutter)));padding:var(--
           <button type="button" role="tab" data-vtab="carnet" aria-selected="false">Carnet</button>
           <button type="button" role="tab" data-vtab="avenir" aria-selected="false">À venir</button>
           <button type="button" role="tab" data-vtab="valeur" aria-selected="false">Valeur</button>
+          <button type="button" role="tab" data-vtab="schema" aria-selected="false">Schéma</button>
           <button type="button" role="tab" data-vtab="avis" aria-selected="false">Avis</button>
           <button type="button" role="tab" data-vtab="transmettre" aria-selected="false">Partager ou vendre</button>
         </div>
@@ -819,6 +872,8 @@ dialog.dlg.large{width:min(920px,calc(100vw - 2 * var(--gutter)));padding:var(--
         </form>
         <ul class="ents" id="ents"></ul>
       </div>
+      <!-- Schéma interactif -->
+      <div id="schemaView" hidden></div>
       <!-- Avis de propriétaires -->
       <div id="avisView" hidden>
         <section class="tsec" aria-labelledby="monAvisTitre">
@@ -872,6 +927,7 @@ dialog.dlg.large{width:min(920px,calc(100vw - 2 * var(--gutter)));padding:var(--
 </div>
 
 <script src="/dossier-rendu.js"></script>
+<script src="/schema-dessin.js"></script>
 <script>
 (function(){
 const $ = s => document.querySelector(s);
@@ -1470,6 +1526,9 @@ function renderGarage(){
   const inVoiture = !!user && voitureOf !== null && !!carById(voitureOf);
   const inTrans = inVoiture && voitureTab === "transmettre" && transOf === voitureOf;
   const inAvis = inVoiture && voitureTab === "avis" && avisOf === voitureOf;
+  const inSchema = inVoiture && voitureTab === "schema" && schemaOf === voitureOf;
+  $("#schemaView").hidden = !inSchema;
+  if(inSchema) renderSchema();
   $("#avisView").hidden = !inAvis;
   if(inAvis) renderAvis();
   const detail = inCarnet || inAvenir || inValeur || inVoiture;
@@ -1581,6 +1640,7 @@ const CAR_ICON = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" str
 async function openVoiture(id, tab = "vie"){
   if(tab === "transmettre") return openTransmettre(id);
   if(tab === "avis") return openAvis(id);
+  if(tab === "schema") return openSchema(id);
   if(tab === "carnet") return openCarnet(id);
   if(tab === "avenir") return openAvenir(id);
   if(tab === "valeur") return openValeur(id);
@@ -2024,6 +2084,96 @@ document.addEventListener("submit", async e => {
   else { const rr = await api("GET", `/api/garage/${vid}/releves`); if(rr.ok){ kmData[vid] = rr.releves; renderGarage(); } }
 });
 
+/* ---------- schéma interactif ---------- */
+let schemaOf = null, schemaData = null, piecesKb = null, schemaZone = null, schemaPiece = null;
+const ENERGIE_TXT = {thermique:"essence ou diesel", hybride:"hybride", hybride_rechargeable:"hybride rechargeable", electrique:"électrique"};
+async function openSchema(id){
+  const [r, k] = await Promise.all([api("GET", `/api/garage/${id}/schema`), piecesKb ? {ok:true, pieces:piecesKb} : api("GET", "/api/pieces")]);
+  if(!r.ok){ showNotice(r.error); return; }
+  if(k.ok) piecesKb = k.pieces;
+  if(!voyants.length) await loadVoyants();
+  schemaData = r; schemaOf = id; schemaZone = null; schemaPiece = null;
+  voitureOf = id; voitureTab = "schema"; carnetOf = null; avenirOf = null; valeurOf = null;
+  renderGarage(); window.scrollTo({top:0}); $("#schemaTitre")?.focus();
+}
+const pieceKb = id => piecesKb.find(p => p.id === id);
+// Niveau d'alerte d'une pièce pour cette voiture : grave (panne sérieuse, entretien en retard), alerte, ou rien.
+const niveauPiece = p => !p.alertes.length ? null : p.alertes.some(a => (a.type === "panne" && a.gravite === "elevee") || a.statut === "retard") ? "grave" : "alerte";
+const niveauZone = z => z.pieces.some(p => niveauPiece(p) === "grave") ? "grave" : z.pieces.some(niveauPiece) ? "info" : null;
+function renderSchema(){
+  const d = schemaData, c = carById(schemaOf), zones = d.zones;
+  const entete = `<p class="hint" style="margin:0 0 var(--sp-3)">Version ${esc(ENERGIE_TXT[d.energie])}, d'après la voiture (champ « Énergie » ou motorisation). Points orange ou rouges : ce que Rétroviz sait de votre voiture (pannes connues de son modèle, entretiens proches ou en retard). Fiches de pièces en cours de vérification.</p>`;
+  if(!schemaZone){
+    const svg = SchemaDessin.vueGenerale(d.energie, zones.map(z => ({id:z.id, nom:z.nom, nbPieces:z.pieces.length, alerte:niveauZone(z)})));
+    const alertesTxt = z => { const n = z.pieces.filter(niveauPiece).length; return n ? ` · ${n} point${n > 1 ? "s" : ""} à surveiller` : ""; };
+    $("#schemaView").innerHTML = `<h3 class="sect" id="schemaTitre" tabindex="-1" style="margin-bottom:var(--sp-2)">Touchez une zone de la voiture</h3>${entete}${svg}
+      <ul class="zliste" aria-label="Zones de la voiture">${zones.map(z => `<li><button type="button" data-zbtn="${z.id}"><span>${esc(z.nom)}</span><small>${z.pieces.length} pièces${alertesTxt(z)}</small></button></li>`).join("")}</ul>
+      <details class="help" style="margin-top:var(--sp-4)"><summary>Toutes les pièces, en liste</summary><div class="cats">${zones.map(z => `<h4 style="margin:var(--sp-3) 0 var(--sp-1)">${esc(z.nom)}</h4>
+        <ul>${z.pieces.map(p => `<li><button class="link" type="button" data-zbtn="${z.id}" data-pbtn="${p.id}">${esc(pieceKb(p.id).nom)}</button>${niveauPiece(p) ? " (à surveiller)" : ""}</li>`).join("")}</ul>`).join("")}</div></details>`;
+    return;
+  }
+  const z = zones.find(x => x.id === schemaZone);
+  const liste = z.pieces.map((p, i) => ({id:p.id, n:i + 1, nom:pieceKb(p.id).nom, alerte:niveauPiece(p)}));
+  const svg = SchemaDessin.zone(z.id, d.energie, z.nom, liste);
+  $("#schemaView").innerHTML = `<button class="btn ghost small back" type="button" id="schemaRetour">← Toute la voiture</button>
+    <h3 class="sect" id="schemaTitre" tabindex="-1" style="margin-bottom:var(--sp-2)">${esc(z.nom)}</h3>${entete}${svg}
+    <ol class="pliste" aria-label="Pièces : ${esc(z.nom)}">${liste.map(p => `<li><button type="button" data-pbtn="${p.id}" aria-current="${p.id === schemaPiece}"><span class="num ${p.alerte === "grave" ? "grave" : p.alerte ? "alerte" : ""}" aria-hidden="true">${p.n}</span><span class="nom">${esc(p.nom)}</span>${p.alerte ? `<small>à surveiller</small>` : ""}</button></li>`).join("")}</ol>
+    <div id="pfiche" aria-live="polite">${schemaPiece ? pieceFicheHTML(z, schemaPiece) : `<p class="hint" style="margin-top:var(--sp-3)">Choisissez une pièce sur le schéma ou dans la liste.</p>`}</div>`;
+  document.querySelectorAll(`.sch-piece[data-piece="${schemaPiece}"]`).forEach(g => g.classList.add("choisie"));
+}
+function pieceFicheHTML(z, id){
+  const k = pieceKb(id), p = z.pieces.find(x => x.id === id), niv = niveauPiece(p);
+  const pourVous = p.alertes.length ? `<div class="pourvous ${niv === "grave" ? "grave" : ""}"><strong>Pour votre voiture</strong><ul>${p.alertes.map(a => a.type === "panne"
+      ? `<li>Panne connue sur ce modèle et ce moteur : ${esc(a.titre)}${a.km ? `, vers ${fmtNum(a.km)} km` : ""}${a.cout ? ` (${esc(a.cout)})` : ""}.</li>`
+      : `<li>${esc(a.titre)} : ${a.statut === "retard" ? "en retard" : "bientôt"}${a.date ? `, ${a.statut === "retard" ? "depuis le" : "vers le"} ${esc(fmtShort(a.date))}` : ""}${a.km != null ? `, à ${fmtNum(a.km)} km` : ""}.</li>`).join("")}</ul></div>` : "";
+  const vl = k.voyants.map(vid => voyants.find(v => v.id === vid)).filter(Boolean);
+  return `<article class="pfiche"><h3 id="pficheTitre" tabindex="-1">${esc(k.nom)}</h3>
+    <p class="hint" style="margin:var(--sp-1) 0 0">${esc(z.nom)}${k.seulement ? ` · ${esc(k.seulement)}` : ""}${k.statut !== "verifie" ? " · fiche en cours de vérification" : ""}</p>
+    ${pourVous}
+    <h4>À quoi ça sert</h4><p style="margin:0">${esc(k.role)}</p>
+    <h4>Signes d'usure</h4><ul>${k.signes_usure.map(x => `<li>${esc(x)}</li>`).join("")}</ul>
+    <h4>Durée de vie</h4><p style="margin:0">${esc(k.duree_vie)}</p>
+    <h4>Prix indicatif</h4><p style="margin:0">${esc(k.prix)}</p><p class="hint">Fourchette indicative, pièces et main-d'œuvre, en garage indépendant ; plus cher en concession.</p>
+    ${k.note ? `<p class="avert" style="margin-top:var(--sp-3)">${esc(k.note)}</p>` : ""}
+    ${vl.length ? `<h4>Voyants liés</h4><div class="vlies">${vl.map(v => `<button type="button" data-voyant="${esc(v.id)}">${vIcon(v)}${esc(v.nom)}</button>`).join("")}</div>` : ""}
+    ${k.glossaire.length ? `<h4>Mots à connaître</h4><p style="margin:0">${k.glossaire.map(t => esc(t.replace(/-/g, " "))).join(" · ")}</p>` : ""}
+    <h4>Dans votre carnet</h4>${p.carnet.length ? `<ul>${p.carnet.slice(0, 5).map(e => `<li>${esc(e.typeLabel)} le ${esc(fmtShort(e.date))}${e.km != null ? `, ${fmtNum(e.km)} km` : ""}</li>`).join("")}</ul>` : `<p class="hint" style="margin:0">Aucune entrée liée à cette pièce.</p>`}
+    ${k.incertitudes?.length ? `<p class="hint" style="margin-top:var(--sp-3)">À savoir : ${esc(k.incertitudes.join(" "))}</p>` : ""}
+    <div class="rowbtns" style="margin-top:var(--sp-4)"><button class="btn" type="button" data-souci="${esc(id)}">J'ai un souci ici</button></div></article>`;
+}
+function choisirPiece(id){
+  schemaPiece = id; renderSchema();
+  $("#pficheTitre")?.focus({preventScroll:true}); $("#pfiche").scrollIntoView({behavior:"smooth", block:"nearest"});
+}
+$("#schemaView").addEventListener("click", e => {
+  const zb = e.target.closest("[data-zbtn], .sch-zone");
+  const pb = e.target.closest("[data-pbtn], .sch-piece");
+  if(e.target.closest("#schemaRetour")){ const z = schemaZone; schemaZone = null; schemaPiece = null; renderSchema(); document.querySelector(`[data-zbtn="${z}"]`)?.focus(); return; }
+  if(zb && !schemaZone){ schemaZone = zb.dataset.zbtn || zb.dataset.zone; schemaPiece = zb.dataset.pbtn || null; renderSchema(); (schemaPiece ? $("#pficheTitre") : $("#schemaTitre")).focus(); return; }
+  if(pb){ return choisirPiece(pb.dataset.pbtn || pb.dataset.piece); }
+  const vb = e.target.closest("[data-voyant]");
+  if(vb){ const v = voyants.find(x => x.id === vb.dataset.voyant); setMode("voyants"); voyantOuvert = v; renderVoyants(); window.scrollTo({top:0}); $("#vTitre")?.focus(); return; }
+  const sb = e.target.closest("[data-souci]");
+  if(sb){
+    /* « J'ai un souci ici » : mode « J'ai une panne », voiture et pièce pré-remplies. */
+    const c = carById(schemaOf), k = pieceKb(sb.dataset.souci), z = schemaData.zones.find(x => x.id === schemaZone);
+    $("#vehicle").value = c.designation; $("#vehPick").value = "";
+    setMode("particulier");
+    $("#input").value = `J'ai un souci côté ${z.nom.toLowerCase()}, avec : ${k.nom.toLowerCase()}. Ce que je remarque : `;
+    window.scrollTo({top:0}); $("#input").focus(); $("#input").setSelectionRange($("#input").value.length, $("#input").value.length);
+  }
+});
+// Clavier : Entrée ou Espace sur une zone ou une pièce du dessin.
+$("#schemaView").addEventListener("keydown", e => {
+  if((e.key === "Enter" || e.key === " ") && e.target.closest(".sch-zone, .sch-piece")){ e.preventDefault(); e.target.closest(".sch-zone, .sch-piece").dispatchEvent(new MouseEvent("click", {bubbles:true})); }
+  if(e.key === "Escape" && schemaZone){ $("#schemaRetour").click(); }
+});
+// Survol : la zone du dessin et son bouton se répondent.
+$("#schemaView").addEventListener("mouseover", e => {
+  const b = e.target.closest("[data-zbtn]"); document.querySelectorAll(".sch-zone.survol").forEach(g => g.classList.remove("survol"));
+  if(b && !b.dataset.pbtn) document.querySelector(`.sch-zone[data-zone="${b.dataset.zbtn}"]`)?.classList.add("survol");
+});
+
 /* ---------- avis de propriétaires ---------- */
 const NOTES_AV = {fiabilite:"Fiabilité", cout_entretien:"Coût d'entretien", confort:"Confort", consommation:"Consommation", rapport_qualite_prix:"Rapport qualité-prix"};
 const MOTIFS_SIG = {coordonnees:"Coordonnées ou informations personnelles", injure:"Injure ou propos haineux", hors_sujet:"Hors sujet (ne parle pas de la voiture)", faux:"Avis qui semble faux", autre:"Autre"};
@@ -2451,7 +2601,7 @@ $("#vehPick").addEventListener("change", e => {
 });
 
 /* ---------- relecture (administrateur) ---------- */
-const COL_NOM = {voyants:"Voyants", obd:"Codes OBD", vehicules:"Véhicules"};
+const COL_NOM = {voyants:"Voyants", obd:"Codes OBD", vehicules:"Véhicules", pieces:"Pièces"};
 let rTab = "tableau", rFiche = null; // fiche ouverte : {collection, id, fiche}
 function setRTab(t){
   rTab = t;

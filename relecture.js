@@ -23,7 +23,8 @@ export function createRelecture({ dataDir, kb, admins = new Set(), now = today, 
 
   /* ---------- lecture et écriture des fichiers ---------- */
   const fichier = c => path.join(dataDir, COLLECTIONS[c].fichier);
-  const lire = c => JSON.parse(fs.readFileSync(fichier(c), "utf8"));
+  // Fichier pas encore créé (nouvelle collection) : collection vide.
+  const lire = c => (fs.existsSync(fichier(c)) ? JSON.parse(fs.readFileSync(fichier(c), "utf8")) : []);
   function ecrire(c, fiches) {
     const tmp = fichier(c) + ".tmp";
     fs.writeFileSync(tmp, serialiser(c, fiches));

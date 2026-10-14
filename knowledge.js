@@ -30,7 +30,8 @@ export function loadKnowledge(dir = DATA_DIR, log = console.warn) {
     if (c && c.code) codes.set(String(c.code).toUpperCase(), { ...c, code: String(c.code).toUpperCase() });
   }
   const voyants = readList(path.join(dir, "voyants.json"), log, { optional: true }).filter(v => v && v.id && v.nom);
-  return { vehicules, codes, voyants };
+  const pieces = readList(path.join(dir, "pieces.json"), log, { optional: true }).filter(p => p && p.id && p.nom && p.zone);
+  return { vehicules, codes, voyants, pieces };
 }
 
 // Recharge la base en place (après une correction dans la Relecture) : les modules qui gardent une
@@ -41,6 +42,7 @@ export function reloadKnowledge(kb, dir = DATA_DIR, log = console.warn) {
   kb.codes.clear();
   for (const [k, v] of fresh.codes) kb.codes.set(k, v);
   kb.voyants.splice(0, kb.voyants.length, ...fresh.voyants);
+  if (kb.pieces) kb.pieces.splice(0, kb.pieces.length, ...fresh.pieces); else kb.pieces = fresh.pieces;
   return kb;
 }
 

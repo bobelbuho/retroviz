@@ -1,0 +1,2276 @@
+[
+  {
+    "id": "huile-moteur",
+    "nom": "Huile et filtre à huile",
+    "zone": "moteur",
+    "energies": [
+      "thermique",
+      "hybride",
+      "hybride_rechargeable"
+    ],
+    "role": "L'huile lubrifie et refroidit les pièces en mouvement du moteur ; le filtre retient les particules.",
+    "signes_usure": [
+      "Niveau qui baisse entre deux vidanges",
+      "Huile noire et épaisse à la jauge",
+      "Voyant de pression ou de niveau d'huile"
+    ],
+    "duree_vie": "Tous les 10 000 à 30 000 km ou 1 à 2 ans, selon le constructeur et l'usage.",
+    "duree_vie_km": [
+      10000,
+      30000
+    ],
+    "prix": "80 à 200 € la vidange avec filtre (garage indépendant).",
+    "prix_eur": [
+      80,
+      200
+    ],
+    "voyants": [
+      "pression-huile",
+      "niveau-huile",
+      "entretien"
+    ],
+    "glossaire": [
+      "vidange",
+      "viscosite"
+    ],
+    "mots_cles": [
+      "vidange",
+      "huile",
+      "filtre a huile"
+    ],
+    "types_carnet": [
+      "vidange"
+    ],
+    "statut": "a_verifier",
+    "sources": [],
+    "redige_par": "ia",
+    "mise_a_jour": "2026-10-14",
+    "incertitudes": [
+      "Durée de vie et prix indicatifs, rédigés de mémoire : à recouper avec des sources (constructeurs, garages)."
+    ]
+  },
+  {
+    "id": "courroie-distribution",
+    "nom": "Courroie ou chaîne de distribution",
+    "zone": "moteur",
+    "energies": [
+      "thermique",
+      "hybride",
+      "hybride_rechargeable"
+    ],
+    "role": "Synchronise la rotation du vilebrequin et des arbres à cames : soupapes et pistons ne doivent jamais se toucher.",
+    "signes_usure": [
+      "Souvent aucun signe avant la casse",
+      "Bruit de frottement ou de claquement côté distribution",
+      "Courroie craquelée ou effilochée au contrôle"
+    ],
+    "duree_vie": "Courroie : 60 000 à 240 000 km ou 5 à 10 ans selon le moteur. Chaîne : prévue pour durer, mais certaines s'allongent.",
+    "duree_vie_km": [
+      60000,
+      240000
+    ],
+    "prix": "400 à 1 200 € (kit avec galets et souvent pompe à eau).",
+    "prix_eur": [
+      400,
+      1200
+    ],
+    "voyants": [
+      "moteur",
+      "pression-huile"
+    ],
+    "glossaire": [
+      "distribution",
+      "courroie-humide"
+    ],
+    "mots_cles": [
+      "distribution",
+      "courroie de distribution",
+      "chaine de distribution"
+    ],
+    "types_carnet": [
+      "distribution"
+    ],
+    "note": "Une casse de distribution peut détruire le moteur : l'échéance du constructeur est à respecter strictement.",
+    "statut": "a_verifier",
+    "sources": [],
+    "redige_par": "ia",
+    "mise_a_jour": "2026-10-14",
+    "incertitudes": [
+      "Durée de vie et prix indicatifs, rédigés de mémoire : à recouper avec des sources (constructeurs, garages)."
+    ]
+  },
+  {
+    "id": "courroie-accessoires",
+    "nom": "Courroie d'accessoires",
+    "zone": "moteur",
+    "energies": [
+      "thermique",
+      "hybride",
+      "hybride_rechargeable"
+    ],
+    "role": "Entraîne l'alternateur, le compresseur de climatisation et parfois la pompe à eau ou de direction.",
+    "signes_usure": [
+      "Sifflement au démarrage ou en braquant",
+      "Courroie fendillée ou lustrée",
+      "Voyant de batterie (alternateur plus entraîné)"
+    ],
+    "duree_vie": "60 000 à 150 000 km, souvent changée avec la distribution.",
+    "duree_vie_km": [
+      60000,
+      150000
+    ],
+    "prix": "80 à 250 €.",
+    "prix_eur": [
+      80,
+      250
+    ],
+    "voyants": [
+      "batterie-charge"
+    ],
+    "glossaire": [
+      "courroie-accessoires"
+    ],
+    "mots_cles": [
+      "courroie d'accessoires",
+      "courroie accessoire",
+      "galet tendeur"
+    ],
+    "types_carnet": [],
+    "statut": "a_verifier",
+    "sources": [],
+    "redige_par": "ia",
+    "mise_a_jour": "2026-10-14",
+    "incertitudes": [
+      "Durée de vie et prix indicatifs, rédigés de mémoire : à recouper avec des sources (constructeurs, garages)."
+    ]
+  },
+  {
+    "id": "bougies-allumage",
+    "nom": "Bougies d'allumage",
+    "zone": "moteur",
+    "energies": [
+      "thermique",
+      "hybride",
+      "hybride_rechargeable"
+    ],
+    "seulement": "essence",
+    "role": "Produisent l'étincelle qui enflamme le mélange air-essence.",
+    "signes_usure": [
+      "Ratés d'allumage, à-coups",
+      "Démarrage difficile",
+      "Consommation en hausse"
+    ],
+    "duree_vie": "30 000 à 100 000 km selon le type (nickel ou iridium).",
+    "duree_vie_km": [
+      30000,
+      100000
+    ],
+    "prix": "60 à 250 € (4 bougies posées).",
+    "prix_eur": [
+      60,
+      250
+    ],
+    "voyants": [
+      "moteur"
+    ],
+    "glossaire": [
+      "bougie",
+      "rate-allumage"
+    ],
+    "mots_cles": [
+      "bougie",
+      "bougies",
+      "rate d'allumage",
+      "rates d'allumage"
+    ],
+    "types_carnet": [],
+    "statut": "a_verifier",
+    "sources": [],
+    "redige_par": "ia",
+    "mise_a_jour": "2026-10-14",
+    "incertitudes": [
+      "Durée de vie et prix indicatifs, rédigés de mémoire : à recouper avec des sources (constructeurs, garages)."
+    ]
+  },
+  {
+    "id": "bobines-allumage",
+    "nom": "Bobines d'allumage",
+    "zone": "moteur",
+    "energies": [
+      "thermique",
+      "hybride",
+      "hybride_rechargeable"
+    ],
+    "seulement": "essence",
+    "role": "Transforment le 12 V en très haute tension pour chaque bougie.",
+    "signes_usure": [
+      "Moteur qui tourne sur 3 cylindres",
+      "Voyant moteur qui clignote",
+      "Code défaut de ratés (P0300 à P0304)"
+    ],
+    "duree_vie": "Variable : souvent 80 000 à 150 000 km, parfois bien moins sur certains moteurs.",
+    "duree_vie_km": [
+      80000,
+      150000
+    ],
+    "prix": "60 à 180 € la bobine posée.",
+    "prix_eur": [
+      60,
+      180
+    ],
+    "voyants": [
+      "moteur"
+    ],
+    "glossaire": [
+      "rate-allumage",
+      "code-defaut"
+    ],
+    "mots_cles": [
+      "bobine",
+      "bobines"
+    ],
+    "types_carnet": [],
+    "statut": "a_verifier",
+    "sources": [],
+    "redige_par": "ia",
+    "mise_a_jour": "2026-10-14",
+    "incertitudes": [
+      "Durée de vie et prix indicatifs, rédigés de mémoire : à recouper avec des sources (constructeurs, garages)."
+    ]
+  },
+  {
+    "id": "bougies-prechauffage",
+    "nom": "Bougies de préchauffage",
+    "zone": "moteur",
+    "energies": [
+      "thermique",
+      "hybride",
+      "hybride_rechargeable"
+    ],
+    "seulement": "diesel",
+    "role": "Chauffent les cylindres d'un diesel pour faciliter le démarrage à froid.",
+    "signes_usure": [
+      "Démarrage difficile par temps froid",
+      "Fumée blanche au démarrage",
+      "Voyant de préchauffage qui clignote"
+    ],
+    "duree_vie": "100 000 à 150 000 km environ.",
+    "duree_vie_km": [
+      100000,
+      150000
+    ],
+    "prix": "100 à 300 € (risque de casse au démontage sur moteur ancien).",
+    "prix_eur": [
+      100,
+      300
+    ],
+    "voyants": [
+      "prechauffage",
+      "moteur"
+    ],
+    "glossaire": [
+      "prechauffage"
+    ],
+    "mots_cles": [
+      "prechauffage",
+      "bougie de prechauffage"
+    ],
+    "types_carnet": [],
+    "statut": "a_verifier",
+    "sources": [],
+    "redige_par": "ia",
+    "mise_a_jour": "2026-10-14",
+    "incertitudes": [
+      "Durée de vie et prix indicatifs, rédigés de mémoire : à recouper avec des sources (constructeurs, garages)."
+    ]
+  },
+  {
+    "id": "filtre-air",
+    "nom": "Filtre à air",
+    "zone": "moteur",
+    "energies": [
+      "thermique",
+      "hybride",
+      "hybride_rechargeable"
+    ],
+    "role": "Empêche poussières et insectes d'entrer dans le moteur.",
+    "signes_usure": [
+      "Filtre gris ou noir",
+      "Légère perte de puissance",
+      "Consommation en hausse"
+    ],
+    "duree_vie": "20 000 à 40 000 km, plus souvent en milieu poussiéreux.",
+    "duree_vie_km": [
+      20000,
+      40000
+    ],
+    "prix": "20 à 60 €.",
+    "prix_eur": [
+      20,
+      60
+    ],
+    "voyants": [],
+    "glossaire": [
+      "filtre-air"
+    ],
+    "mots_cles": [
+      "filtre a air"
+    ],
+    "types_carnet": [],
+    "statut": "a_verifier",
+    "sources": [],
+    "redige_par": "ia",
+    "mise_a_jour": "2026-10-14",
+    "incertitudes": [
+      "Durée de vie et prix indicatifs, rédigés de mémoire : à recouper avec des sources (constructeurs, garages)."
+    ]
+  },
+  {
+    "id": "filtre-carburant",
+    "nom": "Filtre à carburant",
+    "zone": "moteur",
+    "energies": [
+      "thermique",
+      "hybride",
+      "hybride_rechargeable"
+    ],
+    "role": "Retient l'eau et les impuretés du carburant avant les injecteurs.",
+    "signes_usure": [
+      "À-coups ou trous à l'accélération",
+      "Démarrage difficile",
+      "Voyant « eau dans le gazole » sur diesel"
+    ],
+    "duree_vie": "Diesel : 30 000 à 60 000 km. Essence : souvent intégré au réservoir, longue durée.",
+    "duree_vie_km": [
+      30000,
+      60000
+    ],
+    "prix": "40 à 120 €.",
+    "prix_eur": [
+      40,
+      120
+    ],
+    "voyants": [
+      "eau-gazole"
+    ],
+    "glossaire": [
+      "filtre-gasoil"
+    ],
+    "mots_cles": [
+      "filtre a gasoil",
+      "filtre a gazole",
+      "filtre a carburant",
+      "filtre gasoil"
+    ],
+    "types_carnet": [],
+    "statut": "a_verifier",
+    "sources": [],
+    "redige_par": "ia",
+    "mise_a_jour": "2026-10-14",
+    "incertitudes": [
+      "Durée de vie et prix indicatifs, rédigés de mémoire : à recouper avec des sources (constructeurs, garages)."
+    ]
+  },
+  {
+    "id": "refroidissement",
+    "nom": "Circuit de refroidissement (pompe à eau, radiateur, liquide)",
+    "zone": "moteur",
+    "energies": [
+      "thermique",
+      "hybride",
+      "hybride_rechargeable",
+      "electrique"
+    ],
+    "role": "Évacue la chaleur du moteur, ou de la batterie et de l'électronique sur une électrique.",
+    "signes_usure": [
+      "Température qui monte",
+      "Fuite de liquide (traces roses, vertes ou bleues)",
+      "Niveau du vase d'expansion qui baisse"
+    ],
+    "duree_vie": "Liquide : 4 à 5 ans ou selon le constructeur. Pompe à eau : souvent changée avec la distribution.",
+    "duree_vie_km": null,
+    "prix": "60 à 150 € la purge ; 200 à 600 € un radiateur ou une pompe à eau.",
+    "prix_eur": [
+      60,
+      600
+    ],
+    "voyants": [
+      "temperature-moteur",
+      "liquide-refroidissement"
+    ],
+    "glossaire": [
+      "liquide-refroidissement",
+      "joint-culasse"
+    ],
+    "mots_cles": [
+      "refroidissement",
+      "pompe a eau",
+      "radiateur",
+      "liquide de refroidissement",
+      "thermostat"
+    ],
+    "types_carnet": [],
+    "statut": "a_verifier",
+    "sources": [],
+    "redige_par": "ia",
+    "mise_a_jour": "2026-10-14",
+    "incertitudes": [
+      "Durée de vie et prix indicatifs, rédigés de mémoire : à recouper avec des sources (constructeurs, garages)."
+    ]
+  },
+  {
+    "id": "turbo",
+    "nom": "Turbocompresseur",
+    "zone": "moteur",
+    "energies": [
+      "thermique",
+      "hybride",
+      "hybride_rechargeable"
+    ],
+    "role": "Comprime l'air envoyé au moteur grâce aux gaz d'échappement, pour plus de puissance.",
+    "signes_usure": [
+      "Perte de puissance, mode dégradé",
+      "Sifflement anormal",
+      "Fumée bleue, consommation d'huile"
+    ],
+    "duree_vie": "Souvent 150 000 à 250 000 km ; moins avec des vidanges espacées ou un arrêt moteur à chaud.",
+    "duree_vie_km": [
+      150000,
+      250000
+    ],
+    "prix": "800 à 2 500 €.",
+    "prix_eur": [
+      800,
+      2500
+    ],
+    "voyants": [
+      "moteur"
+    ],
+    "glossaire": [
+      "turbo",
+      "mode-degrade"
+    ],
+    "mots_cles": [
+      "turbo",
+      "turbocompresseur"
+    ],
+    "types_carnet": [],
+    "statut": "a_verifier",
+    "sources": [],
+    "redige_par": "ia",
+    "mise_a_jour": "2026-10-14",
+    "incertitudes": [
+      "Durée de vie et prix indicatifs, rédigés de mémoire : à recouper avec des sources (constructeurs, garages)."
+    ]
+  },
+  {
+    "id": "injecteurs",
+    "nom": "Injecteurs",
+    "zone": "moteur",
+    "energies": [
+      "thermique",
+      "hybride",
+      "hybride_rechargeable"
+    ],
+    "role": "Pulvérisent le carburant dans les cylindres, au bon moment et en bonne quantité.",
+    "signes_usure": [
+      "Fumée noire, odeur de carburant",
+      "Ralenti instable, à-coups",
+      "Démarrage difficile, consommation en hausse"
+    ],
+    "duree_vie": "150 000 à 250 000 km environ, selon la qualité du carburant.",
+    "duree_vie_km": [
+      150000,
+      250000
+    ],
+    "prix": "150 à 600 € par injecteur posé.",
+    "prix_eur": [
+      150,
+      600
+    ],
+    "voyants": [
+      "moteur"
+    ],
+    "glossaire": [
+      "injecteur",
+      "common-rail"
+    ],
+    "mots_cles": [
+      "injecteur",
+      "injecteurs",
+      "injection"
+    ],
+    "types_carnet": [],
+    "statut": "a_verifier",
+    "sources": [],
+    "redige_par": "ia",
+    "mise_a_jour": "2026-10-14",
+    "incertitudes": [
+      "Durée de vie et prix indicatifs, rédigés de mémoire : à recouper avec des sources (constructeurs, garages)."
+    ]
+  },
+  {
+    "id": "vanne-egr",
+    "nom": "Vanne EGR",
+    "zone": "moteur",
+    "energies": [
+      "thermique",
+      "hybride",
+      "hybride_rechargeable"
+    ],
+    "role": "Renvoie une partie des gaz d'échappement dans l'admission pour réduire les oxydes d'azote.",
+    "signes_usure": [
+      "Perte de puissance, trous à l'accélération",
+      "Voyant moteur, mode dégradé",
+      "Fumée noire"
+    ],
+    "duree_vie": "Encrassement fréquent entre 80 000 et 150 000 km, surtout en usage urbain.",
+    "duree_vie_km": [
+      80000,
+      150000
+    ],
+    "prix": "200 à 700 €.",
+    "prix_eur": [
+      200,
+      700
+    ],
+    "voyants": [
+      "moteur"
+    ],
+    "glossaire": [
+      "egr",
+      "mode-degrade"
+    ],
+    "mots_cles": [
+      "egr",
+      "vanne egr"
+    ],
+    "types_carnet": [],
+    "statut": "a_verifier",
+    "sources": [],
+    "redige_par": "ia",
+    "mise_a_jour": "2026-10-14",
+    "incertitudes": [
+      "Présente surtout sur les diesels, et sur certains moteurs essence récents.",
+      "Prix indicatifs rédigés de mémoire."
+    ]
+  },
+  {
+    "id": "joint-culasse",
+    "nom": "Joint de culasse",
+    "zone": "moteur",
+    "energies": [
+      "thermique",
+      "hybride",
+      "hybride_rechargeable"
+    ],
+    "role": "Assure l'étanchéité entre le bloc moteur et la culasse.",
+    "signes_usure": [
+      "Surchauffe répétée",
+      "Fumée blanche abondante",
+      "Mayonnaise sous le bouchon d'huile, perte de liquide de refroidissement"
+    ],
+    "duree_vie": "Ne s'use pas normalement : lâche surtout après une surchauffe.",
+    "duree_vie_km": null,
+    "prix": "800 à 2 000 €.",
+    "prix_eur": [
+      800,
+      2000
+    ],
+    "voyants": [
+      "temperature-moteur",
+      "liquide-refroidissement"
+    ],
+    "glossaire": [
+      "joint-culasse"
+    ],
+    "mots_cles": [
+      "joint de culasse",
+      "culasse"
+    ],
+    "types_carnet": [],
+    "statut": "a_verifier",
+    "sources": [],
+    "redige_par": "ia",
+    "mise_a_jour": "2026-10-14",
+    "incertitudes": [
+      "Durée de vie et prix indicatifs, rédigés de mémoire : à recouper avec des sources (constructeurs, garages)."
+    ]
+  },
+  {
+    "id": "moteur-electrique",
+    "nom": "Moteur électrique de traction",
+    "zone": "moteur",
+    "energies": [
+      "hybride",
+      "hybride_rechargeable",
+      "electrique"
+    ],
+    "role": "Fait avancer la voiture, et récupère de l'énergie au freinage.",
+    "signes_usure": [
+      "Bruit ou sifflement inhabituel",
+      "Message de défaut du système",
+      "Puissance limitée"
+    ],
+    "duree_vie": "Conçu pour durer la vie de la voiture ; peu d'entretien.",
+    "duree_vie_km": null,
+    "prix": "Réparation rare : 1 500 à 6 000 € hors garantie.",
+    "prix_eur": [
+      1500,
+      6000
+    ],
+    "voyants": [
+      "systeme-hybride-defaut",
+      "puissance-limitee"
+    ],
+    "glossaire": [
+      "moteur-electrique",
+      "freinage-regeneratif"
+    ],
+    "mots_cles": [
+      "moteur electrique"
+    ],
+    "types_carnet": [],
+    "statut": "a_verifier",
+    "sources": [],
+    "redige_par": "ia",
+    "mise_a_jour": "2026-10-14",
+    "incertitudes": [
+      "Coûts de réparation très variables, peu de retours publics : à vérifier."
+    ]
+  },
+  {
+    "id": "onduleur",
+    "nom": "Onduleur et électronique de puissance",
+    "zone": "moteur",
+    "energies": [
+      "hybride",
+      "hybride_rechargeable",
+      "electrique"
+    ],
+    "role": "Transforme le courant continu de la batterie en courant alternatif pour le moteur, et inversement.",
+    "signes_usure": [
+      "Message de défaut, voiture qui refuse de démarrer (pas de « Ready »)",
+      "Ventilateur qui tourne fort"
+    ],
+    "duree_vie": "Conçu pour durer ; pannes rares mais coûteuses.",
+    "duree_vie_km": null,
+    "prix": "1 000 à 4 000 € hors garantie.",
+    "prix_eur": [
+      1000,
+      4000
+    ],
+    "voyants": [
+      "systeme-hybride-defaut",
+      "ready"
+    ],
+    "glossaire": [
+      "onduleur"
+    ],
+    "mots_cles": [
+      "onduleur",
+      "inverter"
+    ],
+    "types_carnet": [],
+    "statut": "a_verifier",
+    "sources": [],
+    "redige_par": "ia",
+    "mise_a_jour": "2026-10-14",
+    "incertitudes": [
+      "Peu de données publiques sur les coûts : à vérifier."
+    ]
+  },
+  {
+    "id": "embrayage",
+    "nom": "Embrayage",
+    "zone": "transmission",
+    "energies": [
+      "thermique",
+      "hybride",
+      "hybride_rechargeable"
+    ],
+    "role": "Relie et sépare le moteur et la boîte pour démarrer et changer de vitesse (boîte manuelle).",
+    "signes_usure": [
+      "Moteur qui monte en régime sans que la voiture accélère (patinage)",
+      "Pédale qui accroche haut",
+      "Odeur de brûlé en côte"
+    ],
+    "duree_vie": "100 000 à 200 000 km selon la conduite.",
+    "duree_vie_km": [
+      100000,
+      200000
+    ],
+    "prix": "600 à 1 500 € (kit) ; plus avec un volant moteur bimasse.",
+    "prix_eur": [
+      600,
+      1500
+    ],
+    "voyants": [
+      "pedale-frein-embrayage"
+    ],
+    "glossaire": [
+      "embrayage",
+      "patinage"
+    ],
+    "mots_cles": [
+      "embrayage",
+      "butee",
+      "emetteur",
+      "recepteur"
+    ],
+    "types_carnet": [],
+    "statut": "a_verifier",
+    "sources": [],
+    "redige_par": "ia",
+    "mise_a_jour": "2026-10-14",
+    "incertitudes": [
+      "Durée de vie et prix indicatifs, rédigés de mémoire : à recouper avec des sources (constructeurs, garages)."
+    ]
+  },
+  {
+    "id": "volant-bimasse",
+    "nom": "Volant moteur bimasse",
+    "zone": "transmission",
+    "energies": [
+      "thermique",
+      "hybride",
+      "hybride_rechargeable"
+    ],
+    "role": "Absorbe les vibrations du moteur avant l'embrayage.",
+    "signes_usure": [
+      "Vibrations au ralenti ou à l'arrêt du moteur",
+      "Claquements au démarrage ou à bas régime"
+    ],
+    "duree_vie": "150 000 à 250 000 km environ, souvent changé avec l'embrayage.",
+    "duree_vie_km": [
+      150000,
+      250000
+    ],
+    "prix": "800 à 2 000 € avec l'embrayage.",
+    "prix_eur": [
+      800,
+      2000
+    ],
+    "voyants": [],
+    "glossaire": [
+      "volant-bimasse"
+    ],
+    "mots_cles": [
+      "volant moteur",
+      "bimasse",
+      "volant bimasse"
+    ],
+    "types_carnet": [],
+    "statut": "a_verifier",
+    "sources": [],
+    "redige_par": "ia",
+    "mise_a_jour": "2026-10-14",
+    "incertitudes": [
+      "Durée de vie et prix indicatifs, rédigés de mémoire : à recouper avec des sources (constructeurs, garages)."
+    ]
+  },
+  {
+    "id": "boite-vitesses",
+    "nom": "Boîte de vitesses",
+    "zone": "transmission",
+    "energies": [
+      "thermique",
+      "hybride",
+      "hybride_rechargeable"
+    ],
+    "role": "Adapte le régime du moteur à la vitesse de la voiture (manuelle, automatique ou robotisée).",
+    "signes_usure": [
+      "À-coups ou patinage au passage des rapports (boîte automatique)",
+      "Vitesses qui craquent ou s'enclenchent mal (manuelle)",
+      "Bruit de roulement"
+    ],
+    "duree_vie": "Vidange de boîte automatique : souvent 60 000 à 120 000 km, même si le constructeur la dit « à vie ».",
+    "duree_vie_km": [
+      60000,
+      120000
+    ],
+    "prix": "200 à 400 € une vidange de boîte automatique ; 1 500 à 4 000 € une réparation.",
+    "prix_eur": [
+      200,
+      4000
+    ],
+    "voyants": [
+      "boite-auto",
+      "surchauffe-boite"
+    ],
+    "glossaire": [
+      "boite-automatique",
+      "boite-robotisee",
+      "double-embrayage"
+    ],
+    "mots_cles": [
+      "boite",
+      "boite de vitesses",
+      "boite auto",
+      "mecatronique",
+      "convertisseur"
+    ],
+    "types_carnet": [],
+    "statut": "a_verifier",
+    "sources": [],
+    "redige_par": "ia",
+    "mise_a_jour": "2026-10-14",
+    "incertitudes": [
+      "Durée de vie et prix indicatifs, rédigés de mémoire : à recouper avec des sources (constructeurs, garages)."
+    ]
+  },
+  {
+    "id": "cardans",
+    "nom": "Cardans et soufflets",
+    "zone": "transmission",
+    "energies": [
+      "thermique",
+      "hybride",
+      "hybride_rechargeable",
+      "electrique"
+    ],
+    "role": "Transmettent la rotation aux roues tout en permettant de braquer ; les soufflets protègent leurs articulations.",
+    "signes_usure": [
+      "Claquement en braquant à fond",
+      "Graisse projetée près de la roue (soufflet déchiré)",
+      "Vibrations à l'accélération"
+    ],
+    "duree_vie": "100 000 à 200 000 km ; un soufflet déchiré se change vite pour sauver le cardan.",
+    "duree_vie_km": [
+      100000,
+      200000
+    ],
+    "prix": "100 à 350 € (soufflet ou cardan).",
+    "prix_eur": [
+      100,
+      350
+    ],
+    "voyants": [],
+    "glossaire": [
+      "cardan",
+      "soufflet"
+    ],
+    "mots_cles": [
+      "cardan",
+      "soufflet",
+      "transmission"
+    ],
+    "types_carnet": [],
+    "statut": "a_verifier",
+    "sources": [],
+    "redige_par": "ia",
+    "mise_a_jour": "2026-10-14",
+    "incertitudes": [
+      "Durée de vie et prix indicatifs, rédigés de mémoire : à recouper avec des sources (constructeurs, garages)."
+    ]
+  },
+  {
+    "id": "reducteur",
+    "nom": "Réducteur",
+    "zone": "transmission",
+    "energies": [
+      "electrique"
+    ],
+    "role": "Remplace la boîte de vitesses : réduit la vitesse de rotation du moteur électrique.",
+    "signes_usure": [
+      "Bruit de roulement qui augmente avec la vitesse",
+      "Fuite d'huile sous la voiture"
+    ],
+    "duree_vie": "Conçu pour durer ; certains constructeurs prévoient une vidange.",
+    "duree_vie_km": null,
+    "prix": "Vidange 100 à 200 € ; remplacement 1 500 à 3 000 €.",
+    "prix_eur": [
+      100,
+      3000
+    ],
+    "voyants": [],
+    "glossaire": [
+      "reducteur"
+    ],
+    "mots_cles": [
+      "reducteur"
+    ],
+    "types_carnet": [],
+    "statut": "a_verifier",
+    "sources": [],
+    "redige_par": "ia",
+    "mise_a_jour": "2026-10-14",
+    "incertitudes": [
+      "Entretien très variable selon les constructeurs : à vérifier."
+    ]
+  },
+  {
+    "id": "plaquettes",
+    "nom": "Plaquettes de frein",
+    "zone": "freins",
+    "energies": [
+      "thermique",
+      "hybride",
+      "hybride_rechargeable",
+      "electrique"
+    ],
+    "role": "Pressées contre les disques, elles ralentissent la voiture.",
+    "signes_usure": [
+      "Grincement métallique au freinage",
+      "Voyant d'usure des plaquettes",
+      "Freinage moins efficace"
+    ],
+    "duree_vie": "20 000 à 60 000 km à l'avant ; bien plus sur hybride et électrique (freinage régénératif).",
+    "duree_vie_km": [
+      20000,
+      60000
+    ],
+    "prix": "80 à 200 € par essieu.",
+    "prix_eur": [
+      80,
+      200
+    ],
+    "voyants": [
+      "plaquettes",
+      "freins"
+    ],
+    "glossaire": [
+      "plaquettes",
+      "freinage-regeneratif"
+    ],
+    "mots_cles": [
+      "plaquette",
+      "plaquettes"
+    ],
+    "types_carnet": [
+      "freins"
+    ],
+    "statut": "a_verifier",
+    "sources": [],
+    "redige_par": "ia",
+    "mise_a_jour": "2026-10-14",
+    "incertitudes": [
+      "Durée de vie et prix indicatifs, rédigés de mémoire : à recouper avec des sources (constructeurs, garages)."
+    ]
+  },
+  {
+    "id": "disques",
+    "nom": "Disques de frein",
+    "zone": "freins",
+    "energies": [
+      "thermique",
+      "hybride",
+      "hybride_rechargeable",
+      "electrique"
+    ],
+    "role": "Tournent avec la roue ; les plaquettes les pincent pour freiner.",
+    "signes_usure": [
+      "Vibrations dans le volant ou la pédale au freinage",
+      "Disque rayé ou avec un rebord marqué",
+      "Rouille épaisse (voitures peu freinées, électriques)"
+    ],
+    "duree_vie": "40 000 à 100 000 km, souvent tous les deux jeux de plaquettes.",
+    "duree_vie_km": [
+      40000,
+      100000
+    ],
+    "prix": "150 à 400 € par essieu avec plaquettes.",
+    "prix_eur": [
+      150,
+      400
+    ],
+    "voyants": [
+      "freins"
+    ],
+    "glossaire": [
+      "disque-frein",
+      "voile"
+    ],
+    "mots_cles": [
+      "disque",
+      "disques"
+    ],
+    "types_carnet": [
+      "freins"
+    ],
+    "statut": "a_verifier",
+    "sources": [],
+    "redige_par": "ia",
+    "mise_a_jour": "2026-10-14",
+    "incertitudes": [
+      "Durée de vie et prix indicatifs, rédigés de mémoire : à recouper avec des sources (constructeurs, garages)."
+    ]
+  },
+  {
+    "id": "liquide-frein",
+    "nom": "Liquide de frein",
+    "zone": "freins",
+    "energies": [
+      "thermique",
+      "hybride",
+      "hybride_rechargeable",
+      "electrique"
+    ],
+    "role": "Transmet la pression de la pédale aux étriers.",
+    "signes_usure": [
+      "Pédale molle ou qui s'enfonce",
+      "Voyant de niveau de liquide de frein",
+      "Liquide foncé"
+    ],
+    "duree_vie": "Tous les 2 ans environ : il absorbe l'humidité.",
+    "duree_vie_km": null,
+    "prix": "50 à 100 € la purge.",
+    "prix_eur": [
+      50,
+      100
+    ],
+    "voyants": [
+      "liquide-frein",
+      "freins"
+    ],
+    "glossaire": [
+      "liquide-frein",
+      "purge"
+    ],
+    "mots_cles": [
+      "liquide de frein",
+      "purge"
+    ],
+    "types_carnet": [],
+    "statut": "a_verifier",
+    "sources": [],
+    "redige_par": "ia",
+    "mise_a_jour": "2026-10-14",
+    "incertitudes": [
+      "Durée de vie et prix indicatifs, rédigés de mémoire : à recouper avec des sources (constructeurs, garages)."
+    ]
+  },
+  {
+    "id": "etriers",
+    "nom": "Étriers de frein",
+    "zone": "freins",
+    "energies": [
+      "thermique",
+      "hybride",
+      "hybride_rechargeable",
+      "electrique"
+    ],
+    "role": "Pincent les disques grâce à des pistons poussés par le liquide de frein.",
+    "signes_usure": [
+      "Voiture qui tire d'un côté au freinage",
+      "Roue très chaude après un trajet (étrier grippé)",
+      "Fuite de liquide près d'une roue"
+    ],
+    "duree_vie": "Peuvent gripper après 8 à 10 ans, surtout à l'arrière.",
+    "duree_vie_km": null,
+    "prix": "150 à 400 € l'étrier posé.",
+    "prix_eur": [
+      150,
+      400
+    ],
+    "voyants": [
+      "freins"
+    ],
+    "glossaire": [
+      "etrier"
+    ],
+    "mots_cles": [
+      "etrier",
+      "etriers"
+    ],
+    "types_carnet": [],
+    "statut": "a_verifier",
+    "sources": [],
+    "redige_par": "ia",
+    "mise_a_jour": "2026-10-14",
+    "incertitudes": [
+      "Durée de vie et prix indicatifs, rédigés de mémoire : à recouper avec des sources (constructeurs, garages)."
+    ]
+  },
+  {
+    "id": "frein-stationnement",
+    "nom": "Frein de stationnement",
+    "zone": "freins",
+    "energies": [
+      "thermique",
+      "hybride",
+      "hybride_rechargeable",
+      "electrique"
+    ],
+    "role": "Immobilise la voiture à l'arrêt (levier à câble ou commande électrique).",
+    "signes_usure": [
+      "Frein qui tient mal en pente",
+      "Message de défaut du frein de stationnement électrique",
+      "Levier qui monte très haut"
+    ],
+    "duree_vie": "Câbles et moteurs d'étrier : 100 000 à 200 000 km environ.",
+    "duree_vie_km": [
+      100000,
+      200000
+    ],
+    "prix": "100 à 250 € un réglage ou un câble ; 300 à 800 € un moteur d'étrier électrique.",
+    "prix_eur": [
+      100,
+      800
+    ],
+    "voyants": [
+      "frein-stationnement",
+      "frein-stationnement-defaut"
+    ],
+    "glossaire": [
+      "frein-stationnement-electrique"
+    ],
+    "mots_cles": [
+      "frein a main",
+      "frein de stationnement"
+    ],
+    "types_carnet": [],
+    "statut": "a_verifier",
+    "sources": [],
+    "redige_par": "ia",
+    "mise_a_jour": "2026-10-14",
+    "incertitudes": [
+      "Durée de vie et prix indicatifs, rédigés de mémoire : à recouper avec des sources (constructeurs, garages)."
+    ]
+  },
+  {
+    "id": "abs",
+    "nom": "ABS et capteurs de roue",
+    "zone": "freins",
+    "energies": [
+      "thermique",
+      "hybride",
+      "hybride_rechargeable",
+      "electrique"
+    ],
+    "role": "Empêchent les roues de se bloquer au freinage grâce à un capteur sur chaque roue.",
+    "signes_usure": [
+      "Voyant ABS ou ESP allumé",
+      "Compteur de vitesse qui saute (capteur partagé)"
+    ],
+    "duree_vie": "Capteurs sensibles à la rouille et aux chocs ; bloc ABS très durable.",
+    "duree_vie_km": null,
+    "prix": "80 à 250 € un capteur ; 800 à 2 000 € un bloc ABS.",
+    "prix_eur": [
+      80,
+      2000
+    ],
+    "voyants": [
+      "abs",
+      "esp"
+    ],
+    "glossaire": [
+      "abs",
+      "esp"
+    ],
+    "mots_cles": [
+      "abs",
+      "capteur de roue",
+      "esp"
+    ],
+    "types_carnet": [],
+    "statut": "a_verifier",
+    "sources": [],
+    "redige_par": "ia",
+    "mise_a_jour": "2026-10-14",
+    "incertitudes": [
+      "Durée de vie et prix indicatifs, rédigés de mémoire : à recouper avec des sources (constructeurs, garages)."
+    ]
+  },
+  {
+    "id": "amortisseurs",
+    "nom": "Amortisseurs",
+    "zone": "direction-suspension",
+    "energies": [
+      "thermique",
+      "hybride",
+      "hybride_rechargeable",
+      "electrique"
+    ],
+    "role": "Freinent les rebonds des ressorts pour garder les roues au sol.",
+    "signes_usure": [
+      "Voiture qui rebondit ou tangue",
+      "Fuite d'huile sur l'amortisseur",
+      "Freinage plus long, usure irrégulière des pneus"
+    ],
+    "duree_vie": "80 000 à 150 000 km.",
+    "duree_vie_km": [
+      80000,
+      150000
+    ],
+    "prix": "300 à 700 € par essieu (toujours par paire).",
+    "prix_eur": [
+      300,
+      700
+    ],
+    "voyants": [],
+    "glossaire": [
+      "amortisseur",
+      "coupelle"
+    ],
+    "mots_cles": [
+      "amortisseur",
+      "amortisseurs",
+      "coupelle"
+    ],
+    "types_carnet": [],
+    "statut": "a_verifier",
+    "sources": [],
+    "redige_par": "ia",
+    "mise_a_jour": "2026-10-14",
+    "incertitudes": [
+      "Durée de vie et prix indicatifs, rédigés de mémoire : à recouper avec des sources (constructeurs, garages)."
+    ]
+  },
+  {
+    "id": "ressorts",
+    "nom": "Ressorts de suspension",
+    "zone": "direction-suspension",
+    "energies": [
+      "thermique",
+      "hybride",
+      "hybride_rechargeable",
+      "electrique"
+    ],
+    "role": "Portent le poids de la voiture et absorbent les irrégularités de la route.",
+    "signes_usure": [
+      "Voiture penchée d'un côté",
+      "Claquement sur les bosses (ressort cassé)"
+    ],
+    "duree_vie": "Durables, mais peuvent casser avec la rouille.",
+    "duree_vie_km": null,
+    "prix": "100 à 300 € par paire posée.",
+    "prix_eur": [
+      100,
+      300
+    ],
+    "voyants": [],
+    "glossaire": [
+      "ressort"
+    ],
+    "mots_cles": [
+      "ressort",
+      "ressorts"
+    ],
+    "types_carnet": [],
+    "statut": "a_verifier",
+    "sources": [],
+    "redige_par": "ia",
+    "mise_a_jour": "2026-10-14",
+    "incertitudes": [
+      "Durée de vie et prix indicatifs, rédigés de mémoire : à recouper avec des sources (constructeurs, garages)."
+    ]
+  },
+  {
+    "id": "rotules-biellettes",
+    "nom": "Rotules et biellettes",
+    "zone": "direction-suspension",
+    "energies": [
+      "thermique",
+      "hybride",
+      "hybride_rechargeable",
+      "electrique"
+    ],
+    "role": "Articulent la direction et la barre stabilisatrice.",
+    "signes_usure": [
+      "Claquements sur les bosses",
+      "Jeu dans le volant",
+      "Contre-visite au contrôle technique"
+    ],
+    "duree_vie": "80 000 à 150 000 km environ.",
+    "duree_vie_km": [
+      80000,
+      150000
+    ],
+    "prix": "80 à 250 € (géométrie à prévoir).",
+    "prix_eur": [
+      80,
+      250
+    ],
+    "voyants": [],
+    "glossaire": [
+      "rotule",
+      "biellette",
+      "geometrie"
+    ],
+    "mots_cles": [
+      "rotule",
+      "biellette",
+      "biellettes"
+    ],
+    "types_carnet": [],
+    "statut": "a_verifier",
+    "sources": [],
+    "redige_par": "ia",
+    "mise_a_jour": "2026-10-14",
+    "incertitudes": [
+      "Durée de vie et prix indicatifs, rédigés de mémoire : à recouper avec des sources (constructeurs, garages)."
+    ]
+  },
+  {
+    "id": "triangles-silentblocs",
+    "nom": "Triangles et silentblocs",
+    "zone": "direction-suspension",
+    "energies": [
+      "thermique",
+      "hybride",
+      "hybride_rechargeable",
+      "electrique"
+    ],
+    "role": "Relient les roues à la caisse ; les silentblocs en caoutchouc filtrent les chocs.",
+    "signes_usure": [
+      "Claquements, direction floue",
+      "Usure irrégulière des pneus",
+      "Caoutchouc fissuré"
+    ],
+    "duree_vie": "100 000 à 180 000 km environ.",
+    "duree_vie_km": [
+      100000,
+      180000
+    ],
+    "prix": "150 à 400 € par côté.",
+    "prix_eur": [
+      150,
+      400
+    ],
+    "voyants": [],
+    "glossaire": [
+      "silentbloc",
+      "geometrie"
+    ],
+    "mots_cles": [
+      "triangle",
+      "silentbloc",
+      "silent bloc",
+      "bras de suspension"
+    ],
+    "types_carnet": [],
+    "statut": "a_verifier",
+    "sources": [],
+    "redige_par": "ia",
+    "mise_a_jour": "2026-10-14",
+    "incertitudes": [
+      "Durée de vie et prix indicatifs, rédigés de mémoire : à recouper avec des sources (constructeurs, garages)."
+    ]
+  },
+  {
+    "id": "direction",
+    "nom": "Direction assistée",
+    "zone": "direction-suspension",
+    "energies": [
+      "thermique",
+      "hybride",
+      "hybride_rechargeable",
+      "electrique"
+    ],
+    "role": "Rend le volant léger, grâce à une assistance électrique ou hydraulique.",
+    "signes_usure": [
+      "Volant dur",
+      "Voyant de direction assistée",
+      "Bruit en braquant (hydraulique)"
+    ],
+    "duree_vie": "Assistance électrique : en général durable.",
+    "duree_vie_km": null,
+    "prix": "500 à 1 500 € (crémaillère ou moteur d'assistance).",
+    "prix_eur": [
+      500,
+      1500
+    ],
+    "voyants": [
+      "direction-assistee"
+    ],
+    "glossaire": [
+      "cremaillere",
+      "direction-assistee"
+    ],
+    "mots_cles": [
+      "direction",
+      "cremaillere",
+      "direction assistee"
+    ],
+    "types_carnet": [],
+    "statut": "a_verifier",
+    "sources": [],
+    "redige_par": "ia",
+    "mise_a_jour": "2026-10-14",
+    "incertitudes": [
+      "Durée de vie et prix indicatifs, rédigés de mémoire : à recouper avec des sources (constructeurs, garages)."
+    ]
+  },
+  {
+    "id": "geometrie",
+    "nom": "Géométrie (parallélisme)",
+    "zone": "direction-suspension",
+    "energies": [
+      "thermique",
+      "hybride",
+      "hybride_rechargeable",
+      "electrique"
+    ],
+    "role": "Règle l'angle des roues pour que la voiture roule droit et use ses pneus régulièrement.",
+    "signes_usure": [
+      "Voiture qui tire d'un côté",
+      "Volant de travers en ligne droite",
+      "Pneus usés sur un bord"
+    ],
+    "duree_vie": "À contrôler après un choc contre un trottoir ou un changement de pièce de direction.",
+    "duree_vie_km": null,
+    "prix": "60 à 100 €.",
+    "prix_eur": [
+      60,
+      100
+    ],
+    "voyants": [],
+    "glossaire": [
+      "geometrie"
+    ],
+    "mots_cles": [
+      "parallelisme",
+      "geometrie"
+    ],
+    "types_carnet": [],
+    "statut": "a_verifier",
+    "sources": [],
+    "redige_par": "ia",
+    "mise_a_jour": "2026-10-14",
+    "incertitudes": [
+      "Durée de vie et prix indicatifs, rédigés de mémoire : à recouper avec des sources (constructeurs, garages)."
+    ]
+  },
+  {
+    "id": "batterie-12v",
+    "nom": "Batterie 12 V",
+    "zone": "electricite",
+    "energies": [
+      "thermique",
+      "hybride",
+      "hybride_rechargeable",
+      "electrique"
+    ],
+    "role": "Alimente le démarreur et l'électronique ; elle existe aussi sur hybrides et électriques.",
+    "signes_usure": [
+      "Démarreur qui tourne lentement",
+      "Messages d'erreur électroniques au démarrage",
+      "Start and Stop qui ne fonctionne plus"
+    ],
+    "duree_vie": "4 à 6 ans environ.",
+    "duree_vie_km": null,
+    "prix": "100 à 250 € ; 150 à 300 € pour une batterie Start and Stop (AGM ou EFB).",
+    "prix_eur": [
+      100,
+      300
+    ],
+    "voyants": [
+      "batterie-charge",
+      "start-stop"
+    ],
+    "glossaire": [
+      "batterie-agm",
+      "start-stop"
+    ],
+    "mots_cles": [
+      "batterie"
+    ],
+    "types_carnet": [
+      "batterie"
+    ],
+    "statut": "a_verifier",
+    "sources": [],
+    "redige_par": "ia",
+    "mise_a_jour": "2026-10-14",
+    "incertitudes": [
+      "Durée de vie et prix indicatifs, rédigés de mémoire : à recouper avec des sources (constructeurs, garages)."
+    ]
+  },
+  {
+    "id": "alternateur",
+    "nom": "Alternateur",
+    "zone": "electricite",
+    "energies": [
+      "thermique",
+      "hybride",
+      "hybride_rechargeable"
+    ],
+    "role": "Recharge la batterie 12 V quand le moteur tourne.",
+    "signes_usure": [
+      "Voyant de batterie allumé en roulant",
+      "Batterie qui se vide",
+      "Éclairage qui faiblit"
+    ],
+    "duree_vie": "150 000 à 250 000 km environ.",
+    "duree_vie_km": [
+      150000,
+      250000
+    ],
+    "prix": "300 à 800 €.",
+    "prix_eur": [
+      300,
+      800
+    ],
+    "voyants": [
+      "batterie-charge"
+    ],
+    "glossaire": [
+      "alternateur"
+    ],
+    "mots_cles": [
+      "alternateur"
+    ],
+    "types_carnet": [],
+    "statut": "a_verifier",
+    "sources": [],
+    "redige_par": "ia",
+    "mise_a_jour": "2026-10-14",
+    "incertitudes": [
+      "Durée de vie et prix indicatifs, rédigés de mémoire : à recouper avec des sources (constructeurs, garages)."
+    ]
+  },
+  {
+    "id": "demarreur",
+    "nom": "Démarreur",
+    "zone": "electricite",
+    "energies": [
+      "thermique",
+      "hybride",
+      "hybride_rechargeable"
+    ],
+    "role": "Lance le moteur thermique.",
+    "signes_usure": [
+      "Simple « clic » au démarrage",
+      "Démarrage par moments seulement"
+    ],
+    "duree_vie": "150 000 à 250 000 km ; plus sollicité avec le Start and Stop (démarreur renforcé).",
+    "duree_vie_km": [
+      150000,
+      250000
+    ],
+    "prix": "250 à 700 €.",
+    "prix_eur": [
+      250,
+      700
+    ],
+    "voyants": [],
+    "glossaire": [
+      "demarreur",
+      "start-stop"
+    ],
+    "mots_cles": [
+      "demarreur"
+    ],
+    "types_carnet": [],
+    "statut": "a_verifier",
+    "sources": [],
+    "redige_par": "ia",
+    "mise_a_jour": "2026-10-14",
+    "incertitudes": [
+      "Durée de vie et prix indicatifs, rédigés de mémoire : à recouper avec des sources (constructeurs, garages)."
+    ]
+  },
+  {
+    "id": "batterie-traction",
+    "nom": "Batterie de traction (haute tension)",
+    "zone": "electricite",
+    "energies": [
+      "hybride",
+      "hybride_rechargeable",
+      "electrique"
+    ],
+    "role": "Stocke l'énergie qui fait avancer la voiture.",
+    "signes_usure": [
+      "Autonomie en baisse",
+      "Charge plus lente",
+      "Voyant de défaut de batterie haute tension"
+    ],
+    "duree_vie": "Souvent garantie 8 ans ou 160 000 km pour 70 % de capacité ; durée réelle souvent plus longue.",
+    "duree_vie_km": null,
+    "prix": "Réparation d'un module : 1 000 à 4 000 € ; remplacement : 5 000 à 15 000 € et plus.",
+    "prix_eur": [
+      1000,
+      15000
+    ],
+    "voyants": [
+      "batterie-haute-tension",
+      "batterie-traction-basse"
+    ],
+    "glossaire": [
+      "batterie-traction",
+      "soh",
+      "kwh"
+    ],
+    "mots_cles": [
+      "batterie de traction",
+      "batterie haute tension",
+      "soh"
+    ],
+    "types_carnet": [],
+    "statut": "a_verifier",
+    "sources": [],
+    "redige_par": "ia",
+    "mise_a_jour": "2026-10-14",
+    "incertitudes": [
+      "Garanties et coûts variables selon les constructeurs et l'âge : à vérifier modèle par modèle."
+    ]
+  },
+  {
+    "id": "chargeur-embarque",
+    "nom": "Chargeur embarqué et prise de charge",
+    "zone": "electricite",
+    "energies": [
+      "electrique",
+      "hybride_rechargeable"
+    ],
+    "role": "Convertit le courant de la prise domestique ou de la borne pour recharger la batterie.",
+    "signes_usure": [
+      "Charge qui ne démarre pas ou s'interrompt",
+      "Prise ou trappe endommagée",
+      "Charge plus lente qu'avant"
+    ],
+    "duree_vie": "Conçu pour durer ; les câbles et prises s'abîment à l'usage.",
+    "duree_vie_km": null,
+    "prix": "800 à 2 500 € un chargeur ; 150 à 400 € un câble.",
+    "prix_eur": [
+      150,
+      2500
+    ],
+    "voyants": [
+      "prise-branchee"
+    ],
+    "glossaire": [
+      "chargeur-embarque",
+      "recharge-ac-dc"
+    ],
+    "mots_cles": [
+      "chargeur",
+      "prise de charge",
+      "cable de charge",
+      "recharge"
+    ],
+    "types_carnet": [],
+    "statut": "a_verifier",
+    "sources": [],
+    "redige_par": "ia",
+    "mise_a_jour": "2026-10-14",
+    "incertitudes": [
+      "Durée de vie et prix indicatifs, rédigés de mémoire : à recouper avec des sources (constructeurs, garages)."
+    ]
+  },
+  {
+    "id": "climatisation",
+    "nom": "Climatisation",
+    "zone": "electricite",
+    "energies": [
+      "thermique",
+      "hybride",
+      "hybride_rechargeable",
+      "electrique"
+    ],
+    "role": "Refroidit et assèche l'air de l'habitacle (et la batterie sur certaines électriques).",
+    "signes_usure": [
+      "Air moins froid",
+      "Mauvaise odeur",
+      "Buée difficile à chasser"
+    ],
+    "duree_vie": "Recharge tous les 2 à 4 ans environ ; filtre d'habitacle chaque année.",
+    "duree_vie_km": null,
+    "prix": "70 à 150 € une recharge ; 500 à 1 200 € un compresseur.",
+    "prix_eur": [
+      70,
+      1200
+    ],
+    "voyants": [],
+    "glossaire": [
+      "climatisation",
+      "filtre-habitacle"
+    ],
+    "mots_cles": [
+      "clim",
+      "climatisation",
+      "filtre d'habitacle",
+      "filtre habitacle"
+    ],
+    "types_carnet": [],
+    "statut": "a_verifier",
+    "sources": [],
+    "redige_par": "ia",
+    "mise_a_jour": "2026-10-14",
+    "incertitudes": [
+      "Durée de vie et prix indicatifs, rédigés de mémoire : à recouper avec des sources (constructeurs, garages)."
+    ]
+  },
+  {
+    "id": "eclairage",
+    "nom": "Éclairage",
+    "zone": "electricite",
+    "energies": [
+      "thermique",
+      "hybride",
+      "hybride_rechargeable",
+      "electrique"
+    ],
+    "role": "Phares, feux et clignotants : voir et être vu.",
+    "signes_usure": [
+      "Ampoule grillée, voyant d'ampoule",
+      "Phare terne ou jauni"
+    ],
+    "duree_vie": "Ampoules : variable ; LED : souvent la vie de la voiture.",
+    "duree_vie_km": null,
+    "prix": "10 à 150 € une ampoule ; 200 à 1 500 € un bloc optique LED.",
+    "prix_eur": [
+      10,
+      1500
+    ],
+    "voyants": [
+      "ampoule",
+      "feux-croisement"
+    ],
+    "glossaire": [
+      "led"
+    ],
+    "mots_cles": [
+      "ampoule",
+      "phare",
+      "feu",
+      "eclairage"
+    ],
+    "types_carnet": [],
+    "statut": "a_verifier",
+    "sources": [],
+    "redige_par": "ia",
+    "mise_a_jour": "2026-10-14",
+    "incertitudes": [
+      "Durée de vie et prix indicatifs, rédigés de mémoire : à recouper avec des sources (constructeurs, garages)."
+    ]
+  },
+  {
+    "id": "catalyseur",
+    "nom": "Catalyseur",
+    "zone": "echappement-depollution",
+    "energies": [
+      "thermique",
+      "hybride",
+      "hybride_rechargeable"
+    ],
+    "role": "Transforme les gaz les plus polluants en gaz moins nocifs.",
+    "signes_usure": [
+      "Voyant moteur",
+      "Odeur d'œuf pourri",
+      "Perte de puissance, échec au contrôle de pollution"
+    ],
+    "duree_vie": "150 000 à 250 000 km environ.",
+    "duree_vie_km": [
+      150000,
+      250000
+    ],
+    "prix": "400 à 1 500 €.",
+    "prix_eur": [
+      400,
+      1500
+    ],
+    "voyants": [
+      "moteur"
+    ],
+    "glossaire": [
+      "catalyseur",
+      "controle-pollution"
+    ],
+    "mots_cles": [
+      "catalyseur",
+      "pot catalytique"
+    ],
+    "types_carnet": [],
+    "statut": "a_verifier",
+    "sources": [],
+    "redige_par": "ia",
+    "mise_a_jour": "2026-10-14",
+    "incertitudes": [
+      "Durée de vie et prix indicatifs, rédigés de mémoire : à recouper avec des sources (constructeurs, garages)."
+    ]
+  },
+  {
+    "id": "fap",
+    "nom": "Filtre à particules (FAP)",
+    "zone": "echappement-depollution",
+    "energies": [
+      "thermique",
+      "hybride",
+      "hybride_rechargeable"
+    ],
+    "seulement": "diesel (et certains essence récents)",
+    "role": "Retient les suies et les brûle régulièrement (régénération).",
+    "signes_usure": [
+      "Voyant FAP",
+      "Perte de puissance, mode dégradé",
+      "Ventilateur qui tourne après l'arrêt, régénérations fréquentes"
+    ],
+    "duree_vie": "Souvent 150 000 à 250 000 km ; additif à remplir sur certains modèles. S'encrasse vite en usage urbain.",
+    "duree_vie_km": [
+      150000,
+      250000
+    ],
+    "prix": "150 à 400 € un nettoyage ; 800 à 2 500 € un remplacement.",
+    "prix_eur": [
+      150,
+      2500
+    ],
+    "voyants": [
+      "fap",
+      "moteur"
+    ],
+    "glossaire": [
+      "fap",
+      "regeneration",
+      "mode-degrade"
+    ],
+    "mots_cles": [
+      "fap",
+      "filtre a particules",
+      "regeneration",
+      "additif"
+    ],
+    "types_carnet": [],
+    "statut": "a_verifier",
+    "sources": [],
+    "redige_par": "ia",
+    "mise_a_jour": "2026-10-14",
+    "incertitudes": [
+      "Durée de vie et prix indicatifs, rédigés de mémoire : à recouper avec des sources (constructeurs, garages)."
+    ]
+  },
+  {
+    "id": "sonde-lambda",
+    "nom": "Sonde lambda",
+    "zone": "echappement-depollution",
+    "energies": [
+      "thermique",
+      "hybride",
+      "hybride_rechargeable"
+    ],
+    "role": "Mesure l'oxygène dans les gaz d'échappement pour régler le mélange.",
+    "signes_usure": [
+      "Voyant moteur",
+      "Consommation en hausse",
+      "Ralenti irrégulier"
+    ],
+    "duree_vie": "100 000 à 200 000 km environ.",
+    "duree_vie_km": [
+      100000,
+      200000
+    ],
+    "prix": "100 à 300 €.",
+    "prix_eur": [
+      100,
+      300
+    ],
+    "voyants": [
+      "moteur"
+    ],
+    "glossaire": [
+      "sonde-lambda",
+      "code-defaut"
+    ],
+    "mots_cles": [
+      "sonde lambda",
+      "lambda"
+    ],
+    "types_carnet": [],
+    "statut": "a_verifier",
+    "sources": [],
+    "redige_par": "ia",
+    "mise_a_jour": "2026-10-14",
+    "incertitudes": [
+      "Durée de vie et prix indicatifs, rédigés de mémoire : à recouper avec des sources (constructeurs, garages)."
+    ]
+  },
+  {
+    "id": "adblue",
+    "nom": "Système AdBlue (SCR)",
+    "zone": "echappement-depollution",
+    "energies": [
+      "thermique",
+      "hybride",
+      "hybride_rechargeable"
+    ],
+    "seulement": "diesel",
+    "role": "Injecte de l'AdBlue dans l'échappement pour réduire les oxydes d'azote (diesels récents).",
+    "signes_usure": [
+      "Voyant AdBlue, compte à rebours avant interdiction de démarrer",
+      "Message « défaut antipollution »",
+      "Cristaux blancs autour du bouchon"
+    ],
+    "duree_vie": "Remplissage : environ tous les 10 000 à 20 000 km. Pompe et injecteur : pannes fréquentes sur certains modèles.",
+    "duree_vie_km": [
+      10000,
+      20000
+    ],
+    "prix": "10 à 30 € le plein ; 500 à 1 500 € une pompe, un réservoir ou un injecteur.",
+    "prix_eur": [
+      10,
+      1500
+    ],
+    "voyants": [
+      "adblue",
+      "niveau-adblue-blocage"
+    ],
+    "glossaire": [
+      "adblue",
+      "scr"
+    ],
+    "mots_cles": [
+      "adblue",
+      "scr",
+      "uree"
+    ],
+    "types_carnet": [],
+    "statut": "a_verifier",
+    "sources": [],
+    "redige_par": "ia",
+    "mise_a_jour": "2026-10-14",
+    "incertitudes": [
+      "Durée de vie et prix indicatifs, rédigés de mémoire : à recouper avec des sources (constructeurs, garages)."
+    ]
+  },
+  {
+    "id": "silencieux",
+    "nom": "Ligne d'échappement et silencieux",
+    "zone": "echappement-depollution",
+    "energies": [
+      "thermique",
+      "hybride",
+      "hybride_rechargeable"
+    ],
+    "role": "Évacue les gaz à l'arrière et réduit le bruit.",
+    "signes_usure": [
+      "Bruit plus fort, ronflement",
+      "Odeur de gaz dans l'habitacle",
+      "Pièce qui pend sous la voiture"
+    ],
+    "duree_vie": "Souvent 100 000 à 200 000 km ; la rouille l'abîme plus vite sur les petits trajets.",
+    "duree_vie_km": [
+      100000,
+      200000
+    ],
+    "prix": "150 à 500 €.",
+    "prix_eur": [
+      150,
+      500
+    ],
+    "voyants": [],
+    "glossaire": [
+      "ligne-echappement"
+    ],
+    "mots_cles": [
+      "echappement",
+      "silencieux",
+      "pot d'echappement"
+    ],
+    "types_carnet": [],
+    "statut": "a_verifier",
+    "sources": [],
+    "redige_par": "ia",
+    "mise_a_jour": "2026-10-14",
+    "incertitudes": [
+      "Durée de vie et prix indicatifs, rédigés de mémoire : à recouper avec des sources (constructeurs, garages)."
+    ]
+  },
+  {
+    "id": "pneus",
+    "nom": "Pneus",
+    "zone": "pneus",
+    "energies": [
+      "thermique",
+      "hybride",
+      "hybride_rechargeable",
+      "electrique"
+    ],
+    "role": "Seul contact avec la route : adhérence, freinage, confort et consommation.",
+    "signes_usure": [
+      "Témoins d'usure atteints (1,6 mm, limite légale)",
+      "Usure irrégulière",
+      "Hernie, entaille, flanc craquelé"
+    ],
+    "duree_vie": "30 000 à 60 000 km à l'avant ; moins sur les voitures lourdes ou puissantes (électriques). À changer après 6 à 10 ans, même peu usés.",
+    "duree_vie_km": [
+      30000,
+      60000
+    ],
+    "prix": "50 à 150 € par pneu posé (citadine) ; 100 à 250 € (SUV, grandes jantes).",
+    "prix_eur": [
+      50,
+      250
+    ],
+    "voyants": [
+      "pression-pneus"
+    ],
+    "glossaire": [
+      "temoin-usure",
+      "dot",
+      "indice-charge",
+      "pneu-4-saisons"
+    ],
+    "mots_cles": [
+      "pneu",
+      "pneus",
+      "pneumatique"
+    ],
+    "types_carnet": [
+      "pneus"
+    ],
+    "statut": "a_verifier",
+    "sources": [],
+    "redige_par": "ia",
+    "mise_a_jour": "2026-10-14",
+    "incertitudes": [
+      "Durée de vie et prix indicatifs, rédigés de mémoire : à recouper avec des sources (constructeurs, garages)."
+    ]
+  },
+  {
+    "id": "capteurs-pression",
+    "nom": "Capteurs de pression des pneus",
+    "zone": "pneus",
+    "energies": [
+      "thermique",
+      "hybride",
+      "hybride_rechargeable",
+      "electrique"
+    ],
+    "role": "Surveillent la pression et allument un voyant en cas de perte.",
+    "signes_usure": [
+      "Voyant de pression qui reste allumé alors que la pression est bonne",
+      "Message « capteur défaillant »"
+    ],
+    "duree_vie": "Pile de 5 à 10 ans.",
+    "duree_vie_km": null,
+    "prix": "50 à 100 € par capteur posé.",
+    "prix_eur": [
+      50,
+      100
+    ],
+    "voyants": [
+      "pression-pneus",
+      "defaut-capteur"
+    ],
+    "glossaire": [
+      "tpms"
+    ],
+    "mots_cles": [
+      "capteur de pression des pneus",
+      "capteurs de pression des pneus",
+      "tpms",
+      "valve",
+      "pression des pneus"
+    ],
+    "types_carnet": [],
+    "statut": "a_verifier",
+    "sources": [],
+    "redige_par": "ia",
+    "mise_a_jour": "2026-10-14",
+    "incertitudes": [
+      "Durée de vie et prix indicatifs, rédigés de mémoire : à recouper avec des sources (constructeurs, garages)."
+    ]
+  },
+  {
+    "id": "pneus-hiver",
+    "nom": "Pneus hiver ou 4 saisons",
+    "zone": "pneus",
+    "energies": [
+      "thermique",
+      "hybride",
+      "hybride_rechargeable",
+      "electrique"
+    ],
+    "role": "Adhèrent mieux sous 7 °C, sur la neige et le verglas.",
+    "signes_usure": [
+      "Mêmes signes que les pneus été",
+      "Marquage 3PMSF (montagne et flocon) absent"
+    ],
+    "duree_vie": "Obligatoires du 1er novembre au 31 mars dans certaines communes de montagne (loi Montagne), ou chaînes à bord.",
+    "duree_vie_km": null,
+    "prix": "60 à 160 € par pneu ; montage saisonnier 40 à 80 €.",
+    "prix_eur": [
+      40,
+      160
+    ],
+    "voyants": [
+      "verglas"
+    ],
+    "glossaire": [
+      "3pmsf",
+      "loi-montagne",
+      "pneu-4-saisons"
+    ],
+    "mots_cles": [
+      "pneus hiver",
+      "pneu hiver",
+      "4 saisons"
+    ],
+    "types_carnet": [],
+    "statut": "a_verifier",
+    "sources": [],
+    "redige_par": "ia",
+    "mise_a_jour": "2026-10-14",
+    "incertitudes": [
+      "Durée de vie et prix indicatifs, rédigés de mémoire : à recouper avec des sources (constructeurs, garages)."
+    ]
+  },
+  {
+    "id": "essuie-glaces",
+    "nom": "Balais d'essuie-glace",
+    "zone": "carrosserie",
+    "energies": [
+      "thermique",
+      "hybride",
+      "hybride_rechargeable",
+      "electrique"
+    ],
+    "role": "Dégagent le pare-brise.",
+    "signes_usure": [
+      "Traces ou zones non essuyées",
+      "Broutement, bruit",
+      "Caoutchouc fendu"
+    ],
+    "duree_vie": "1 an environ.",
+    "duree_vie_km": null,
+    "prix": "15 à 50 € la paire.",
+    "prix_eur": [
+      15,
+      50
+    ],
+    "voyants": [
+      "lave-glace"
+    ],
+    "glossaire": [],
+    "mots_cles": [
+      "essuie glace",
+      "balais",
+      "essuie-glace"
+    ],
+    "types_carnet": [],
+    "statut": "a_verifier",
+    "sources": [],
+    "redige_par": "ia",
+    "mise_a_jour": "2026-10-14",
+    "incertitudes": [
+      "Durée de vie et prix indicatifs, rédigés de mémoire : à recouper avec des sources (constructeurs, garages)."
+    ]
+  },
+  {
+    "id": "pare-brise",
+    "nom": "Pare-brise et vitrage",
+    "zone": "carrosserie",
+    "energies": [
+      "thermique",
+      "hybride",
+      "hybride_rechargeable",
+      "electrique"
+    ],
+    "role": "Protège les occupants et porte souvent la caméra des aides à la conduite.",
+    "signes_usure": [
+      "Impact, fissure",
+      "Rayures dans le champ de vision"
+    ],
+    "duree_vie": "Un impact se répare tant qu'il est petit et loin du bord.",
+    "duree_vie_km": null,
+    "prix": "0 à 100 € une réparation (souvent prise en charge par l'assurance bris de glace) ; 300 à 1 200 € un remplacement avec calibrage de la caméra.",
+    "prix_eur": [
+      0,
+      1200
+    ],
+    "voyants": [],
+    "glossaire": [
+      "bris-de-glace",
+      "adas",
+      "calibrage"
+    ],
+    "mots_cles": [
+      "pare brise",
+      "pare-brise",
+      "vitre"
+    ],
+    "types_carnet": [],
+    "statut": "a_verifier",
+    "sources": [],
+    "redige_par": "ia",
+    "mise_a_jour": "2026-10-14",
+    "incertitudes": [
+      "Durée de vie et prix indicatifs, rédigés de mémoire : à recouper avec des sources (constructeurs, garages)."
+    ]
+  },
+  {
+    "id": "corrosion",
+    "nom": "Corrosion et bas de caisse",
+    "zone": "carrosserie",
+    "energies": [
+      "thermique",
+      "hybride",
+      "hybride_rechargeable",
+      "electrique"
+    ],
+    "role": "La rouille attaque d'abord les bas de caisse, passages de roue et soubassement.",
+    "signes_usure": [
+      "Cloques sous la peinture",
+      "Rouille perforante sur les bas de caisse",
+      "Contre-visite au contrôle technique"
+    ],
+    "duree_vie": "Variable selon le climat et le salage des routes.",
+    "duree_vie_km": null,
+    "prix": "200 à 1 500 € de carrosserie selon l'étendue.",
+    "prix_eur": [
+      200,
+      1500
+    ],
+    "voyants": [],
+    "glossaire": [
+      "corrosion-perforante"
+    ],
+    "mots_cles": [
+      "rouille",
+      "corrosion",
+      "bas de caisse"
+    ],
+    "types_carnet": [],
+    "statut": "a_verifier",
+    "sources": [],
+    "redige_par": "ia",
+    "mise_a_jour": "2026-10-14",
+    "incertitudes": [
+      "Durée de vie et prix indicatifs, rédigés de mémoire : à recouper avec des sources (constructeurs, garages)."
+    ]
+  },
+  {
+    "id": "ouvrants",
+    "nom": "Portes, serrures et lève-vitres",
+    "zone": "carrosserie",
+    "energies": [
+      "thermique",
+      "hybride",
+      "hybride_rechargeable",
+      "electrique"
+    ],
+    "role": "Ouverture, fermeture et étanchéité de l'habitacle.",
+    "signes_usure": [
+      "Vitre lente ou bloquée",
+      "Porte qui ne se verrouille plus",
+      "Infiltrations d'eau, joints abîmés"
+    ],
+    "duree_vie": "Moteurs de lève-vitre et serrures : variable.",
+    "duree_vie_km": null,
+    "prix": "150 à 400 € un lève-vitre ou une serrure.",
+    "prix_eur": [
+      150,
+      400
+    ],
+    "voyants": [
+      "portes-ouvertes"
+    ],
+    "glossaire": [],
+    "mots_cles": [
+      "leve vitre",
+      "serrure",
+      "joint de porte",
+      "porte"
+    ],
+    "types_carnet": [],
+    "statut": "a_verifier",
+    "sources": [],
+    "redige_par": "ia",
+    "mise_a_jour": "2026-10-14",
+    "incertitudes": [
+      "Durée de vie et prix indicatifs, rédigés de mémoire : à recouper avec des sources (constructeurs, garages)."
+    ]
+  }
+]
