@@ -82,3 +82,19 @@
 - Vérification de l'adresse e-mail à l'inscription (lien de confirmation).
 - Rappels par e-mail (contrôle technique, vidange, assurance…), une fois l'adresse vérifiée.
 - Ne plus révéler si une adresse est déjà inscrite : l'inscription affiche le même message dans tous les cas, et un e-mail prévient le titulaire de l'adresse.
+
+## Idées en réserve
+
+- **Indice de santé de la voiture** : une note synthétique, à partir du carnet, des relevés, de « À venir » et des pannes connues du modèle.
+- **Dictée vocale** pour décrire une panne sans taper.
+- **Photos analysées par l'IA** : un voyant, un devis de garage, l'usure d'un pneu, une fuite sous la voiture.
+- **Mode rendez-vous au garage** : ce qu'il faut dire, les questions à poser, le devis à demander, l'historique à montrer.
+- **Mode départ en vacances** : vérifications avant un long trajet, adaptées à la voiture et à la saison.
+- **Alertes de saison** : pneus hiver, batterie au premier froid, climatisation avant l'été.
+- **Tutoriels illustrés des gestes simples** : niveaux, pression des pneus, ampoule, balais d'essuie-glace.
+- **QR code pour les garages partenaires** : le client partage son carnet en un geste.
+- **Modèle économique** :
+  - freemium (l'essentiel gratuit, des fonctions avancées payantes) ;
+  - abonnement pour les professionnels ;
+  - partenariats transparents, toujours signalés comme tels et sans influence sur les conseils ;
+  - offre pour les flottes.
