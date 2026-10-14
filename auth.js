@@ -80,7 +80,9 @@ export const needUser = (req, res, next) =>
 /* ---------- routeur ---------- */
 // Monte /api/auth/* et /api/account/* ; req.user est rempli pour toutes les routes de l'application.
 // exportData(userId) ajoute à l'export RGPD les données des autres modules (garage…).
-export function createAuth(db, { now = () => Date.now(), exportData = () => ({}) } = {}) {
+// beforeDeleteUser(userId) est appelé avant l'effacement du compte et renvoie une fonction à appeler après
+// (ex. supprimer les fichiers des factures, que la base ne peut pas effacer elle-même).
+export function createAuth(db, { now = () => Date.now(), exportData = () => ({}), beforeDeleteUser = () => null } = {}) {
   const q = {
     userByEmail: db.prepare("SELECT * FROM users WHERE email = ?"),
     userById: db.prepare("SELECT id, email, created_at FROM users WHERE id = ?"),
@@ -192,7 +194,9 @@ export function createAuth(db, { now = () => Date.now(), exportData = () => ({})
     if (!(await verifyPassword(password, password_hash))) {
       return res.status(401).json({ code: "bad_credentials", error: "Mot de passe incorrect." });
     }
-    q.deleteUser.run(req.user.id); // les sessions partent avec (ON DELETE CASCADE)
+    const cleanup = beforeDeleteUser(req.user.id);
+    q.deleteUser.run(req.user.id); // sessions, voitures, relevés, entretiens partent avec (ON DELETE CASCADE)
+    if (cleanup) await cleanup();
     setSessionCookie(req, res, "", 0);
     res.json({ ok: true });
   });

@@ -50,7 +50,8 @@ export const designation = (v, km = null) =>
     .filter(Boolean).join(", ");
 
 /* ---------- routeur ---------- */
-export function createGarage(db, kb) {
+// carnet (facultatif) : module carnet.js, pour le résumé, l'export et l'effacement des factures.
+export function createGarage(db, kb, { carnet = null } = {}) {
   const q = {
     list: db.prepare("SELECT * FROM vehicles WHERE user_id = ? ORDER BY created_at, id"),
     get: db.prepare("SELECT * FROM vehicles WHERE id = ? AND user_id = ?"),
@@ -78,6 +79,7 @@ export function createGarage(db, kb) {
       fiche: fiche ? { id: fiche.id, label: vehicleLabel(fiche), statut: fiche.statut === "verifie" ? "verifie" : "a_verifier" } : null,
       ficheRefusee: !!row.fiche_refusee,
       kilometrage,
+      ...(carnet && { carnet: carnet.summary(row.id) }),
       designation: designation(row, kilometrage.dernier?.km ?? null),
       createdAt: row.created_at, updatedAt: row.updated_at,
     };
@@ -123,9 +125,12 @@ export function createGarage(db, kb) {
     res.json({ vehicule: toPublic(q.get.get(id, req.user.id)) });
   });
 
-  router.delete("/api/garage/:id", (req, res) => {
-    const { changes } = q.remove.run(vehicleId(req), req.user.id);
-    if (!changes) return notFound(res);
+  router.delete("/api/garage/:id", async (req, res, next) => {
+    const id = vehicleId(req);
+    if (!q.get.get(id, req.user.id)) return notFound(res);
+    const cleanup = carnet ? carnet.beforeDeleteVehicle(id) : null;
+    q.remove.run(id, req.user.id); // relevés et entretiens partent avec (ON DELETE CASCADE)
+    try { if (cleanup) await cleanup(); } catch (e) { return next(e); }
     res.json({ ok: true });
   });
 
@@ -162,7 +167,11 @@ export function createGarage(db, kb) {
 
   // Pour l'export RGPD : chaque voiture avec tous ses relevés.
   router.exportFor = userId => ({
-    vehicules: q.list.all(userId).map(row => ({ ...toPublic(row), releves: q.releves.all(row.id).map(({ date, km }) => ({ date, km })) })),
+    vehicules: q.list.all(userId).map(row => ({
+      ...toPublic(row),
+      releves: q.releves.all(row.id).map(({ date, km }) => ({ date, km })),
+      ...(carnet && { entretiens: carnet.forExport(row.id) }),
+    })),
   });
   return router;
 }

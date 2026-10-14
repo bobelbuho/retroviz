@@ -265,6 +265,24 @@ label.f{display:block;font-weight:var(--fw-semibold);font-size:var(--fs-sm);marg
 .kmlist li span{white-space:nowrap}
 .kmlist li span:last-of-type{margin-left:auto;font-weight:var(--fw-semibold)}
 .kmlist .btn{padding:0 var(--sp-2)}
+/* carnet d'entretien */
+.back{margin:0 0 var(--sp-3) calc(-1 * var(--sp-3))}
+.carnet-head h2{font-size:var(--fs-2xl);font-weight:var(--fw-bold);margin:0;line-height:var(--lh-tight)}
+.carnet-head h2:focus{outline:none}
+.carnet-head .sub{color:var(--muted);margin:var(--sp-1) 0 var(--sp-2)}
+.carnet-head .sum{margin:0 0 var(--sp-5);font-weight:var(--fw-semibold)}
+.ents{list-style:none;margin:var(--sp-5) 0 0;padding:0;display:grid;gap:var(--sp-3)}
+.ent{background:var(--surface);border-radius:var(--r-lg);padding:var(--sp-4) var(--sp-5);box-shadow:var(--shadow)}
+.ent-top{display:flex;justify-content:space-between;align-items:baseline;gap:var(--sp-3);flex-wrap:wrap}
+.ent-top strong{font-size:var(--fs-lg)}
+.ent-top .cost{font-weight:var(--fw-bold);font-variant-numeric:tabular-nums}
+.ent-meta{color:var(--muted);font-size:var(--fs-sm);margin:var(--sp-1) 0 0}
+.ent-desc{margin:var(--sp-2) 0 0;white-space:pre-wrap}
+.ent .rowbtns{margin:var(--sp-3) 0 0 calc(-1 * var(--sp-1))}
+.check{display:flex;gap:var(--sp-2);align-items:flex-start;font-size:var(--fs-sm)}
+.check input{width:20px;height:20px;margin-top:2px;flex:none;accent-color:var(--primary)}
+.file-now{font-size:var(--fs-sm);margin:var(--sp-1) 0 0}
+input[type=file].field{padding:8px var(--sp-3)}
 .empty{background:var(--soft);border-radius:var(--r-lg);padding:var(--sp-5);margin:0 0 var(--sp-4);color:var(--muted)}
 
 /* ---------- compte (fenêtre) ---------- */
@@ -397,10 +415,11 @@ footer{margin-top:var(--sp-7);font-size:var(--fs-xs);color:var(--muted);padding-
 
   <!-- Mon garage -->
   <section class="panel" id="garagePanel" hidden>
-    <p class="intro">Vos voitures, enregistrées une fois pour toutes. Quand Rétroviz a une fiche pour leur modèle et leur moteur, elle sert en priorité dans les réponses.</p>
+    <p class="intro" id="garageIntro">Vos voitures, enregistrées une fois pour toutes. Quand Rétroviz a une fiche pour leur modèle et leur moteur, elle sert en priorité dans les réponses.</p>
     <div id="garageOut"><p class="empty">Créez un compte ou connectez-vous pour enregistrer vos voitures.</p>
       <button class="btn" type="button" id="garageLogin">Se connecter ou créer un compte</button></div>
     <div id="garageIn" hidden>
+      <div id="garageList">
       <ul class="cars" id="cars"></ul>
       <button class="btn" type="button" id="carAdd">Ajouter une voiture</button>
       <form class="form" id="carForm" novalidate hidden style="margin-top:16px">
@@ -415,6 +434,30 @@ footer{margin-top:var(--sp-7);font-size:var(--fs-xs);color:var(--muted);padding-
         <p class="hint full" id="carMsg" style="margin:0" role="alert"></p>
         <div class="formbtns"><button class="btn" type="submit" id="carSave">Enregistrer</button><button class="btn ghost" type="button" id="carCancel">Annuler</button></div>
       </form>
+      </div>
+      <!-- Carnet d'entretien d'une voiture -->
+      <div id="carnetView" hidden>
+        <button class="btn ghost small back" type="button" id="carnetBack">← Mon garage</button>
+        <div class="carnet-head"><h2 id="carnetTitle" tabindex="-1"></h2><p class="sub" id="carnetSub"></p><p class="sum" id="carnetSum"></p></div>
+        <button class="btn" type="button" id="entAdd">Ajouter un entretien</button>
+        <form class="form" id="entForm" novalidate hidden>
+          <div><label class="f" for="e_date">Date *</label><input class="field" type="date" id="e_date" required></div>
+          <div><label class="f" for="e_type">Type *</label>
+            <select class="field" id="e_type" required><option value="">Choisir…</option><option value="vidange">Vidange</option><option value="distribution">Distribution</option><option value="freins">Freins</option><option value="pneus">Pneus</option><option value="batterie">Batterie</option><option value="controle_technique">Contrôle technique</option><option value="reparation">Réparation</option><option value="autre">Autre</option></select></div>
+          <div><label class="f" for="e_km">Kilométrage</label><input class="field" id="e_km" inputmode="numeric" maxlength="9" placeholder="48 200"></div>
+          <div><label class="f" for="e_cout">Coût (€)</label><input class="field" id="e_cout" inputmode="decimal" maxlength="12" placeholder="89,90"></div>
+          <div class="s2"><label class="f" for="e_garage">Garage</label><input class="field" id="e_garage" maxlength="100" placeholder="Garage Martin, Lyon"></div>
+          <div class="s2"><label class="check"><input type="checkbox" id="e_feed" checked><span>Ajouter ce kilométrage à mes relevés</span></label></div>
+          <div class="full"><label class="f" for="e_desc">Description</label><textarea class="field" id="e_desc" rows="2" maxlength="1000" placeholder="Vidange et filtre à huile, huile 5W30"></textarea></div>
+          <div class="full"><label class="f" for="e_file">Facture</label>
+            <input class="field" type="file" id="e_file" accept="image/jpeg,image/png,image/webp,image/heic,image/heif,.heic,.heif,application/pdf" aria-describedby="e_file_hint">
+            <p class="hint" id="e_file_hint">Facultatif. Photo ou PDF, 10 Mo au plus.</p>
+            <p class="file-now" id="e_fileNow" hidden></p></div>
+          <p class="hint full" id="entMsg" style="margin:0" role="alert"></p>
+          <div class="formbtns"><button class="btn" type="submit" id="entSave">Enregistrer</button><button class="btn ghost" type="button" id="entCancel">Annuler</button></div>
+        </form>
+        <ul class="ents" id="ents"></ul>
+      </div>
     </div>
   </section>
 
@@ -914,12 +957,13 @@ api("GET", "/api/auth/me").then(r => { if(r.ok){ user = r.user; renderAcct(); lo
 
 /* ---------- mon garage ---------- */
 let cars = [], editing = null; // editing : id de la voiture modifiée, "new" pour un ajout, null sinon
-let kmOpen = null, kmData = {};  // voiture dont les relevés sont dépliés ; relevés chargés, par voiture
+let kmOpen = null, kmData = {};
+let carnetOf = null, carnet = {entretiens:[], total:0}, entEditing = null; // voiture du carnet ouvert ; entretien modifié ("new" pour un ajout)  // voiture dont les relevés sont dépliés ; relevés chargés, par voiture
 const STATUT = s => s === "verifie" ? "vérifiée" : "à vérifier";
 async function loadGarage(){
   cars = [];
   if(user){ const r = await api("GET", "/api/garage"); if(r.ok) cars = r.vehicules; }
-  editing = null; kmOpen = null; kmData = {}; renderGarage();
+  editing = null; kmOpen = null; kmData = {}; carnetOf = null; renderGarage();
 }
 const fmtNum = n => Number(n).toLocaleString("fr-FR");
 const fmtDate = d => new Date(d + "T00:00:00").toLocaleDateString("fr-FR", {day:"numeric", month:"long", year:"numeric"});
@@ -954,12 +998,24 @@ function ficheHTML(c){
   if(!c.motorisation) return `Ajoutez la motorisation pour relier une fiche Rétroviz. <button class="link" type="button" data-act="edit">Ajouter la motorisation</button>`;
   return "Pas encore de fiche Rétroviz pour ce modèle et ce moteur : l'assistant répondra avec ses connaissances générales.";
 }
+const fmtEur = n => Number(n).toLocaleString("fr-FR", {style:"currency", currency:"EUR"});
+function carnetLineHTML(c){
+  const k = c.carnet || {nombre:0};
+  const txt = k.nombre
+    ? `Carnet : ${k.nombre} entretien${k.nombre > 1 ? "s" : ""}, dernier : ${esc(k.dernier.typeLabel.toLowerCase())} le ${fmtDate(k.dernier.date)}.`
+    : "Carnet d'entretien vide.";
+  return `<div class="kmbox"><p>${txt}</p><button class="link" type="button" data-act="carnet">Ouvrir le carnet</button></div>`;
+}
 function renderGarage(){
   $("#garageOut").hidden = !!user; $("#garageIn").hidden = !user;
+  const inCarnet = !!user && carnetOf !== null && !!carById(carnetOf);
+  $("#garageList").hidden = inCarnet; $("#garageIntro").hidden = inCarnet; $("#carnetView").hidden = !inCarnet;
+  if(inCarnet) renderCarnet();
   $("#cars").innerHTML = cars.length ? cars.map(c => `<li class="car" data-id="${c.id}">
       <h3>${esc(c.surnom || c.marque+" "+c.modele)}</h3>
       <p class="sub">${esc(carSub(c))}</p>
       ${kmHTML(c)}
+      ${carnetLineHTML(c)}
       <p class="fiche">${ficheHTML(c)}</p>
       <div class="rowbtns"><button class="btn soft small" type="button" data-act="ask">Poser une question</button><button class="btn ghost small" type="button" data-act="edit">Modifier</button><button class="btn ghost small" type="button" data-act="del">Supprimer</button></div>
     </li>`).join("") : `<li class="empty">Votre garage est vide. Ajoutez votre première voiture.</li>`;
@@ -1016,6 +1072,8 @@ $("#cars").addEventListener("click", async e => {
   }else if(act === "refuse" || act === "relink"){
     const err = await saveCar(c.id, {...carPayload(c), ficheRefusee: act === "refuse"});
     if(err) showNotice(err);
+  }else if(act === "carnet"){
+    await openCarnet(c.id);
   }else if(act === "km"){
     if(kmOpen === c.id){ kmOpen = null; renderGarage(); return; }
     const r = await api("GET", `/api/garage/${c.id}/releves`);
@@ -1029,6 +1087,109 @@ $("#cars").addEventListener("click", async e => {
     applyReleves(c.id, r);
   }
 });
+/* ---------- carnet d'entretien ---------- */
+async function refreshCar(id){
+  const r = await api("GET", "/api/garage");
+  if(r.ok) cars = r.vehicules;
+  delete kmData[id];
+}
+async function openCarnet(id){
+  const r = await api("GET", `/api/garage/${id}/entretiens`);
+  if(!r.ok){ showNotice(r.error); return; }
+  carnet = r; carnetOf = id; entEditing = null; renderGarage();
+  window.scrollTo({top:0}); $("#carnetTitle").focus();
+}
+function entHTML(e){
+  const meta = [fmtDate(e.date), e.km !== null && fmtNum(e.km) + " km", e.garage].filter(Boolean).map(esc).join(" · ");
+  return `<li class="ent" data-eid="${e.id}">
+    <div class="ent-top"><strong>${esc(e.typeLabel)}</strong>${e.cout !== null ? `<span class="cost">${fmtEur(e.cout)}</span>` : ""}</div>
+    <p class="ent-meta">${meta}</p>
+    ${e.description ? `<p class="ent-desc">${esc(e.description)}</p>` : ""}
+    <div class="rowbtns">
+      ${e.facture ? `<a class="btn soft small" href="${esc(e.facture.url)}" target="_blank" rel="noopener">Facture (${esc(e.facture.type)})</a>` : ""}
+      <button class="btn ghost small" type="button" data-eact="edit">Modifier</button><button class="btn ghost small" type="button" data-eact="del">Supprimer</button>
+    </div>
+  </li>`;
+}
+function renderCarnet(){
+  const c = carById(carnetOf), n = carnet.entretiens.length;
+  $("#carnetTitle").textContent = "Carnet de " + (c.surnom || c.marque + " " + c.modele);
+  $("#carnetSub").textContent = carSub(c);
+  $("#carnetSum").textContent = n ? `${n} entretien${n > 1 ? "s" : ""}${carnet.total ? " · " + fmtEur(carnet.total) + " au total" : ""}` : "";
+  $("#entForm").hidden = entEditing === null; $("#entAdd").hidden = entEditing !== null;
+  $("#ents").innerHTML = n ? carnet.entretiens.map(entHTML).join("")
+    : `<li class="empty">Aucun entretien pour l'instant. Ajoutez le premier : vidange, pneus, contrôle technique…</li>`;
+}
+function openEntForm(e){
+  entEditing = e ? e.id : "new";
+  $("#e_date").value = e?.date || todayISO(); $("#e_date").max = todayISO();
+  $("#e_type").value = e?.type || ""; $("#e_km").value = e?.km ?? ""; $("#e_cout").value = e?.cout != null ? String(e.cout).replace(".", ",") : "";
+  $("#e_garage").value = e?.garage || ""; $("#e_desc").value = e?.description || ""; $("#e_file").value = ""; $("#e_feed").checked = true;
+  $("#e_fileNow").hidden = !e?.facture;
+  $("#e_fileNow").innerHTML = e?.facture ? `Facture actuelle : ${esc(e.facture.nom)} (${esc(e.facture.type)}). Choisissez un fichier pour la remplacer, ou <button class="link" type="button" id="e_fileDel">supprimez-la</button>.` : "";
+  $("#entMsg").textContent = "";
+  renderCarnet(); $("#e_date").focus();
+}
+/* Envoi de la facture : le fichier brut, en PUT (le serveur vérifie son vrai type). */
+async function uploadFacture(vid, eid, file){
+  if(file.size > 10 * 1024 * 1024) return "Fichier trop lourd (10 Mo au plus).";
+  try{
+    const res = await fetch(`/api/garage/${vid}/entretiens/${eid}/facture`, {method:"PUT",
+      headers:{"Content-Type":"application/octet-stream", "X-Filename":encodeURIComponent(file.name)}, body:file});
+    if(res.ok) return null;
+    let j = {}; try { j = await res.json(); } catch {}
+    return j.error || "La facture n'a pas pu être envoyée.";
+  }catch{ return "Le serveur ne répond pas. Vérifiez qu'il tourne bien (npm start)."; }
+}
+$("#carnetBack").addEventListener("click", () => {
+  const id = carnetOf; carnetOf = null; entEditing = null; renderGarage();
+  const link = document.querySelector(`.car[data-id="${id}"] [data-act=carnet]`); if(link) link.focus();
+});
+$("#entAdd").addEventListener("click", () => openEntForm(null));
+$("#entCancel").addEventListener("click", () => { entEditing = null; renderCarnet(); $("#entAdd").focus(); });
+$("#entForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  const v = id => $("#"+id).value.trim();
+  if(!v("e_date") || !v("e_type")){ $("#entMsg").textContent = "Indiquez au moins la date et le type."; return; }
+  const file = $("#e_file").files[0];
+  if(file && file.size > 10 * 1024 * 1024){ $("#entMsg").textContent = "Fichier trop lourd (10 Mo au plus)."; return; }
+  const vid = carnetOf, eid = entEditing === "new" ? null : entEditing;
+  $("#entSave").disabled = true;
+  const r = await api(eid ? "PUT" : "POST", eid ? `/api/garage/${vid}/entretiens/${eid}` : `/api/garage/${vid}/entretiens`, {
+    date:v("e_date"), type:v("e_type"), km:v("e_km"), cout:v("e_cout"), garage:v("e_garage"), description:v("e_desc"),
+    alimenterReleves:$("#e_feed").checked});
+  let err = r.ok ? null : r.error;
+  if(r.ok && file){
+    const upErr = await uploadFacture(vid, r.entretien.id, file);
+    if(upErr) err = "Entretien enregistré, mais pas la facture : " + upErr;
+  }
+  $("#entSave").disabled = false;
+  if(!r.ok){ $("#entMsg").textContent = err; return; }
+  await refreshCar(vid);
+  const list = await api("GET", `/api/garage/${vid}/entretiens`);
+  if(list.ok) carnet = list;
+  if(err){ entEditing = r.entretien.id; openEntForm(carnet.entretiens.find(x => x.id === r.entretien.id)); $("#entMsg").textContent = err; return; }
+  entEditing = null; renderCarnet(); $("#entAdd").focus();
+});
+$("#entForm").addEventListener("click", async e => {
+  if(!e.target.closest("#e_fileDel")) return;
+  if(!confirm("Supprimer la facture de cet entretien ?")) return;
+  const r = await api("DELETE", `/api/garage/${carnetOf}/entretiens/${entEditing}/facture`);
+  if(!r.ok){ $("#entMsg").textContent = r.error; return; }
+  carnet.entretiens = carnet.entretiens.map(x => x.id === r.entretien.id ? r.entretien : x);
+  openEntForm(r.entretien);
+});
+$("#ents").addEventListener("click", async e => {
+  const b = e.target.closest("[data-eact]"); if(!b) return;
+  const ent = carnet.entretiens.find(x => x.id === +b.closest(".ent").dataset.eid); if(!ent) return;
+  if(b.dataset.eact === "edit") return openEntForm(ent);
+  if(!confirm(`Supprimer cet entretien (${ent.typeLabel.toLowerCase()} du ${fmtDate(ent.date)})${ent.facture ? " et sa facture" : ""} ?`)) return;
+  const r = await api("DELETE", `/api/garage/${carnetOf}/entretiens/${ent.id}`);
+  if(!r.ok){ showNotice(r.error); return; }
+  carnet = r; if(entEditing === ent.id) entEditing = null;
+  await refreshCar(carnetOf); renderCarnet(); $("#entAdd").focus();
+});
+
 function applyReleves(id, r){
   kmData[id] = r.releves;
   cars = cars.map(x => x.id === id ? r.vehicule : x);

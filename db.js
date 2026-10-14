@@ -43,6 +43,23 @@ CREATE TABLE IF NOT EXISTS releves (
   created_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now')),
   UNIQUE (vehicle_id, date)              -- un relevé par jour : le nouveau remplace l'ancien
 );
+CREATE TABLE IF NOT EXISTS entretiens (
+  id             INTEGER PRIMARY KEY,
+  vehicle_id     INTEGER NOT NULL REFERENCES vehicles(id) ON DELETE CASCADE,
+  date           TEXT NOT NULL,            -- AAAA-MM-JJ
+  km             INTEGER,
+  type           TEXT NOT NULL,            -- vidange, distribution, freins, pneus, batterie, controle_technique, reparation, autre
+  description    TEXT NOT NULL DEFAULT '',
+  garage         TEXT NOT NULL DEFAULT '',
+  cout_centimes  INTEGER,
+  facture_key    TEXT,                     -- clé dans storage.js (nom aléatoire), ou NULL
+  facture_type   TEXT,                     -- extension détectée d'après le contenu : jpg, png, webp, heic, pdf
+  facture_taille INTEGER,
+  facture_nom    TEXT,                     -- nom d'origine, pour l'affichage seulement
+  created_at     TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now')),
+  updated_at     TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now'))
+);
+CREATE INDEX IF NOT EXISTS entretiens_vehicle ON entretiens(vehicle_id, date);
 `;
 
 // Ouvre (et crée si besoin) la base. ":memory:" pour les tests.

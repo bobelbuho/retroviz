@@ -18,21 +18,33 @@ const days = (a, b) => Math.round((Date.parse(`${b}T00:00:00Z`) - Date.parse(`${
 export const kmText = n => `${n.toLocaleString("fr-FR")} km`;
 const dateText = s => new Date(`${s}T00:00:00Z`).toLocaleDateString("fr-FR", { timeZone: "UTC" });
 
+// Date AAAA-MM-JJ, ni future ni avant 1950. Renvoie { date } ou { error }.
+export function cleanDate(raw, now = today()) {
+  const date = isoDate(raw ?? now);
+  if (!date) return { error: "Date invalide." };
+  // Un jour de marge : le navigateur peut être dans un autre fuseau horaire que le serveur.
+  if (days(now, date) > 1) return { error: "La date ne peut pas être dans le futur." };
+  if (date < "1950-01-01") return { error: "Date trop ancienne." };
+  return { date };
+}
+
+// Kilométrage entier. Chiffres seulement, espaces acceptés (« 85 000 ») ;
+// « 85.000 » ou « 85,5 » sont refusés plutôt que mal lus. Renvoie { km } ou { error }.
+export function cleanKm(raw) {
+  const s = typeof raw === "number" ? String(raw) : String(raw ?? "").replace(/[\s\u202f\u00a0]/g, "");
+  const km = /^\d+$/.test(s) ? Number(s) : NaN;
+  if (!Number.isInteger(km) || km > KM_MAX) return { error: `Kilométrage invalide (nombre entier entre 0 et ${kmText(KM_MAX)}).` };
+  return { km };
+}
+
 // Renvoie { data: { date, km } } ou { error }.
 export function cleanReleve(body, now = today()) {
   const b = body && typeof body === "object" ? body : {};
-  const date = isoDate(b.date ?? now);
-  if (!date) return { error: "Date invalide." };
-  // Un jour de marge : le navigateur peut être dans un autre fuseau horaire que le serveur.
-  if (days(now, date) > 1) return { error: "La date du relevé ne peut pas être dans le futur." };
-  if (date < "1950-01-01") return { error: "Date trop ancienne." };
-  // Chiffres seulement, espaces acceptés (« 85 000 ») ; « 85.000 » ou « 85,5 » sont refusés plutôt que mal lus.
-  const raw = typeof b.km === "number" ? String(b.km) : String(b.km ?? "").replace(/[\s  ]/g, "");
-  const km = /^\d+$/.test(raw) ? Number(raw) : NaN;
-  if (!Number.isInteger(km) || km > KM_MAX) {
-    return { error: `Kilométrage invalide (nombre entier entre 0 et ${kmText(KM_MAX)}).` };
-  }
-  return { data: { date, km } };
+  const d = cleanDate(b.date, now);
+  if (d.error) return d;
+  const k = cleanKm(b.km);
+  if (k.error) return k;
+  return { data: { date: d.date, km: k.km } };
 }
 
 // Le nouveau relevé est-il cohérent avec les autres ? Un compteur ne recule pas.

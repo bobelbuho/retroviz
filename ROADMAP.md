@@ -6,7 +6,8 @@
 - ✅ Garage virtuel : mes voitures, reliées si possible à une fiche de la base Rétroviz.
 - ✅ Relevés de kilométrage et moyenne de km par mois.
   - Plus tard : option « compteur changé ou remis à zéro » (aujourd'hui, un relevé inférieur au précédent est refusé).
-- Carnet d'entretien, avec photo ou PDF de facture.
+- ✅ Carnet d'entretien, avec photo ou PDF de facture.
+  - Plus tard : stockage des factures compatible S3 hébergé en Europe (Scaleway ou OVH), en remplaçant `createLocalStorage` dans `storage.js`.
 - Rappels : contrôle technique, assurance, vidange, pneus hiver.
 - Prochains entretiens calculés à partir de la fiche et du carnet.
 - Valeur indicative estimée par l'IA, avec son évolution dans le temps.
