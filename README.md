@@ -94,11 +94,11 @@ Les comptes sont facultatifs : l'assistant reste utilisable sans compte. Le bout
 
 « Voir sa page » (ou un clic sur le nom de la voiture) ouvre sa page principale, avec quatre onglets : **Sa vie**, **Carnet**, **À venir** et **Valeur**.
 
-- **Photo** facultative : JPEG, PNG ou WebP, 10 Mo au plus, vrai type vérifié d'après le contenu, nom aléatoire, visible par le seul propriétaire. Elle passe par  comme les factures, et elle est effacée avec la voiture ou le compte.
+- **Photo** facultative : JPEG, PNG ou WebP, 10 Mo au plus, vrai type vérifié d'après le contenu, nom aléatoire, visible par le seul propriétaire. Elle passe par `storage.js` comme les factures, et elle est effacée avec la voiture ou le compte.
 - **Frise** : ajout au garage ou achat, relevés, entretiens et factures (« avec facture » ou « déclaré »), estimations de valeur. Les changements de propriétaire et les avis s'y ajouteront.
 - **Étapes marquantes** : paliers de kilométrage franchis avec vous (50 000, 100 000 km…), anniversaires (« 1 an avec vous »).
 - **Chiffres clés**, depuis l'achat (date et kilométrage d'achat facultatifs, sinon depuis l'ajout au garage) : km parcourus, total dépensé en entretien, coût d'entretien par km et par mois.
-- Route :  ; photo : ,  et .
+- Routes : `GET /api/garage/:id/vie` ; photo : `PUT`, `GET` et `DELETE /api/garage/:id/photo`.
 
 ## Mon garage
 
