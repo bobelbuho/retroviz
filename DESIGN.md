@@ -92,6 +92,8 @@ Les titres de section sont en `--primary`, en gras. Le texte courant ne descend 
 | `.pill` | Statut d'un élément (`data-s` : `retard` rouge, `bientot` orange, `plus_tard` vert, `verifier`/`surveiller` bleu, `inconnu` gris). Pastille de couleur et texte : l'information ne passe jamais par la couleur seule. |
 | `.badge` | Compteur rouge à côté d'un titre (« 2 en retard »). Réservé à ce qui est en retard. |
 | `.av` | Élément de « À venir » : carte avec filet gauche rouge ou orange seulement pour « en retard » et « bientôt ». |
+| `.val-hero` | Chiffre clé d'un écran (fourchette de valeur) : fond `--soft`, montant en `--fs-2xl` couleur `--primary`. |
+| `.val-chart` | Courbe simple en SVG : une série en `--primary` (2 px), fourchette en bande `--soft`, points de 10 px avec anneau `--surface`, axes en `--muted`, infobulle au survol et au clavier, résumé dans `aria-label` et historique en liste dessous (vue tableau). |
 | `.formsec` | Sous-titre de section dans un formulaire en grille. |
 | `.ent` | Entretien du carnet : carte avec le type en titre, le coût à droite, la date, le kilométrage et le garage en `--muted`. |
 | `.check` | Case à cocher avec son libellé (cible de 20 px, couleur `--primary`). |

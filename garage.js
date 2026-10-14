@@ -84,7 +84,8 @@ export const designation = (v, km = null) =>
 /* ---------- routeur ---------- */
 // carnet (facultatif) : module carnet.js, pour le résumé, l'export et l'effacement des factures.
 // rappels (facultatif) : module rappels.js, pour le résumé « À venir » de chaque voiture.
-export function createGarage(db, kb, { carnet = null, rappels = null } = {}) {
+// valeur (facultatif) : module valeur.js, pour la dernière estimation et l'export.
+export function createGarage(db, kb, { carnet = null, rappels = null, valeur = null } = {}) {
   const q = {
     list: db.prepare("SELECT * FROM vehicles WHERE user_id = ? ORDER BY created_at, id"),
     get: db.prepare("SELECT * FROM vehicles WHERE id = ? AND user_id = ?"),
@@ -118,6 +119,7 @@ export function createGarage(db, kb, { carnet = null, rappels = null } = {}) {
       kilometrage,
       ...(carnet && { carnet: carnet.summary(row.id) }),
       ...(rappels && { avenir: rappels.summary(row) }),
+      ...(valeur && { valeur: valeur.latest(row.id) }),
       designation: designation(row, kilometrage.dernier?.km ?? null),
       createdAt: row.created_at, updatedAt: row.updated_at,
     };
@@ -211,6 +213,7 @@ export function createGarage(db, kb, { carnet = null, rappels = null } = {}) {
       releves: q.releves.all(row.id).map(({ date, km }) => ({ date, km })),
       ...(carnet && { entretiens: carnet.forExport(row.id) }),
       ...(rappels && { rappels: rappels.forExport(row.id) }),
+      ...(valeur && { estimations: valeur.forExport(row.id) }),
     })),
   });
   return router;

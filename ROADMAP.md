@@ -11,7 +11,7 @@
   - Au moment du passage à S3 : nettoyage périodique des factures orphelines (fichiers sans entretien, par exemple après un arrêt du serveur pendant une suppression).
 - ✅ Rappels : contrôle technique, assurance, vidange, pneus hiver, rappels libres (écran « À venir », dans l'appli seulement).
 - ✅ Prochains entretiens calculés à partir de la fiche et du carnet.
-- Valeur indicative estimée par l'IA, avec son évolution dans le temps.
+- ✅ Valeur indicative estimée par l'IA, avec son évolution dans le temps.
 - Historique des conversations des trois modes.
 
 ## Phase 2 : l'IA voit ce que vous voyez

@@ -68,6 +68,21 @@ CREATE TABLE IF NOT EXISTS rappels (
   km         INTEGER,                    -- ou NULL (au moins l'un des deux)
   created_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now'))
 );
+CREATE TABLE IF NOT EXISTS estimations (
+  id              INTEGER PRIMARY KEY,
+  vehicle_id      INTEGER NOT NULL REFERENCES vehicles(id) ON DELETE CASCADE,
+  date            TEXT NOT NULL,         -- AAAA-MM-JJ
+  km              INTEGER,               -- dernier kilométrage connu au moment de l'estimation
+  basse           INTEGER NOT NULL,
+  haute           INTEGER NOT NULL,
+  valeur_probable INTEGER NOT NULL,
+  explication     TEXT NOT NULL,
+  facteurs        TEXT NOT NULL,         -- JSON [{facteur, effet}]
+  conseils        TEXT NOT NULL,         -- JSON [texte]
+  modele          TEXT,                  -- modèle d'IA qui a répondu
+  created_at      TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now')),
+  UNIQUE (vehicle_id, date)              -- une estimation par voiture et par jour (coûts)
+);
 `;
 
 // Colonnes ajoutées après la création des tables : ajoutées aux bases existantes au démarrage.

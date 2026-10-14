@@ -10,6 +10,7 @@ import { createGarage } from "./garage.js";
 import { createCarnet } from "./carnet.js";
 import { createLocalStorage } from "./storage.js";
 import { createRappels } from "./rappels.js";
+import { createValeur, anthropicEstimator } from "./valeur.js";
 
 const PORT = process.env.PORT || 3000;
 const MODEL = process.env.MODEL || "claude-sonnet-5-5";
@@ -30,15 +31,18 @@ const db = openDb();
 // Factures : stockage local dans storage/uploads/ (variable UPLOAD_DIR pour le changer). Voir storage.js.
 const carnet = createCarnet(db, createLocalStorage());
 const rappels = createRappels(db, kb);
-const garage = createGarage(db, kb, { carnet, rappels });
 
 const client = new Anthropic(); // lit ANTHROPIC_API_KEY dans l'environnement
+// Valeur indicative : même modèle que l'assistant ; désactivée sans clé API.
+const valeur = createValeur(db, { estimate: process.env.ANTHROPIC_API_KEY ? anthropicEstimator(client, MODEL) : null });
+const garage = createGarage(db, kb, { carnet, rappels, valeur });
 const app = express();
 app.use(express.json({ limit: "1mb" }));
 app.use(createAuth(db, { exportData: garage.exportFor, beforeDeleteUser: carnet.beforeDeleteUser }));
 app.use(garage);
 app.use(carnet);
 app.use(rappels);
+app.use(valeur);
 app.use(express.static("public"));
 
 // Nettoie la conversation : rôles valides, texte non vide, tours consécutifs du même rôle fusionnés.

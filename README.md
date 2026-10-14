@@ -17,6 +17,7 @@ retroviz/
 ├── carnet.js           ← carnet d'entretien et factures
 ├── avenir.js           ← calcul de « À venir » : rappels et prochains entretiens (sans base de données)
 ├── rappels.js          ← routes « À venir » et rappels libres
+├── valeur.js           ← valeur indicative estimée par l'IA, historique
 ├── storage.js          ← stockage des fichiers (factures) : enregistrer, lire, supprimer
 ├── db.js               ← la base SQLite (comptes, garages)
 ├── storage/            ← la base (retroviz.db) et les factures (uploads/), créés au démarrage, jamais publiés
@@ -84,7 +85,7 @@ Les comptes sont facultatifs : l'assistant reste utilisable sans compte. Le bout
 
 - **Fiche reliée** : à chaque enregistrement, le serveur cherche une fiche de `data/vehicules.json`. Il ne la relie que si le modèle **et** le moteur correspondent, et si l'année tombe dans la période de la fiche (une fiche fausse est pire que pas de fiche). L'utilisateur peut écarter une fiche (« Ce n'est pas ma voiture ») ou en chercher une à nouveau.
 - **Poser une question** : remplit le champ « Votre véhicule » avec la désignation de la voiture et ouvre « J'ai une panne ». Le menu « Mes voitures… » à côté de ce champ fait la même chose depuis les modes de discussion.
-- Les voitures, leurs relevés, entretiens et rappels libres sont inclus dans l'export des données et effacés avec le compte.
+- Les voitures, leurs relevés, entretiens, rappels libres et estimations de valeur sont inclus dans l'export des données et effacés avec le compte.
 - **Kilométrage** : chaque voiture a ses relevés (date et kilométrage). Le « Kilométrage actuel » saisi à l'ajout devient le premier relevé. Un relevé à la même date remplace le précédent. Un relevé incohérent est refusé : un compteur ne recule pas. La **moyenne de km par mois** est calculée entre le premier et le dernier relevé, s'ils sont espacés d'au moins 30 jours. Le dernier kilométrage est ajouté à la désignation envoyée à l'assistant.
 - Routes (connexion requise) : `GET /api/garage`, `POST /api/garage`, `PUT /api/garage/:id`, `DELETE /api/garage/:id`, et pour les relevés `GET` et `POST /api/garage/:id/releves`, `DELETE /api/garage/:id/releves/:rid`.
 
@@ -129,6 +130,23 @@ Depuis la carte d'une voiture, « Tout ce qui arrive » ouvre l'écran « À ven
 - Les rappels ne s'affichent que dans l'application pour l'instant.
 - **Routes** (connexion requise) : `GET /api/garage/:id/avenir`, `POST /api/garage/:id/rappels`, `DELETE /api/garage/:id/rappels/:rid`.
 
+## Valeur indicative
+
+Depuis la carte d'une voiture, « Estimer la valeur » demande à l'IA une fourchette de prix de vente entre particuliers.
+
+- **Ce qui est envoyé à l'IA** :
+  - la voiture : marque, modèle, motorisation, boîte, année ou date de mise en circulation ;
+  - le kilométrage : dernier relevé et moyenne par mois ;
+  - un résumé du carnet : nombre d'entretiens, nombre de factures, et pour chaque entretien important son type, sa date, son kilométrage et si sa facture est présente.
+
+  Aucune donnée personnelle ne part : ni e-mail, ni surnom, ni nom du garage, ni description libre des entretiens. Aucune donnée n'est récupérée sur des sites d'annonces : l'IA s'appuie sur ses connaissances générales.
+- **Réponse** : JSON imposé par un schéma (basse, haute, valeur probable, explication, facteurs en plus et en moins, conseils), puis revalidé par le serveur (fourchette cohérente, montants plausibles). Si la réponse est invalide, un message clair s'affiche et rien n'est enregistré.
+- **Coûts** : une estimation au maximum par voiture et par jour. Au-delà, la dernière estimation est réaffichée, avec sa date, sans appeler l'IA. Deux clics simultanés ne déclenchent qu'un seul appel. Une estimation qui échoue n'est pas comptée.
+- **Historique** : chaque estimation est enregistrée avec sa date et le kilométrage du moment. Dès deux estimations, une courbe montre l'évolution de la valeur probable et de la fourchette.
+- **Modèle** : le même que l'assistant (variable `MODEL`). Si le modèle décline la demande, l'API la relance sur un autre modèle (repli côté serveur). Sans clé API, l'estimation est désactivée avec un message clair.
+- **RGPD** : les estimations sont dans l'export, et effacées avec la voiture ou le compte.
+- **Routes** (connexion requise) : `GET /api/garage/:id/valeur` (historique) et `POST /api/garage/:id/valeur` (nouvelle estimation).
+
 ## Où modifier quoi
 
 - Le comportement de l'IA (ton, structure des réponses, règles de sécurité) : les textes `rules` et `SAFETY` dans `public/index.html`.
@@ -139,5 +157,5 @@ Depuis la carte d'une voiture, « Tout ce qui arrive » ouvre l'écran « À ven
 - La consigne donnée à l'IA sur l'usage des fiches : la constante `KB_RULES` dans `server.js`.
 - La recherche (scores, taille maximale du contexte `MAX_CONTEXT`) : `knowledge.js`. Lancez `npm test` après toute modification.
 - Les comptes (longueur minimale du mot de passe, durée de session, blocage après échecs) : les constantes en haut de `auth.js`. Lancez `npm test` après toute modification.
-- Le garage (nombre maximal de voitures, champs, règle de rattachement à une fiche `matchFiche`) : `garage.js`. Les relevés (écart minimal pour la moyenne, nombre maximal, contrôles) : `kilometrage.js`. Le carnet (types d'entretien, limites) : `carnet.js`. Les règles « À venir » (seuils « bientôt », vidange par défaut, contrôle technique, pneus hiver) : `avenir.js`. Les types de fichiers acceptés et la taille maximale : `storage.js`. Lancez `npm test` après toute modification.
+- Le garage (nombre maximal de voitures, champs, règle de rattachement à une fiche `matchFiche`) : `garage.js`. Les relevés (écart minimal pour la moyenne, nombre maximal, contrôles) : `kilometrage.js`. Le carnet (types d'entretien, limites) : `carnet.js`. Les règles « À venir » (seuils « bientôt », vidange par défaut, contrôle technique, pneus hiver) : `avenir.js`. La consigne envoyée à l'IA pour la valeur, son schéma JSON et les contrôles de la réponse : `valeur.js`. Les types de fichiers acceptés et la taille maximale : `storage.js`. Lancez `npm test` après toute modification.
 - L'apparence (couleurs claires et sombres, tailles de texte, espacements, arrondis) : les variables en haut du `<style>` de `public/index.html`, documentées dans [DESIGN.md](DESIGN.md). Tout nouvel écran suit ce système.

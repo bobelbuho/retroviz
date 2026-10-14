@@ -265,6 +265,30 @@ label.f{display:block;font-weight:var(--fw-semibold);font-size:var(--fs-sm);marg
 .kmlist li span{white-space:nowrap}
 .kmlist li span:last-of-type{margin-left:auto;font-weight:var(--fw-semibold)}
 .kmlist .btn{padding:0 var(--sp-2)}
+/* valeur indicative */
+.val-hero{background:var(--soft);border-radius:var(--r-lg);padding:var(--sp-5);margin:var(--sp-5) 0 var(--sp-4)}
+.val-hero .lbl{margin:0;color:var(--muted);font-size:var(--fs-sm);font-weight:var(--fw-semibold)}
+.val-range{margin:var(--sp-1) 0;font-size:var(--fs-2xl);font-weight:var(--fw-bold);line-height:var(--lh-tight);color:var(--primary);font-variant-numeric:tabular-nums}
+.val-prob{margin:0;font-size:var(--fs-lg)}
+.val-hero .hint{margin-top:var(--sp-2)}
+.val-expl{margin:0 0 var(--sp-5);max-width:65ch}
+.val-f,.box .val-f{list-style:none;margin:0;padding:0}
+.val-f li{display:flex;gap:var(--sp-2);align-items:baseline;padding:var(--sp-1) 0}
+.val-f .sym{flex:none;width:20px;height:20px;border-radius:50%;display:inline-grid;place-items:center;font-weight:var(--fw-bold);font-size:var(--fs-sm);background:var(--soft);color:var(--primary)}
+.val-chart{position:relative;margin:var(--sp-3) 0 var(--sp-2)}
+.val-chart svg{display:block;width:100%;height:auto;overflow:visible}
+.val-chart .grid{stroke:var(--line);stroke-width:1}
+.val-chart .axis{fill:var(--muted);font-size:12px;font-family:var(--font)}
+.val-chart .band{fill:var(--soft)}
+.val-chart .line{fill:none;stroke:var(--primary);stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+.val-chart .pt{fill:var(--primary);stroke:var(--surface);stroke-width:2}
+.val-chart .hit{fill:transparent;cursor:pointer}
+.val-chart .hit:focus-visible{outline:none;stroke:var(--primary);stroke-width:2}
+.val-tip{position:absolute;pointer-events:none;background:var(--surface);color:var(--ink);border-radius:var(--r-sm);box-shadow:var(--shadow);padding:var(--sp-2) var(--sp-3);font-size:var(--fs-sm);white-space:nowrap;transform:translate(-50%,calc(-100% - 12px))}
+.val-hist{list-style:none;margin:var(--sp-3) 0 0;padding:0;font-size:var(--fs-sm);font-variant-numeric:tabular-nums}
+.val-hist li{display:flex;flex-wrap:wrap;justify-content:space-between;gap:var(--sp-1) var(--sp-3);padding:var(--sp-2) 0;border-top:1px solid var(--line)}
+.val-hist li span:last-child{font-weight:var(--fw-semibold)}
+
 /* à venir : statuts (le rouge et l'orange gardent leur sens : en retard, bientôt) */
 .pill{display:inline-flex;align-items:center;gap:6px;padding:2px var(--sp-3);border-radius:var(--r-pill);font-size:var(--fs-xs);font-weight:var(--fw-bold);background:var(--soft);color:var(--muted);white-space:nowrap}
 .pill::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--c,var(--grey))}
@@ -464,6 +488,14 @@ footer{margin-top:var(--sp-7);font-size:var(--fs-xs);color:var(--muted);padding-
         <p class="hint full" id="carMsg" style="margin:0" role="alert"></p>
         <div class="formbtns"><button class="btn" type="submit" id="carSave">Enregistrer</button><button class="btn ghost" type="button" id="carCancel">Annuler</button></div>
       </form>
+      </div>
+      <!-- Valeur indicative d'une voiture -->
+      <div id="valeurView" hidden>
+        <button class="btn ghost small back" type="button" id="valeurBack">← Mon garage</button>
+        <div class="carnet-head"><h2 id="valeurTitle" tabindex="-1"></h2><p class="sub" id="valeurSub"></p></div>
+        <button class="btn" type="button" id="valEstimer">Estimer la valeur</button>
+        <p class="hint" id="valMsg" role="status" aria-live="polite"></p>
+        <div id="valResult"></div>
       </div>
       <!-- À venir pour une voiture -->
       <div id="avenirView" hidden>
@@ -1007,6 +1039,7 @@ api("GET", "/api/auth/me").then(r => { if(r.ok){ user = r.user; renderAcct(); lo
 /* ---------- mon garage ---------- */
 let cars = [], editing = null; // editing : id de la voiture modifiée, "new" pour un ajout, null sinon
 let kmOpen = null, kmData = {};
+let valeurOf = null, valeur = {estimations:[], derniere:null, peutEstimer:true}, valBusy = false; // voiture dont la valeur est ouverte
 let avenirOf = null, avenir = {items:[]}, rapOpen = false;  // voiture dont « À venir » est ouvert
 let entRappelId = null;  // rappel libre à supprimer une fois l'entretien « C'est fait » enregistré
 let carnetOf = null, carnet = {entretiens:[], total:0}, entEditing = null; // voiture du carnet ouvert ; entretien modifié ("new" pour un ajout)  // voiture dont les relevés sont dépliés ; relevés chargés, par voiture
@@ -1014,7 +1047,7 @@ const STATUT = s => s === "verifie" ? "vérifiée" : "à vérifier";
 async function loadGarage(){
   cars = [];
   if(user){ const r = await api("GET", "/api/garage"); if(r.ok) cars = r.vehicules; }
-  editing = null; kmOpen = null; kmData = {}; carnetOf = null; avenirOf = null; renderGarage();
+  editing = null; kmOpen = null; kmData = {}; carnetOf = null; avenirOf = null; valeurOf = null; renderGarage();
 }
 const fmtNum = n => Number(n).toLocaleString("fr-FR");
 const fmtDate = d => new Date(d + "T00:00:00").toLocaleDateString("fr-FR", {day:"numeric", month:"long", year:"numeric"});
@@ -1061,8 +1094,11 @@ function renderGarage(){
   $("#garageOut").hidden = !!user; $("#garageIn").hidden = !user;
   const inCarnet = !!user && carnetOf !== null && !!carById(carnetOf);
   const inAvenir = !!user && !inCarnet && avenirOf !== null && !!carById(avenirOf);
-  $("#garageList").hidden = inCarnet || inAvenir; $("#garageIntro").hidden = inCarnet || inAvenir;
-  $("#carnetView").hidden = !inCarnet; $("#avenirView").hidden = !inAvenir;
+  const inValeur = !!user && !inCarnet && !inAvenir && valeurOf !== null && !!carById(valeurOf);
+  const detail = inCarnet || inAvenir || inValeur;
+  $("#garageList").hidden = detail; $("#garageIntro").hidden = detail;
+  $("#carnetView").hidden = !inCarnet; $("#avenirView").hidden = !inAvenir; $("#valeurView").hidden = !inValeur;
+  if(inValeur) renderValeur();
   if(inCarnet) renderCarnet();
   if(inAvenir) renderAvenir();
   $("#cars").innerHTML = cars.length ? cars.map(c => `<li class="car" data-id="${c.id}">
@@ -1071,6 +1107,7 @@ function renderGarage(){
       ${kmHTML(c)}
       ${avenirLineHTML(c)}
       ${carnetLineHTML(c)}
+      ${valeurLineHTML(c)}
       <p class="fiche">${ficheHTML(c)}</p>
       <div class="rowbtns"><button class="btn soft small" type="button" data-act="ask">Poser une question</button><button class="btn ghost small" type="button" data-act="edit">Modifier</button><button class="btn ghost small" type="button" data-act="del">Supprimer</button></div>
     </li>`).join("") : `<li class="empty">Votre garage est vide. Ajoutez votre première voiture.</li>`;
@@ -1132,6 +1169,8 @@ $("#cars").addEventListener("click", async e => {
   }else if(act === "refuse" || act === "relink"){
     const err = await saveCar(c.id, {...carPayload(c), ficheRefusee: act === "refuse"});
     if(err) showNotice(err);
+  }else if(act === "valeur"){
+    await openValeur(c.id);
   }else if(act === "avenir"){
     await openAvenir(c.id);
   }else if(act === "carnet"){
@@ -1149,6 +1188,110 @@ $("#cars").addEventListener("click", async e => {
     applyReleves(c.id, r);
   }
 });
+/* ---------- valeur indicative ---------- */
+const fmtShortD = d => new Date(d + "T00:00:00").toLocaleDateString("fr-FR", {day:"numeric", month:"short", year:"numeric"});
+function valeurLineHTML(c){
+  const v = c.valeur;
+  const txt = v ? `Valeur estimée : <strong>${fmtEur0(v.valeurProbable)}</strong> (${fmtEur0(v.basse)} à ${fmtEur0(v.haute)}), le ${esc(fmtShortD(v.date))}.` : "Valeur : pas encore estimée.";
+  return `<div class="kmbox"><p>${txt}</p><button class="link" type="button" data-act="valeur">${v ? "Voir la valeur" : "Estimer la valeur"}</button></div>`;
+}
+const fmtEur0 = n => Number(n).toLocaleString("fr-FR", {style:"currency", currency:"EUR", maximumFractionDigits:0});
+async function openValeur(id){
+  const r = await api("GET", `/api/garage/${id}/valeur`);
+  if(!r.ok){ showNotice(r.error); return; }
+  valeur = r; valeurOf = id; carnetOf = null; avenirOf = null; $("#valMsg").textContent = ""; renderGarage();
+  window.scrollTo({top:0}); $("#valeurTitle").focus();
+}
+/* Courbe de la valeur probable, avec la fourchette en bande (SVG simple, une seule série). */
+function valeurChart(list){
+  const W = Math.max(280, Math.min(820, $("#valResult").clientWidth || 600)), H = 190;
+  const m = {l:58, r:16, t:16, b:28}, iw = W - m.l - m.r, ih = H - m.t - m.b;
+  const t = list.map(e => new Date(e.date + "T00:00:00").getTime());
+  const t0 = Math.min(...t), t1 = Math.max(...t);
+  const lo = Math.min(...list.map(e => e.basse)), hi = Math.max(...list.map(e => e.haute));
+  const pad = Math.max(500, (hi - lo) * 0.15), y0 = Math.max(0, Math.floor((lo - pad) / 500) * 500), y1 = Math.ceil((hi + pad) / 500) * 500;
+  const x = v => m.l + (t1 === t0 ? iw / 2 : (v - t0) / (t1 - t0) * iw);
+  const y = v => m.t + ih - (v - y0) / (y1 - y0) * ih;
+  const ticks = [y0, Math.round((y0 + y1) / 2 / 100) * 100, y1];
+  const band = list.map((e, i) => `${x(t[i])},${y(e.haute)}`).concat(list.map((e, i) => `${x(t[i])},${y(e.basse)}`).reverse()).join(" ");
+  const line = list.map((e, i) => `${x(t[i])},${y(e.valeurProbable)}`).join(" ");
+  const xLabels = [0, list.length - 1].filter((v, i, a) => a.indexOf(v) === i);
+  const first = list[0], last = list.at(-1);
+  const resume = `Valeur probable passée de ${fmtEur0(first.valeurProbable)} le ${fmtShortD(first.date)} à ${fmtEur0(last.valeurProbable)} le ${fmtShortD(last.date)}, sur ${list.length} estimations.`;
+  return `<div class="val-chart" id="valChart">
+    <svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="${esc(resume)}">
+      ${ticks.map(v => `<line class="grid" x1="${m.l}" x2="${W - m.r}" y1="${y(v)}" y2="${y(v)}"/><text class="axis" x="${m.l - 8}" y="${y(v) + 4}" text-anchor="end">${esc(fmtEur0(v))}</text>`).join("")}
+      ${xLabels.map(i => `<text class="axis" x="${x(t[i])}" y="${H - 8}" text-anchor="${i === 0 && list.length > 1 ? "start" : i === list.length - 1 && list.length > 1 ? "end" : "middle"}">${esc(fmtShortD(list[i].date))}</text>`).join("")}
+      <polygon class="band" points="${band}"/>
+      <polyline class="line" points="${line}"/>
+      ${list.map((e, i) => `<circle class="pt" cx="${x(t[i])}" cy="${y(e.valeurProbable)}" r="5"/>`).join("")}
+      ${list.map((e, i) => `<circle class="hit" cx="${x(t[i])}" cy="${y(e.valeurProbable)}" r="16" tabindex="0" data-i="${i}" aria-label="${esc(`${fmtShortD(e.date)} : ${fmtEur0(e.valeurProbable)}, de ${fmtEur0(e.basse)} à ${fmtEur0(e.haute)}`)}"/>`).join("")}
+    </svg>
+    <div class="val-tip" id="valTip" hidden></div>
+  </div>`;
+}
+function showTip(hit){
+  const e = valeur.estimations[+hit.dataset.i], tip = $("#valTip"), box = $("#valChart").getBoundingClientRect(), r = hit.getBoundingClientRect();
+  tip.innerHTML = `<strong>${esc(fmtEur0(e.valeurProbable))}</strong> · ${esc(fmtShortD(e.date))}<br><span style="color:var(--muted)">${esc(fmtEur0(e.basse))} à ${esc(fmtEur0(e.haute))}${e.km !== null ? " · " + esc(fmtNum(e.km)) + " km" : ""}</span>`;
+  tip.hidden = false;
+  const cx = r.left + r.width / 2 - box.left;
+  tip.style.left = Math.min(Math.max(cx, tip.offsetWidth / 2), box.width - tip.offsetWidth / 2) + "px";
+  tip.style.top = (r.top + r.height / 2 - box.top) + "px";
+}
+function renderValeur(){
+  const c = carById(valeurOf), d = valeur.derniere;
+  $("#valeurTitle").textContent = "Valeur de " + (c.surnom || c.marque + " " + c.modele);
+  $("#valeurSub").textContent = c.designation;
+  $("#valEstimer").disabled = valBusy || !valeur.peutEstimer;
+  $("#valEstimer").textContent = valBusy ? "Estimation en cours…" : "Estimer la valeur";
+  if(!valBusy && !valeur.peutEstimer && !$("#valMsg").textContent) $("#valMsg").textContent = "Une estimation par jour : la prochaine sera possible demain.";
+  if(!d){
+    $("#valResult").innerHTML = `<p class="empty" style="margin-top:var(--sp-5)">Rétroviz demande à l'IA une fourchette de prix de vente entre particuliers, d'après la voiture, son kilométrage et son carnet d'entretien. Aucune donnée personnelle n'est envoyée.</p>`;
+    return;
+  }
+  const plus = d.facteurs.filter(f => f.effet === "plus"), moins = d.facteurs.filter(f => f.effet === "moins");
+  const fl = (items, sym, label) => items.length ? `<ul class="val-f">${items.map(f => `<li><span class="sym" aria-hidden="true">${sym}</span><span><span class="sr">${label} : </span>${esc(f.facteur)}</span></li>`).join("")}</ul>` : `<p class="hint" style="margin:0">Aucun.</p>`;
+  const hist = valeur.estimations;
+  $("#valResult").innerHTML = `
+    <div class="val-hero">
+      <p class="lbl">Fourchette estimée</p>
+      <p class="val-range">${esc(fmtEur0(d.basse))} à ${esc(fmtEur0(d.haute))}</p>
+      <p class="val-prob">Valeur probable : <strong>${esc(fmtEur0(d.valeurProbable))}</strong></p>
+      <p class="hint">Estimée le ${esc(fmtDate(d.date))}${d.km !== null ? `, à ${esc(fmtNum(d.km))} km` : ", sans kilométrage connu"}.</p>
+    </div>
+    <p class="val-expl">${esc(d.explication)}</p>
+    <div class="sect two">
+      <div class="box"><h3>Ce qui fait monter la valeur</h3>${fl(plus, "+", "En plus")}</div>
+      <div class="box"><h3>Ce qui fait baisser la valeur</h3>${fl(moins, "−", "En moins")}</div>
+    </div>
+    ${d.conseils.length ? `<div class="sect box"><h3>Pour mieux la vendre</h3><ul>${d.conseils.map(t => `<li>${esc(t)}</li>`).join("")}</ul></div>` : ""}
+    <p class="sect caveat">Estimation de l'IA, pas une cote officielle. Comparez avec des annonces de véhicules similaires avant de fixer un prix.</p>
+    ${hist.length >= 2 ? `<div class="sect"><h3>Évolution</h3>${valeurChart(hist)}
+      <ul class="val-hist" aria-label="Historique des estimations">${hist.slice().reverse().map(e => `<li><span>${esc(fmtShortD(e.date))}${e.km !== null ? " · " + esc(fmtNum(e.km)) + " km" : ""}</span><span>${esc(fmtEur0(e.valeurProbable))} (${esc(fmtEur0(e.basse))} à ${esc(fmtEur0(e.haute))})</span></li>`).join("")}</ul></div>` : ""}`;
+}
+$("#valeurBack").addEventListener("click", () => {
+  const id = valeurOf; valeurOf = null; renderGarage();
+  const link = document.querySelector(`.car[data-id="${id}"] [data-act=valeur]`); if(link) link.focus();
+});
+$("#valEstimer").addEventListener("click", async () => {
+  if(valBusy) return;
+  const id = valeurOf;
+  valBusy = true; $("#valMsg").textContent = "Rétroviz estime la valeur… cela peut prendre jusqu'à une minute."; renderValeur();
+  const r = await api("POST", `/api/garage/${id}/valeur`, {});
+  valBusy = false;
+  if(!r.ok){ $("#valMsg").textContent = r.error; renderValeur(); return; }
+  valeur = r;
+  $("#valMsg").textContent = r.dejaFaiteAujourdhui ? `Déjà estimée aujourd'hui : voici l'estimation du ${fmtDate(r.derniere.date)}.` : "";
+  await refreshCar(id);
+  if(valeurOf === id) renderValeur();
+});
+$("#valResult").addEventListener("mouseover", e => { const h = e.target.closest(".hit"); if(h) showTip(h); });
+$("#valResult").addEventListener("focusin", e => { const h = e.target.closest(".hit"); if(h) showTip(h); });
+$("#valResult").addEventListener("mouseout", e => { if(e.target.closest(".hit")) $("#valTip").hidden = true; });
+$("#valResult").addEventListener("focusout", e => { if(e.target.closest(".hit")) $("#valTip").hidden = true; });
+let valResize = null;
+addEventListener("resize", () => { clearTimeout(valResize); valResize = setTimeout(() => { if(valeurOf !== null && !$("#valeurView").hidden) renderValeur(); }, 150); });
+
 /* ---------- à venir ---------- */
 const STATUT_LABEL = {retard:"En retard", bientot:"Bientôt", plus_tard:"Plus tard", verifier:"À vérifier", surveiller:"À surveiller", inconnu:"À compléter"};
 const CAT_LABEL = {rappel:"Rappel", entretien:"Entretien", surveiller:"Panne connue"};
@@ -1189,7 +1332,7 @@ function avenirLineHTML(c){
 async function openAvenir(id){
   const r = await api("GET", `/api/garage/${id}/avenir`);
   if(!r.ok){ showNotice(r.error); return; }
-  avenir = r; avenirOf = id; carnetOf = null; rapOpen = false; $("#avPannes").open = false; renderGarage();
+  avenir = r; avenirOf = id; carnetOf = null; valeurOf = null; rapOpen = false; $("#avPannes").open = false; renderGarage();
   window.scrollTo({top:0}); $("#avenirTitle").focus();
 }
 function avHTML(it){
@@ -1274,7 +1417,7 @@ async function refreshCar(id){
 async function openCarnet(id){
   const r = await api("GET", `/api/garage/${id}/entretiens`);
   if(!r.ok){ showNotice(r.error); return; }
-  carnet = r; carnetOf = id; avenirOf = null; entEditing = null; entRappelId = null; renderGarage();
+  carnet = r; carnetOf = id; avenirOf = null; valeurOf = null; entEditing = null; entRappelId = null; renderGarage();
   window.scrollTo({top:0}); $("#carnetTitle").focus();
 }
 function entHTML(e){
