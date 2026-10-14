@@ -1,0 +1,24 @@
+/* Dossier d'une voiture : éléments communs à la page publique (dossier.html) et à l'aperçu dans Rétroviz.
+   Utilise uniquement les variables du système de design (DESIGN.md). */
+.mention{display:inline-flex;align-items:center;padding:1px var(--sp-2);border-radius:var(--r-pill);font-size:var(--fs-xs);font-weight:var(--fw-semibold);background:var(--soft);color:var(--muted);white-space:nowrap;text-decoration:none}
+.mention.ok{color:var(--green-ink)}
+a.mention.ok{text-decoration:underline;text-underline-offset:2px}
+.mention.attention{background:color-mix(in srgb,var(--amber) 12%,var(--surface));color:var(--amber-ink)}
+.notes{list-style:none;margin:var(--sp-2) 0 0;padding:0;display:grid;gap:var(--sp-1)}
+.notes li{border-left:3px solid var(--primary);background:var(--soft);border-radius:var(--r-sm);padding:var(--sp-1) var(--sp-3);font-size:var(--fs-sm)}
+.evdesc{margin:var(--sp-1) 0 0;font-size:var(--fs-sm);white-space:pre-wrap}
+.ev[data-t="proprietaire"]::before{background:var(--amber);border-color:var(--amber)}
+.ev[data-t="proprietaire"] .quoi{color:var(--amber-ink)}
+.continu{margin:var(--sp-3) 0 0;padding:var(--sp-2) var(--sp-3);border-left:4px solid var(--green);background:color-mix(in srgb,var(--green) 10%,var(--surface));border-radius:var(--r-sm)}
+.synthese{background:var(--surface);border-radius:var(--r-lg);padding:var(--sp-4) var(--sp-5);box-shadow:var(--shadow);margin:0 0 var(--sp-5)}
+.synthese ul{margin:0;padding-left:var(--sp-5)}
+.dhead{display:flex;gap:var(--sp-4);align-items:center;margin:0 0 var(--sp-5);flex-wrap:wrap}
+.dhead h1{margin:0;font-size:var(--fs-2xl);line-height:var(--lh-tight);color:var(--primary)}
+.dhead .sub{margin:var(--sp-1) 0 0;color:var(--muted)}
+.dphoto{width:160px;max-width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:var(--r-md)}
+.sect-t{font-size:var(--fs-lg);font-weight:var(--fw-bold);color:var(--primary);margin:var(--sp-5) 0 var(--sp-3);line-height:var(--lh-tight)}
+.echs{list-style:none;margin:0 0 var(--sp-5);padding:0;display:grid;gap:var(--sp-2)}
+.echs li{display:flex;flex-wrap:wrap;gap:var(--sp-1) var(--sp-2);align-items:center}
+.echs .hint{margin:0;width:100%}
+.valeur{background:var(--soft);border-radius:var(--r-md);padding:var(--sp-3) var(--sp-4)}
+.fin{margin-top:var(--sp-6)}

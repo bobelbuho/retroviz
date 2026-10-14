@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Crect width=%2232%22 height=%2232%22 rx=%228%22 fill=%22%23123F8C%22/%3E%3Cpath d=%22M6 20v-4l3-6h13l4 6h1v4z%22 fill=%22%23fff%22/%3E%3Ccircle cx=%2211%22 cy=%2221%22 r=%222.5%22 fill=%22%23123F8C%22 stroke=%22%23fff%22 stroke-width=%221.5%22/%3E%3Ccircle cx=%2222%22 cy=%2221%22 r=%222.5%22 fill=%22%23123F8C%22 stroke=%22%23fff%22 stroke-width=%221.5%22/%3E%3C/svg%3E">
 <title>Rétroviz, assistant automobile</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -325,9 +326,12 @@ label.f{display:block;font-weight:var(--fw-semibold);font-size:var(--fs-sm);marg
 .kmform .err:empty{display:none}
 @media (max-width:480px){.kmform{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.kmform .btn{grid-column:1/-1}}
 .kmlist{list-style:none;margin:var(--sp-4) 0 0;padding:0}
-.kmlist li{display:flex;align-items:center;gap:var(--sp-2);padding:var(--sp-1) 0;border-top:1px solid var(--line);font-variant-numeric:tabular-nums;font-size:var(--fs-sm)}
-.kmlist li span{white-space:nowrap}
-.kmlist li span:last-of-type{margin-left:auto;font-weight:var(--fw-semibold)}
+.kmlist li{display:flex;flex-wrap:wrap;align-items:center;gap:var(--sp-1) var(--sp-2);padding:var(--sp-1) 0;border-top:1px solid var(--line);font-variant-numeric:tabular-nums;font-size:var(--fs-sm)}
+.kmlist li > span{white-space:nowrap}
+.kmlist li > span:last-of-type{margin-left:auto;font-weight:var(--fw-semibold)}
+.kmlist .kmtags{display:flex;flex-wrap:wrap;gap:var(--sp-1);width:100%}
+.kmlist .kmtags:empty{display:none}
+.kmlist .notes{width:100%;margin:0}
 .kmlist .btn{padding:0 var(--sp-2)}
 /* valeur indicative */
 .val-hero{background:var(--soft);border-radius:var(--r-lg);padding:var(--sp-5);margin:var(--sp-5) 0 var(--sp-4)}
@@ -459,7 +463,41 @@ dialog.dlg::backdrop{background:var(--overlay)}
 
 footer{margin-top:var(--sp-7);font-size:var(--fs-xs);color:var(--muted);padding-top:var(--sp-4);border-top:1px solid var(--line)}
 @media (prefers-reduced-motion: reduce){.item.flash{animation:none}}
+/* partager ou vendre */
+.tsec{background:var(--surface);border-radius:var(--r-lg);padding:var(--sp-5);box-shadow:var(--shadow);margin:0 0 var(--sp-5)}
+.tsec > h3{font-size:var(--fs-xl);font-weight:var(--fw-bold);color:var(--primary);margin:0 0 var(--sp-2);line-height:var(--lh-tight)}
+.tsec > h3:focus{outline:none}
+.tsec > p{margin:0 0 var(--sp-3)}
+.topts{border:0;margin:0 0 var(--sp-4);padding:0}
+.topts legend{font-weight:var(--fw-bold);padding:0;margin:0 0 var(--sp-1)}
+.topts ul{list-style:none;margin:var(--sp-2) 0 0;padding:0;display:grid;gap:var(--sp-3)}
+.topts li{border-top:1px solid var(--line);padding-top:var(--sp-3)}
+.topts li:first-child{border-top:0;padding-top:0}
+.topts .fstate{display:flex;flex-wrap:wrap;gap:var(--sp-1) var(--sp-3);align-items:center;margin:var(--sp-1) 0 0 28px;font-size:var(--fs-sm)}
+.topts q{color:var(--muted)}
+.topts .pourquoi{background:var(--soft);border-radius:var(--r-sm);padding:var(--sp-2) var(--sp-3);font-size:var(--fs-sm);margin:var(--sp-2) 0 0}
+.avert{border-left:4px solid var(--amber);background:color-mix(in srgb,var(--amber) 10%,var(--surface));border-radius:var(--r-sm);padding:var(--sp-2) var(--sp-3);margin:0 0 var(--sp-4)}
+.recap{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:var(--sp-3);margin:0 0 var(--sp-4)}
+.recap > div{background:var(--soft);border-radius:var(--r-md);padding:var(--sp-3) var(--sp-4)}
+.recap h4{margin:0 0 var(--sp-1);font-size:var(--fs-md)}
+.recap ul{margin:0;padding-left:var(--sp-5);font-size:var(--fs-sm)}
+.lien{display:flex;gap:var(--sp-2);flex-wrap:wrap;align-items:center;background:var(--soft);border-radius:var(--r-md);padding:var(--sp-3);margin:var(--sp-3) 0}
+.lien input{flex:1 1 220px;min-width:0}
+.code{font-size:var(--fs-2xl);font-weight:var(--fw-bold);letter-spacing:.08em;color:var(--primary);font-variant-numeric:tabular-nums}
+.plist{list-style:none;margin:var(--sp-4) 0 0;padding:0;display:grid;gap:var(--sp-2)}
+.plist li{display:flex;flex-wrap:wrap;gap:var(--sp-1) var(--sp-3);align-items:center;justify-content:space-between;border-top:1px solid var(--line);padding-top:var(--sp-2);font-size:var(--fs-sm)}
+.noteform{display:grid;gap:var(--sp-2);background:var(--soft);border-radius:var(--r-md);padding:var(--sp-3);margin:var(--sp-2) 0}
+.noteform .err{color:var(--red-ink);font-weight:var(--fw-semibold);margin:0;font-size:var(--fs-sm)}
+.noteform .err:empty{display:none}
+.ent .tags{display:flex;flex-wrap:wrap;gap:var(--sp-1);margin:var(--sp-2) 0 0}
+.ent .modif{font-size:var(--fs-sm);color:var(--muted);margin:var(--sp-1) 0 0}
+.recu{font-size:var(--fs-sm);color:var(--muted);margin:var(--sp-2) 0 0}
+dialog.dlg.large{width:min(920px,calc(100vw - 2 * var(--gutter)));padding:var(--sp-6) var(--sp-4) var(--sp-4)}
+.masque-zone{background:var(--soft);border-radius:var(--r-md);padding:var(--sp-2);display:flex;justify-content:center;overflow:auto;max-height:62dvh}
+.masque-zone canvas{max-width:100%;height:auto;touch-action:none;cursor:crosshair;background:#fff}
+.apercu-bandeau{background:var(--soft);border-radius:var(--r-md);padding:var(--sp-2) var(--sp-3);margin:0 0 var(--sp-4);font-size:var(--fs-sm)}
 </style>
+<link rel="stylesheet" href="/dossier.css">
 </head>
 <body>
 <div class="wrap">
@@ -640,7 +678,13 @@ footer{margin-top:var(--sp-7);font-size:var(--fs-xs);color:var(--muted);padding-
     <div id="garageIn" hidden>
       <div id="garageList">
       <ul class="cars" id="cars"></ul>
-      <button class="btn" type="button" id="carAdd">Ajouter une voiture</button>
+      <div class="rowbtns"><button class="btn" type="button" id="carAdd">Ajouter une voiture</button><button class="btn soft" type="button" id="codeOpen">J'ai un code de transfert</button></div>
+      <form class="form" id="codeForm" novalidate hidden style="margin-top:16px">
+        <div class="s2"><label class="f" for="c_code">Code de transfert</label><input class="field" id="c_code" maxlength="9" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="ABCD-EF23" aria-describedby="c_hint"><p class="hint" id="c_hint">Le vendeur l'obtient dans sa page voiture, onglet « Partager ou vendre ». 8 caractères.</p></div>
+        <div class="full" id="codeResume" aria-live="polite"></div>
+        <p class="hint full" id="codeMsg" style="margin:0" role="alert"></p>
+        <div class="formbtns"><button class="btn" type="submit" id="codeVerif">Vérifier le code</button><button class="btn" type="button" id="codeAccept" hidden>Accepter et ajouter à mon garage</button><button class="btn ghost" type="button" id="codeCancel">Annuler</button></div>
+      </form>
       <form class="form" id="carForm" novalidate hidden style="margin-top:16px">
         <div class="s2"><label class="f" for="g_surnom">Surnom</label><input class="field" id="g_surnom" maxlength="40" placeholder="La voiture de tous les jours"></div>
         <div><label class="f" for="g_marque">Marque *</label><input class="field" id="g_marque" maxlength="40" required placeholder="Renault"></div>
@@ -688,6 +732,7 @@ footer{margin-top:var(--sp-7);font-size:var(--fs-xs);color:var(--muted);padding-
           <button type="button" role="tab" data-vtab="carnet" aria-selected="false">Carnet</button>
           <button type="button" role="tab" data-vtab="avenir" aria-selected="false">À venir</button>
           <button type="button" role="tab" data-vtab="valeur" aria-selected="false">Valeur</button>
+          <button type="button" role="tab" data-vtab="transmettre" aria-selected="false">Partager ou vendre</button>
         </div>
         <div id="vieView"></div>
       </div>
@@ -741,12 +786,47 @@ footer{margin-top:var(--sp-7);font-size:var(--fs-xs);color:var(--muted);padding-
         </form>
         <ul class="ents" id="ents"></ul>
       </div>
+      <!-- Partager le dossier, transférer la voiture -->
+      <div id="transView" hidden>
+        <section class="tsec" aria-labelledby="partTitre">
+          <h3 id="partTitre" tabindex="-1">Partager le dossier</h3>
+          <p>Un lien en lecture seule pour un acheteur intéressé : la vie de la voiture, son carnet, ses relevés et son badge. Jamais votre nom ni votre e-mail.</p>
+          <div id="partOpts"></div>
+          <div style="max-width:220px;margin:0 0 var(--sp-4)"><label class="f" for="partDuree">Lien valable</label>
+            <select class="field" id="partDuree"><option value="1">1 jour</option><option value="7" selected>7 jours</option><option value="30">30 jours</option></select></div>
+          <div class="rowbtns"><button class="btn soft" type="button" id="partApercu">Voir l'aperçu</button><button class="btn" type="button" id="partCreer">Créer le lien</button></div>
+          <div id="partLien" role="status" aria-live="polite"></div>
+          <ul class="plist" id="partListe" aria-label="Liens créés"></ul>
+        </section>
+        <section class="tsec" aria-labelledby="transTitre">
+          <h3 id="transTitre">Transférer à un nouveau propriétaire</h3>
+          <p>Quand vous vendez : l'acheteur reçoit l'historique dans son garage Rétroviz, et vous perdez l'accès à cette voiture.</p>
+          <div id="transEtat"></div>
+        </section>
+      </div>
     </div>
   </section>
+
+  <dialog class="dlg large" id="apercuDlg" aria-labelledby="apercuTitre">
+    <button class="close" type="button" id="apercuClose" aria-label="Fermer">×</button>
+    <h2 id="apercuTitre">Aperçu du dossier</h2>
+    <p class="apercu-bandeau" id="apercuBandeau"></p>
+    <div id="apercuCorps"></div>
+  </dialog>
+  <dialog class="dlg large" id="masqueDlg" aria-labelledby="masqueTitre">
+    <button class="close" type="button" id="masqueClose" aria-label="Fermer">×</button>
+    <h2 id="masqueTitre">Masquer des informations</h2>
+    <p class="hint" style="margin:0 0 var(--sp-3)">Tracez des rectangles (souris ou doigt) sur le nom, l'adresse, le téléphone, la plaque… Ils sont peints en noir sur une copie de la facture : votre original ne change pas, et ce qui est masqué ne peut pas être retrouvé.</p>
+    <div class="masque-zone"><canvas id="masqueCanvas" width="10" height="10" aria-label="Facture à masquer"></canvas></div>
+    <p class="hint" id="masqueMsg" role="status" aria-live="polite"></p>
+    <div class="rowbtns" style="margin:var(--sp-2) 0 var(--sp-3)"><button class="btn ghost small" type="button" id="masqueDernier">Retirer le dernier rectangle</button><button class="btn ghost small" type="button" id="masqueVider">Tout retirer</button></div>
+    <div class="rowbtns"><button class="btn" type="button" id="masqueOk">Enregistrer la copie masquée</button><button class="btn ghost" type="button" id="masqueAnnuler">Annuler</button></div>
+  </dialog>
 
   <footer>Rétroviz donne des pistes, pas un diagnostic certifié : ses informations peuvent être incomplètes ou inexactes. Au moindre doute sur les freins, la direction, un voyant rouge ou une odeur de carburant, arrêtez-vous et contactez un professionnel. <a href="/confidentialite.html">Confidentialité</a></footer>
 </div>
 
+<script src="/dossier-rendu.js"></script>
 <script>
 (function(){
 const $ = s => document.querySelector(s);
@@ -1315,7 +1395,10 @@ function kmHTML(c){
       <p class="err" role="alert"></p>
     </form>
     ${k.moyenneMensuelle === null ? `<p class="hint">Avec deux relevés espacés d'au moins un mois, Rétroviz calcule votre moyenne de kilomètres par mois.</p>` : ""}
-    ${list.length ? `<ul class="kmlist" aria-label="Relevés">${list.map(r => `<li><span>${esc(fmtShort(r.date))}</span><span>${fmtNum(r.km)} km</span><button class="btn ghost small" type="button" data-act="kmdel" data-rid="${r.id}" aria-label="Supprimer le relevé du ${esc(fmtDate(r.date))}">Supprimer</button></li>`).join("")}</ul>` : ""}
+    ${list.length ? `<ul class="kmlist" aria-label="Relevés">${list.map(r => `<li><span>${esc(fmtShort(r.date))}</span><span>${fmtNum(r.km)} km</span>${r.verrouille
+        ? `<button class="btn ghost small" type="button" data-note="releve" data-oid="${r.id}" aria-label="Ajouter une note au relevé du ${esc(fmtDate(r.date))}">Note</button>`
+        : `<button class="btn ghost small" type="button" data-act="kmdel" data-rid="${r.id}" aria-label="Supprimer le relevé du ${esc(fmtDate(r.date))}">Supprimer</button>`}
+      <small class="kmtags">${Dossier.confianceHTML({saisiLe:r.saisiLe, modifieLe:r.modifications.at(-1)?.le, recu:r.verrouille})}</small>${Dossier.notesHTML(r.notes)}</li>`).join("")}</ul>` : ""}
   </div>`;
   return h;
 }
@@ -1339,7 +1422,10 @@ function renderGarage(){
   const inAvenir = !!user && !inCarnet && avenirOf !== null && !!carById(avenirOf);
   const inValeur = !!user && !inCarnet && !inAvenir && valeurOf !== null && !!carById(valeurOf);
   const inVoiture = !!user && voitureOf !== null && !!carById(voitureOf);
+  const inTrans = inVoiture && voitureTab === "transmettre" && transOf === voitureOf;
   const detail = inCarnet || inAvenir || inValeur || inVoiture;
+  $("#transView").hidden = !inTrans;
+  if(inTrans) renderTransmettre();
   $("#garageList").hidden = detail; $("#garageIntro").hidden = detail;
   $("#voitureView").hidden = !inVoiture; $("#garageIn").classList.toggle("envoiture", inVoiture);
   if(inVoiture) renderVoiture();
@@ -1444,6 +1530,7 @@ $("#cars").addEventListener("click", async e => {
 let voitureOf = null, voitureTab = "vie", vie = null, badgeV = null;
 const CAR_ICON = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 16.5v-3l2.2-4.5h10l3.3 4.5H21v3z"/><circle cx="7.5" cy="17" r="1.5"/><circle cx="17" cy="17" r="1.5"/></svg>`;
 async function openVoiture(id, tab = "vie"){
+  if(tab === "transmettre") return openTransmettre(id);
   if(tab === "carnet") return openCarnet(id);
   if(tab === "avenir") return openAvenir(id);
   if(tab === "valeur") return openValeur(id);
@@ -1476,16 +1563,9 @@ function renderVie(c){
   const conseil = k.source !== "achat" ? `<p class="hint" style="margin-top:calc(-1 * var(--sp-3))">Indiquez la date et le kilométrage d'achat (« Modifier ») pour que les chiffres partent de l'achat.</p>` : "";
   const jalons = vie.jalons.length ? `<h3 class="sect" style="margin-bottom:var(--sp-3)">Étapes marquantes</h3>
     <ul class="jalons">${vie.jalons.slice().reverse().map(j => `<li><span aria-hidden="true">★</span>${esc(j.titre)} <small>${esc(fmtShort(j.date))}</small></li>`).join("")}</ul>` : "";
-  let annee = "";
-  const frise = vie.evenements.map(e => {
-    const a = e.date.slice(0, 4), entete = a !== annee ? `<li class="annee" aria-hidden="true">${a}</li>` : "";
-    annee = a;
-    const det = [e.detail && esc(e.detail), e.km != null && !["releve", "achat", "jalon"].includes(e.type) && `${fmtNum(e.km)} km`, e.montant != null && fmtEurV(e.montant / 100)].filter(Boolean);
-    const preuve = e.preuve === "facture" ? `<a href="${esc(e.facture)}" target="_blank" rel="noopener">avec facture</a>` : e.preuve === "declare" ? `<span>déclaré</span>` : "";
-    return `${entete}<li class="ev" data-t="${e.type}"><div class="quand">${esc(fmtDate(e.date))}</div><div class="quoi">${e.type === "jalon" ? "★ " : ""}${esc(e.titre)}</div>
-      ${det.length || preuve ? `<div class="det">${det.map(d => `<span>${d}</span>`).join("")}${preuve}</div>` : ""}</li>`;
-  }).join("");
-  $("#vieView").innerHTML = `${badgeHTML(badgeV)}${kpis}${conseil}${jalons}
+  const frise = Dossier.friseHTML(vie.evenements, {noteBtn:true});
+  const continu = Dossier.continuiteHTML(vie.continuite);
+  $("#vieView").innerHTML = `${badgeHTML(badgeV)}${kpis}${conseil}${continu ? continu + "<br>" : ""}${jalons}
     <h3 class="sect" style="margin-bottom:var(--sp-3)">Sa vie, de la plus récente à la plus ancienne</h3>
     <ol class="frise" aria-label="Frise de la vie de la voiture">${frise}</ol>`;
 }
@@ -1761,15 +1841,26 @@ async function openCarnet(id){
   carnet = r; carnetOf = id; avenirOf = null; valeurOf = null; voitureOf = id; voitureTab = "carnet"; entEditing = null; entRappelId = null; renderGarage();
   window.scrollTo({top:0}); $("#carnetTitle").focus();
 }
+const CHAMP_TXT = {date:"date", km:"kilométrage", type:"type", cout:"coût", description:"description", garage:"garage", facture:"facture"};
+const valTxt = (c, v) => v == null ? "vide" : c === "km" ? fmtNum(v) + " km" : c === "cout" ? fmtEur(v / 100) : c === "date" ? fmtShort(v) : String(v);
+function modifHTML(mods){
+  return mods.map(m => `<p class="modif">Modifié le ${esc(fmtShort(m.le))} : ${m.champs.map(c => c.champ === "facture" ? `facture ${esc(c.apres)}`
+    : "avant" in c ? `${CHAMP_TXT[c.champ] || c.champ} ${esc(valTxt(c.champ, c.avant))} → ${esc(valTxt(c.champ, c.apres))}` : `${CHAMP_TXT[c.champ] || c.champ} modifié${c.champ === "description" ? "e" : ""}`).join(" ; ")}</p>`).join("");
+}
 function entHTML(e){
   const meta = [fmtDate(e.date), e.km !== null && fmtNum(e.km) + " km", e.garage].filter(Boolean).map(esc).join(" · ");
+  const tags = (e.facture ? `<span class="mention ok">avec facture</span>` : "") + Dossier.confianceHTML({preuve: e.facture ? null : "declare", saisiLe:e.saisiLe, modifieLe:e.modifications.at(-1)?.le, recu:e.verrouille});
   return `<li class="ent" data-eid="${e.id}">
     <div class="ent-top"><strong>${esc(e.typeLabel)}</strong>${e.cout !== null ? `<span class="cost">${fmtEur(e.cout)}</span>` : ""}</div>
     <p class="ent-meta">${meta}</p>
+    <div class="tags">${tags}</div>
     ${e.description ? `<p class="ent-desc">${esc(e.description)}</p>` : ""}
+    ${modifHTML(e.modifications)}${Dossier.notesHTML(e.notes)}
+    ${e.verrouille ? `<p class="recu">Reçu d'un propriétaire précédent : ni modifiable ni supprimable. Vous pouvez y ajouter une note.</p>` : ""}
     <div class="rowbtns">
       ${e.facture ? `<a class="btn soft small" href="${esc(e.facture.url)}" target="_blank" rel="noopener">Facture (${esc(e.facture.type)})</a>` : ""}
-      <button class="btn ghost small" type="button" data-eact="edit">Modifier</button><button class="btn ghost small" type="button" data-eact="del">Supprimer</button>
+      ${e.verrouille ? `<button class="btn ghost small" type="button" data-note="entretien" data-oid="${e.id}">Ajouter une note</button>`
+        : `<button class="btn ghost small" type="button" data-eact="edit">Modifier</button><button class="btn ghost small" type="button" data-eact="del">Supprimer</button>`}
     </div>
   </li>`;
 }
@@ -1851,6 +1942,272 @@ $("#ents").addEventListener("click", async e => {
   if(!r.ok){ showNotice(r.error); return; }
   carnet = r; if(entEditing === ent.id) entEditing = null;
   await refreshCar(carnetOf); renderCarnet(); $("#entAdd").focus();
+});
+
+/* ---------- notes sur l'historique reçu (frise, carnet, relevés) ---------- */
+document.addEventListener("click", async e => {
+  const b = e.target.closest("[data-note]");
+  if(b){
+    document.querySelectorAll(".noteform").forEach(f => f.remove());
+    const f = document.createElement("form");
+    f.className = "noteform"; f.noValidate = true; f.dataset.objet = b.dataset.note; f.dataset.oid = b.dataset.oid;
+    f.innerHTML = `<label class="f" for="noteTxt">Votre note sur cette entrée</label>
+      <textarea class="field" id="noteTxt" rows="2" maxlength="500" placeholder="Kilométrage erroné, vérifié sur le contrôle technique : 98 000 km"></textarea>
+      <p class="hint" style="margin:0">Visible dans la frise et dans le dossier partagé, et transmise aux propriétaires suivants : n'y mettez pas d'informations personnelles.</p>
+      <div class="rowbtns"><button class="btn small" type="submit">Enregistrer la note</button><button class="btn ghost small" type="button" data-notecancel>Annuler</button></div><p class="err" role="alert"></p>`;
+    (b.closest(".ev, .ent, li") || b.parentElement).append(f);
+    f.querySelector("textarea").focus();
+    return;
+  }
+  if(e.target.closest("[data-notecancel]")) e.target.closest(".noteform").remove();
+});
+document.addEventListener("submit", async e => {
+  const f = e.target.closest(".noteform"); if(!f) return;
+  e.preventDefault();
+  const texte = f.querySelector("textarea").value.trim();
+  if(!texte){ f.querySelector(".err").textContent = "Écrivez votre note."; return; }
+  const vid = voitureOf ?? +f.closest(".car")?.dataset.id;
+  const r = await api("POST", `/api/garage/${vid}/notes`, {objet:f.dataset.objet, objetId:+f.dataset.oid, texte});
+  if(!r.ok){ f.querySelector(".err").textContent = r.error; return; }
+  if(carnetOf !== null){ const l = await api("GET", `/api/garage/${vid}/entretiens`); if(l.ok){ carnet = l; renderCarnet(); } }
+  else if(voitureOf !== null) await openVoiture(vid, "vie");
+  else { const rr = await api("GET", `/api/garage/${vid}/releves`); if(rr.ok){ kmData[vid] = rr.releves; renderGarage(); } }
+});
+
+/* ---------- partager ou vendre : dossier partagé, transfert, masquage des factures ---------- */
+let transOf = null, trans = null, selP = null, selT = null, dernierLien = null, dernierCode = null;
+const selVide = () => ({factures:new Set(), descriptions:new Set(), garages:false, photo:false, valeur:false});
+const optsBody = (sel, partage) => ({factures:[...sel.factures], descriptions:[...sel.descriptions], garages:sel.garages, photo:sel.photo,
+  ...(partage && {valeur:sel.valeur, duree:+$("#partDuree").value})});
+async function openTransmettre(id){
+  const r = await api("GET", `/api/garage/${id}/partage`);
+  if(!r.ok){ showNotice(r.error); return; }
+  trans = r; transOf = id; voitureOf = id; voitureTab = "transmettre"; carnetOf = null; avenirOf = null; valeurOf = null;
+  selP = selVide(); selT = selVide(); dernierLien = null; dernierCode = null;
+  renderGarage(); window.scrollTo({top:0}); $("#partTitre").focus();
+}
+async function reloadTrans(){ const r = await api("GET", `/api/garage/${transOf}/partage`); if(r.ok) trans = r; renderTransmettre(); }
+const FACTURES_UTILES = "Pourquoi les transmettre ? Les factures sont la meilleure preuve d'entretien : l'acheteur voit « avec facture » au lieu de « déclaré », ce qui le rassure et peut peser dans le prix.";
+/* Cases à cocher, toutes décochées par défaut. p : "p" (partage) ou "t" (transfert). */
+function optsHTML(p, sel, partage){
+  const ch = trans.choix, lib = e => `${esc(e.typeLabel)} du ${esc(fmtShort(e.date))}`;
+  const fact = ch.entretiens.filter(e => e.facture), desc = ch.entretiens.filter(e => e.description), garage = ch.entretiens.find(e => e.garage);
+  const cb = (kind, id, on, label, extra = "") => `<label class="check"><input type="checkbox" data-p="${p}" data-sel="${kind}" ${id != null ? `data-id="${id}"` : ""} ${on ? "checked" : ""}><span>${label}</span></label>${extra}`;
+  const etatFacture = e => {
+    const f = e.facture;
+    const masque = f.image || f.pdf ? `<button class="link" type="button" data-masquer="${e.id}">${f.masquee ? "Refaire le masquage" : f.pdf ? "Masquer des informations (le PDF devient une image)" : "Masquer des informations"}</button>`
+      : `<span class="hint" style="margin:0">Photo HEIC : impossible à masquer ici. Vérifiez-la vous-même, ou laissez-la décochée.</span>`;
+    return `<div class="fstate">${f.masquee ? `<span class="mention ok">copie masquée prête</span>` : e.verrouille ? `<span class="mention">reçue du propriétaire précédent</span>` : `<span class="mention attention">non masquée</span>`}
+      <a class="link" href="${esc(f.urlPartage)}" target="_blank" rel="noopener">Voir ce qui sera montré</a>${masque}</div>`;
+  };
+  let h = "";
+  if(fact.length) h += `<fieldset class="topts"><legend>Factures (${fact.length})</legend><p class="pourquoi">${FACTURES_UTILES}</p>
+    <ul>${fact.map(e => `<li>${cb("factures", e.id, sel.factures.has(e.id), `Facture : ${lib(e)} <small class="hint">(${esc(e.facture.label)})</small>`, etatFacture(e))}</li>`).join("")}</ul></fieldset>`;
+  if(desc.length) h += `<fieldset class="topts"><legend>Descriptions des entretiens (${desc.length})</legend><p class="hint" style="margin:0">Texte libre : relisez-le, il peut contenir un nom ou un lieu.</p>
+    <ul>${desc.map(e => `<li>${cb("descriptions", e.id, sel.descriptions.has(e.id), `${lib(e)} : <q>${esc(e.description)}</q>`)}</li>`).join("")}</ul></fieldset>`;
+  const autres = [
+    garage && cb("garages", null, sel.garages, `Noms des garages (par exemple <q>${esc(garage.garage)}</q>) : ils peuvent indiquer où vous habitez.`),
+    ch.photo && cb("photo", null, sel.photo, "Photo de la voiture. Vérifiez que la plaque d'immatriculation n'est pas lisible."),
+    partage && ch.valeur && cb("valeur", null, sel.valeur, "Dernière estimation de valeur (elle peut peser dans la négociation)."),
+  ].filter(Boolean);
+  if(autres.length) h += `<fieldset class="topts"><legend>Autres informations</legend><ul>${autres.map(x => `<li>${x}</li>`).join("")}</ul></fieldset>`;
+  return h || `<p class="hint">Rien d'autre à choisir : le dossier contiendra les dates, types, kilométrages et coûts.</p>`;
+}
+function partListeHTML(){
+  return trans.partages.map(p => {
+    const r = p.resume, contenu = [r.factures && `${r.factures} facture${r.factures > 1 ? "s" : ""}`, r.descriptions && `${r.descriptions} description${r.descriptions > 1 ? "s" : ""}`, r.garages && "noms de garage", r.photo && "photo", r.valeur && "valeur"].filter(Boolean).join(", ") || "sans facture ni texte libre";
+    const etat = p.revoqueLe ? `révoqué le ${fmtShort(p.revoqueLe.slice(0, 10))}` : p.actif ? `valable jusqu'au ${fmtShort(p.expireLe.slice(0, 10))}` : `expiré le ${fmtShort(p.expireLe.slice(0, 10))}`;
+    return `<li><span>Lien du ${esc(fmtShort(p.creeLe.slice(0, 10)))} (${esc(contenu)}) : ${esc(etat)}</span>${p.actif ? `<button class="btn ghost small" type="button" data-revoquer="${p.id}">Révoquer</button>` : ""}</li>`;
+  }).join("");
+}
+function renderTransmettre(){
+  $("#partOpts").innerHTML = optsHTML("p", selP, true);
+  $("#partLien").innerHTML = dernierLien ? `<div class="lien"><label class="sr" for="lienTxt">Lien du dossier</label><input class="field" id="lienTxt" readonly value="${esc(location.origin + dernierLien)}"><button class="btn small" type="button" id="lienCopier">Copier</button></div>
+    <p class="hint">Ce lien n'est affiché qu'une fois : copiez-le maintenant. Vous pourrez le révoquer à tout moment.</p>` : "";
+  $("#partListe").innerHTML = partListeHTML();
+  const t = trans.transfert, ch = trans.choix, nEnt = ch.entretiens.length;
+  if(t){
+    $("#transEtat").innerHTML = `${dernierCode ? `<p>Code de transfert à donner à l'acheteur :</p><p class="code" aria-label="Code ${esc(dernierCode.split("").join(" "))}">${esc(dernierCode)}</p>
+      <p class="hint">Affiché une seule fois. L'acheteur le saisit dans son garage Rétroviz (« J'ai un code de transfert »), voit ce qu'il va recevoir, puis accepte.</p>` : `<p>Un code de transfert a été créé le ${esc(fmtShort(t.creeLe.slice(0, 10)))}.</p>`}
+      <p>Valable jusqu'au ${esc(fmtDate(t.expireLe.slice(0, 10)))}, tant que l'acheteur ne l'a pas utilisé. Transmis avec : ${t.options.factures.length} facture(s), ${t.options.descriptions.length} description(s)${t.options.garages ? ", noms de garage" : ""}${t.options.photo ? ", photo" : ""}.</p>
+      <div class="rowbtns"><button class="btn ghost" type="button" id="transAnnuler">Annuler le transfert</button></div>`;
+    return;
+  }
+  $("#transEtat").innerHTML = `
+    <div class="recap">
+      <div><h4>Part avec la voiture</h4><ul><li>Marque, modèle, motorisation, année, mise en circulation</li><li>${ch.releves} relevé(s) de kilométrage</li><li>Tous les entretiens : dates, types, kilométrages, coûts${nEnt ? "" : " (aucun pour l'instant)"}</li><li>Réglages de vidange, dernier contrôle technique</li><li>Notes sur l'historique</li><li>Ce que vous cochez ci-dessous</li></ul></div>
+      <div><h4>Ne part jamais</h4><ul><li>Votre nom et votre e-mail</li><li>Le surnom de la voiture</li><li>L'échéance d'assurance, vos rappels, les pneus hiver</li><li>Les estimations de valeur</li><li>Ce que vous ne cochez pas (effacé au transfert)</li></ul></div>
+    </div>
+    <div id="transOpts">${optsHTML("t", selT, false)}</div>
+    <p class="avert"><strong>Vérifiez vos factures avant de les transmettre</strong> : elles portent souvent votre nom, votre adresse, votre téléphone ou la plaque. Masquez ces informations, ou laissez la facture décochée.</p>
+    <p>Après le transfert, vous n'aurez plus accès à cette voiture. <a href="/api/account/export">Télécharger mes données avant</a> (fichier JSON, toutes vos voitures).</p>
+    <div class="rowbtns"><button class="btn soft" type="button" id="transApercu">Voir ce que l'acheteur recevra</button><button class="btn" type="button" id="transCreer">Créer le code de transfert</button></div>
+    <p class="hint" id="transMsg" role="alert"></p>`;
+}
+async function apercu(sel, partage){
+  const r = await api("POST", `/api/garage/${transOf}/partage/apercu`, optsBody(sel, true));
+  if(!r.ok){ showNotice(r.error); return; }
+  $("#apercuTitre").textContent = partage ? "Aperçu du dossier partagé" : "Ce que l'acheteur recevra";
+  $("#apercuBandeau").textContent = partage ? "Exactement ce que verra la personne qui ouvre le lien." : "L'historique tel qu'il arrivera dans le garage de l'acheteur. Il ne pourra ni le modifier ni le supprimer, seulement y ajouter des notes.";
+  $("#apercuCorps").innerHTML = Dossier.html(r.dossier);
+  $("#apercuDlg").showModal(); $("#apercuClose").focus();
+}
+$("#apercuClose").addEventListener("click", () => $("#apercuDlg").close());
+$("#transView").addEventListener("change", e => {
+  const i = e.target.closest("[data-sel]"); if(!i) return;
+  const sel = i.dataset.p === "p" ? selP : selT, k = i.dataset.sel;
+  if(i.dataset.id) { const id = +i.dataset.id; i.checked ? sel[k].add(id) : sel[k].delete(id); }
+  else sel[k] = i.checked;
+  // Les factures sont communes aux deux listes : la même case cochée ici est cochée là-bas aussi, pour le masquage.
+});
+$("#transView").addEventListener("click", async e => {
+  const b = e.target.closest("button"); if(!b) return;
+  if(b.id === "partApercu") return apercu(selP, true);
+  if(b.id === "transApercu") return apercu({...selT, valeur:false}, false);
+  if(b.id === "partCreer"){
+    const r = await api("POST", `/api/garage/${transOf}/partages`, optsBody(selP, true));
+    if(!r.ok){ showNotice(r.error); return; }
+    dernierLien = r.lien; await reloadTrans(); $("#lienTxt")?.select(); return;
+  }
+  if(b.id === "lienCopier"){ try{ await navigator.clipboard.writeText($("#lienTxt").value); b.textContent = "Copié"; }catch{ $("#lienTxt").select(); } return; }
+  if(b.dataset.revoquer){
+    if(!confirm("Révoquer ce lien ? Il ne fonctionnera plus pour personne.")) return;
+    const r = await api("DELETE", `/api/garage/${transOf}/partages/${b.dataset.revoquer}`);
+    if(!r.ok){ showNotice(r.error); return; }
+    await reloadTrans(); return;
+  }
+  if(b.id === "transCreer"){
+    if(!confirm("Créer un code de transfert ? Dès que l'acheteur l'aura accepté, cette voiture quittera votre garage et vous n'y aurez plus accès.")) return;
+    const r = await api("POST", `/api/garage/${transOf}/transfert`, optsBody(selT, false));
+    if(!r.ok){ $("#transMsg").textContent = r.error; return; }
+    dernierCode = r.code; await reloadTrans(); return;
+  }
+  if(b.id === "transAnnuler"){
+    if(!confirm("Annuler le transfert ? Le code ne fonctionnera plus.")) return;
+    const r = await api("DELETE", `/api/garage/${transOf}/transfert`);
+    if(!r.ok){ showNotice(r.error); return; }
+    dernierCode = null; selT = selVide(); await reloadTrans(); return;
+  }
+  if(b.dataset.masquer) return ouvrirMasque(+b.dataset.masquer);
+});
+
+/* Outil de masquage : la facture est dessinée dans un canvas, les rectangles y sont peints en noir,
+   puis l'image obtenue est envoyée comme copie. Rien n'est superposé en CSS : les pixels masqués n'existent plus. */
+let masque = null; // {eid, base: canvas, rects: [{x,y,w,h}], en_cours}
+const MASQUE_MAX = 2400; // px sur le plus grand côté (photos de téléphone)
+async function pdfEnCanvas(buf){
+  const pdfjs = await import("/vendor/pdfjs/pdf.min.mjs");
+  pdfjs.GlobalWorkerOptions.workerSrc = "/vendor/pdfjs/pdf.worker.min.mjs";
+  const doc = await pdfjs.getDocument({data:new Uint8Array(buf), isEvalSupported:false}).promise;
+  const n = Math.min(doc.numPages, 4), pages = [];
+  for(let i = 1; i <= n; i++){
+    const page = await doc.getPage(i), v1 = page.getViewport({scale:1}), vp = page.getViewport({scale:1400 / v1.width});
+    const c = document.createElement("canvas"); c.width = Math.round(vp.width); c.height = Math.round(vp.height);
+    await page.render({canvasContext:c.getContext("2d"), viewport:vp}).promise;
+    pages.push(c);
+  }
+  const gap = 16, W = Math.max(...pages.map(c => c.width)), H = pages.reduce((h, c) => h + c.height, 0) + gap * (n - 1);
+  const out = document.createElement("canvas"); out.width = W; out.height = H;
+  const g = out.getContext("2d"); g.fillStyle = "#fff"; g.fillRect(0, 0, W, H);
+  let y = 0; for(const c of pages){ g.drawImage(c, 0, y); y += c.height + gap; }
+  return {canvas:out, ignorees:doc.numPages - n};
+}
+async function imageEnCanvas(blob){
+  const bmp = await createImageBitmap(blob);
+  const k = Math.min(1, MASQUE_MAX / Math.max(bmp.width, bmp.height));
+  const c = document.createElement("canvas"); c.width = Math.round(bmp.width * k); c.height = Math.round(bmp.height * k);
+  c.getContext("2d").drawImage(bmp, 0, 0, c.width, c.height);
+  return c;
+}
+function dessinerMasque(){
+  const cv = $("#masqueCanvas"), g = cv.getContext("2d");
+  g.drawImage(masque.base, 0, 0);
+  g.fillStyle = "#000";
+  for(const r of [...masque.rects, masque.enCours].filter(Boolean)) g.fillRect(r.x, r.y, r.w, r.h);
+  $("#masqueDernier").disabled = $("#masqueVider").disabled = !masque.rects.length;
+}
+async function ouvrirMasque(eid){
+  const e = trans.choix.entretiens.find(x => x.id === eid); if(!e) return;
+  masque = null; $("#masqueOk").disabled = true; $("#masqueMsg").textContent = "Chargement de la facture…";
+  $("#masqueDlg").showModal();
+  try{
+    const res = await fetch(e.facture.url);
+    if(!res.ok) throw new Error();
+    let base, note = "";
+    if(e.facture.pdf){
+      try{ const r = await pdfEnCanvas(await res.arrayBuffer()); base = r.canvas; if(r.ignorees) note = ` Seules les 4 premières pages sont gardées dans la copie (${r.ignorees} page(s) en plus).`; }
+      catch{ $("#masqueMsg").textContent = "Ce PDF ne peut pas être converti en image ici. Ouvrez-le pour vérifier ce qu'il contient, et laissez-le décoché s'il porte des informations personnelles."; return; }
+    } else base = await imageEnCanvas(await res.blob());
+    const cv = $("#masqueCanvas"); cv.width = base.width; cv.height = base.height;
+    masque = {eid, base, rects:[], enCours:null, pdf:e.facture.pdf};
+    dessinerMasque(); $("#masqueOk").disabled = false;
+    $("#masqueMsg").textContent = "Tracez un rectangle sur chaque information à cacher." + note;
+  }catch{ $("#masqueMsg").textContent = "La facture n'a pas pu être ouverte."; }
+}
+const ptCanvas = e => { const cv = $("#masqueCanvas"), r = cv.getBoundingClientRect(); return {x:(e.clientX - r.left) * cv.width / r.width, y:(e.clientY - r.top) * cv.height / r.height}; };
+let depart = null;
+$("#masqueCanvas").addEventListener("pointerdown", e => { if(!masque) return; e.preventDefault(); e.target.setPointerCapture(e.pointerId); depart = ptCanvas(e); });
+$("#masqueCanvas").addEventListener("pointermove", e => {
+  if(!masque || !depart) return;
+  const p = ptCanvas(e);
+  masque.enCours = {x:Math.min(depart.x, p.x), y:Math.min(depart.y, p.y), w:Math.abs(p.x - depart.x), h:Math.abs(p.y - depart.y)};
+  dessinerMasque();
+});
+$("#masqueCanvas").addEventListener("pointerup", () => {
+  if(!masque || !depart) return;
+  const r = masque.enCours; depart = null; masque.enCours = null;
+  if(r && r.w > 4 && r.h > 4) masque.rects.push(r);
+  dessinerMasque();
+  $("#masqueMsg").textContent = `${masque.rects.length} zone${masque.rects.length > 1 ? "s" : ""} masquée${masque.rects.length > 1 ? "s" : ""}.`;
+});
+$("#masqueDernier").addEventListener("click", () => { masque?.rects.pop(); dessinerMasque(); });
+$("#masqueVider").addEventListener("click", () => { if(masque){ masque.rects = []; dessinerMasque(); } });
+const fermerMasque = () => { masque = null; $("#masqueDlg").close(); };
+$("#masqueClose").addEventListener("click", fermerMasque);
+$("#masqueAnnuler").addEventListener("click", fermerMasque);
+$("#masqueOk").addEventListener("click", async () => {
+  if(!masque) return;
+  if(!masque.rects.length && !confirm("Aucune zone masquée. Enregistrer quand même une copie (sans les métadonnées de la photo) ?")) return;
+  $("#masqueOk").disabled = true; $("#masqueMsg").textContent = "Enregistrement…";
+  dessinerMasque(); // la copie est exactement ce qui est affiché
+  const blob = await new Promise(r => $("#masqueCanvas").toBlob(r, "image/jpeg", 0.9));
+  try{
+    const res = await fetch(`/api/garage/${transOf}/entretiens/${masque.eid}/facture-masquee`, {method:"PUT", headers:{"Content-Type":"application/octet-stream"}, body:blob});
+    let j = {}; try { j = await res.json(); } catch {}
+    if(!res.ok){ $("#masqueMsg").textContent = j.error || "La copie n'a pas pu être enregistrée."; $("#masqueOk").disabled = false; return; }
+  }catch{ $("#masqueMsg").textContent = "Le serveur ne répond pas."; $("#masqueOk").disabled = false; return; }
+  fermerMasque(); await reloadTrans();
+  showNotice("Copie masquée enregistrée. Votre facture d'origine n'a pas changé.");
+});
+
+/* ---------- acheteur : saisir un code de transfert ---------- */
+let codeOk = null;
+$("#codeOpen").addEventListener("click", () => { $("#codeForm").hidden = false; $("#codeOpen").hidden = true; codeOk = null; $("#codeResume").innerHTML = ""; $("#codeAccept").hidden = true; $("#codeVerif").hidden = false; $("#codeMsg").textContent = ""; $("#c_code").value = ""; $("#c_code").focus(); });
+$("#codeCancel").addEventListener("click", () => { $("#codeForm").hidden = true; $("#codeOpen").hidden = false; $("#codeOpen").focus(); });
+$("#codeForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  const code = $("#c_code").value.trim();
+  if(!code){ $("#codeMsg").textContent = "Indiquez le code donné par le vendeur."; return; }
+  $("#codeVerif").disabled = true;
+  const r = await api("POST", "/api/transfert/apercu", {code});
+  $("#codeVerif").disabled = false;
+  if(!r.ok){ $("#codeMsg").textContent = r.error; return; }
+  const t = r.transfert; codeOk = code; $("#codeMsg").textContent = "";
+  $("#codeResume").innerHTML = `<div class="recap" style="margin:0"><div><h4>${esc(t.voiture)}</h4><ul>
+      <li>${t.releves} relevé(s) de kilométrage</li><li>${t.entretiens} entretien(s), dont ${t.factures} avec facture transmise</li>
+      ${t.descriptions ? `<li>${t.descriptions} description(s) d'entretien</li>` : ""}${t.garages ? "<li>Noms des garages</li>" : ""}${t.photo ? "<li>Photo de la voiture</li>" : ""}</ul></div>
+    <div><h4>En acceptant</h4><ul><li>La voiture et son historique arrivent dans votre garage.</li><li>L'historique reçu ne peut être ni modifié ni supprimé ; vous pourrez y ajouter des notes.</li><li>Le vendeur n'y a plus accès. Son identité ne vous est pas transmise, ni la vôtre à lui.</li></ul></div></div>`;
+  $("#codeAccept").hidden = false; $("#codeVerif").hidden = true; $("#codeAccept").focus();
+});
+$("#codeAccept").addEventListener("click", async () => {
+  if(!codeOk) return;
+  $("#codeAccept").disabled = true;
+  const r = await api("POST", "/api/transfert/accepter", {code:codeOk});
+  $("#codeAccept").disabled = false;
+  if(!r.ok){ $("#codeMsg").textContent = r.error; return; }
+  $("#codeForm").hidden = true; $("#codeOpen").hidden = false;
+  await loadGarage(); await openVoiture(r.vehiculeId, "vie");
+  showNotice("La voiture et son historique sont dans votre garage.");
 });
 
 function applyReleves(id, r){

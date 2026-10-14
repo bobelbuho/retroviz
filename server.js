@@ -17,6 +17,7 @@ import { createRappels } from "./rappels.js";
 import { createValeur, anthropicEstimator } from "./valeur.js";
 import { createVie } from "./vie.js";
 import { createBadge } from "./badge.js";
+import { createTransfert } from "./transfert.js";
 
 const PORT = process.env.PORT || 3000;
 const MODEL = process.env.MODEL || "claude-sonnet-5-5";
@@ -42,6 +43,15 @@ const client = new Anthropic(); // lit ANTHROPIC_API_KEY dans l'environnement
 const valeur = createValeur(db, { estimate: process.env.ANTHROPIC_API_KEY ? anthropicEstimator(client, MODEL) : null });
 const badge = createBadge(db, { rappels });
 const garage = createGarage(db, kb, { carnet, rappels, valeur, storage: fichiers, badge });
+const vie = createVie(db);
+// Dossier partageable, transfert au nouveau propriétaire, notes sur l'historique reçu.
+const transfert = createTransfert(db, { carnet, vie, badge, rappels, valeur, storage: fichiers });
+// Export RGPD : chaque voiture avec son historique, y compris celui reçu d'anciens propriétaires.
+const exportData = uid => {
+  const d = garage.exportFor(uid);
+  for (const v of d.vehicules) v.changementsDeProprietaire = transfert.datesTransfert(v.id);
+  return d;
+};
 // Suppression du compte : factures et photos effacées du stockage.
 const beforeDeleteUser = uid => { const a = carnet.beforeDeleteUser(uid), b = garage.beforeDeleteUser(uid); return async () => { await a(); await b(); }; };
 // Relecture des fiches : réservée aux adresses de ADMIN_EMAILS (séparées par des virgules).
@@ -63,17 +73,20 @@ const tableau = () => ({
 });
 const app = express();
 app.use(express.json({ limit: "1mb" }));
-app.use(createAuth(db, { exportData: garage.exportFor, beforeDeleteUser, isAdmin: relecture.isAdmin }));
+app.use(createAuth(db, { exportData, beforeDeleteUser, isAdmin: relecture.isAdmin }));
 app.use(garage);
 app.use(carnet);
 app.use(rappels);
 app.use(valeur);
-app.use(createVie(db));
+app.use(vie);
+app.use(transfert);
 app.use(badge);
 app.use(relecture);
 app.use(propositions);
 app.use(retours);
 app.use(express.static("public"));
+// pdf.js (navigateur) : conversion des factures PDF en image pour les masquer, sans service extérieur.
+app.use("/vendor/pdfjs", express.static("node_modules/pdfjs-dist/build", { index: false }));
 
 // Assistant : consignes et fiches ajoutées côté serveur (chat.js, prompts.js).
 app.use(createChat({ client, kb, model: MODEL, maxTokens: MAX_TOKENS, onSansFiche: retours.noterSansFiche }));

@@ -136,6 +136,57 @@ CREATE TABLE IF NOT EXISTS observateur_passages (
   cout_eur    REAL NOT NULL DEFAULT 0,
   journal     TEXT NOT NULL DEFAULT '[]' -- JSON : lignes de journal
 );
+-- Historique des modifications d'entrées anciennes (plus de 30 jours) : gardé et affiché « modifié le … ».
+-- Pour la description et le garage, seul le nom du champ est gardé (jamais l'ancien texte).
+CREATE TABLE IF NOT EXISTS modifications (
+  id         INTEGER PRIMARY KEY,
+  vehicle_id INTEGER NOT NULL REFERENCES vehicles(id) ON DELETE CASCADE,
+  objet      TEXT NOT NULL,              -- releve ou entretien
+  objet_id   INTEGER NOT NULL,
+  le         TEXT NOT NULL,              -- AAAA-MM-JJ
+  champs     TEXT NOT NULL               -- JSON [{champ, avant, apres}] ; champ « suppression » pour une entrée effacée
+);
+CREATE INDEX IF NOT EXISTS modifications_vehicle ON modifications(vehicle_id);
+-- Notes sur l'historique reçu d'un ancien propriétaire (qui, lui, ne peut plus être modifié).
+CREATE TABLE IF NOT EXISTS notes (
+  id         INTEGER PRIMARY KEY,
+  vehicle_id INTEGER NOT NULL REFERENCES vehicles(id) ON DELETE CASCADE,
+  objet      TEXT NOT NULL,              -- releve ou entretien
+  objet_id   INTEGER NOT NULL,
+  texte      TEXT NOT NULL,
+  verrouille INTEGER NOT NULL DEFAULT 0, -- 1 : note d'un ancien propriétaire
+  cree_le    TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now'))
+);
+-- Liens de partage en lecture seule (le lien lui-même n'est jamais stocké : seulement son empreinte).
+CREATE TABLE IF NOT EXISTS partages (
+  id         INTEGER PRIMARY KEY,
+  vehicle_id INTEGER NOT NULL REFERENCES vehicles(id) ON DELETE CASCADE,
+  token_hash TEXT NOT NULL UNIQUE,
+  options    TEXT NOT NULL,              -- JSON : ce que le propriétaire a choisi de montrer
+  cree_le    TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now')),
+  expire_le  TEXT NOT NULL,              -- ISO
+  revoque_le TEXT
+);
+-- Transferts à un nouveau propriétaire. Une fois accepté, plus aucun lien vers les comptes : seulement la date.
+CREATE TABLE IF NOT EXISTS transferts (
+  id          INTEGER PRIMARY KEY,
+  vehicle_id  INTEGER NOT NULL REFERENCES vehicles(id) ON DELETE CASCADE,
+  code_hash   TEXT UNIQUE,               -- NULL une fois le transfert terminé ou annulé
+  options     TEXT NOT NULL,
+  cree_le     TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now')),
+  expire_le   TEXT NOT NULL,
+  statut      TEXT NOT NULL DEFAULT 'en_attente', -- en_attente, accepte, annule
+  accepte_le  TEXT,                      -- AAAA-MM-JJ : « Changement de propriétaire »
+  ancien_achat_date TEXT,                -- achat par le propriétaire précédent, pour la frise
+  ancien_achat_km   INTEGER
+);
+CREATE INDEX IF NOT EXISTS transferts_vehicle ON transferts(vehicle_id, statut);
+-- Essais de code de transfert ratés : limite par compte et par heure (contre les codes devinés).
+CREATE TABLE IF NOT EXISTS essais_transfert (
+  id      INTEGER PRIMARY KEY,
+  user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  le      TEXT NOT NULL                  -- ISO
+);
 `;
 
 // Colonnes ajoutées après la création des tables : ajoutées aux bases existantes au démarrage.
@@ -155,6 +206,14 @@ const MIGRATIONS = {
     energie: "TEXT",             // thermique, hybride, hybride_rechargeable, electrique (vide : déduite de la motorisation)
     badge_obtenu: "INTEGER NOT NULL DEFAULT 0", // badge « Voiture bien suivie » au dernier calcul
     badge_change_le: "TEXT",     // date du dernier gain ou de la dernière perte du badge
+  },
+  releves: {
+    verrouille: "INTEGER NOT NULL DEFAULT 0", // 1 : reçu d'un ancien propriétaire, ni modifiable ni supprimable
+  },
+  entretiens: {
+    verrouille: "INTEGER NOT NULL DEFAULT 0",
+    facture_masquee_key: "TEXT",  // copie masquée de la facture (rectangles noirs), utilisée pour le partage et le transfert
+    facture_masquee_type: "TEXT",
   },
   users: {
     stats_consent: "INTEGER NOT NULL DEFAULT 0", // 1 : accepte que son carnet serve aux statistiques anonymes

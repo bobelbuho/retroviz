@@ -165,7 +165,7 @@ describe("API du carnet", () => {
 
     const up = await c("PUT", furl, FILES.png, { "X-Filename": encodeURIComponent("Facture garage.pdf") }); // extension trompeuse
     assert.equal(up.status, 200);
-    assert.deepEqual(up.body.entretien.facture, { nom: "Facture garage.pdf", type: "photo PNG", taille: FILES.png.length, url: furl });
+    assert.deepEqual(up.body.entretien.facture, { nom: "Facture garage.pdf", type: "photo PNG", taille: FILES.png.length, url: furl, image: true, pdf: false, masquee: null });
     const [stored] = filesOnDisk().filter(f => f.endsWith(".png"));
     assert.ok(isValidKey(stored), "nom aléatoire, sans le nom d'origine");
 

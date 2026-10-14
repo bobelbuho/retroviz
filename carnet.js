@@ -2,8 +2,10 @@
 // Les fichiers passent uniquement par storage.js.
 import express from "express";
 import { needUser, sameSiteJson } from "./auth.js";
-import { cleanDate, cleanKm, incoherence } from "./kilometrage.js";
+import { cleanDate, cleanKm, incoherence, today } from "./kilometrage.js";
 import { detectType, FILE_TYPES, MAX_FILE_SIZE } from "./storage.js";
+import { saisiLe, estAncienne, differences } from "./historique.js";
+import { sansMetadonnees } from "./metadonnees.js";
 
 export const TYPES = {
   vidange: "Vidange", distribution: "Distribution", freins: "Freins", pneus: "Pneus", batterie: "Batterie",
@@ -65,7 +67,10 @@ export function cleanFileName(raw) {
 const rfc5987 = s => encodeURIComponent(s).replace(/['()*]/g, c => "%" + c.charCodeAt(0).toString(16).toUpperCase());
 
 /* ---------- routeur ---------- */
-export function createCarnet(db, storage, { log = console.error } = {}) {
+// Copie masquée d'une facture : seulement des images que le navigateur a produites (canvas).
+export const TYPES_MASQUE = ["jpg", "png", "webp"];
+
+export function createCarnet(db, storage, { log = console.error, now = today } = {}) {
   const q = {
     owns: db.prepare("SELECT id FROM vehicles WHERE id = ? AND user_id = ?"),
     list: db.prepare("SELECT * FROM entretiens WHERE vehicle_id = ? ORDER BY date DESC, id DESC"),
@@ -81,23 +86,47 @@ export function createCarnet(db, storage, { log = console.error } = {}) {
     releves: db.prepare("SELECT date, km FROM releves WHERE vehicle_id = ?"),
     upsertReleve: db.prepare(`INSERT INTO releves (vehicle_id, date, km) VALUES (?, ?, ?)
                               ON CONFLICT (vehicle_id, date) DO UPDATE SET km = excluded.km`),
-    keysOfVehicle: db.prepare("SELECT facture_key FROM entretiens WHERE vehicle_id = ? AND facture_key IS NOT NULL"),
-    keysOfUser: db.prepare(`SELECT e.facture_key FROM entretiens e JOIN vehicles v ON v.id = e.vehicle_id
-                            WHERE v.user_id = ? AND e.facture_key IS NOT NULL`),
+    setMasque: db.prepare("UPDATE entretiens SET facture_masquee_key = ?, facture_masquee_type = ? WHERE id = ? AND vehicle_id = ?"),
+    releveVerrouille: db.prepare("SELECT 1 FROM releves WHERE vehicle_id = ? AND date = ? AND verrouille = 1"),
+    keysOfVehicle: db.prepare("SELECT facture_key, facture_masquee_key FROM entretiens WHERE vehicle_id = ? AND (facture_key IS NOT NULL OR facture_masquee_key IS NOT NULL)"),
+    keysOfUser: db.prepare(`SELECT e.facture_key, e.facture_masquee_key FROM entretiens e JOIN vehicles v ON v.id = e.vehicle_id
+                            WHERE v.user_id = ? AND (e.facture_key IS NOT NULL OR e.facture_masquee_key IS NOT NULL)`),
+    modifs: db.prepare("SELECT objet_id, le, champs FROM modifications WHERE vehicle_id = ? AND objet = 'entretien' ORDER BY le, id"),
+    addModif: db.prepare("INSERT INTO modifications (vehicle_id, objet, objet_id, le, champs) VALUES (?, 'entretien', ?, ?, ?)"),
+    notes: db.prepare("SELECT id, objet_id, texte, verrouille, cree_le FROM notes WHERE vehicle_id = ? AND objet = 'entretien' ORDER BY cree_le, id"),
   };
+  const cles = rows => rows.flatMap(r => [r.facture_key, r.facture_masquee_key]).filter(Boolean);
+  // Modification d'une entrée ancienne : gardée et affichée « modifié le … ».
+  const noterModif = (row, champs) => { if (champs.length && estAncienne(row, now())) q.addModif.run(row.vehicle_id, row.id, now(), JSON.stringify(champs)); };
+  const verrouille = res => res.status(403).json({ code: "verrouille", error: "Cet entretien vient d'un ancien propriétaire : il ne peut être ni modifié ni supprimé. Vous pouvez y ajouter une note." });
 
   const factureUrl = row => `/api/garage/${row.vehicle_id}/entretiens/${row.id}/facture`;
-  const toPublic = row => ({
+  // extras : { modifs: Map id -> [{le, champs}], notes: Map id -> [note] } (chargés une fois pour toute la voiture)
+  const toPublic = (row, extras = annexes(row.vehicle_id)) => ({
     id: row.id, date: row.date, km: row.km, type: row.type, typeLabel: TYPES[row.type] || row.type,
     description: row.description, garage: row.garage,
     cout: row.cout_centimes === null ? null : row.cout_centimes / 100,
     facture: row.facture_key
-      ? { nom: row.facture_nom, type: FILE_TYPES[row.facture_type]?.label || row.facture_type, taille: row.facture_taille, url: factureUrl(row) }
+      ? { nom: row.facture_nom, type: FILE_TYPES[row.facture_type]?.label || row.facture_type, taille: row.facture_taille, url: factureUrl(row),
+          image: TYPES_MASQUE.includes(row.facture_type), pdf: row.facture_type === "pdf",
+          masquee: row.facture_masquee_key ? { url: `${factureUrl(row)}-masquee` } : null }
       : null,
+    preuve: row.facture_key ? "facture" : "declare",
+    verrouille: !!row.verrouille,
+    saisiLe: saisiLe(row),
+    modifications: extras.modifs.get(row.id) || [],
+    notes: extras.notes.get(row.id) || [],
     createdAt: row.created_at, updatedAt: row.updated_at,
   });
+  function annexes(vid) {
+    const modifs = new Map(), notes = new Map();
+    for (const m of q.modifs.all(vid)) { if (!modifs.has(m.objet_id)) modifs.set(m.objet_id, []); modifs.get(m.objet_id).push({ le: m.le, champs: JSON.parse(m.champs) }); }
+    for (const n of q.notes.all(vid)) { if (!notes.has(n.objet_id)) notes.set(n.objet_id, []); notes.get(n.objet_id).push({ id: n.id, texte: n.texte, le: n.cree_le.slice(0, 10), verrouille: !!n.verrouille }); }
+    return { modifs, notes };
+  }
   const listOut = vid => {
-    const entretiens = q.list.all(vid).map(toPublic);
+    const ex = annexes(vid);
+    const entretiens = q.list.all(vid).map(r => toPublic(r, ex));
     const total = entretiens.reduce((n, e) => n + (e.cout === null ? 0 : Math.round(e.cout * 100)), 0) / 100;
     return { entretiens, total };
   };
@@ -133,7 +162,8 @@ export function createCarnet(db, storage, { log = console.error } = {}) {
     if (data.km === null) return null;
     return incoherence(q.releves.all(vid), data);
   }
-  const feedReleves = (vid, data) => { if (data.alimenter) q.upsertReleve.run(vid, data.date, data.km); };
+  // Un relevé reçu d'un ancien propriétaire n'est jamais remplacé.
+  const feedReleves = (vid, data) => { if (data.alimenter && !q.releveVerrouille.get(vid, data.date)) q.upsertReleve.run(vid, data.date, data.km); };
 
   router.get(base, (req, res) => {
     const ctx = load(req, res); if (!ctx) return;
@@ -157,10 +187,12 @@ export function createCarnet(db, storage, { log = console.error } = {}) {
 
   router.put(`${base}/:eid`, (req, res) => {
     const ctx = load(req, res, true); if (!ctx) return;
+    if (ctx.row.verrouille) return verrouille(res);
     const { data, error } = cleanEntretien(req.body);
     if (error) return res.status(400).json({ code: "invalid_entretien", error });
     const problem = checkKm(ctx.vid, data);
     if (problem) return res.status(409).json({ code: "incoherent_km", error: problem });
+    noterModif(ctx.row, differences(ctx.row, { ...data, cout_centimes: data.centimes }));
     q.update.run(data.date, data.km, data.type, data.description, data.garage, data.centimes, ctx.row.id, ctx.vid);
     feedReleves(ctx.vid, data);
     res.json({ entretien: toPublic(q.get.get(ctx.row.id, ctx.vid)), ...listOut(ctx.vid) });
@@ -168,8 +200,10 @@ export function createCarnet(db, storage, { log = console.error } = {}) {
 
   router.delete(`${base}/:eid`, wrap(async (req, res) => {
     const ctx = load(req, res, true); if (!ctx) return;
+    if (ctx.row.verrouille) return verrouille(res);
+    noterModif(ctx.row, [{ champ: "suppression", avant: { date: ctx.row.date, type: ctx.row.type, km: ctx.row.km }, apres: null }]);
     q.remove.run(ctx.row.id, ctx.vid);
-    if (ctx.row.facture_key) await removeFiles([ctx.row.facture_key]);
+    await removeFiles(cles([ctx.row]));
     res.json(listOut(ctx.vid));
   }));
 
@@ -177,6 +211,7 @@ export function createCarnet(db, storage, { log = console.error } = {}) {
   // Envoi : PUT avec le fichier brut dans le corps (pas de multipart). Le nom d'origine est dans l'en-tête X-Filename.
   router.put(`${base}/:eid/facture`, express.raw({ type: () => true, limit: MAX_FILE_SIZE }), wrap(async (req, res) => {
     const ctx = load(req, res, true); if (!ctx) return;
+    if (ctx.row.verrouille) return verrouille(res);
     const buf = Buffer.isBuffer(req.body) ? req.body : null;
     if (!buf || !buf.length) return res.status(400).json({ code: "empty_file", error: "Fichier vide." });
     const ext = detectType(buf); // le vrai type, d'après le contenu
@@ -188,12 +223,17 @@ export function createCarnet(db, storage, { log = console.error } = {}) {
       await removeFiles([key]);
       throw e;
     }
-    if (ctx.row.facture_key) await removeFiles([ctx.row.facture_key]); // l'ancienne facture est remplacée
+    // L'ancienne facture et sa copie masquée sont remplacées.
+    if (ctx.row.facture_masquee_key) q.setMasque.run(null, null, ctx.row.id, ctx.vid);
+    await removeFiles(cles([ctx.row]));
+    noterModif(ctx.row, [{ champ: "facture", avant: ctx.row.facture_key ? "oui" : "non", apres: ctx.row.facture_key ? "remplacée" : "ajoutée" }]);
     res.json({ entretien: toPublic(q.get.get(ctx.row.id, ctx.vid)) });
   }));
 
   router.get(`${base}/:eid/facture`, wrap(async (req, res) => {
     const ctx = load(req, res, true); if (!ctx) return;
+    // ?version=partage : exactement ce que verrait un visiteur du dossier (copie masquée, ou facture sans métadonnées).
+    if (req.query.version === "partage") return envoyerVersionPartage(res, ctx.row);
     const buf = ctx.row.facture_key ? await storage.read(ctx.row.facture_key) : null;
     if (!buf) return notFound(res, "Pas de facture pour cet entretien.");
     const type = FILE_TYPES[ctx.row.facture_type];
@@ -211,11 +251,64 @@ export function createCarnet(db, storage, { log = console.error } = {}) {
 
   router.delete(`${base}/:eid/facture`, wrap(async (req, res) => {
     const ctx = load(req, res, true); if (!ctx) return;
+    if (ctx.row.verrouille) return verrouille(res);
     if (!ctx.row.facture_key) return notFound(res, "Pas de facture pour cet entretien.");
     q.setFacture.run(null, null, null, null, ctx.row.id, ctx.vid);
-    await removeFiles([ctx.row.facture_key]);
+    q.setMasque.run(null, null, ctx.row.id, ctx.vid);
+    await removeFiles(cles([ctx.row]));
+    noterModif(ctx.row, [{ champ: "facture", avant: "oui", apres: "supprimée" }]);
     res.json({ entretien: toPublic(q.get.get(ctx.row.id, ctx.vid)) });
   }));
+
+  /* ---------- copie masquée de la facture ----------
+     Le navigateur dessine la facture dans un canvas, y peint les rectangles noirs, et envoie l'image obtenue.
+     L'original n'est jamais modifié ; la copie sert au dossier partagé et au transfert. */
+  router.put(`${base}/:eid/facture-masquee`, express.raw({ type: () => true, limit: MAX_FILE_SIZE }), wrap(async (req, res) => {
+    const ctx = load(req, res, true); if (!ctx) return;
+    if (!ctx.row.facture_key) return notFound(res, "Pas de facture pour cet entretien.");
+    const buf = Buffer.isBuffer(req.body) ? req.body : null;
+    if (!buf || !buf.length) return res.status(400).json({ code: "empty_file", error: "Fichier vide." });
+    const ext = detectType(buf);
+    if (!TYPES_MASQUE.includes(ext)) return res.status(415).json({ code: "unsupported_file", error: "La copie masquée doit être une image JPEG, PNG ou WebP." });
+    const key = await storage.save(sansMetadonnees(buf, ext).buffer, { ext });
+    q.setMasque.run(key, ext, ctx.row.id, ctx.vid);
+    if (ctx.row.facture_masquee_key) await removeFiles([ctx.row.facture_masquee_key]);
+    res.json({ entretien: toPublic(q.get.get(ctx.row.id, ctx.vid)) });
+  }));
+  router.get(`${base}/:eid/facture-masquee`, wrap(async (req, res) => {
+    const ctx = load(req, res, true); if (!ctx) return;
+    const buf = ctx.row.facture_masquee_key ? await storage.read(ctx.row.facture_masquee_key) : null;
+    if (!buf) return notFound(res, "Pas de copie masquée pour cette facture.");
+    envoyerImage(res, buf, ctx.row.facture_masquee_type);
+  }));
+  router.delete(`${base}/:eid/facture-masquee`, wrap(async (req, res) => {
+    const ctx = load(req, res, true); if (!ctx) return;
+    if (!ctx.row.facture_masquee_key) return notFound(res, "Pas de copie masquée pour cette facture.");
+    q.setMasque.run(null, null, ctx.row.id, ctx.vid);
+    await removeFiles([ctx.row.facture_masquee_key]);
+    res.json({ entretien: toPublic(q.get.get(ctx.row.id, ctx.vid)) });
+  }));
+
+  const envoyerImage = (res, buf, ext, nom = "facture") => {
+    res.set({ "Content-Type": FILE_TYPES[ext].mime, "Content-Length": buf.length, "X-Content-Type-Options": "nosniff", "Cache-Control": "private, no-store",
+      "Content-Disposition": `${ext === "heic" ? "attachment" : "inline"}; filename="${nom}.${ext}"` });
+    res.end(buf);
+  };
+  // Version montrée aux autres : la copie masquée si elle existe, sinon la facture sans ses métadonnées.
+  async function versionPartage(row) {
+    if (row.facture_masquee_key) {
+      const buf = await storage.read(row.facture_masquee_key);
+      if (buf) return { buffer: buf, ext: row.facture_masquee_type, masquee: true };
+    }
+    const buf = row.facture_key ? await storage.read(row.facture_key) : null;
+    if (!buf) return null;
+    return { buffer: sansMetadonnees(buf, row.facture_type).buffer, ext: row.facture_type, masquee: false };
+  }
+  async function envoyerVersionPartage(res, row) {
+    const v = await versionPartage(row);
+    if (!v) return notFound(res, "Pas de facture pour cet entretien.");
+    envoyerImage(res, v.buffer, v.ext, `facture-${row.date}`);
+  }
 
   // Fichier trop gros : message clair plutôt que la page d'erreur par défaut d'Express.
   router.use(base, (err, req, res, next) => {
@@ -227,7 +320,9 @@ export function createCarnet(db, storage, { log = console.error } = {}) {
 
   /* ---------- pour les autres modules ---------- */
   // Export RGPD : entretiens d'une voiture, avec la liste de leurs factures.
-  router.forExport = vid => q.list.all(vid).map(toPublic);
+  router.forExport = vid => { const ex = annexes(vid); return q.list.all(vid).map(r => toPublic(r, ex)); };
+  router.versionPartage = versionPartage;
+  router.envoyerVersionPartage = envoyerVersionPartage;
   // Résumé pour la carte de la voiture.
   router.summary = vid => {
     const rows = q.list.all(vid);
@@ -235,7 +330,8 @@ export function createCarnet(db, storage, { log = console.error } = {}) {
   };
   // Suppressions en cascade : la base efface les lignes, il reste à effacer les fichiers.
   // Renvoient une fonction à appeler APRÈS la suppression en base.
-  router.beforeDeleteVehicle = vid => { const keys = q.keysOfVehicle.all(vid).map(r => r.facture_key); return () => removeFiles(keys); };
-  router.beforeDeleteUser = uid => { const keys = q.keysOfUser.all(uid).map(r => r.facture_key); return () => removeFiles(keys); };
+  router.beforeDeleteVehicle = vid => { const keys = cles(q.keysOfVehicle.all(vid)); return () => removeFiles(keys); };
+  router.beforeDeleteUser = uid => { const keys = cles(q.keysOfUser.all(uid)); return () => removeFiles(keys); };
+  router.removeFiles = removeFiles;
   return router;
 }

@@ -9,6 +9,8 @@ Assistant automobile avec trois modes : **J'ai une panne** (particuliers), **Dia
 ```
 retroviz/
 ├── public/index.html   ← l'interface (HTML, CSS, JavaScript)
+├── public/dossier.html ← page publique d'un dossier partagé (lecture seule, non indexée)
+├── public/dossier-rendu.js ← rendu du dossier, commun à la page publique et à l'aperçu
 ├── server.js           ← le serveur : assemble les modules et sert l'interface
 ├── chat.js             ← l'assistant (/api/chat) : relaie les questions à l'API Claude
 ├── prompts.js          ← les consignes de l'IA et la voix de Rétroviz (côté serveur)
@@ -23,6 +25,9 @@ retroviz/
 ├── vie.js              ← page de vie d'une voiture : frise, étapes marquantes, chiffres clés
 ├── badge.js            ← badge « Voiture bien suivie » : critères et seuils
 ├── energie.js          ← énergie d'une voiture (thermique, hybride, électrique)
+├── transfert.js        ← dossier partageable, transfert au nouveau propriétaire, notes sur l'historique reçu
+├── historique.js       ← confiance de l'historique : « saisi le », « modifié le », continuité du kilométrage
+├── metadonnees.js      ← retire les métadonnées (GPS…) des images avant de les montrer
 ├── relecture.js        ← page « Relecture » (administrateurs) : corriger et valider les fiches
 ├── fiabilite.js        ← règles de fiabilité des fiches, partagées par les tests et la Relecture
 ├── propositions.js     ← propositions d'amélioration de la base (Observateur, signalements)
@@ -113,6 +118,17 @@ Affiché en tête de « Sa vie », et en pastille sur la carte de la voiture. Il
 5. **Preuves** : au moins 2 entretiens, et un score de preuve d'au moins 75 % (entretien avec facture = 1 point, sans facture = 0,5).
 
 Si la voiture perd le badge, l'écran indique la date, les critères en cause et comment le récupérer. L'énergie de la voiture (champ « Énergie », sinon déduite de la motorisation) décide du critère vidange ; une voiture électrique n'a pas non plus de vidange dans « À venir ». Route : `GET /api/garage/:id/badge`. Seuils : `SEUILS` dans `badge.js`.
+
+## Partager ou vendre : le carnet suit la voiture
+
+Onglet « Partager ou vendre » de la page d'une voiture. **Tout ce qui peut identifier le propriétaire est décoché par défaut** : noms de garage, descriptions (entretien par entretien), factures (une par une), photo, estimations de valeur (partage seulement).
+
+- **Lien de partage** (`/dossier.html#jeton`) : lecture seule, 1, 7 ou 30 jours, révocable, plusieurs liens possibles. « Voir l'aperçu » montre exactement ce que verra le visiteur (même code de rendu). Le jeton n'est jamais stocké, seulement son empreinte. Pages et réponses marquées `noindex` et `no-referrer`.
+- **Masquage des factures** : le navigateur dessine la facture dans un canvas, l'utilisateur trace des rectangles, peints en noir dans les pixels ; l'image obtenue est envoyée comme **copie masquée** (`PUT …/facture-masquee`). L'original ne change pas. Un PDF est converti en image par pdf.js (`/vendor/pdfjs`, servi depuis `node_modules`, 4 pages au plus) ; s'il ne peut pas l'être, ou pour une photo HEIC, un avertissement le dit. Une facture montrée ou transmise est la copie masquée si elle existe, sinon l'original **sans ses métadonnées** (`metadonnees.js` : Exif, XMP, IPTC, textes PNG).
+- **Transfert** : le vendeur crée un code (8 caractères sans I, O, 0, 1, valable 7 jours, un seul à la fois, annulable). L'acheteur connecté le saisit (« J'ai un code de transfert »), voit un résumé, accepte. La voiture change de compte : surnom, assurance, pneus hiver, rappels libres, estimations, liens de partage, photo et factures non cochées sont effacés ; descriptions et garages non cochés sont vidés ; les noms de fichiers d'origine sont remplacés (`facture-AAAA-MM-JJ.jpg`). L'achat de l'acheteur est daté du transfert, au dernier kilométrage connu. La frise affiche « Changement de propriétaire » et « Achat par un propriétaire précédent », sans identité. **10 codes faux par compte et par heure** (et 30 par adresse IP), puis refus pendant une heure.
+- **Historique verrouillé** : relevés, entretiens, factures et notes reçus ne peuvent être ni modifiés ni supprimés (403). L'acheteur peut ajouter une **note** sur une entrée reçue (500 caractères), visible dans la frise, le carnet et le dossier, et transmise aux propriétaires suivants.
+- **Confiance** : chaque entrée affiche « avec facture » ou « déclaré » ; « saisi le … » si elle a été ajoutée plus de 30 jours après sa date ; « modifié le … » si elle a été modifiée alors que sa date et sa saisie avaient plus de 30 jours (table `modifications` : anciennes et nouvelles valeurs pour date, km, type, coût ; pour la description et le garage, seulement le fait qu'ils ont changé, jamais l'ancien texte ; suppressions comptées). Le dossier résume : « 3 entretiens saisis après coup, dont 2 avec facture », et met en avant le **kilométrage suivi sans interruption** (jamais plus de 6 mois sans kilométrage connu), y compris d'un propriétaire à l'autre.
+- **RGPD** : l'export de l'acheteur contient l'historique reçu et les dates de changement de propriétaire ; supprimer le compte du vendeur ne touche pas une voiture déjà transférée.
 
 ## Mon garage
 

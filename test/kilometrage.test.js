@@ -133,7 +133,7 @@ describe("API des relevés", () => {
     const c = await newUser("km-export@exemple.fr");
     const { id } = (await c("POST", "/api/garage", { ...CLIO, km: 1000 })).body.vehicule;
     const exp = await c("GET", "/api/account/export");
-    assert.deepEqual(exp.body.vehicules[0].releves, [{ date: today(), km: 1000 }]);
+    assert.deepEqual(exp.body.vehicules[0].releves, [{ date: today(), km: 1000, recuDUnAncienProprietaire: false, saisiLe: null, modifications: [], notes: [] }]);
     await c("DELETE", `/api/garage/${id}`);
     assert.equal(db.prepare("SELECT COUNT(*) AS n FROM releves WHERE vehicle_id = ?").get(id).n, 0);
   });

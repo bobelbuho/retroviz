@@ -2,7 +2,8 @@
 import express from "express";
 import { findVehicle, vehicleLabel } from "./knowledge.js";
 import { needUser, sameSiteJson } from "./auth.js";
-import { cleanReleve, cleanDate, cleanAnyDate, incoherence, stats, kmText, MAX_RELEVES } from "./kilometrage.js";
+import { cleanReleve, cleanDate, cleanAnyDate, incoherence, stats, kmText, MAX_RELEVES, today } from "./kilometrage.js";
+import { saisiLe, estAncienne } from "./historique.js";
 import { detectType, FILE_TYPES, MAX_FILE_SIZE } from "./storage.js";
 import { ENERGIES, energieDe } from "./energie.js";
 
@@ -104,7 +105,7 @@ export const designation = (v, km = null) =>
 // valeur (facultatif) : module valeur.js, pour la dernière estimation et l'export.
 // storage (facultatif) : module storage.js, pour la photo de la voiture.
 // badge (facultatif) : module badge.js, pour l'état du badge « Voiture bien suivie » sur la carte.
-export function createGarage(db, kb, { carnet = null, rappels = null, valeur = null, storage = null, badge = null, log = console.error } = {}) {
+export function createGarage(db, kb, { carnet = null, rappels = null, valeur = null, storage = null, badge = null, log = console.error, now = today } = {}) {
   const q = {
     list: db.prepare("SELECT * FROM vehicles WHERE user_id = ? ORDER BY created_at, id"),
     get: db.prepare("SELECT * FROM vehicles WHERE id = ? AND user_id = ?"),
@@ -120,7 +121,12 @@ export function createGarage(db, kb, { carnet = null, rappels = null, valeur = n
     remove: db.prepare("DELETE FROM vehicles WHERE id = ? AND user_id = ?"),
     setPhoto: db.prepare("UPDATE vehicles SET photo_key = ?, photo_type = ?, photo_maj = strftime('%Y-%m-%dT%H:%M:%fZ', 'now') WHERE id = ? AND user_id = ?"),
     photosOfUser: db.prepare("SELECT photo_key FROM vehicles WHERE user_id = ? AND photo_key IS NOT NULL"),
-    releves: db.prepare("SELECT id, date, km FROM releves WHERE vehicle_id = ? ORDER BY date DESC"),
+    releves: db.prepare("SELECT id, date, km, created_at, verrouille FROM releves WHERE vehicle_id = ? ORDER BY date DESC"),
+    releveDuJour: db.prepare("SELECT * FROM releves WHERE vehicle_id = ? AND date = ?"),
+    releve: db.prepare("SELECT * FROM releves WHERE id = ? AND vehicle_id = ?"),
+    modifs: db.prepare("SELECT objet_id, le, champs FROM modifications WHERE vehicle_id = ? AND objet = 'releve' ORDER BY le, id"),
+    addModif: db.prepare("INSERT INTO modifications (vehicle_id, objet, objet_id, le, champs) VALUES (?, 'releve', ?, ?, ?)"),
+    notes: db.prepare("SELECT id, objet_id, texte, verrouille, cree_le FROM notes WHERE vehicle_id = ? AND objet = 'releve' ORDER BY cree_le, id"),
     countReleves: db.prepare("SELECT COUNT(*) AS n FROM releves WHERE vehicle_id = ?"),
     upsertReleve: db.prepare(`INSERT INTO releves (vehicle_id, date, km) VALUES (?, ?, ?)
                               ON CONFLICT (vehicle_id, date) DO UPDATE SET km = excluded.km`),
@@ -158,10 +164,19 @@ export function createGarage(db, kb, { carnet = null, rappels = null, valeur = n
   const removeFiles = async keys => { for (const k of keys) { try { await storage?.remove(k); } catch (e) { log("Suppression de photo impossible :", k, e.message); } } };
   const notFound = res => res.status(404).json({ code: "not_found", error: "Voiture introuvable dans votre garage." });
   const vehicleId = req => (/^\d+$/.test(req.params.id) ? Number(req.params.id) : -1);
+  // Relevés avec leur niveau de confiance : saisi après coup, modifié, reçu d'un ancien propriétaire, notes.
+  const relevesPublics = vid => {
+    const modifs = new Map(), notes = new Map();
+    for (const m of q.modifs.all(vid)) { if (!modifs.has(m.objet_id)) modifs.set(m.objet_id, []); modifs.get(m.objet_id).push({ le: m.le, champs: JSON.parse(m.champs) }); }
+    for (const n of q.notes.all(vid)) { if (!notes.has(n.objet_id)) notes.set(n.objet_id, []); notes.get(n.objet_id).push({ id: n.id, texte: n.texte, le: n.cree_le.slice(0, 10), verrouille: !!n.verrouille }); }
+    return q.releves.all(vid).map(r => ({ id: r.id, date: r.date, km: r.km, verrouille: !!r.verrouille, saisiLe: saisiLe(r),
+      modifications: modifs.get(r.id) || [], notes: notes.get(r.id) || [] }));
+  };
   const releveOut = (vid, extra = {}) => {
-    const list = q.releves.all(vid);
+    const list = relevesPublics(vid);
     return { releves: list, ...stats(list), ...extra };
   };
+  const recuMsg = "Ce relevé vient d'un ancien propriétaire : il ne peut être ni modifié ni supprimé. Vous pouvez y ajouter une note.";
 
   const router = express.Router();
   router.use("/api/garage", sameSiteJson, needUser);
@@ -262,11 +277,14 @@ export function createGarage(db, kb, { carnet = null, rappels = null, valeur = n
     const { data, error } = cleanReleve(req.body);
     if (error) return res.status(400).json({ code: "invalid_releve", error });
     const existing = q.releves.all(id);
+    const meme = q.releveDuJour.get(id, data.date); // le relevé du même jour est remplacé
+    if (meme?.verrouille) return res.status(403).json({ code: "verrouille", error: recuMsg });
     const problem = incoherence(existing, data);
     if (problem) return res.status(409).json({ code: "incoherent_releve", error: problem });
-    if (!existing.some(r => r.date === data.date) && q.countReleves.get(id).n >= MAX_RELEVES) {
+    if (!meme && q.countReleves.get(id).n >= MAX_RELEVES) {
       return res.status(409).json({ code: "too_many_releves", error: `${MAX_RELEVES} relevés au plus par voiture.` });
     }
+    if (meme && meme.km !== data.km && estAncienne(meme, now())) q.addModif.run(id, meme.id, now(), JSON.stringify([{ champ: "km", avant: meme.km, apres: data.km }]));
     q.upsertReleve.run(id, data.date, data.km);
     res.status(201).json(releveOut(id, { vehicule: toPublic(q.get.get(id, req.user.id)) }));
   });
@@ -275,15 +293,20 @@ export function createGarage(db, kb, { carnet = null, rappels = null, valeur = n
     const id = vehicleId(req);
     if (!q.get.get(id, req.user.id)) return notFound(res);
     const rid = /^\d+$/.test(req.params.rid) ? Number(req.params.rid) : -1;
-    if (!q.removeReleve.run(rid, id).changes) return res.status(404).json({ code: "not_found", error: "Relevé introuvable." });
+    const r = q.releve.get(rid, id);
+    if (!r) return res.status(404).json({ code: "not_found", error: "Relevé introuvable." });
+    if (r.verrouille) return res.status(403).json({ code: "verrouille", error: recuMsg });
+    if (estAncienne(r, now())) q.addModif.run(id, r.id, now(), JSON.stringify([{ champ: "suppression", avant: { date: r.date, km: r.km }, apres: null }]));
+    q.removeReleve.run(rid, id);
     res.json(releveOut(id, { vehicule: toPublic(q.get.get(id, req.user.id)) }));
   });
 
   // Pour l'export RGPD : chaque voiture avec tous ses relevés.
+  router.toPublic = toPublic;
   router.exportFor = userId => ({
     vehicules: q.list.all(userId).map(row => ({
       ...toPublic(row),
-      releves: q.releves.all(row.id).map(({ date, km }) => ({ date, km })),
+      releves: relevesPublics(row.id).map(({ date, km, verrouille, saisiLe, modifications, notes }) => ({ date, km, recuDUnAncienProprietaire: verrouille, saisiLe, modifications, notes })),
       ...(carnet && { entretiens: carnet.forExport(row.id) }),
       ...(rappels && { rappels: rappels.forExport(row.id) }),
       ...(valeur && { estimations: valeur.forExport(row.id) }),

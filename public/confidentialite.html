@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Crect width=%2232%22 height=%2232%22 rx=%228%22 fill=%22%23123F8C%22/%3E%3Cpath d=%22M6 20v-4l3-6h13l4 6h1v4z%22 fill=%22%23fff%22/%3E%3Ccircle cx=%2211%22 cy=%2221%22 r=%222.5%22 fill=%22%23123F8C%22 stroke=%22%23fff%22 stroke-width=%221.5%22/%3E%3Ccircle cx=%2222%22 cy=%2221%22 r=%222.5%22 fill=%22%23123F8C%22 stroke=%22%23fff%22 stroke-width=%221.5%22/%3E%3C/svg%3E">
 <title>Confidentialité – Rétroviz</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -39,6 +40,15 @@ li{margin:4px 0}
     <li><strong>Vos conversations avec l'assistant ne sont pas enregistrées</strong> sur le serveur.</li>
   </ul>
 
+  <h2>Partager ou vendre votre voiture</h2>
+  <ul>
+    <li><strong>Lien de partage</strong> : vous seul le créez, pour 1, 7 ou 30 jours, et vous pouvez le révoquer à tout moment. Il montre la voiture (mise en circulation en mois et année seulement), ses relevés, ses entretiens (dates, types, kilométrages, coûts), son badge et ses chiffres clés. Votre nom et votre e-mail n'y figurent jamais. Noms de garage, descriptions, factures, photo et estimations de valeur n'y figurent que si vous les cochez. Le lien n'est pas indexé par les moteurs de recherche, et Rétroviz ne garde que son empreinte, pas le lien lui-même.</li>
+    <li><strong>Factures et photos montrées ou transmises</strong> : leurs métadonnées (position GPS, date de prise de vue, appareil) sont retirées. Vous pouvez masquer des zones (nom, adresse, téléphone, plaque) : les rectangles sont peints sur une copie de l'image, votre original ne change pas. Un PDF peut être converti en image dans votre navigateur pour être masqué ; un PDF ou une photo HEIC non convertis sont montrés tels quels : vérifiez-les avant de les cocher.</li>
+    <li><strong>Transfert à l'acheteur</strong> : la voiture et son historique passent dans son compte avec ce que vous avez coché ; le reste (surnom, assurance, rappels, estimations, factures et descriptions non cochées, photo) est effacé. Vous perdez l'accès à la voiture, et Rétroviz ne garde aucun lien entre votre compte et le sien : seule la date du « changement de propriétaire » reste dans l'historique.</li>
+    <li><strong>Historique reçu</strong> : il fait partie des données de l'acheteur (il figure dans son export). Si l'ancien propriétaire supprime son compte, une voiture déjà transférée n'est pas touchée.</li>
+    <li><strong>Codes de transfert</strong> : les essais de code ratés sont comptés pendant une heure, par compte, pour empêcher de deviner un code. Ils sont ensuite effacés.</li>
+  </ul>
+
   <h2>Ce qui sert à améliorer Rétroviz, sans vous identifier</h2>
   <ul>
     <li><strong>Questions sans fiche</strong> : quand la base Rétroviz n'a pas de fiche pour une question, on note seulement la voiture indiquée et les codes défaut cités, jamais le texte de la question ni votre compte. Cela décide des fiches à rédiger en priorité.</li>
@@ -61,7 +71,7 @@ li{margin:4px 0}
   <h2>Vos droits</h2>
   <ul>
     <li><strong>Télécharger vos données</strong> : « Mon compte » › « Télécharger mes données » (fichier JSON).</li>
-    <li><strong>Tout supprimer</strong> : « Mon compte » › « Supprimer mon compte ». Votre compte, vos voitures, votre carnet et vos factures sont effacés immédiatement et définitivement.</li>
+    <li><strong>Tout supprimer</strong> : « Mon compte » › « Supprimer mon compte ». Votre compte, vos voitures, votre carnet et vos factures sont effacés immédiatement et définitivement, ainsi que vos liens de partage. Les voitures que vous avez déjà transférées appartiennent à leur nouveau propriétaire et ne sont pas effacées.</li>
     <li><strong>Statistiques</strong> : retirez votre accord à tout moment dans « Mon compte ».</li>
   </ul>
   <p class="muted">Pendant la phase d'essai, Rétroviz fonctionne sur la machine de son auteur. L'hébergement définitif sera situé en Europe.</p>
