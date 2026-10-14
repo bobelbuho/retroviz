@@ -25,6 +25,8 @@ describe("validation", () => {
     const vide = cleanVehicle(P208).data;
     assert.deepEqual([vide.miseEnCirculation, vide.assuranceEcheance, vide.pneusHiver, vide.vidangeKm, vide.vidangeMois], [null, null, false, null, null]);
     assert.ok(cleanVehicle({ ...P208, miseEnCirculation: "2099-01-01" }).error, "mise en circulation dans le futur");
+    assert.equal(cleanVehicle({ ...P208, dernierCt: "2025-03-02" }).data.dernierCt, "2025-03-02");
+    assert.ok(cleanVehicle({ ...P208, dernierCt: "2099-01-01" }).error, "dernier contrôle dans le futur");
     assert.ok(cleanVehicle({ ...P208, vidangeKm: 500 }).error);
     assert.ok(cleanVehicle({ ...P208, vidangeMois: 48 }).error);
   });

@@ -78,6 +78,7 @@ const MIGRATIONS = {
     pneus_hiver: "INTEGER NOT NULL DEFAULT 0",
     vidange_km: "INTEGER",       // NULL : fiche Rétroviz ou valeur par défaut
     vidange_mois: "INTEGER",
+    dernier_ct: "TEXT",          // date du dernier contrôle technique, si connue
   },
 };
 

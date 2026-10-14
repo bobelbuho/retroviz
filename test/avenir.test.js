@@ -43,6 +43,8 @@ describe("contrôle technique", () => {
     const ct = get(run({ vehicle: { mise_en_circulation: "2015-06-01" } }), "ct");
     assert.equal(ct.date, "2027-06-01"); // 2019, 2021, 2023, 2025, 2027
     assert.match(ct.texte, /en supposant/);
+    assert.equal(ct.aCompleter, "dernier_ct");
+    assert.match(ct.aCompleterTexte, /indiquez la date de votre dernier contrôle technique pour un rappel exact/);
   });
   test("un contrôle du carnet sert de nouvelle référence, même sans date de mise en circulation", () => {
     const ok = get(run({ entretiens: [{ type: "controle_technique", date: "2024-11-20", km: 33500, description: "" }] }), "ct");
@@ -51,6 +53,20 @@ describe("contrôle technique", () => {
     const retard = get(run({ vehicle: { mise_en_circulation: "2015-06-01" }, entretiens: [{ type: "controle_technique", date: "2024-09-01", km: null, description: "" }] }), "ct");
     assert.equal(retard.date, "2026-09-01");
     assert.equal(retard.statut, "retard");
+  });
+  test("date du dernier contrôle saisie sur la voiture : calcul exact, rien à compléter", () => {
+    const ct = get(run({ vehicle: { mise_en_circulation: "2015-06-01", dernier_ct: "2025-03-02" } }), "ct");
+    assert.equal(ct.date, "2027-03-02");
+    assert.equal(ct.aCompleter, null);
+    assert.doesNotMatch(ct.texte, /en supposant/);
+    // Le plus récent l'emporte, qu'il vienne du carnet ou du champ.
+    const carnetPlusRecent = get(run({ vehicle: { dernier_ct: "2024-01-10" }, entretiens: [{ type: "controle_technique", date: "2025-06-01", km: null, description: "" }] }), "ct");
+    assert.equal(carnetPlusRecent.date, "2027-06-01");
+    const champPlusRecent = get(run({ vehicle: { dernier_ct: "2025-06-01" }, entretiens: [{ type: "controle_technique", date: "2024-01-10", km: null, description: "" }] }), "ct");
+    assert.equal(champPlusRecent.date, "2027-06-01");
+  });
+  test("moins de 4 ans : premier contrôle exact, rien à compléter", () => {
+    assert.equal(get(run({ vehicle: { mise_en_circulation: "2023-03-10" } }), "ct").aCompleter, null);
   });
   test("sans date de mise en circulation ni contrôle : à compléter", () => {
     const ct = get(run(), "ct");

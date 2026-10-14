@@ -93,24 +93,30 @@ export function computeAvenir({ vehicle, fiche = null, releves = [], entretiens 
   const ctx = { kmNow, moyenne, today };
   const items = [];
 
-  /* Contrôle technique : avant les 4 ans, puis tous les 2 ans ; le dernier CT du carnet sert de référence. */
-  const dernierCT = dernier(entretiens.filter(e => e.type === "controle_technique"));
+  /* Contrôle technique : avant les 4 ans, puis tous les 2 ans. Le dernier contrôle connu (carnet ou champ
+     « Date du dernier contrôle technique » de la voiture, le plus récent des deux) rend le calcul exact. */
+  const ctCarnet = dernier(entretiens.filter(e => e.type === "controle_technique"));
+  const ctChamp = vehicle.dernier_ct || null;
+  const refCT = ctCarnet && (!ctChamp || ctCarnet.date >= ctChamp) ? { date: ctCarnet.date, source: "carnet" } : ctChamp ? { date: ctChamp, source: "vehicule" } : null;
   const mec = vehicle.mise_en_circulation || null;
   const noteCT = "Estimation : vérifiez la date sur votre dernier procès-verbal (après une contre-visite, l'échéance peut différer).";
   const faitCT = { type: "controle_technique", description: "" };
-  if (dernierCT) {
-    items.push(item({ cle: "ct", categorie: "rappel", titre: "Contrôle technique", texte: `2 ans après le dernier contrôle noté dans le carnet (${fr(dernierCT.date)}).`, note: noteCT, fait: faitCT },
-      { ...ctx, date: addYears(dernierCT.date, 2) }));
+  const ct = { cle: "ct", categorie: "rappel", titre: "Contrôle technique", note: noteCT, fait: faitCT, aCompleter: null, aCompleterTexte: null };
+  if (refCT) {
+    const texte = `2 ans après votre dernier contrôle (${fr(refCT.date)}${refCT.source === "carnet" ? ", noté dans le carnet" : ""}).`;
+    items.push(item({ ...ct, texte }, { ...ctx, date: addYears(refCT.date, 2) }));
   } else if (mec) {
-    let due = addYears(mec, 4), texte = "Premier contrôle : avant les 4 ans de la voiture.";
-    // Plus de 4 ans et aucun contrôle dans le carnet : on suppose les contrôles faits à temps, tous les 2 ans.
+    let due = addYears(mec, 4), texte = "Premier contrôle : avant les 4 ans de la voiture.", extra = {};
+    // Plus de 4 ans et aucun contrôle connu : on suppose les contrôles faits à temps, tous les 2 ans.
     if (due < today) {
       while (due < today) due = addYears(due, 2);
-      texte = "Tous les 2 ans, en supposant les contrôles précédents faits à temps. Notez votre dernier contrôle dans le carnet pour un calcul exact.";
+      texte = "Tous les 2 ans, en supposant les contrôles précédents faits à temps.";
+      extra = { aCompleter: "dernier_ct", aCompleterTexte: "À compléter : indiquez la date de votre dernier contrôle technique pour un rappel exact." };
     }
-    items.push(item({ cle: "ct", categorie: "rappel", titre: "Contrôle technique", texte, note: noteCT, fait: faitCT }, { ...ctx, date: due }));
+    items.push(item({ ...ct, texte, ...extra }, { ...ctx, date: due }));
   } else {
-    items.push(item({ cle: "ct", categorie: "rappel", titre: "Contrôle technique", texte: "Ajoutez la date de première mise en circulation (case B de la carte grise) ou notez votre dernier contrôle dans le carnet.", note: null, fait: faitCT, aCompleter: "vehicule" },
+    items.push(item({ ...ct, note: null, aCompleter: "vehicule",
+      texte: "Ajoutez la date de première mise en circulation (case B de la carte grise) ou celle de votre dernier contrôle technique." },
       { ...ctx, statutForce: "inconnu" }));
   }
 

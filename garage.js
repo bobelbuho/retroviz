@@ -38,6 +38,12 @@ export function cleanVehicle(body, thisYear = new Date().getFullYear()) {
     if (d.error) return { error: `Date de première mise en circulation : ${d.error.toLowerCase()}` };
     data.miseEnCirculation = d.date;
   }
+  data.dernierCt = null;
+  if (!empty(b.dernierCt)) {
+    const d = cleanDate(b.dernierCt);
+    if (d.error) return { error: `Date du dernier contrôle technique : ${d.error.toLowerCase()}` };
+    data.dernierCt = d.date;
+  }
   data.assuranceEcheance = null;
   if (!empty(b.assuranceEcheance)) {
     const d = cleanAnyDate(b.assuranceEcheance);
@@ -84,11 +90,11 @@ export function createGarage(db, kb, { carnet = null, rappels = null } = {}) {
     get: db.prepare("SELECT * FROM vehicles WHERE id = ? AND user_id = ?"),
     count: db.prepare("SELECT COUNT(*) AS n FROM vehicles WHERE user_id = ?"),
     insert: db.prepare(`INSERT INTO vehicles (user_id, surnom, marque, modele, motorisation, annee, boite, fiche_id, fiche_refusee,
-                          mise_en_circulation, assurance_echeance, pneus_hiver, vidange_km, vidange_mois)
-                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`),
+                          mise_en_circulation, assurance_echeance, pneus_hiver, vidange_km, vidange_mois, dernier_ct)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`),
     update: db.prepare(`UPDATE vehicles SET surnom = ?, marque = ?, modele = ?, motorisation = ?, annee = ?, boite = ?,
                         fiche_id = ?, fiche_refusee = ?, mise_en_circulation = ?, assurance_echeance = ?, pneus_hiver = ?,
-                        vidange_km = ?, vidange_mois = ?, updated_at = strftime('%Y-%m-%dT%H:%M:%fZ', 'now')
+                        vidange_km = ?, vidange_mois = ?, dernier_ct = ?, updated_at = strftime('%Y-%m-%dT%H:%M:%fZ', 'now')
                         WHERE id = ? AND user_id = ?`),
     remove: db.prepare("DELETE FROM vehicles WHERE id = ? AND user_id = ?"),
     releves: db.prepare("SELECT id, date, km FROM releves WHERE vehicle_id = ? ORDER BY date DESC"),
@@ -106,7 +112,7 @@ export function createGarage(db, kb, { carnet = null, rappels = null } = {}) {
       id: row.id, surnom: row.surnom, marque: row.marque, modele: row.modele, motorisation: row.motorisation,
       annee: row.annee, boite: row.boite,
       miseEnCirculation: row.mise_en_circulation, assuranceEcheance: row.assurance_echeance, pneusHiver: !!row.pneus_hiver,
-      vidangeKm: row.vidange_km, vidangeMois: row.vidange_mois,
+      vidangeKm: row.vidange_km, vidangeMois: row.vidange_mois, dernierCt: row.dernier_ct,
       fiche: fiche ? { id: fiche.id, label: vehicleLabel(fiche), statut: fiche.statut === "verifie" ? "verifie" : "a_verifier" } : null,
       ficheRefusee: !!row.fiche_refusee,
       kilometrage,
@@ -118,7 +124,7 @@ export function createGarage(db, kb, { carnet = null, rappels = null } = {}) {
   };
   const ficheFor = d => (d.ficheRefusee ? null : matchFiche(d, kb));
   const params = d => [d.surnom, d.marque, d.modele, d.motorisation, d.annee, d.boite, ficheFor(d), d.ficheRefusee ? 1 : 0,
-    d.miseEnCirculation, d.assuranceEcheance, d.pneusHiver ? 1 : 0, d.vidangeKm, d.vidangeMois];
+    d.miseEnCirculation, d.assuranceEcheance, d.pneusHiver ? 1 : 0, d.vidangeKm, d.vidangeMois, d.dernierCt];
   const notFound = res => res.status(404).json({ code: "not_found", error: "Voiture introuvable dans votre garage." });
   const vehicleId = req => (/^\d+$/.test(req.params.id) ? Number(req.params.id) : -1);
   const releveOut = (vid, extra = {}) => {

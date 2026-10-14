@@ -455,6 +455,7 @@ footer{margin-top:var(--sp-7);font-size:var(--fs-xs);color:var(--muted);padding-
           <select class="field" id="g_boite"><option value="">Je ne sais pas</option><option value="manuelle">Manuelle</option><option value="automatique">Automatique</option></select></div>
         <h3 class="formsec">Rappels <span class="hint" style="font-weight:400">(facultatif)</span></h3>
         <div class="s2"><label class="f" for="g_mec">Date de première mise en circulation</label><input class="field" type="date" id="g_mec" aria-describedby="g_mec_hint"><p class="hint" id="g_mec_hint">Case B de la carte grise. Sert à estimer le contrôle technique.</p></div>
+        <div class="s2"><label class="f" for="g_dct">Date du dernier contrôle technique</label><input class="field" type="date" id="g_dct" aria-describedby="g_dct_hint"><p class="hint" id="g_dct_hint">Sur votre dernier procès-verbal. Rend le rappel exact.</p></div>
         <div class="s2"><label class="f" for="g_assur">Échéance de l'assurance</label><input class="field" type="date" id="g_assur"></div>
         <div><label class="f" for="g_vkm">Vidange tous les… (km)</label><input class="field" id="g_vkm" inputmode="numeric" maxlength="7" placeholder="15 000" aria-describedby="g_v_hint"></div>
         <div><label class="f" for="g_vmois">…ou tous les (mois)</label><input class="field" id="g_vmois" inputmode="numeric" maxlength="2" placeholder="12" aria-describedby="g_v_hint"></div>
@@ -477,6 +478,10 @@ footer{margin-top:var(--sp-7);font-size:var(--fs-xs);color:var(--muted);padding-
           <div class="formbtns"><button class="btn" type="submit" id="rapSave">Enregistrer</button><button class="btn ghost" type="button" id="rapCancel">Annuler</button></div>
         </form>
         <ul class="avl" id="avl"></ul>
+        <details class="help" id="avPannes" style="margin-top:var(--sp-5)">
+          <summary id="avPannesTitre">Pannes connues à surveiller</summary>
+          <div class="cats"><p class="hint" style="margin:0">Pannes signalées sur ce modèle et ce moteur, vers leur kilométrage habituel. Elles ne sont pas certaines : soyez simplement attentif aux signes.</p><ul class="avl" id="avlPannes"></ul></div>
+        </details>
         <p class="hint" style="margin-top:var(--sp-5)">Rappels affichés seulement dans Rétroviz pour l'instant. Les dates estimées dépendent de votre moyenne de kilomètres par mois.</p>
       </div>
       <!-- Carnet d'entretien d'une voiture -->
@@ -1076,13 +1081,14 @@ function renderGarage(){
 }
 const carById = id => cars.find(c => c.id === +id);
 const carPayload = c => ({surnom:c.surnom, marque:c.marque, modele:c.modele, motorisation:c.motorisation, annee:c.annee, boite:c.boite,
-  miseEnCirculation:c.miseEnCirculation, assuranceEcheance:c.assuranceEcheance, pneusHiver:c.pneusHiver, vidangeKm:c.vidangeKm, vidangeMois:c.vidangeMois});
+  miseEnCirculation:c.miseEnCirculation, dernierCt:c.dernierCt, assuranceEcheance:c.assuranceEcheance, pneusHiver:c.pneusHiver, vidangeKm:c.vidangeKm, vidangeMois:c.vidangeMois});
 function openCarForm(c){
   editing = c ? c.id : "new";
   $("#g_surnom").value = c?.surnom || ""; $("#g_marque").value = c?.marque || ""; $("#g_modele").value = c?.modele || "";
   $("#g_moteur").value = c?.motorisation || ""; $("#g_annee").value = c?.annee || ""; $("#g_boite").value = c?.boite || "";
   $("#g_km").value = ""; $("#g_kmWrap").hidden = !!c;
-  $("#g_mec").value = c?.miseEnCirculation || ""; $("#g_mec").max = todayISO(); $("#g_assur").value = c?.assuranceEcheance || "";
+  $("#g_mec").value = c?.miseEnCirculation || ""; $("#g_mec").max = todayISO();
+  $("#g_dct").value = c?.dernierCt || ""; $("#g_dct").max = todayISO(); $("#g_assur").value = c?.assuranceEcheance || "";
   $("#g_vkm").value = c?.vidangeKm ?? ""; $("#g_vmois").value = c?.vidangeMois ?? ""; $("#g_hiver").checked = !!c?.pneusHiver;
   $("#carMsg").textContent = "";
   renderGarage(); $("#g_marque").focus();
@@ -1106,7 +1112,7 @@ $("#carForm").addEventListener("submit", async e => {
   $("#carSave").disabled = true;
   const err = await saveCar(id, {surnom:v("g_surnom"), marque:v("g_marque"), modele:v("g_modele"), motorisation:v("g_moteur"),
     annee:v("g_annee"), boite:v("g_boite"), ficheRefusee: !!prev?.ficheRefusee, ...(!id && v("g_km") ? {km:v("g_km")} : {}),
-    miseEnCirculation:v("g_mec"), assuranceEcheance:v("g_assur"), vidangeKm:v("g_vkm"), vidangeMois:v("g_vmois"), pneusHiver:$("#g_hiver").checked});
+    miseEnCirculation:v("g_mec"), dernierCt:v("g_dct"), assuranceEcheance:v("g_assur"), vidangeKm:v("g_vkm"), vidangeMois:v("g_vmois"), pneusHiver:$("#g_hiver").checked});
   $("#carSave").disabled = false;
   $("#carMsg").textContent = err || "";
 });
@@ -1183,13 +1189,14 @@ function avenirLineHTML(c){
 async function openAvenir(id){
   const r = await api("GET", `/api/garage/${id}/avenir`);
   if(!r.ok){ showNotice(r.error); return; }
-  avenir = r; avenirOf = id; carnetOf = null; rapOpen = false; renderGarage();
+  avenir = r; avenirOf = id; carnetOf = null; rapOpen = false; $("#avPannes").open = false; renderGarage();
   window.scrollTo({top:0}); $("#avenirTitle").focus();
 }
 function avHTML(it){
   let btns = "";
   if(it.fait) btns += `<button class="btn soft small" type="button" data-aact="fait">${it.statut === "inconnu" && it.aCompleter === "carnet" ? "Noter la dernière vidange" : "C'est fait"}</button>`;
   if(it.aCompleter === "vehicule") btns += `<button class="btn ghost small" type="button" data-aact="vehicule">Ajouter la date</button>`;
+  if(it.aCompleter === "dernier_ct") btns += `<button class="btn ghost small" type="button" data-aact="vehicule">Indiquer la date</button>`;
   if(it.cle === "assurance") btns += `<button class="btn ghost small" type="button" data-aact="vehicule">Modifier la date</button>`;
   if(it.cle === "vidange" && it.statut !== "inconnu") btns += `<button class="btn ghost small" type="button" data-aact="vehicule">Changer l'intervalle</button>`;
   if(it.rappelId) btns += `<button class="btn ghost small" type="button" data-aact="suppr">Supprimer</button>`;
@@ -1199,6 +1206,7 @@ function avHTML(it){
     <strong class="av-t">${esc(it.titre)}</strong>
     ${when ? `<p class="av-when">${esc(when)}</p>` : ""}
     ${it.texte ? `<p class="av-txt">${esc(it.texte)}</p>` : ""}
+    ${it.aCompleterTexte ? `<p class="av-when">${esc(it.aCompleterTexte)}</p>` : ""}
     ${it.note ? `<p class="hint">${esc(it.note)}</p>` : ""}
     ${btns ? `<div class="rowbtns">${btns}</div>` : ""}
   </li>`;
@@ -1210,7 +1218,11 @@ function renderAvenir(){
     ? `Kilométrage estimé aujourd'hui : ${fmtNum(avenir.kmAujourdhui)} km${avenir.moyenneMensuelle ? ` · environ ${fmtNum(avenir.moyenneMensuelle)} km par mois` : " · ajoutez un deuxième relevé pour estimer les dates"}`
     : "Ajoutez des relevés de kilométrage pour savoir quand arrivent les entretiens.";
   $("#rapForm").hidden = !rapOpen; $("#rapAdd").hidden = rapOpen;
-  $("#avl").innerHTML = avenir.items.map(avHTML).join("");
+  const pannes = avenir.items.filter(it => it.categorie === "surveiller");
+  $("#avl").innerHTML = avenir.items.filter(it => it.categorie !== "surveiller").map(avHTML).join("");
+  $("#avPannes").hidden = !pannes.length;
+  $("#avPannesTitre").textContent = `Pannes connues à surveiller (${pannes.length})`;
+  $("#avlPannes").innerHTML = pannes.map(avHTML).join("");
 }
 $("#avenirBack").addEventListener("click", () => {
   const id = avenirOf; avenirOf = null; renderGarage();
@@ -1243,7 +1255,7 @@ $("#avl").addEventListener("click", async e => {
     entRappelId = it.rappelId ?? null;
   }else if(act === "vehicule"){
     avenirOf = null; renderGarage(); openCarForm(carById(id));
-    const target = it.cle === "assurance" ? "#g_assur" : it.cle === "vidange" ? "#g_vkm" : "#g_mec";
+    const target = it.cle === "assurance" ? "#g_assur" : it.cle === "vidange" ? "#g_vkm" : it.aCompleter === "dernier_ct" ? "#g_dct" : "#g_mec";
     $(target).scrollIntoView({block:"center"}); $(target).focus();
   }else if(act === "suppr"){
     if(!confirm(`Supprimer le rappel « ${it.titre} » ?`)) return;

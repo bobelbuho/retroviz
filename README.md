@@ -112,9 +112,12 @@ Depuis la carte d'une voiture, « Tout ce qui arrive » ouvre l'écran « À ven
   - **Bientôt** (orange : moins de 30 jours ou de 1 000 km) ;
   - **Plus tard** ;
   - **À vérifier** : entretien de la fiche déjà dépassé sans trace dans le carnet, il a peut-être été fait par un ancien propriétaire ;
-  - **À surveiller** : panne connue, jamais présentée comme certaine ;
+  - **À surveiller** : panne connue, jamais présentée comme certaine, regroupée dans une section repliée en bas de l'écran ;
   - **À compléter** : il manque une information.
-- **Contrôle technique** : premier contrôle avant les 4 ans (d'après la date de première mise en circulation, case B de la carte grise), puis tous les 2 ans. Le dernier contrôle noté dans le carnet sert de nouvelle référence. C'est une estimation, à vérifier sur le procès-verbal.
+- **Contrôle technique** : premier contrôle avant les 4 ans (d'après la date de première mise en circulation, case B de la carte grise), puis tous les 2 ans.
+  - Le calcul est exact si la date du dernier contrôle est connue : champ « Date du dernier contrôle technique » de la voiture, ou contrôle noté dans le carnet. Le plus récent des deux l'emporte.
+  - Sinon, on suppose les contrôles faits à temps et l'écran affiche « À compléter ».
+  - C'est toujours une estimation, à vérifier sur le procès-verbal.
 - **Assurance** : date d'échéance saisie, renouvelée chaque année.
 - **Vidange** : intervalle en km et en mois. Par défaut, c'est celui de la fiche Rétroviz liée, sinon 15 000 km ou 12 mois, modifiable. La prochaine se calcule depuis la dernière vidange du carnet.
 - **Pneus hiver** (facultatif) : monter avant le 1er novembre, démonter à partir du 1er avril, avec un rappel de la loi Montagne.
