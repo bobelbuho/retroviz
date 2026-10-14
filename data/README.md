@@ -133,7 +133,18 @@ Le texte (champ « Votre véhicule », ou le message si ce champ est vide) est m
 4. Mettez la date du jour dans `mise_a_jour`.
 5. Lancez `npm test`, puis relancez le serveur.
 
-## Passer une fiche en « vérifiée »
+## Vérifier une fiche dans la page « Relecture »
+
+La page « Relecture » n'est visible que pour les comptes dont l'adresse figure dans `ADMIN_EMAILS` (fichier `.env`, adresses séparées par des virgules). Pour tous les autres, elle n'existe pas.
+
+1. Onglet « Fiches » : filtrez par collection, par statut ou par mot.
+2. Ouvrez une fiche : son contenu s'affiche en JSON, modifiable. « Enregistrer la correction » refuse toute fiche qui ne respecte pas les règles de fiabilité (statut, sources, format, icône sans danger…).
+3. « Ajouter une source » : une URL ou une référence précise, réellement consultée.
+4. « Passer en vérifiée » n'est possible qu'avec au moins une source, et après avoir recoupé chaque information.
+
+Chaque action est écrite dans le fichier JSON de `data/` (donc visible dans git) avec la date de mise à jour et une ligne dans `revisions` (`date`, `par`, `action`). Une fiche validée garde aussi `verifie_par` et `verifie_le`. La base est rechargée aussitôt : pas besoin de relancer le serveur. La variable `DATA_DIR` permet de travailler sur une copie de `data/` (essais).
+
+## Passer une fiche en « vérifiée » (à la main)
 
 Une fiche ne passe en `"statut": "verifie"` que si :
 
@@ -144,6 +155,6 @@ Une fiche ne passe en `"statut": "verifie"` que si :
    ```
 3. `mise_a_jour` porte la date de la vérification.
 
-Les tests (`npm test`) refusent une fiche `verifie` sans source.
+Les tests (`npm test`) et la Relecture refusent une fiche `verifie` sans source.
 
 Toutes les fiches livrées au départ sont **à vérifier** : elles ont été rédigées à partir de connaissances générales et peuvent contenir des erreurs, en particulier les kilométrages, les intervalles d'entretien et les coûts.

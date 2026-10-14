@@ -4,6 +4,7 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
 import { DATA_DIR } from "../knowledge.js";
+import { COLLECTIONS, problemesFiche, serialiser } from "../fiabilite.js";
 
 // Fichiers de fiches et champ servant d'identifiant. Ajouter ici chaque nouveau fichier de data/.
 export const FICHIERS = { "obd.json": "code", "vehicules.json": "id", "voyants.json": "id" };
@@ -57,3 +58,12 @@ test("voyants.json : champs complets, couleurs et urgence valides, icônes SVG s
     assert.doesNotMatch(v.icone.replace(/<[^>]+>/g, ""), /[<>]/, `${v.id} : texte d'icône suspect`);
   }
 });
+
+for (const [collection, def] of Object.entries(COLLECTIONS)) {
+  test(`${def.fichier} : règles partagées avec la Relecture, format d'écriture stable`, () => {
+    const brut = fs.readFileSync(path.join(DATA_DIR, def.fichier), "utf8");
+    const fiches = JSON.parse(brut);
+    for (const f of fiches) assert.deepEqual(problemesFiche(collection, f), [], `${f[def.cle]}`);
+    assert.equal(brut, serialiser(collection, fiches), "le fichier doit garder le format écrit par la Relecture");
+  });
+}

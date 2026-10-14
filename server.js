@@ -3,7 +3,8 @@
 import "dotenv/config";
 import express from "express";
 import Anthropic from "@anthropic-ai/sdk";
-import { loadKnowledge } from "./knowledge.js";
+import { loadKnowledge, DATA_DIR } from "./knowledge.js";
+import { createRelecture, parseAdmins } from "./relecture.js";
 import { createChat } from "./chat.js";
 import { openDb } from "./db.js";
 import { createAuth } from "./auth.js";
@@ -35,13 +36,16 @@ const client = new Anthropic(); // lit ANTHROPIC_API_KEY dans l'environnement
 // Valeur indicative : même modèle que l'assistant ; désactivée sans clé API.
 const valeur = createValeur(db, { estimate: process.env.ANTHROPIC_API_KEY ? anthropicEstimator(client, MODEL) : null });
 const garage = createGarage(db, kb, { carnet, rappels, valeur });
+// Relecture des fiches : réservée aux adresses de ADMIN_EMAILS (séparées par des virgules).
+const relecture = createRelecture({ dataDir: DATA_DIR, kb, admins: parseAdmins(process.env.ADMIN_EMAILS) });
 const app = express();
 app.use(express.json({ limit: "1mb" }));
-app.use(createAuth(db, { exportData: garage.exportFor, beforeDeleteUser: carnet.beforeDeleteUser }));
+app.use(createAuth(db, { exportData: garage.exportFor, beforeDeleteUser: carnet.beforeDeleteUser, isAdmin: relecture.isAdmin }));
 app.use(garage);
 app.use(carnet);
 app.use(rappels);
 app.use(valeur);
+app.use(relecture);
 app.use(express.static("public"));
 
 // Assistant : consignes et fiches ajoutées côté serveur (chat.js, prompts.js).

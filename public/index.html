@@ -116,6 +116,30 @@ label.f{display:block;font-weight:var(--fw-semibold);font-size:var(--fs-sm);marg
 .field:focus{border-color:var(--primary);outline:none;box-shadow:0 0 0 3px color-mix(in srgb,var(--primary) 30%,transparent)}
 .hint{font-size:var(--fs-xs);color:var(--muted);margin:var(--sp-1) 0 0}
 .veh{margin-bottom:var(--sp-4)}
+/* Relecture (administrateur) */
+.nav{flex-wrap:wrap;justify-content:flex-end}
+.tabs{display:flex;flex-wrap:wrap;gap:var(--sp-1);border-bottom:1px solid var(--line);margin:0 0 var(--sp-5)}
+.tabs button{background:none;border:0;border-bottom:3px solid transparent;padding:var(--sp-2) var(--sp-3);min-height:var(--tap);font-weight:var(--fw-semibold);color:var(--muted);cursor:pointer}
+.tabs button[aria-selected="true"]{color:var(--primary);border-bottom-color:var(--primary)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:var(--sp-3);margin:0 0 var(--sp-5)}
+.kpi{background:var(--surface);border-radius:var(--r-lg);padding:var(--sp-4);box-shadow:var(--shadow)}
+.kpi strong{display:block;font-size:var(--fs-2xl);line-height:1;color:var(--primary);font-variant-numeric:tabular-nums}
+.kpi span{color:var(--muted);font-size:var(--fs-sm)}
+.rfilters{display:flex;flex-wrap:wrap;gap:var(--sp-2);margin:0 0 var(--sp-3)}
+.rfilters .field{flex:1 1 160px;width:auto}
+.rlist{list-style:none;margin:0;padding:0;background:var(--surface);border-radius:var(--r-lg);box-shadow:var(--shadow);overflow:hidden}
+.rlist li+li{border-top:1px solid var(--line)}
+.rlist button{width:100%;display:flex;flex-wrap:wrap;gap:var(--sp-1) var(--sp-3);align-items:center;justify-content:space-between;text-align:left;background:none;border:0;padding:var(--sp-3) var(--sp-4);cursor:pointer;font-size:var(--fs-sm)}
+.rlist button:hover{background:var(--soft)}
+.rlist .meta{color:var(--muted);font-size:var(--fs-xs)}
+.mono{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:13px;line-height:1.45;min-height:360px;resize:vertical}
+.redit{display:grid;gap:var(--sp-3)}
+.redit > .back{justify-self:start}
+.rsrc{display:flex;gap:var(--sp-2);flex-wrap:wrap}
+.rsrc .field{flex:1 1 260px;width:auto}
+.rmsg{margin:0;font-weight:var(--fw-semibold);font-size:var(--fs-sm)}
+.rmsg.ok{color:var(--green-ink)}.rmsg.ko{color:var(--red-ink)}
+
 /* Voyants */
 .vic{width:40px;height:40px;flex:none}
 .vtools{display:flex;flex-wrap:wrap;gap:var(--sp-2) var(--sp-3);align-items:center;margin:0 0 var(--sp-4)}
@@ -382,6 +406,7 @@ footer{margin-top:var(--sp-7);font-size:var(--fs-xs);color:var(--muted);padding-
     <nav class="nav" aria-label="Mon espace">
       <button class="navlink" type="button" id="voyantsBtn" data-mode="voyants">Voyants</button>
       <button class="navlink" type="button" id="garageBtn" data-mode="garage">Mon garage</button>
+      <button class="navlink" type="button" id="relectureBtn" data-mode="relecture" hidden>Relecture</button>
       <div class="acct" id="acct"><button class="navlink" type="button" id="acctBtn">Se connecter</button></div>
     </nav>
   </header>
@@ -481,6 +506,31 @@ footer{margin-top:var(--sp-7);font-size:var(--fs-xs);color:var(--muted);padding-
       <p class="hint full" id="achatMsg" style="margin:0"></p>
     </form>
     <div class="report" id="report" hidden></div>
+  </section>
+
+  <!-- Relecture (administrateur) -->
+  <section class="panel" id="relecturePanel" hidden>
+    <p class="intro">Fiches de la base Rétroviz : corriger, sourcer, valider. Une fiche ne passe en « vérifiée » qu'avec au moins une source.</p>
+    <div class="tabs" role="tablist" aria-label="Relecture">
+      <button type="button" role="tab" data-rtab="tableau" aria-selected="true">Tableau de bord</button>
+      <button type="button" role="tab" data-rtab="fiches" aria-selected="false">Fiches</button>
+    </div>
+    <div id="rTableau"></div>
+    <div id="rFiches" hidden>
+      <div id="rListe">
+        <div class="rfilters">
+          <label class="sr" for="rCol">Collection</label>
+          <select class="field" id="rCol"><option value="">Toutes les collections</option><option value="voyants">Voyants</option><option value="obd">Codes OBD</option><option value="vehicules">Véhicules</option></select>
+          <label class="sr" for="rStatut">Statut</label>
+          <select class="field" id="rStatut"><option value="a_verifier">À vérifier</option><option value="verifie">Vérifiées</option><option value="">Tous les statuts</option></select>
+          <label class="sr" for="rQ">Rechercher</label>
+          <input class="field" id="rQ" type="search" placeholder="Rechercher une fiche">
+        </div>
+        <p class="hint" id="rCount" aria-live="polite"></p>
+        <ul class="rlist" id="rList"></ul>
+      </div>
+      <div id="rEdit" class="redit" hidden></div>
+    </div>
   </section>
 
   <!-- Voyants -->
@@ -717,6 +767,8 @@ function setMode(m){
   const chat = !!MODES[m];
   $("#chatPanel").hidden = !chat; $("#achatPanel").hidden = m !== "achat"; $("#garagePanel").hidden = m !== "garage";
   $("#voyantsPanel").hidden = m !== "voyants";
+  $("#relecturePanel").hidden = m !== "relecture";
+  if(m === "relecture") openRelecture();
   if(m === "voyants"){ voyantOuvert = null; renderVoyants(); }
   if(m === "garage") renderGarage();
   if(chat){
@@ -1006,6 +1058,8 @@ async function api(method, url, body){
   return res.ok ? {ok:true, ...j} : {ok:false, error: j.error || "Une erreur est survenue. Réessayez."};
 }
 function renderAcct(){
+  $("#relectureBtn").hidden = !user?.admin;
+  if(!user?.admin && mode === "relecture") setMode("particulier");
   $("#acct").innerHTML = `<button class="navlink" type="button" id="acctBtn" ${user ? `title="${esc(user.email)}"` : ""}>${user ? "Mon compte" : "Se connecter"}</button>`;
   $("#authView").hidden = !!user; $("#meView").hidden = !user;
   if(user) $("#me_meta").textContent = `${user.email} · compte créé le ${new Date(user.createdAt).toLocaleDateString("fr-FR", {day:"numeric", month:"long", year:"numeric"})}`;
@@ -1552,6 +1606,90 @@ $("#cars").addEventListener("submit", async e => {
 $("#vehPick").addEventListener("change", e => {
   const c = carById(e.target.value); if(c) $("#vehicle").value = c.designation;
   e.target.value = "";
+});
+
+/* ---------- relecture (administrateur) ---------- */
+const COL_NOM = {voyants:"Voyants", obd:"Codes OBD", vehicules:"Véhicules"};
+let rTab = "tableau", rFiche = null; // fiche ouverte : {collection, id, fiche}
+function setRTab(t){
+  rTab = t;
+  document.querySelectorAll("[data-rtab]").forEach(b => b.setAttribute("aria-selected", String(b.dataset.rtab === t)));
+  $("#rTableau").hidden = t !== "tableau"; $("#rFiches").hidden = t !== "fiches";
+  if(t === "tableau") loadRTableau(); else if(t === "fiches"){ rFiche = null; loadRFiches(); }
+}
+function openRelecture(){ setRTab(rTab); }
+async function loadRTableau(){
+  const r = await api("GET", "/api/admin/tableau");
+  if(!r.ok){ $("#rTableau").innerHTML = `<p class="notice">${esc(r.error)}</p>`; return; }
+  const cartes = Object.entries(r.fiches).map(([c, n]) => `<div class="kpi"><strong>${n.a_verifier}</strong><span>${esc(COL_NOM[c] || c)} à vérifier, sur ${n.total} (${n.verifie} vérifiée${n.verifie > 1 ? "s" : ""})</span></div>`).join("");
+  $("#rTableau").innerHTML = `<h3 class="sect" style="margin-bottom:var(--sp-3)">Fiches par statut</h3><div class="kpis">${cartes}</div>`;
+}
+async function loadRFiches(){
+  $("#rListe").hidden = !!rFiche; $("#rEdit").hidden = !rFiche;
+  if(rFiche) return;
+  const qs = new URLSearchParams({collection:$("#rCol").value, statut:$("#rStatut").value, q:$("#rQ").value.trim()});
+  const r = await api("GET", "/api/admin/fiches?" + qs);
+  if(!r.ok){ $("#rCount").textContent = r.error; return; }
+  $("#rCount").textContent = `${r.fiches.length} fiche${r.fiches.length > 1 ? "s" : ""}`;
+  $("#rList").innerHTML = r.fiches.slice(0, 300).map(f => `<li><button type="button" data-rc="${esc(f.collection)}" data-rid="${esc(f.id)}">
+    <span><strong>${esc(f.titre)}</strong><br><span class="meta">${esc(COL_NOM[f.collection])} · ${f.sources} source${f.sources > 1 ? "s" : ""} · rédigée par ${f.redige_par === "ia" ? "l'IA" : "un humain"} · ${esc(f.mise_a_jour)}</span></span>
+    <span class="pill" data-s="${f.statut === "verifie" ? "plus_tard" : "inconnu"}">${f.statut === "verifie" ? "Vérifiée" : "À vérifier"}</span></button></li>`).join("");
+}
+async function openRFiche(collection, id){
+  const r = await api("GET", `/api/admin/fiches/${collection}/${encodeURIComponent(id)}`);
+  if(!r.ok){ showNotice(r.error); return; }
+  rFiche = {collection, id, fiche:r.fiche};
+  $("#rListe").hidden = true; $("#rEdit").hidden = false;
+  renderREdit(); window.scrollTo({top:0}); $("#rEditTitre").focus();
+}
+function renderREdit(msg = "", ok = true){
+  const {collection, id, fiche} = rFiche;
+  const icone = collection === "voyants" ? `<span id="rIcone">${vIcon(fiche)}</span>` : "";
+  $("#rEdit").innerHTML = `
+    <button class="btn ghost small back" type="button" id="rBack">← Toutes les fiches</button>
+    <div class="vfiche-head">${icone}<div><h2 id="rEditTitre" tabindex="-1">${esc(COL_NOM[collection])} : ${esc(id)}</h2>
+      <p>${fiche.statut === "verifie" ? `Vérifiée${fiche.verifie_par ? " par " + esc(fiche.verifie_par) + " le " + esc(fiche.verifie_le) : ""}` : "À vérifier"} · mise à jour ${esc(fiche.mise_a_jour)} · ${fiche.sources.length} source${fiche.sources.length > 1 ? "s" : ""}</p></div></div>
+    <label class="f" for="rJson">Contenu de la fiche (JSON)</label>
+    <textarea class="field mono" id="rJson" spellcheck="false">${esc(JSON.stringify(fiche, null, 2))}</textarea>
+    <p class="rmsg ${ok ? "ok" : "ko"}" id="rMsg" role="alert">${esc(msg)}</p>
+    <div class="rowbtns"><button class="btn" type="button" id="rSave">Enregistrer la correction</button>
+      <button class="btn soft" type="button" id="rVerif" ${fiche.sources.length ? "" : "disabled"} title="${fiche.sources.length ? "" : "Ajoutez d'abord une source"}">Passer en vérifiée</button></div>
+    <div><label class="f" for="rSrc">Ajouter une source</label>
+      <div class="rsrc"><input class="field" id="rSrc" placeholder="URL, ou référence précise (document, page)" maxlength="500"><button class="btn soft" type="button" id="rSrcAdd">Ajouter</button></div>
+      <p class="hint">Une source réelle et vérifiable. N'ajoutez jamais une source que vous n'avez pas consultée.</p></div>`;
+}
+async function rAction(method, url, body, okMsg){
+  const r = await api(method, url, body);
+  if(!r.ok) return renderREditKeep(r.error);
+  rFiche.fiche = r.fiche; renderREdit(okMsg, true);
+}
+// Garde le texte saisi en cas d'erreur.
+function renderREditKeep(err){ $("#rMsg").textContent = err; $("#rMsg").className = "rmsg ko"; }
+document.querySelectorAll("[data-rtab]").forEach(b => b.addEventListener("click", () => setRTab(b.dataset.rtab)));
+["#rCol", "#rStatut"].forEach(id => $(id).addEventListener("change", loadRFiches));
+let rQTimer = null;
+$("#rQ").addEventListener("input", () => { clearTimeout(rQTimer); rQTimer = setTimeout(loadRFiches, 250); });
+$("#rList").addEventListener("click", e => { const b = e.target.closest("[data-rid]"); if(b) openRFiche(b.dataset.rc, b.dataset.rid); });
+$("#rEdit").addEventListener("click", async e => {
+  if(!rFiche) return;
+  const base = `/api/admin/fiches/${rFiche.collection}/${encodeURIComponent(rFiche.id)}`;
+  if(e.target.closest("#rBack")){ const id = rFiche.id; rFiche = null; await loadRFiches(); document.querySelector(`[data-rid="${CSS.escape(id)}"]`)?.focus(); }
+  else if(e.target.closest("#rSave")){
+    let fiche; try{ fiche = JSON.parse($("#rJson").value); }catch(err){ return renderREditKeep("JSON invalide : " + err.message); }
+    await rAction("PUT", base, {fiche}, "Correction enregistrée dans le fichier.");
+  }
+  else if(e.target.closest("#rVerif")){
+    if(!confirm("Passer cette fiche en « vérifiée » ? Vous confirmez avoir recoupé chaque information avec ses sources.")) return;
+    await rAction("POST", base + "/verifier", {}, "Fiche passée en vérifiée.");
+  }
+  else if(e.target.closest("#rSrcAdd")){
+    const source = $("#rSrc").value.trim(); if(!source) return renderREditKeep("Indiquez la source.");
+    await rAction("POST", base + "/sources", {source}, "Source ajoutée.");
+  }
+});
+$("#rEdit").addEventListener("input", e => {
+  if(e.target.id !== "rJson" || rFiche?.collection !== "voyants") return;
+  try{ const f = JSON.parse(e.target.value); if(f.icone && f.couleurs) $("#rIcone").innerHTML = vIcon(f); }catch{}
 });
 
 /* ---------- voyants ---------- */

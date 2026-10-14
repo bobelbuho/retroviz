@@ -20,6 +20,8 @@ retroviz/
 ├── avenir.js           ← calcul de « À venir » : rappels et prochains entretiens (sans base de données)
 ├── rappels.js          ← routes « À venir » et rappels libres
 ├── valeur.js           ← valeur indicative estimée par l'IA, historique
+├── relecture.js        ← page « Relecture » (administrateurs) : corriger et valider les fiches
+├── fiabilite.js        ← règles de fiabilité des fiches, partagées par les tests et la Relecture
 ├── storage.js          ← stockage des fichiers (factures) : enregistrer, lire, supprimer
 ├── db.js               ← la base SQLite (comptes, garages)
 ├── storage/            ← la base (retroviz.db) et les factures (uploads/), créés au démarrage, jamais publiés

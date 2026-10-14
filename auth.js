@@ -82,7 +82,8 @@ export const needUser = (req, res, next) =>
 // exportData(userId) ajoute à l'export RGPD les données des autres modules (garage…).
 // beforeDeleteUser(userId) est appelé avant l'effacement du compte et renvoie une fonction à appeler après
 // (ex. supprimer les fichiers des factures, que la base ne peut pas effacer elle-même).
-export function createAuth(db, { now = () => Date.now(), exportData = () => ({}), beforeDeleteUser = () => null } = {}) {
+// isAdmin(user) : ajoute « admin: true » à l'utilisateur renvoyé à la page (lien « Relecture »).
+export function createAuth(db, { now = () => Date.now(), exportData = () => ({}), beforeDeleteUser = () => null, isAdmin = () => false } = {}) {
   const q = {
     userByEmail: db.prepare("SELECT * FROM users WHERE email = ?"),
     userById: db.prepare("SELECT id, email, created_at FROM users WHERE id = ?"),
@@ -121,7 +122,7 @@ export function createAuth(db, { now = () => Date.now(), exportData = () => ({})
     if (token) q.deleteSession.run(sha256(token));
     setSessionCookie(req, res, "", 0);
   }
-  const publicUser = u => ({ email: u.email, createdAt: u.created_at });
+  const publicUser = u => ({ email: u.email, createdAt: u.created_at, ...(isAdmin(u) && { admin: true }) });
 
   const router = express.Router();
 

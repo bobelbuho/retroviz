@@ -30,14 +30,14 @@ export function createRappels(db, kb, { now = today } = {}) {
     insert: db.prepare("INSERT INTO rappels (vehicle_id, titre, date, km) VALUES (?, ?, ?, ?)"),
     remove: db.prepare("DELETE FROM rappels WHERE id = ? AND vehicle_id = ?"),
   };
-  const fichesById = new Map(kb.vehicules.map(f => [f.id, f]));
+  const ficheById = id => kb.vehicules.find(f => f.id === id); // base rechargeable (Relecture)
 
   // Calcul complet pour une ligne de la table vehicles.
   function forVehicle(row) {
     const releves = q.releves.all(row.id);
     return computeAvenir({
       vehicle: row,
-      fiche: row.fiche_id ? fichesById.get(row.fiche_id) || null : null,
+      fiche: row.fiche_id ? ficheById(row.fiche_id) || null : null,
       releves,
       kilometrage: stats(releves),
       entretiens: q.entretiens.all(row.id),

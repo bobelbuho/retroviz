@@ -104,10 +104,11 @@ export function createGarage(db, kb, { carnet = null, rappels = null, valeur = n
                               ON CONFLICT (vehicle_id, date) DO UPDATE SET km = excluded.km`),
     removeReleve: db.prepare("DELETE FROM releves WHERE id = ? AND vehicle_id = ?"),
   };
-  const fichesById = new Map(kb.vehicules.map(f => [f.id, f]));
+  // Recherche à chaque fois : la base peut être rechargée après une correction dans la Relecture.
+  const ficheById = id => kb.vehicules.find(f => f.id === id);
 
   const toPublic = row => {
-    const fiche = row.fiche_id ? fichesById.get(row.fiche_id) : null; // fiche retirée de la base : plus de lien
+    const fiche = row.fiche_id ? ficheById(row.fiche_id) : null; // fiche retirée de la base : plus de lien
     const kilometrage = stats(q.releves.all(row.id));
     return {
       id: row.id, surnom: row.surnom, marque: row.marque, modele: row.modele, motorisation: row.motorisation,

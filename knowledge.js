@@ -3,7 +3,8 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
-export const DATA_DIR = path.join(path.dirname(fileURLToPath(import.meta.url)), "data");
+// Dossier des fiches : data/ du projet, ou DATA_DIR (par exemple une copie pour des essais).
+export const DATA_DIR = process.env.DATA_DIR || path.join(path.dirname(fileURLToPath(import.meta.url)), "data");
 export const MAX_CONTEXT = 6000;
 export const STATUT_LABEL = { verifie: "vérifiée", a_verifier: "à vérifier" };
 const statutOf = f => (f.statut === "verifie" ? "verifie" : "a_verifier");
@@ -30,6 +31,17 @@ export function loadKnowledge(dir = DATA_DIR, log = console.warn) {
   }
   const voyants = readList(path.join(dir, "voyants.json"), log, { optional: true }).filter(v => v && v.id && v.nom);
   return { vehicules, codes, voyants };
+}
+
+// Recharge la base en place (après une correction dans la Relecture) : les modules qui gardent une
+// référence à `kb` voient immédiatement les nouvelles fiches.
+export function reloadKnowledge(kb, dir = DATA_DIR, log = console.warn) {
+  const fresh = loadKnowledge(dir, log);
+  kb.vehicules.splice(0, kb.vehicules.length, ...fresh.vehicules);
+  kb.codes.clear();
+  for (const [k, v] of fresh.codes) kb.codes.set(k, v);
+  kb.voyants.splice(0, kb.voyants.length, ...fresh.voyants);
+  return kb;
 }
 
 let defaultKb = null;
