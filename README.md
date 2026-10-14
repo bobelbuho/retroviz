@@ -22,6 +22,7 @@ retroviz/
 ├── test/               ← les tests (npm test)
 ├── package.json        ← les dépendances
 ├── .env.example        ← modèle du fichier de configuration
+├── DESIGN.md           ← le système de design (couleurs, textes, espacements)
 └── README.md
 ```
 
@@ -74,7 +75,7 @@ Les comptes sont facultatifs : l'assistant reste utilisable sans compte. Le bout
 
 ## Mon garage
 
-L'onglet « Mon garage » (compte requis) enregistre les voitures de l'utilisateur : surnom, marque, modèle, motorisation, année, boîte. 30 voitures au plus par compte.
+« Mon garage », en haut à droite (compte requis), enregistre les voitures de l'utilisateur : surnom, marque, modèle, motorisation, année, boîte. 30 voitures au plus par compte.
 
 - **Fiche reliée** : à chaque enregistrement, le serveur cherche une fiche de `data/vehicules.json`. Il ne la relie que si le modèle **et** le moteur correspondent, et si l'année tombe dans la période de la fiche (une fiche fausse est pire que pas de fiche). L'utilisateur peut écarter une fiche (« Ce n'est pas ma voiture ») ou en chercher une à nouveau.
 - **Poser une question** : remplit le champ « Votre véhicule » avec la désignation de la voiture et ouvre « J'ai une panne ». Le menu « Mes voitures… » à côté de ce champ fait la même chose depuis les modes de discussion.
@@ -92,4 +93,4 @@ L'onglet « Mon garage » (compte requis) enregistre les voitures de l'utilisate
 - La recherche (scores, taille maximale du contexte `MAX_CONTEXT`) : `knowledge.js`. Lancez `npm test` après toute modification.
 - Les comptes (longueur minimale du mot de passe, durée de session, blocage après échecs) : les constantes en haut de `auth.js`. Lancez `npm test` après toute modification.
 - Le garage (nombre maximal de voitures, champs, règle de rattachement à une fiche `matchFiche`) : `garage.js`. Lancez `npm test` après toute modification.
-- Les couleurs : les variables `--bg`, `--ink`, `--accent`… en haut du `<style>`.
+- L'apparence (couleurs claires et sombres, tailles de texte, espacements, arrondis) : les variables en haut du `<style>` de `public/index.html`, documentées dans [DESIGN.md](DESIGN.md). Tout nouvel écran suit ce système.

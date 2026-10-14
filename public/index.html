@@ -6,212 +6,282 @@
 <title>Rétroviz, assistant automobile</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
 <style>
+/* ==========================================================================
+   Système de design Rétroviz (documenté dans DESIGN.md).
+   Toute nouvelle couleur, taille, marge ou arrondi passe par ces variables.
+   ========================================================================== */
 :root{
-  --bg:#E7EBEF; --surface:#FFFFFF; --sunk:#F2F4F7; --ink:#14213D; --muted:#56637A; --line:#C8D0DA;
-  --accent:#1F4E8C; --accent-ink:#FFFFFF;
-  --green:#2E8B4A; --amber:#D9930F; --red:#C33A2E; --grey:#8A95A6;
+  /* Couleurs : bleu et blanc */
+  --bg:#F6F9FD;          /* fond de page, blanc à peine bleuté */
+  --surface:#FFFFFF;     /* cartes, champs, fenêtres */
+  --soft:#E8F0FB;        /* bleu clair : fonds de section, éléments actifs */
+  --soft-hover:#DCE8F8;
+  --line:#D8E3F0;        /* séparateurs discrets (décoratifs) */
+  --field-line:#7A8CA6;  /* bordure des champs : contraste 3:1 minimum */
+  --ink:#0E1F3B;         /* texte principal */
+  --muted:#4E5F78;       /* texte secondaire, gris bleuté */
+  --primary:#123F8C;     /* bleu profond : actions, titres, liens */
+  --primary-hover:#0D3170;
+  --on-primary:#FFFFFF;  /* texte sur bleu profond */
+  /* Couleurs de sens, jamais décoratives : gravité et alertes */
+  --green:#1E8449; --green-ink:#176A3A;
+  --amber:#C77700; --amber-ink:#8A4F00;
+  --red:#C8372D;   --red-ink:#A92C23; --on-red:#FFFFFF;
+  --grey:#7A8CA6;        /* niveau « inconnu » */
+  --overlay:rgb(14 31 59 / .5);
+  --shadow:0 1px 2px rgb(14 31 59 / .06), 0 4px 16px rgb(14 31 59 / .06);
+
+  /* Typographie : une seule police */
   --font:"Barlow", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  --cond:"Barlow Condensed", "Arial Narrow", "Barlow", sans-serif;
+  --fs-xs:13px; --fs-sm:15px; --fs-md:17px; --fs-lg:20px; --fs-xl:24px; --fs-2xl:32px; --fs-brand:30px;
+  --lh:1.55; --lh-tight:1.2;
+  --fw-regular:400; --fw-medium:500; --fw-semibold:600; --fw-bold:700;
+
+  /* Espacements (multiples de 4 px) */
+  --sp-1:4px; --sp-2:8px; --sp-3:12px; --sp-4:16px; --sp-5:24px; --sp-6:32px; --sp-7:48px; --sp-8:64px;
+
+  /* Arrondis */
+  --r-sm:8px; --r-md:12px; --r-lg:16px; --r-pill:999px;
+
+  /* Mise en page */
+  --page-max:880px; --gutter:16px; --tap:44px; /* hauteur minimale d'une cible tactile */
+
+  color-scheme:light;
   box-sizing:border-box;
   padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
 }
+/* Mode sombre : bleu nuit */
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
-    --bg:#0F151E; --surface:#17202C; --sunk:#1D2836; --ink:#E5EAF1; --muted:#97A3B6; --line:#2B3748;
-    --accent:#6FA0E0; --accent-ink:#0F151E;
-    --green:#4CB46A; --amber:#F0AE30; --red:#E86455; --grey:#7D889A;
+    --bg:#0A1426; --surface:#101D33; --soft:#172A4A; --soft-hover:#1E3459; --line:#24375A; --field-line:#62789E;
+    --ink:#E6EEF9; --muted:#A3B4CF; --primary:#8DB8F7; --primary-hover:#B0CEFA; --on-primary:#0A1426;
+    --green:#4CC27C; --green-ink:#6ED597; --amber:#F0B03E; --amber-ink:#F4C468; --red:#F06A5E; --red-ink:#F48E84; --on-red:#0A1426;
+    --grey:#7D90B0; --overlay:rgb(0 0 0 / .6); --shadow:0 1px 2px rgb(0 0 0 / .3), 0 4px 16px rgb(0 0 0 / .25);
+    color-scheme:dark;
   }
 }
 :root[data-theme="dark"]{
-  --bg:#0F151E; --surface:#17202C; --sunk:#1D2836; --ink:#E5EAF1; --muted:#97A3B6; --line:#2B3748;
-  --accent:#6FA0E0; --accent-ink:#0F151E;
-  --green:#4CB46A; --amber:#F0AE30; --red:#E86455; --grey:#7D889A;
+  --bg:#0A1426; --surface:#101D33; --soft:#172A4A; --soft-hover:#1E3459; --line:#24375A; --field-line:#62789E;
+  --ink:#E6EEF9; --muted:#A3B4CF; --primary:#8DB8F7; --primary-hover:#B0CEFA; --on-primary:#0A1426;
+  --green:#4CC27C; --green-ink:#6ED597; --amber:#F0B03E; --amber-ink:#F4C468; --red:#F06A5E; --red-ink:#F48E84; --on-red:#0A1426;
+  --grey:#7D90B0; --overlay:rgb(0 0 0 / .6); --shadow:0 1px 2px rgb(0 0 0 / .3), 0 4px 16px rgb(0 0 0 / .25);
+  color-scheme:dark;
 }
+
+/* ---------- base ---------- */
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
 *,*::before,*::after{box-sizing:inherit}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);font-size:17px;line-height:1.5;-webkit-font-smoothing:antialiased}
+[hidden]{display:none !important}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);font-size:var(--fs-md);line-height:var(--lh);-webkit-font-smoothing:antialiased;overflow-wrap:break-word}
 button,input,select,textarea{font:inherit;color:inherit}
-:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
-.wrap{max-width:880px;margin:0 auto;padding:28px 20px 48px}
-
-header{display:flex;flex-wrap:wrap;align-items:flex-end;gap:8px 24px;margin-bottom:24px}
-.brand{font-family:var(--cond);font-weight:700;font-size:clamp(56px,11vw,92px);line-height:.85;letter-spacing:-.01em;margin:0}
-.tagline{color:var(--muted);margin:0 0 6px;max-width:34ch}
-
-.modes{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:var(--ink);border:2px solid var(--ink);border-radius:10px;overflow:hidden;margin-bottom:28px}
-.mode{background:var(--surface);border:0;padding:14px 16px;text-align:left;cursor:pointer}
-.mode strong{display:block;font-family:var(--cond);font-size:22px;font-weight:700;line-height:1.1}
-.mode span{display:block;font-size:14px;color:var(--muted);margin-top:2px}
-.mode[aria-selected="true"]{background:var(--ink);color:var(--bg)}
-.mode[aria-selected="true"] span{color:var(--bg);opacity:.8}
-@media (max-width:800px){.modes{grid-template-columns:repeat(2,1fr)}}
-@media (max-width:480px){.modes{grid-template-columns:1fr}}
-
-.panel[hidden]{display:none}
-.intro{margin:0 0 16px;max-width:62ch}
-label.f{display:block;font-weight:600;font-size:14px;margin-bottom:4px}
-.field{width:100%;background:var(--surface);border:1.5px solid var(--line);border-radius:8px;padding:10px 12px}
-.field:focus{border-color:var(--accent);outline:none;box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 25%,transparent)}
-.veh{margin-bottom:16px;max-width:480px}
-.hint{font-size:14px;color:var(--muted);margin:4px 0 0}
-
-.examples{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 20px}
-.ex{background:transparent;border:1.5px dashed var(--line);border-radius:999px;padding:6px 14px;font-size:15px;cursor:pointer;color:var(--muted)}
-.ex:hover{border-color:var(--accent);color:var(--ink)}
-
-.thread{display:flex;flex-direction:column;gap:14px;margin-bottom:16px}
-.msg-user{align-self:flex-end;max-width:80%;background:var(--accent);color:var(--accent-ink);padding:10px 14px;border-radius:14px 14px 4px 14px;white-space:pre-wrap}
-.msg-ai{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
-.msg-ai .note{font-size:14px;color:var(--muted);margin-top:10px;font-style:italic}
-.src{font-size:13px;color:var(--muted);margin:10px 0 0;padding-top:8px;border-top:1px dashed var(--line)}
-.thinking{color:var(--muted);font-style:italic}
-
-.level{display:flex;align-items:center;gap:12px;margin:-2px 0 12px;padding:10px 12px;border-radius:8px;background:var(--sunk);font-weight:600}
-.lamp{width:22px;height:22px;border-radius:50%;flex:none;background:var(--c);box-shadow:0 0 0 4px color-mix(in srgb,var(--c) 22%,transparent),0 0 14px color-mix(in srgb,var(--c) 60%,transparent)}
-.level small{display:block;font-weight:400;color:var(--muted);font-size:14px}
-
-.md h3,.md h4{font-family:var(--cond);font-size:21px;font-weight:700;margin:18px 0 6px;line-height:1.15}
-.md h3:first-child,.md h4:first-child{margin-top:0}
-.md p{margin:0 0 10px}
-.md ul,.md ol{margin:0 0 10px;padding-left:22px}
-.md li{margin:3px 0}
-.md code{background:var(--sunk);padding:1px 5px;border-radius:4px;font-size:.92em}
-.md > :last-child{margin-bottom:0}
-
-.composer{display:flex;gap:10px;align-items:flex-end;position:sticky;bottom:0;background:var(--bg);padding:10px 0 4px}
-.composer textarea{flex:1;resize:vertical;min-height:52px;max-height:220px}
-.btn{background:var(--accent);color:var(--accent-ink);border:0;border-radius:8px;padding:12px 18px;font-weight:700;cursor:pointer;white-space:nowrap}
-.btn:disabled{opacity:.5;cursor:default}
-.btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
-.btn.stop{background:var(--red);color:#fff}
-.rowbtns{display:flex;gap:10px;flex-wrap:wrap}
-.notice{background:var(--sunk);border-left:4px solid var(--amber);padding:10px 14px;border-radius:6px;margin:0 0 16px}
-.notice[hidden]{display:none}
+:focus-visible{outline:3px solid var(--primary);outline-offset:2px;border-radius:var(--r-sm)}
+.wrap{max-width:var(--page-max);margin:0 auto;padding:var(--sp-4) var(--gutter) var(--sp-7)}
+@media (min-width:600px){.wrap{padding-top:var(--sp-5);--gutter:24px}}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 
-/* Aide débutants : pastilles de symptômes */
-.help{background:var(--surface);border:1px solid var(--line);border-radius:12px;margin:0 0 12px}
-.help[hidden]{display:none}
-.help summary{cursor:pointer;padding:12px 16px;font-weight:600;border-radius:12px}
-.help .cats{padding:0 16px 14px}
-.cat-t{font-family:var(--cond);font-size:19px;font-weight:700;margin:12px 0 6px;line-height:1.15}
-.chips{display:flex;flex-wrap:wrap;gap:8px}
-.chip{display:inline-flex;align-items:center;gap:6px;background:var(--sunk);border:1.5px solid var(--line);border-radius:999px;padding:7px 14px;font-size:15px;cursor:pointer;text-align:left}
-.chip:hover{border-color:var(--accent)}
-.chip[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
-.warn{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;background:var(--red);color:#fff;font-size:12px;font-weight:700;flex:none}
-.chip.danger[aria-pressed="true"]{background:var(--red);border-color:var(--red);color:#fff}
-.chip.danger[aria-pressed="true"] .warn{background:#fff;color:var(--red)}
-.help .legend-d{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);margin:12px 0 0}
-.danger-box{background:color-mix(in srgb,var(--red) 12%,var(--surface));border:2px solid var(--red);border-radius:8px;padding:12px 14px;font-weight:700;margin:0 0 12px}
-.danger-box[hidden]{display:none}
+/* ---------- en-tête ---------- */
+header{display:flex;align-items:center;justify-content:space-between;gap:var(--sp-3);flex-wrap:wrap;margin-bottom:var(--sp-5)}
+.logo{display:flex;align-items:center;gap:var(--sp-3);min-width:0}
+.logo svg{flex:none;width:40px;height:40px}
+.brand{font-size:var(--fs-brand);font-weight:var(--fw-bold);line-height:1;letter-spacing:-.01em;margin:0;color:var(--primary)}
+.tagline{color:var(--muted);margin:2px 0 0;font-size:var(--fs-sm);line-height:var(--lh-tight)}
+.nav{display:flex;align-items:center;gap:var(--sp-1)}
+.navlink{display:inline-flex;align-items:center;min-height:var(--tap);background:transparent;border:0;border-radius:var(--r-pill);padding:0 var(--sp-4);font-weight:var(--fw-semibold);font-size:var(--fs-sm);color:var(--primary);cursor:pointer}
+.navlink:hover{background:var(--soft)}
+.navlink[aria-current="page"]{background:var(--soft)}
+.acct{display:flex}
+@media (max-width:420px){.tagline{display:none}.navlink{padding:0 var(--sp-3)}.nav{margin-left:calc(-1 * var(--sp-3))}}
 
-/* Fiche rapide pro */
-.proform{display:grid;gap:12px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px;margin:0 0 12px}
-.proform[hidden]{display:none}
-.proform h2{font-family:var(--cond);font-size:22px;font-weight:700;margin:0;line-height:1.1}
+/* ---------- les trois modes ---------- */
+.modes{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--sp-2);margin-bottom:var(--sp-6)}
+.mode{display:flex;flex-direction:column;align-items:flex-start;gap:2px;min-height:var(--tap);background:var(--surface);border:1.5px solid transparent;border-radius:var(--r-md);padding:var(--sp-4);text-align:left;cursor:pointer;box-shadow:var(--shadow)}
+.mode:hover{border-color:var(--soft-hover)}
+.mode strong{font-size:var(--fs-lg);font-weight:var(--fw-bold);line-height:var(--lh-tight);color:var(--ink)}
+.mode span{font-size:var(--fs-sm);color:var(--muted);line-height:var(--lh-tight)}
+.mode[aria-selected="true"]{background:var(--soft);border-color:var(--primary);box-shadow:none}
+.mode[aria-selected="true"] strong{color:var(--primary)}
+@media (max-width:640px){
+  .modes{grid-template-columns:1fr;gap:var(--sp-2)}
+  .mode{padding:var(--sp-3) var(--sp-4)}
+  .mode strong{font-size:var(--fs-md)}
+}
+
+/* ---------- panneaux, textes, champs ---------- */
+.intro{margin:0 0 var(--sp-5);max-width:60ch;color:var(--muted)}
+label.f{display:block;font-weight:var(--fw-semibold);font-size:var(--fs-sm);margin-bottom:var(--sp-1)}
+.field{width:100%;min-height:var(--tap);background:var(--surface);border:1px solid var(--field-line);border-radius:var(--r-sm);padding:10px var(--sp-3)}
+.field::placeholder{color:var(--muted);opacity:.85}
+.field:focus{border-color:var(--primary);outline:none;box-shadow:0 0 0 3px color-mix(in srgb,var(--primary) 30%,transparent)}
+.hint{font-size:var(--fs-xs);color:var(--muted);margin:var(--sp-1) 0 0}
+.veh{margin-bottom:var(--sp-4)}
+.vehrow{display:flex;gap:var(--sp-2);flex-wrap:wrap}
+.vehrow .field{flex:1 1 260px}
+.vehrow select.field{flex:0 1 200px}
+.notice{background:var(--soft);border-radius:var(--r-sm);padding:var(--sp-3) var(--sp-4);margin:0 0 var(--sp-4)}
+
+/* ---------- boutons ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:var(--sp-2);min-height:var(--tap);background:var(--primary);color:var(--on-primary);border:0;border-radius:var(--r-sm);padding:0 var(--sp-5);font-weight:var(--fw-semibold);cursor:pointer;white-space:nowrap;text-decoration:none}
+.btn:hover{background:var(--primary-hover)}
+.btn:disabled{opacity:.5;cursor:default}
+/* bouton secondaire : bleu clair */
+.btn.soft{background:var(--soft);color:var(--primary)}
+.btn.soft:hover{background:var(--soft-hover)}
+/* bouton discret : texte seul */
+.btn.ghost{background:transparent;color:var(--primary);padding:0 var(--sp-3)}
+.btn.ghost:hover{background:var(--soft)}
+.btn.stop,.btn.red{background:var(--red);color:var(--on-red)}
+.btn.stop:hover,.btn.red:hover{background:var(--red-ink)}
+.btn.small{min-height:36px;padding:0 var(--sp-3);font-size:var(--fs-sm)}
+.rowbtns{display:flex;gap:var(--sp-2);flex-wrap:wrap;align-items:center}
+.link{background:none;border:0;padding:0;color:var(--primary);text-decoration:underline;text-underline-offset:2px;cursor:pointer;font-size:inherit;font-weight:var(--fw-medium)}
+
+/* ---------- discussion ---------- */
+.examples{display:flex;flex-wrap:wrap;gap:var(--sp-2);margin:0 0 var(--sp-5)}
+.ex{min-height:36px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-pill);padding:var(--sp-1) var(--sp-4);font-size:var(--fs-sm);cursor:pointer;color:var(--ink)}
+.ex:hover{background:var(--soft);border-color:var(--soft-hover)}
+.thread{display:flex;flex-direction:column;gap:var(--sp-4);margin-bottom:var(--sp-4)}
+.thread:empty{display:none}
+.msg-user{align-self:flex-end;max-width:85%;background:var(--primary);color:var(--on-primary);padding:10px var(--sp-4);border-radius:var(--r-lg) var(--r-lg) var(--r-sm) var(--r-lg);white-space:pre-wrap}
+.msg-ai{background:var(--surface);border-radius:var(--r-lg);padding:var(--sp-5);box-shadow:var(--shadow)}
+.msg-ai .note{font-size:var(--fs-sm);color:var(--muted);margin-top:var(--sp-3);font-style:italic}
+.src{font-size:var(--fs-xs);color:var(--muted);margin:var(--sp-4) 0 0;padding-top:var(--sp-3);border-top:1px solid var(--line)}
+.thinking{color:var(--muted);font-style:italic;margin:0}
+.copy{margin-top:var(--sp-2);margin-left:calc(-1 * var(--sp-3))}
+
+.level{display:flex;align-items:center;gap:var(--sp-3);margin:0 0 var(--sp-4);padding:var(--sp-3) var(--sp-4);border-radius:var(--r-md);background:color-mix(in srgb,var(--c) 12%,var(--surface));font-weight:var(--fw-bold)}
+.lamp{width:20px;height:20px;border-radius:50%;flex:none;background:var(--c);box-shadow:0 0 0 4px color-mix(in srgb,var(--c) 25%,transparent)}
+.level small{display:block;font-weight:var(--fw-regular);color:var(--muted);font-size:var(--fs-sm)}
+
+.md h3,.md h4{font-size:var(--fs-lg);font-weight:var(--fw-bold);color:var(--primary);margin:var(--sp-5) 0 var(--sp-2);line-height:var(--lh-tight)}
+.md h3:first-child,.md h4:first-child{margin-top:0}
+.md p{margin:0 0 var(--sp-3)}
+.md ul,.md ol{margin:0 0 var(--sp-3);padding-left:22px}
+.md li{margin:var(--sp-1) 0}
+.md code{background:var(--soft);padding:1px 5px;border-radius:4px;font-size:.92em}
+.md > :last-child{margin-bottom:0}
+
+.composer{display:flex;gap:var(--sp-2);align-items:flex-end;position:sticky;bottom:0;background:var(--bg);padding:var(--sp-3) 0;margin-top:var(--sp-2)}
+.composer textarea{flex:1;resize:vertical;min-height:52px;max-height:220px}
+@media (max-width:420px){.composer .btn{padding:0 var(--sp-4)}}
+
+/* aide débutants : pastilles de symptômes */
+.help{background:var(--soft);border-radius:var(--r-md);margin:0 0 var(--sp-3)}
+.help summary{cursor:pointer;padding:var(--sp-3) var(--sp-4);font-weight:var(--fw-semibold);color:var(--primary);border-radius:var(--r-md);min-height:var(--tap);display:flex;align-items:center}
+.help .cats{padding:0 var(--sp-4) var(--sp-4)}
+.cat-t{font-size:var(--fs-sm);font-weight:var(--fw-bold);margin:var(--sp-4) 0 var(--sp-2);line-height:var(--lh-tight)}
+.chips{display:flex;flex-wrap:wrap;gap:var(--sp-2)}
+.chip{display:inline-flex;align-items:center;gap:6px;min-height:36px;background:var(--surface);border:1px solid transparent;border-radius:var(--r-pill);padding:var(--sp-1) var(--sp-3);font-size:var(--fs-sm);cursor:pointer;text-align:left}
+.chip:hover{border-color:var(--primary)}
+.chip[aria-pressed="true"]{background:var(--primary);color:var(--on-primary)}
+.warn{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;background:var(--red);color:var(--on-red);font-size:12px;font-weight:var(--fw-bold);flex:none}
+.chip.danger[aria-pressed="true"]{background:var(--red);color:var(--on-red)}
+.chip.danger[aria-pressed="true"] .warn{background:var(--on-red);color:var(--red)}
+.help .legend-d{display:flex;align-items:center;gap:6px;font-size:var(--fs-xs);color:var(--muted);margin:var(--sp-4) 0 0}
+.danger-box{background:color-mix(in srgb,var(--red) 10%,var(--surface));border-left:4px solid var(--red);border-radius:var(--r-sm);padding:var(--sp-3) var(--sp-4);font-weight:var(--fw-bold);color:var(--red-ink);margin:0 0 var(--sp-3)}
+
+/* fiche rapide pro */
+.proform{display:grid;gap:var(--sp-3);background:var(--surface);border-radius:var(--r-lg);padding:var(--sp-5);margin:0 0 var(--sp-3);box-shadow:var(--shadow)}
+.proform h2{font-size:var(--fs-lg);font-weight:var(--fw-bold);margin:0;line-height:var(--lh-tight)}
 .proform textarea{resize:vertical;min-height:52px}
 
-.copy{margin-top:12px;padding:6px 12px;font-size:14px;font-weight:600}
-
-/* Achat */
-.form{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px;margin-bottom:24px}
+/* ---------- formulaires en grille (achat, garage) ---------- */
+.form{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--sp-4);background:var(--surface);border-radius:var(--r-lg);padding:var(--sp-5);margin-bottom:var(--sp-6);box-shadow:var(--shadow)}
 .form .s2{grid-column:span 2}
 .form .full{grid-column:1/-1}
-@media (max-width:700px){.form{grid-template-columns:1fr 1fr}.form .s2{grid-column:1/-1}}
+.form .formbtns{grid-column:1/-1;display:flex;gap:var(--sp-2);flex-wrap:wrap}
+@media (max-width:700px){.form{grid-template-columns:repeat(2,minmax(0,1fr))}.form .s2{grid-column:1/-1}}
+@media (max-width:420px){.form{padding:var(--sp-4);gap:var(--sp-3)}}
 
-.report[hidden]{display:none}
-.verdict{display:grid;grid-template-columns:auto 1fr;gap:6px 22px;align-items:center;margin-bottom:28px}
-.score{font-family:var(--cond);font-weight:700;font-size:84px;line-height:.9;grid-row:span 2}
-.score small{font-size:34px;color:var(--muted)}
-.tag{display:inline-block;justify-self:start;padding:4px 12px;border-radius:999px;font-weight:700;color:#fff;background:var(--c)}
-.vtitle{font-family:var(--cond);font-size:28px;font-weight:700;margin:0 0 4px;line-height:1.1}
-.sect{margin:0 0 28px}
-.sect h3{font-family:var(--cond);font-size:24px;font-weight:700;margin:0 0 10px;line-height:1.1}
+/* ---------- rapport d'achat ---------- */
+.verdict{display:grid;grid-template-columns:auto 1fr;gap:var(--sp-2) var(--sp-5);align-items:center;margin-bottom:var(--sp-6)}
+.verdict .md{grid-column:1/-1}
+.score{font-size:64px;font-weight:var(--fw-bold);line-height:.9;color:var(--primary)}
+.score small{font-size:var(--fs-xl);color:var(--muted)}
+.tag{display:inline-flex;align-items:center;gap:var(--sp-2);justify-self:start;padding:var(--sp-1) var(--sp-3);border-radius:var(--r-pill);font-weight:var(--fw-bold);font-size:var(--fs-sm);color:var(--ink);background:color-mix(in srgb,var(--c) 14%,var(--surface))}
+.tag::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--c)}
+.vtitle{font-size:var(--fs-xl);font-weight:var(--fw-bold);margin:0 0 var(--sp-1);line-height:var(--lh-tight)}
+.sect{margin:0 0 var(--sp-6)}
+.sect h3{font-size:var(--fs-lg);font-weight:var(--fw-bold);color:var(--primary);margin:0 0 var(--sp-3);line-height:var(--lh-tight)}
 
-.odo{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px 18px 14px}
-.track{position:relative;height:56px;margin:8px 6px 28px}
-.track .rail{position:absolute;left:0;right:0;top:26px;height:6px;border-radius:3px;background:var(--line)}
-.track .done{position:absolute;left:0;top:26px;height:6px;border-radius:3px;background:var(--ink)}
+.odo{background:var(--surface);border-radius:var(--r-lg);padding:var(--sp-5) var(--sp-5) var(--sp-4);box-shadow:var(--shadow)}
+.track{position:relative;height:56px;margin:var(--sp-2) 6px var(--sp-6)}
+.track .rail{position:absolute;left:0;right:0;top:26px;height:6px;border-radius:3px;background:var(--soft)}
+.track .done{position:absolute;left:0;top:26px;height:6px;border-radius:3px;background:var(--primary)}
 .track .dot{position:absolute;top:21px;width:16px;height:16px;margin-left:-8px;border-radius:50%;background:var(--c);border:2px solid var(--surface);cursor:pointer;padding:0}
 .track .dot.maint{border-radius:3px}
-.track .now{position:absolute;top:0;bottom:-6px;width:3px;margin-left:-1.5px;background:var(--ink)}
-.track .now span{position:absolute;top:-4px;left:8px;white-space:nowrap;font-weight:700;font-size:14px}
+.track .now{position:absolute;top:0;bottom:-6px;width:3px;margin-left:-1.5px;background:var(--primary)}
+.track .now span{position:absolute;top:-4px;left:8px;white-space:nowrap;font-weight:var(--fw-bold);font-size:var(--fs-sm)}
 .track .now.flip span{left:auto;right:8px}
-.track .tick{position:absolute;top:40px;font-size:12px;color:var(--muted);transform:translateX(-50%);white-space:nowrap}
-.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13px;color:var(--muted)}
+.track .tick{position:absolute;top:40px;font-size:var(--fs-xs);color:var(--muted);transform:translateX(-50%);white-space:nowrap}
+.legend{display:flex;flex-wrap:wrap;gap:6px var(--sp-4);font-size:var(--fs-xs);color:var(--muted)}
 .legend i{display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--c);margin-right:5px;vertical-align:0}
 .legend i.sq{border-radius:2px}
+@media (max-width:480px){.track .tick:nth-of-type(even){display:none}}
 
-.items{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
-.item{background:var(--surface);border:1px solid var(--line);border-left:5px solid var(--c);border-radius:8px;padding:12px 14px}
+.items{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:var(--sp-2)}
+.item{background:var(--surface);border-left:4px solid var(--c);border-radius:var(--r-sm);padding:var(--sp-3) var(--sp-4);box-shadow:var(--shadow)}
 .item.flash{animation:flash 1.2s ease}
-@keyframes flash{0%{box-shadow:0 0 0 4px var(--accent)}100%{box-shadow:0 0 0 0 transparent}}
-.item .top{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font-weight:700}
-.item .km{font-weight:600;color:var(--muted);font-size:15px}
-.item p{margin:4px 0 0}
-.item .cost{font-size:15px;color:var(--muted);margin-top:4px}
-.group-label{font-weight:700;margin:16px 0 8px}
+@keyframes flash{0%{box-shadow:0 0 0 4px var(--primary)}100%{box-shadow:var(--shadow)}}
+.item .top{display:flex;justify-content:space-between;gap:var(--sp-2) var(--sp-3);flex-wrap:wrap;font-weight:var(--fw-bold)}
+.item .km{font-weight:var(--fw-medium);color:var(--muted);font-size:var(--fs-sm)}
+.item p{margin:var(--sp-1) 0 0}
+.item .cost{font-size:var(--fs-sm);color:var(--muted);margin-top:var(--sp-1)}
+.group-label{font-weight:var(--fw-bold);margin:var(--sp-5) 0 var(--sp-2)}
 
-.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-@media (max-width:600px){.two{grid-template-columns:1fr}}
-.box{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 18px}
-.box h3{font-size:21px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-4)}
+@media (max-width:640px){.two{grid-template-columns:1fr}}
+.box{background:var(--surface);border-radius:var(--r-lg);padding:var(--sp-4) var(--sp-5);box-shadow:var(--shadow)}
 .box ul{margin:0;padding-left:20px}
-.box li{margin:4px 0}
+.box li{margin:var(--sp-1) 0}
 .checks{list-style:none;padding:0;margin:0}
-.checks li{display:flex;gap:10px;align-items:flex-start;padding:6px 0;border-bottom:1px solid var(--line)}
+.checks li{display:flex;gap:var(--sp-3);align-items:flex-start;padding:var(--sp-2) 0;border-bottom:1px solid var(--line)}
 .checks li:last-child{border-bottom:0}
-.checks input{width:20px;height:20px;margin-top:2px;flex:none;accent-color:var(--accent)}
+.checks input{width:20px;height:20px;margin-top:2px;flex:none;accent-color:var(--primary)}
 .checks label{cursor:pointer}
 .checks input:checked + label{color:var(--muted);text-decoration:line-through}
-.caveat{font-size:15px;color:var(--muted);border-left:3px solid var(--line);padding-left:12px}
+.caveat{font-size:var(--fs-sm);color:var(--muted)}
 
-/* Garage */
-.vehrow{display:flex;gap:8px;flex-wrap:wrap}
-.vehrow .field{flex:1 1 260px}
-.vehrow select.field{flex:0 1 220px}
-.cars{list-style:none;margin:0 0 16px;padding:0;display:grid;gap:12px}
-.car{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
-.car h3{font-family:var(--cond);font-size:24px;font-weight:700;margin:0;line-height:1.1}
-.car .sub{color:var(--muted);margin:2px 0 10px}
-.car .fiche{font-size:15px;margin:0 0 12px;padding:8px 12px;border-radius:8px;background:var(--sunk)}
-.car .fiche .link{background:none;border:0;padding:0;color:var(--accent);text-decoration:underline;cursor:pointer;font-size:15px}
-.car .rowbtns .btn{padding:8px 14px;font-size:15px}
-.empty{background:var(--surface);border:1.5px dashed var(--line);border-radius:12px;padding:18px;margin:0 0 16px}
-.form .formbtns{grid-column:1/-1;display:flex;gap:10px;flex-wrap:wrap}
+/* ---------- mon garage ---------- */
+.cars{list-style:none;margin:0 0 var(--sp-5);padding:0;display:grid;gap:var(--sp-3)}
+.car{background:var(--surface);border-radius:var(--r-lg);padding:var(--sp-5);box-shadow:var(--shadow)}
+.car h3{font-size:var(--fs-xl);font-weight:var(--fw-bold);margin:0;line-height:var(--lh-tight)}
+.car .sub{color:var(--muted);margin:var(--sp-1) 0 var(--sp-3)}
+.car .fiche{font-size:var(--fs-sm);margin:0 0 var(--sp-4);padding:var(--sp-2) var(--sp-3);border-radius:var(--r-sm);background:var(--soft)}
+.car .rowbtns{margin-left:calc(-1 * var(--sp-1))}
+@media (max-width:420px){.car{padding:var(--sp-4)}}
+.empty{background:var(--soft);border-radius:var(--r-lg);padding:var(--sp-5);margin:0 0 var(--sp-4);color:var(--muted)}
 
-/* Compte */
-.acct{margin-left:auto;align-self:flex-start;display:flex;align-items:center;gap:10px;font-size:15px}
-.acct .who{color:var(--muted);max-width:24ch;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.acct .btn{padding:8px 14px}
-dialog.dlg{border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--ink);padding:22px;width:min(440px,calc(100vw - 32px));max-height:calc(100dvh - 32px)}
-dialog.dlg::backdrop{background:rgb(15 21 30 / .55)}
-.dlg h2{font-family:var(--cond);font-size:26px;font-weight:700;margin:0 0 14px;line-height:1.1}
-.dlg form{display:grid;gap:12px}
-.dlg .close{position:absolute;top:10px;right:10px;background:transparent;border:0;font-size:24px;line-height:1;padding:6px 10px;cursor:pointer;color:var(--muted)}
-.dlg .err{color:var(--red);font-weight:600;margin:0;font-size:15px}
+/* ---------- compte (fenêtre) ---------- */
+dialog.dlg{border:0;border-radius:var(--r-lg);background:var(--surface);color:var(--ink);padding:var(--sp-6) var(--sp-5) var(--sp-5);width:min(440px,calc(100vw - 2 * var(--gutter)));max-height:calc(100dvh - 32px);box-shadow:0 12px 48px rgb(0 0 0 / .25)}
+dialog.dlg::backdrop{background:var(--overlay)}
+.dlg h2{font-size:var(--fs-xl);font-weight:var(--fw-bold);margin:0 0 var(--sp-4);line-height:var(--lh-tight)}
+.dlg form{display:grid;gap:var(--sp-3)}
+.dlg .close{position:absolute;top:var(--sp-2);right:var(--sp-2);width:var(--tap);height:var(--tap);background:transparent;border:0;border-radius:var(--r-pill);font-size:24px;line-height:1;cursor:pointer;color:var(--muted)}
+.dlg .close:hover{background:var(--soft)}
+.dlg .err{color:var(--red-ink);font-weight:var(--fw-semibold);margin:0;font-size:var(--fs-sm)}
 .dlg .err:empty{display:none}
-.dlg .link{background:none;border:0;padding:0;color:var(--accent);text-decoration:underline;cursor:pointer;font-size:15px}
-.dlg .meta{color:var(--muted);font-size:15px;margin:0 0 16px}
-.dlg .danger{border-top:1px solid var(--line);margin-top:18px;padding-top:14px}
-.dlg .danger summary{cursor:pointer;font-weight:600;color:var(--red)}
-.dlg .danger form{margin-top:10px}
-.btn.red{background:var(--red);color:#fff}
-.dlg [hidden]{display:none}
+.dlg .meta{color:var(--muted);font-size:var(--fs-sm);margin:0 0 var(--sp-4)}
+.dlg .danger{border-top:1px solid var(--line);margin-top:var(--sp-5);padding-top:var(--sp-4)}
+.dlg .danger summary{cursor:pointer;font-weight:var(--fw-semibold);color:var(--muted);font-size:var(--fs-sm)}
+.dlg .danger form{margin-top:var(--sp-3)}
 
-footer{margin-top:40px;font-size:14px;color:var(--muted);border-top:1px solid var(--line);padding-top:14px}
+footer{margin-top:var(--sp-7);font-size:var(--fs-xs);color:var(--muted);padding-top:var(--sp-4);border-top:1px solid var(--line)}
 @media (prefers-reduced-motion: reduce){.item.flash{animation:none}}
 </style>
 </head>
 <body>
 <div class="wrap">
   <header>
-    <h1 class="brand">Rétroviz</h1>
-    <p class="tagline"><strong style="color:var(--ink);font-size:20px">Regardez dans le rétro, roulez l'esprit tranquille.</strong><br>Comprendre une panne, diagnostiquer comme un pro, acheter une occasion sans mauvaise surprise.</p>
-    <div class="acct" id="acct"><button class="btn ghost" type="button" id="acctBtn">Se connecter</button></div>
+    <div class="logo">
+      <svg viewBox="0 0 40 40" aria-hidden="true"><rect x="2" y="7" width="36" height="22" rx="11" fill="var(--primary)"/><path d="M11 23c3.5-6 14.5-6 18 0" stroke="var(--on-primary)" stroke-width="3" fill="none" stroke-linecap="round"/><rect x="18" y="29" width="4" height="7" rx="2" fill="var(--primary)"/></svg>
+      <div><h1 class="brand">Rétroviz</h1><p class="tagline">Regardez dans le rétro, roulez l'esprit tranquille.</p></div>
+    </div>
+    <nav class="nav" aria-label="Mon espace">
+      <button class="navlink" type="button" id="garageBtn" data-mode="garage">Mon garage</button>
+      <div class="acct" id="acct"><button class="navlink" type="button" id="acctBtn">Se connecter</button></div>
+    </nav>
   </header>
 
   <dialog class="dlg" id="acctDlg" aria-labelledby="acctTitle">
@@ -234,7 +304,7 @@ footer{margin-top:40px;font-size:14px;color:var(--muted);border-top:1px solid va
       <h2>Mon compte</h2>
       <p class="meta" id="me_meta"></p>
       <div class="rowbtns">
-        <a class="btn ghost" href="/api/account/export" download style="text-decoration:none">Télécharger mes données</a>
+        <a class="btn soft" href="/api/account/export" download>Télécharger mes données</a>
         <button class="btn ghost" type="button" id="me_logout">Se déconnecter</button>
       </div>
       <details class="danger">
@@ -250,10 +320,9 @@ footer{margin-top:40px;font-size:14px;color:var(--muted);border-top:1px solid va
   </dialog>
 
   <div class="modes" role="tablist" aria-label="Choisir un mode">
-    <button class="mode" role="tab" data-mode="particulier" aria-selected="true"><strong>J'ai une panne</strong><span>Pour tous : comprendre et savoir quoi faire</span></button>
-    <button class="mode" role="tab" data-mode="pro" aria-selected="false"><strong>Diagnostic pro</strong><span>Pour les mécaniciens : codes défaut, mesures</span></button>
-    <button class="mode" role="tab" data-mode="achat" aria-selected="false"><strong>J'achète une voiture</strong><span>Pour tous : qualités, défauts, pannes à venir</span></button>
-    <button class="mode" role="tab" data-mode="garage" aria-selected="false"><strong>Mon garage</strong><span>Vos voitures, reliées aux fiches Rétroviz</span></button>
+    <button class="mode" role="tab" data-mode="particulier" aria-selected="true"><strong>J'ai une panne</strong><span>Comprendre et savoir quoi faire</span></button>
+    <button class="mode" role="tab" data-mode="pro" aria-selected="false"><strong>Diagnostic pro</strong><span>Pour les mécaniciens</span></button>
+    <button class="mode" role="tab" data-mode="achat" aria-selected="false"><strong>J'achète une voiture</strong><span>Analyser une occasion</span></button>
   </div>
 
   <p class="notice" id="notice" hidden></p>
@@ -267,12 +336,12 @@ footer{margin-top:40px;font-size:14px;color:var(--muted);border-top:1px solid va
         <input class="field" id="vehicle" placeholder="Ex. Peugeot 308 1.2 PureTech 130, 2017, 98 000 km">
         <select class="field" id="vehPick" aria-label="Choisir une voiture de mon garage" hidden></select>
       </div>
-      <p class="hint">Facultatif, mais les réponses sont bien plus précises avec.</p>
+      <p class="hint">Facultatif, mais les réponses sont plus précises.</p>
     </div>
     <div class="examples" id="examples"></div>
     <div class="thread" id="thread" aria-live="polite"></div>
-    <details class="help" id="help" open>
-      <summary>Vous ne savez pas comment décrire le problème ? Touchez ce que vous remarquez.</summary>
+    <details class="help" id="help">
+      <summary>Vous ne savez pas comment le décrire ? Touchez ce que vous remarquez</summary>
       <div class="cats" id="helpCats"></div>
     </details>
     <p class="danger-box" id="dangerBox" role="alert" hidden>Avec ce symptôme, arrêtez-vous dès que possible dans un endroit sûr et coupez le moteur.</p>
@@ -289,12 +358,12 @@ footer{margin-top:40px;font-size:14px;color:var(--muted);border-top:1px solid va
       <button class="btn" id="sendBtn">Envoyer</button>
       <button class="btn stop" id="stopBtn" hidden>Arrêter</button>
     </div>
-    <div class="rowbtns" style="margin-top:8px"><button class="btn ghost" id="resetBtn" hidden>Nouvelle conversation</button></div>
+    <div class="rowbtns"><button class="btn ghost small" id="resetBtn" hidden>Nouvelle conversation</button></div>
   </section>
 
   <!-- Achat -->
   <section class="panel" id="achatPanel" hidden>
-    <p class="intro">Renseignez la voiture que vous regardez. Rétroviz liste ses qualités et ses défauts, place les pannes connues sur son compteur et vous dit quoi contrôler avant de signer.</p>
+    <p class="intro">La voiture que vous regardez : ses qualités, ses défauts, les pannes à venir et quoi contrôler avant de signer.</p>
     <form class="form" id="achatForm" novalidate>
       <div><label class="f" for="a_marque">Marque *</label><input class="field" id="a_marque" required placeholder="Renault"></div>
       <div><label class="f" for="a_modele">Modèle *</label><input class="field" id="a_modele" required placeholder="Clio IV"></div>
@@ -306,7 +375,7 @@ footer{margin-top:40px;font-size:14px;color:var(--muted);border-top:1px solid va
       <div><label class="f" for="a_prix">Prix demandé (€)</label><input class="field" id="a_prix" inputmode="numeric" placeholder="8 900"></div>
       <div class="s2"><label class="f" for="a_usage">Votre usage</label>
         <select class="field" id="a_usage"><option value="">Non précisé</option><option>Surtout en ville, petits trajets</option><option>Mixte</option><option>Beaucoup d'autoroute, gros rouleur</option></select></div>
-      <div class="s2" style="align-self:end"><button class="btn" id="achatBtn" type="submit" style="width:100%">Analyser ce véhicule</button></div>
+      <div class="s2" style="align-self:end"><button class="btn" id="achatBtn" type="submit" style="width:100%">Analyser cette voiture</button></div>
       <p class="hint full" id="achatMsg" style="margin:0"></p>
     </form>
     <div class="report" id="report" hidden></div>
@@ -314,7 +383,7 @@ footer{margin-top:40px;font-size:14px;color:var(--muted);border-top:1px solid va
 
   <!-- Mon garage -->
   <section class="panel" id="garagePanel" hidden>
-    <p class="intro">Enregistrez vos voitures une fois pour toutes. Quand Rétroviz a une fiche pour le modèle et le moteur, elle est reliée à la voiture et sert en priorité dans les réponses.</p>
+    <p class="intro">Vos voitures, enregistrées une fois pour toutes. Quand Rétroviz a une fiche pour leur modèle et leur moteur, elle sert en priorité dans les réponses.</p>
     <div id="garageOut"><p class="empty">Créez un compte ou connectez-vous pour enregistrer vos voitures.</p>
       <button class="btn" type="button" id="garageLogin">Se connecter ou créer un compte</button></div>
     <div id="garageIn" hidden>
@@ -386,7 +455,7 @@ const SAFETY = `Sécurité, règle absolue : pour les freins, la direction, les 
 
 const MODES = {
   particulier: {
-    intro: "Décrivez ce que fait votre voiture avec vos mots. Rétroviz vous dit si vous pouvez rouler, ce qui se passe probablement, ce que vous pouvez vérifier vous-même et quand aller au garage.",
+    intro: "Décrivez le problème avec vos mots : Rétroviz vous dit si vous pouvez rouler et quoi faire.",
     placeholder: "Ex. un voyant orange moteur s'est allumé et la voiture broute à l'accélération",
     examples: ["Ma voiture tremble au ralenti", "Bruit de grincement quand je freine", "Voyant moteur orange allumé", "La voiture ne démarre plus, ça fait clic clic", "Odeur de brûlé après un trajet"],
     rules: `Tu es Rétroviz, un assistant automobile qui aide des particuliers sans connaissances mécaniques, en français, avec un ton rassurant et clair.
@@ -400,7 +469,7 @@ Format obligatoire :
 ${SAFETY}`
   },
   pro: {
-    intro: "Pour les mécaniciens et techniciens. Donnez un code défaut, des symptômes ou des valeurs relevées : Rétroviz propose une stratégie de diagnostic, des mesures et les défauts connus du modèle.",
+    intro: "Code défaut, symptômes ou valeurs relevées : Rétroviz propose une stratégie de diagnostic et les défauts connus du modèle.",
     placeholder: "Ex. P0299 sur 1.6 HDi 110 FAP, sous-suralimentation en charge, turbo neuf il y a 20 000 km",
     examples: ["P0420 sur une essence de 2014, sondes OK", "P0087 pression rail trop basse sur 2.0 TDI", "Défaut intermittent CAN U0100", "Démarreur qui cliquette, batterie 12,4 V", "Valeurs de référence d'un débitmètre au ralenti"],
     rules: `Tu es Rétroviz, un assistant de diagnostic automobile pour professionnels (mécaniciens, techniciens, électriciens auto), en français. Ton interlocuteur a un outil de diagnostic, un multimètre, parfois un oscilloscope et un manomètre.
@@ -476,6 +545,7 @@ function setMode(m){
   if(busy && ctl) ctl.abort();
   mode = m;
   document.querySelectorAll(".mode").forEach(b => b.setAttribute("aria-selected", String(b.dataset.mode===m)));
+  if(m === "garage") $("#garageBtn").setAttribute("aria-current", "page"); else $("#garageBtn").removeAttribute("aria-current");
   const chat = !!MODES[m];
   $("#chatPanel").hidden = !chat; $("#achatPanel").hidden = m !== "achat"; $("#garagePanel").hidden = m !== "garage";
   if(m === "garage") renderGarage();
@@ -486,7 +556,7 @@ function setMode(m){
     renderThread();
   }
 }
-document.querySelectorAll(".mode").forEach(b => b.addEventListener("click", () => setMode(b.dataset.mode)));
+document.querySelectorAll("[data-mode]").forEach(b => b.addEventListener("click", () => setMode(b.dataset.mode)));
 $("#examples").addEventListener("click", e => { const b=e.target.closest(".ex"); if(b){ $("#input").value=b.textContent; $("#input").focus(); }});
 
 /* ---------- chat ---------- */
@@ -513,7 +583,7 @@ function aiHTML(msg){
   h += `<div class="md">${md(body)}</div>`;
   if(msg.note) h += `<p class="note">${esc(msg.note)}</p>`;
   if(msg.done && msg.sources) h += `<p class="src">${esc(sourcesText(msg.sources))}</p>`;
-  if(msg.done && body.trim()) h += `<button class="btn ghost copy" type="button">Copier la réponse</button>`;
+  if(msg.done && body.trim()) h += `<button class="btn ghost small copy" type="button">Copier la réponse</button>`;
   return h;
 }
 function renderThread(){
@@ -778,9 +848,7 @@ async function api(method, url, body){
   return res.ok ? {ok:true, ...j} : {ok:false, error: j.error || "Une erreur est survenue. Réessayez."};
 }
 function renderAcct(){
-  $("#acct").innerHTML = user
-    ? `<span class="who" title="${esc(user.email)}">${esc(user.email)}</span><button class="btn ghost" type="button" id="acctBtn">Mon compte</button>`
-    : `<button class="btn ghost" type="button" id="acctBtn">Se connecter</button>`;
+  $("#acct").innerHTML = `<button class="navlink" type="button" id="acctBtn" ${user ? `title="${esc(user.email)}"` : ""}>${user ? "Mon compte" : "Se connecter"}</button>`;
   $("#authView").hidden = !!user; $("#meView").hidden = !user;
   if(user) $("#me_meta").textContent = `${user.email} · compte créé le ${new Date(user.createdAt).toLocaleDateString("fr-FR", {day:"numeric", month:"long", year:"numeric"})}`;
 }
@@ -849,7 +917,7 @@ function renderGarage(){
       <h3>${esc(c.surnom || c.marque+" "+c.modele)}</h3>
       <p class="sub">${esc(c.designation)}</p>
       <p class="fiche">${ficheHTML(c)}</p>
-      <div class="rowbtns"><button class="btn" type="button" data-act="ask">Poser une question</button><button class="btn ghost" type="button" data-act="edit">Modifier</button><button class="btn ghost" type="button" data-act="del">Supprimer</button></div>
+      <div class="rowbtns"><button class="btn soft small" type="button" data-act="ask">Poser une question</button><button class="btn ghost small" type="button" data-act="edit">Modifier</button><button class="btn ghost small" type="button" data-act="del">Supprimer</button></div>
     </li>`).join("") : `<li class="empty">Votre garage est vide. Ajoutez votre première voiture.</li>`;
   $("#carForm").hidden = editing === null; $("#carAdd").hidden = editing !== null;
   /* Sélecteur « Mes voitures » à côté du champ « Votre véhicule ». */
