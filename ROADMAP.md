@@ -1,5 +1,26 @@
 # Feuille de route Rétroviz
 
+## À faire avant toute mise en ligne (même pour quelques proches)
+
+1. **Protéger l'assistant** :
+   - compte obligatoire pour utiliser l'assistant ;
+   - consignes de l'IA côté serveur (aujourd'hui dans la page, donc modifiables par l'utilisateur) ;
+   - quota de questions par jour et par compte ;
+   - limite de dépense mensuelle dans la console Anthropic.
+2. **Réinitialisation du mot de passe** par e-mail, avec un service d'envoi hébergé en Europe. Ce service servira aussi aux rappels et à la vérification de l'adresse.
+3. **Hébergement en Europe avec HTTPS** (Scaleway ou OVH) : `NODE_ENV=production`, configuration du proxy, sauvegardes de la base et des factures.
+4. **Essai réel** de l'assistant et de la valeur indicative avec la clé API.
+5. **Courte notice pour les testeurs** : ce qui est stocké, version d'essai, fiches et estimations à vérifier, comment faire un retour.
+6. **Fiches des voitures des testeurs** dans la base Rétroviz.
+7. **Journal des erreurs et suivi du nombre d'appels à l'IA**, pour surveiller les coûts.
+
+## Base de connaissances (en cours)
+
+- Voyants du tableau de bord (fiches et icônes).
+- L'Observateur : recherche, extraction, recoupement et propositions d'amélioration de la base, validées dans la page « Relecture ».
+- Marques et modèles : les 30 modèles d'occasion les plus courants en France.
+- Comparateur, glossaire, guide des prix.
+
 ## Phase 1 : comptes et garage (en cours)
 
 - ✅ Comptes utilisateurs (e-mail + mot de passe), conformes au RGPD : export et suppression des données.

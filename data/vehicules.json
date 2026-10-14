@@ -25,6 +25,7 @@
     "points_faibles": ["Courroie de distribution dans l'huile sensible à la qualité de l'huile", "Consommation d'huile sur certains moteurs", "Historique d'entretien indispensable avant achat"],
     "sources": [],
     "statut": "a_verifier",
+    "redige_par": "ia",
     "mise_a_jour": "2026-10-13"
   },
   {
@@ -53,6 +54,7 @@
     "points_faibles": ["Peu adapté aux petits trajets (FAP, EGR)", "Volant moteur bimasse coûteux", "Finition intérieure qui vieillit moyennement"],
     "sources": [],
     "statut": "a_verifier",
+    "redige_par": "ia",
     "mise_a_jour": "2026-10-13"
   },
   {
@@ -81,6 +83,7 @@
     "points_faibles": ["Peu adapté aux petits trajets (FAP, EGR)", "Réparations plus chères que la moyenne", "Boîte DSG à surveiller"],
     "sources": [],
     "statut": "a_verifier",
+    "redige_par": "ia",
     "mise_a_jour": "2026-10-13"
   },
   {
@@ -108,6 +111,7 @@
     "points_faibles": ["Finition et insonorisation sommaires", "Équipements de sécurité limités sur les premières versions", "Petit moteur turbo qui consomme plus qu'annoncé sur autoroute"],
     "sources": [],
     "statut": "a_verifier",
+    "redige_par": "ia",
     "mise_a_jour": "2026-10-13"
   },
   {
@@ -135,6 +139,7 @@
     "points_faibles": ["Courroie de distribution dans l'huile sensible à la qualité de l'huile", "Consommation d'huile sur certains moteurs", "Historique d'entretien indispensable avant achat"],
     "sources": [],
     "statut": "a_verifier",
+    "redige_par": "ia",
     "mise_a_jour": "2026-10-13"
   }
 ]

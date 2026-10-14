@@ -6,6 +6,24 @@ Les fichiers sont lus **au démarrage du serveur** : après une modification, ar
 
 Après chaque modification, lancez `npm test` : les tests vérifient aussi que les données sont bien formées.
 
+## Règles de fiabilité (toutes les fiches)
+
+Chaque fiche, quel que soit le fichier, porte ces champs :
+
+| Champ | Rôle |
+|---|---|
+| `statut` | `a_verifier` ou `verifie`. Une fiche `verifie` doit avoir **au moins une source**. |
+| `sources` | Liste des sources (texte ou URL), vide si aucune. |
+| `redige_par` | `ia` (rédigée de mémoire par l'IA) ou `humain`. |
+| `mise_a_jour` | Date de la dernière modification, au format `AAAA-MM-JJ`. |
+| `incertitudes` | Facultatif : liste des points dont le rédacteur n'est pas sûr. |
+
+- Tout ce que l'IA rédige de mémoire est en `a_verifier`, avec `redige_par: "ia"`.
+- On n'invente jamais de source, de référence de pièce, de numéro de rappel constructeur ni de statistique précise. Dans le doute, on n'écrit pas l'information, ou on la met dans `incertitudes`.
+- On préfère des fourchettes (km, coûts) à des valeurs exactes.
+- Dans l'interface, une fiche `a_verifier` affiche discrètement « Fiche en cours de vérification ».
+- `npm test` vérifie ces règles sur tous les fichiers (`test/donnees.test.js`).
+
 ## `obd.json` : codes défaut OBD-II génériques
 
 Un tableau d'objets :
@@ -17,12 +35,14 @@ Un tableau d'objets :
   "causes_frequentes": ["Bougies usées", "Bobine(s) d'allumage défaillante(s)"],
   "verifications": ["Compteurs de ratés par cylindre en données dynamiques"],
   "statut": "a_verifier",
-  "sources": []
+  "sources": [],
+  "redige_par": "ia",
+  "mise_a_jour": "2026-10-13"
 }
 ```
 
 - `code` : lettre P, B, C ou U, puis 4 caractères (ex. `P0300`, `P20EE`, `U0100`). Un code ne doit apparaître qu'une fois.
-- `statut` et `sources` sont facultatifs. Sans `statut`, la fiche est considérée « à vérifier ».
+- `statut`, `sources`, `redige_par` et `mise_a_jour` suivent les règles de fiabilité ci-dessus.
 - Seuls les codes **génériques** (normalisés, identiques pour toutes les marques) ont leur place ici. Les codes constructeur (souvent P1xxx) n'ont pas le même sens selon la marque.
 
 ## `vehicules.json` : fiches véhicule
@@ -47,6 +67,7 @@ Un tableau d'objets, un par véhicule **et** motorisation :
   "points_faibles": ["…"],
   "sources": [],
   "statut": "a_verifier",
+  "redige_par": "ia",
   "mise_a_jour": "2026-10-13"
 }
 ```
