@@ -20,6 +20,7 @@ retroviz/
 ├── avenir.js           ← calcul de « À venir » : rappels et prochains entretiens (sans base de données)
 ├── rappels.js          ← routes « À venir » et rappels libres
 ├── valeur.js           ← valeur indicative estimée par l'IA, historique
+├── vie.js              ← page de vie d'une voiture : frise, étapes marquantes, chiffres clés
 ├── relecture.js        ← page « Relecture » (administrateurs) : corriger et valider les fiches
 ├── fiabilite.js        ← règles de fiabilité des fiches, partagées par les tests et la Relecture
 ├── propositions.js     ← propositions d'amélioration de la base (Observateur, signalements)
@@ -88,6 +89,16 @@ Les comptes sont facultatifs : l'assistant reste utilisable sans compte. Le bout
 - Après 5 mots de passe erronés pour une même adresse, la connexion est bloquée 15 minutes.
 - En production (`NODE_ENV=production`, derrière HTTPS), le cookie est en plus marqué `Secure`.
 - Routes : `POST /api/auth/signup`, `POST /api/auth/login`, `POST /api/auth/logout`, `GET /api/auth/me`, `GET /api/account/export`, `DELETE /api/account`.
+
+## Page de vie d'une voiture
+
+« Voir sa page » (ou un clic sur le nom de la voiture) ouvre sa page principale, avec quatre onglets : **Sa vie**, **Carnet**, **À venir** et **Valeur**.
+
+- **Photo** facultative : JPEG, PNG ou WebP, 10 Mo au plus, vrai type vérifié d'après le contenu, nom aléatoire, visible par le seul propriétaire. Elle passe par  comme les factures, et elle est effacée avec la voiture ou le compte.
+- **Frise** : ajout au garage ou achat, relevés, entretiens et factures (« avec facture » ou « déclaré »), estimations de valeur. Les changements de propriétaire et les avis s'y ajouteront.
+- **Étapes marquantes** : paliers de kilométrage franchis avec vous (50 000, 100 000 km…), anniversaires (« 1 an avec vous »).
+- **Chiffres clés**, depuis l'achat (date et kilométrage d'achat facultatifs, sinon depuis l'ajout au garage) : km parcourus, total dépensé en entretien, coût d'entretien par km et par mois.
+- Route :  ; photo : ,  et .
 
 ## Mon garage
 

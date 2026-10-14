@@ -3,6 +3,7 @@ import express from "express";
 import { findVehicle, vehicleLabel } from "./knowledge.js";
 import { needUser, sameSiteJson } from "./auth.js";
 import { cleanReleve, cleanDate, cleanAnyDate, incoherence, stats, kmText, MAX_RELEVES } from "./kilometrage.js";
+import { detectType, FILE_TYPES, MAX_FILE_SIZE } from "./storage.js";
 
 export const MAX_VEHICLES = 30;
 const BOITES = ["manuelle", "automatique"];
@@ -61,8 +62,21 @@ export function cleanVehicle(body, thisYear = new Date().getFullYear()) {
   const vm = int(b.vidangeMois, 1, 36, "Intervalle de vidange en mois");
   if (vm.error) return { error: vm.error };
   data.vidangeKm = vk.value; data.vidangeMois = vm.value;
+  // Achat (facultatif) : point de départ de la page de vie et des chiffres clés.
+  data.achatDate = null;
+  if (!empty(b.achatDate)) {
+    const d = cleanDate(b.achatDate);
+    if (d.error) return { error: `Date d'achat : ${d.error.toLowerCase()}` };
+    data.achatDate = d.date;
+  }
+  const ak = int(b.achatKm, 0, 2_000_000, "Kilométrage à l'achat");
+  if (ak.error) return { error: ak.error };
+  data.achatKm = ak.value;
   return { data };
 }
+
+// Photos de voiture : seulement des images que les navigateurs affichent (pas de PDF ni de HEIC).
+export const TYPES_PHOTO = ["jpg", "png", "webp"];
 
 /* ---------- fiche Rétroviz ---------- */
 // On ne relie que si le modèle ET le moteur correspondent, et que l'année tombe dans la période de la fiche :
@@ -85,19 +99,23 @@ export const designation = (v, km = null) =>
 // carnet (facultatif) : module carnet.js, pour le résumé, l'export et l'effacement des factures.
 // rappels (facultatif) : module rappels.js, pour le résumé « À venir » de chaque voiture.
 // valeur (facultatif) : module valeur.js, pour la dernière estimation et l'export.
-export function createGarage(db, kb, { carnet = null, rappels = null, valeur = null } = {}) {
+// storage (facultatif) : module storage.js, pour la photo de la voiture.
+export function createGarage(db, kb, { carnet = null, rappels = null, valeur = null, storage = null, log = console.error } = {}) {
   const q = {
     list: db.prepare("SELECT * FROM vehicles WHERE user_id = ? ORDER BY created_at, id"),
     get: db.prepare("SELECT * FROM vehicles WHERE id = ? AND user_id = ?"),
     count: db.prepare("SELECT COUNT(*) AS n FROM vehicles WHERE user_id = ?"),
     insert: db.prepare(`INSERT INTO vehicles (user_id, surnom, marque, modele, motorisation, annee, boite, fiche_id, fiche_refusee,
-                          mise_en_circulation, assurance_echeance, pneus_hiver, vidange_km, vidange_mois, dernier_ct)
-                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`),
+                          mise_en_circulation, assurance_echeance, pneus_hiver, vidange_km, vidange_mois, dernier_ct, achat_date, achat_km)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`),
     update: db.prepare(`UPDATE vehicles SET surnom = ?, marque = ?, modele = ?, motorisation = ?, annee = ?, boite = ?,
                         fiche_id = ?, fiche_refusee = ?, mise_en_circulation = ?, assurance_echeance = ?, pneus_hiver = ?,
-                        vidange_km = ?, vidange_mois = ?, dernier_ct = ?, updated_at = strftime('%Y-%m-%dT%H:%M:%fZ', 'now')
+                        vidange_km = ?, vidange_mois = ?, dernier_ct = ?, achat_date = ?, achat_km = ?,
+                        updated_at = strftime('%Y-%m-%dT%H:%M:%fZ', 'now')
                         WHERE id = ? AND user_id = ?`),
     remove: db.prepare("DELETE FROM vehicles WHERE id = ? AND user_id = ?"),
+    setPhoto: db.prepare("UPDATE vehicles SET photo_key = ?, photo_type = ?, photo_maj = strftime('%Y-%m-%dT%H:%M:%fZ', 'now') WHERE id = ? AND user_id = ?"),
+    photosOfUser: db.prepare("SELECT photo_key FROM vehicles WHERE user_id = ? AND photo_key IS NOT NULL"),
     releves: db.prepare("SELECT id, date, km FROM releves WHERE vehicle_id = ? ORDER BY date DESC"),
     countReleves: db.prepare("SELECT COUNT(*) AS n FROM releves WHERE vehicle_id = ?"),
     upsertReleve: db.prepare(`INSERT INTO releves (vehicle_id, date, km) VALUES (?, ?, ?)
@@ -115,6 +133,8 @@ export function createGarage(db, kb, { carnet = null, rappels = null, valeur = n
       annee: row.annee, boite: row.boite,
       miseEnCirculation: row.mise_en_circulation, assuranceEcheance: row.assurance_echeance, pneusHiver: !!row.pneus_hiver,
       vidangeKm: row.vidange_km, vidangeMois: row.vidange_mois, dernierCt: row.dernier_ct,
+      achatDate: row.achat_date, achatKm: row.achat_km,
+      photo: row.photo_key ? { url: `/api/garage/${row.id}/photo?v=${encodeURIComponent(row.photo_maj || "")}` } : null,
       fiche: fiche ? { id: fiche.id, label: vehicleLabel(fiche), statut: fiche.statut === "verifie" ? "verifie" : "a_verifier" } : null,
       ficheRefusee: !!row.fiche_refusee,
       kilometrage,
@@ -127,7 +147,9 @@ export function createGarage(db, kb, { carnet = null, rappels = null, valeur = n
   };
   const ficheFor = d => (d.ficheRefusee ? null : matchFiche(d, kb));
   const params = d => [d.surnom, d.marque, d.modele, d.motorisation, d.annee, d.boite, ficheFor(d), d.ficheRefusee ? 1 : 0,
-    d.miseEnCirculation, d.assuranceEcheance, d.pneusHiver ? 1 : 0, d.vidangeKm, d.vidangeMois, d.dernierCt];
+    d.miseEnCirculation, d.assuranceEcheance, d.pneusHiver ? 1 : 0, d.vidangeKm, d.vidangeMois, d.dernierCt, d.achatDate, d.achatKm];
+  // Supprime des fichiers sans faire échouer la requête (un fichier orphelin vaut mieux qu'une erreur).
+  const removeFiles = async keys => { for (const k of keys) { try { await storage?.remove(k); } catch (e) { log("Suppression de photo impossible :", k, e.message); } } };
   const notFound = res => res.status(404).json({ code: "not_found", error: "Voiture introuvable dans votre garage." });
   const vehicleId = req => (/^\d+$/.test(req.params.id) ? Number(req.params.id) : -1);
   const releveOut = (vid, extra = {}) => {
@@ -169,12 +191,56 @@ export function createGarage(db, kb, { carnet = null, rappels = null, valeur = n
 
   router.delete("/api/garage/:id", async (req, res, next) => {
     const id = vehicleId(req);
-    if (!q.get.get(id, req.user.id)) return notFound(res);
+    const row = q.get.get(id, req.user.id);
+    if (!row) return notFound(res);
     const cleanup = carnet ? carnet.beforeDeleteVehicle(id) : null;
     q.remove.run(id, req.user.id); // relevés et entretiens partent avec (ON DELETE CASCADE)
-    try { if (cleanup) await cleanup(); } catch (e) { return next(e); }
+    try {
+      if (cleanup) await cleanup();
+      if (row.photo_key) await removeFiles([row.photo_key]);
+    } catch (e) { return next(e); }
     res.json({ ok: true });
   });
+
+  /* ---------- photo de la voiture : mêmes contrôles que les factures ---------- */
+  const wrap = fn => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next);
+  router.put("/api/garage/:id/photo", express.raw({ type: () => true, limit: MAX_FILE_SIZE }), wrap(async (req, res) => {
+    const id = vehicleId(req);
+    const row = q.get.get(id, req.user.id);
+    if (!row) return notFound(res);
+    if (!storage) return res.status(503).json({ code: "unavailable", error: "Stockage des photos indisponible." });
+    const buf = Buffer.isBuffer(req.body) ? req.body : null;
+    if (!buf || !buf.length) return res.status(400).json({ code: "empty_file", error: "Fichier vide." });
+    const ext = detectType(buf); // le vrai type, d'après le contenu
+    if (!TYPES_PHOTO.includes(ext)) return res.status(415).json({ code: "unsupported_file", error: "Seules les photos JPEG, PNG ou WebP sont acceptées." });
+    const key = await storage.save(buf, { ext });
+    q.setPhoto.run(key, ext, id, req.user.id);
+    if (row.photo_key) await removeFiles([row.photo_key]); // l'ancienne photo est remplacée
+    res.json({ vehicule: toPublic(q.get.get(id, req.user.id)) });
+  }));
+  router.get("/api/garage/:id/photo", wrap(async (req, res) => {
+    const row = q.get.get(vehicleId(req), req.user.id);
+    const buf = row?.photo_key && storage ? await storage.read(row.photo_key) : null;
+    if (!buf) return res.status(404).json({ code: "not_found", error: "Pas de photo." });
+    res.set({ "Content-Type": FILE_TYPES[row.photo_type].mime, "Content-Length": buf.length, "X-Content-Type-Options": "nosniff", "Cache-Control": "private, max-age=86400" });
+    res.end(buf);
+  }));
+  router.delete("/api/garage/:id/photo", wrap(async (req, res) => {
+    const id = vehicleId(req);
+    const row = q.get.get(id, req.user.id);
+    if (!row) return notFound(res);
+    if (!row.photo_key) return res.status(404).json({ code: "not_found", error: "Pas de photo." });
+    q.setPhoto.run(null, null, id, req.user.id);
+    await removeFiles([row.photo_key]);
+    res.json({ vehicule: toPublic(q.get.get(id, req.user.id)) });
+  }));
+  // Fichier trop gros : message clair.
+  router.use("/api/garage/:id/photo", (err, req, res, next) => {
+    if (err?.type === "entity.too.large") return res.status(413).json({ code: "file_too_large", error: `Photo trop lourde (${MAX_FILE_SIZE / 1024 / 1024} Mo au plus).` });
+    next(err);
+  });
+  // Suppression du compte : effacer aussi les photos (appelé avant l'effacement en base).
+  router.beforeDeleteUser = uid => { const keys = q.photosOfUser.all(uid).map(r => r.photo_key); return () => removeFiles(keys); };
 
   /* ---------- relevés de kilométrage ---------- */
   router.get("/api/garage/:id/releves", (req, res) => {

@@ -147,6 +147,11 @@ const MIGRATIONS = {
     vidange_km: "INTEGER",       // NULL : fiche Rétroviz ou valeur par défaut
     vidange_mois: "INTEGER",
     dernier_ct: "TEXT",          // date du dernier contrôle technique, si connue
+    achat_date: "TEXT",          // date d'achat, si connue (départ de la page de vie)
+    achat_km: "INTEGER",         // kilométrage à l'achat, si connu
+    photo_key: "TEXT",           // photo de la voiture : clé dans storage.js (nom aléatoire), ou NULL
+    photo_type: "TEXT",          // jpg, png ou webp, d'après le contenu
+    photo_maj: "TEXT",           // date de la photo (pour le cache du navigateur)
   },
   users: {
     stats_consent: "INTEGER NOT NULL DEFAULT 0", // 1 : accepte que son carnet serve aux statistiques anonymes

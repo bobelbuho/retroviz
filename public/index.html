@@ -375,6 +375,38 @@ label.f{display:block;font-weight:var(--fw-semibold);font-size:var(--fs-sm);marg
 .formsec{grid-column:1/-1;font-size:var(--fs-md);font-weight:var(--fw-bold);margin:var(--sp-3) 0 0;padding-top:var(--sp-4);border-top:1px solid var(--line)}
 @media (max-width:420px){.av{padding:var(--sp-4)}}
 
+/* page de vie d'une voiture */
+.vhead{display:flex;gap:var(--sp-4);align-items:center;flex-wrap:wrap;margin:0 0 var(--sp-4)}
+.vphoto{width:168px;aspect-ratio:4/3;border-radius:var(--r-lg);overflow:hidden;background:var(--soft);display:grid;place-items:center;flex:none;box-shadow:var(--shadow)}
+.vphoto img{width:100%;height:100%;object-fit:cover;display:block}
+.vphoto svg{width:56%;height:auto;color:var(--primary);opacity:.7}
+.vhead h2{font-size:var(--fs-2xl);margin:0;line-height:var(--lh-tight)}
+.vhead h2:focus{outline:none}
+.vhead .sub{color:var(--muted);margin:var(--sp-1) 0 var(--sp-2)}
+.vhead .rowbtns{margin-left:calc(-1 * var(--sp-1))}
+@media (max-width:480px){.vphoto{width:100%}}
+.car .thumb{float:right;width:84px;aspect-ratio:4/3;border-radius:var(--r-md);object-fit:cover;margin:0 0 var(--sp-2) var(--sp-3)}
+.car h3 .open{background:none;border:0;padding:0;font:inherit;color:inherit;cursor:pointer;text-align:left}
+.car h3 .open:hover{color:var(--primary);text-decoration:underline;text-underline-offset:3px}
+#garageIn.envoiture :is(#carnetView,#avenirView,#valeurView) > .back,
+#garageIn.envoiture :is(#carnetView,#avenirView,#valeurView) .carnet-head h2,
+#garageIn.envoiture :is(#carnetView,#valeurView) .carnet-head .sub{display:none}
+.jalons{list-style:none;margin:0 0 var(--sp-5);padding:0;display:flex;flex-wrap:wrap;gap:var(--sp-2)}
+.jalons li{display:inline-flex;align-items:center;gap:var(--sp-2);background:var(--soft);color:var(--primary);border-radius:var(--r-pill);padding:var(--sp-1) var(--sp-3);font-weight:var(--fw-semibold);font-size:var(--fs-sm)}
+.jalons small{color:var(--muted);font-weight:var(--fw-regular)}
+.frise{list-style:none;margin:0;padding:0 0 0 var(--sp-5);border-left:2px solid var(--line)}
+.frise .annee{margin:var(--sp-5) 0 var(--sp-2) calc(-1 * var(--sp-5) - 1px);font-weight:var(--fw-bold);color:var(--primary);background:var(--bg);padding:2px 0}
+.frise .annee:first-child{margin-top:0}
+.ev{position:relative;padding:var(--sp-2) 0 var(--sp-3)}
+.ev::before{content:"";position:absolute;left:calc(-1 * var(--sp-5) - 7px);top:15px;width:12px;height:12px;border-radius:50%;background:var(--surface);border:2px solid var(--field-line)}
+.ev[data-t="entretien"]::before{border-color:var(--primary)}
+.ev[data-t="jalon"]::before{background:var(--primary);border-color:var(--primary)}
+.ev[data-t="achat"]::before,.ev[data-t="ajout"]::before{background:var(--soft);border-color:var(--primary)}
+.ev .quand{color:var(--muted);font-size:var(--fs-xs)}
+.ev .quoi{font-weight:var(--fw-semibold)}
+.ev[data-t="jalon"] .quoi{color:var(--primary)}
+.ev .det{color:var(--muted);font-size:var(--fs-sm);display:flex;flex-wrap:wrap;gap:var(--sp-1) var(--sp-3);align-items:center}
+
 /* carnet d'entretien */
 .back{margin:0 0 var(--sp-3) calc(-1 * var(--sp-3))}
 .carnet-head h2{font-size:var(--fs-2xl);font-weight:var(--fw-bold);margin:0;line-height:var(--lh-tight)}
@@ -598,6 +630,8 @@ footer{margin-top:var(--sp-7);font-size:var(--fs-xs);color:var(--muted);padding-
         <div><label class="f" for="g_marque">Marque *</label><input class="field" id="g_marque" maxlength="40" required placeholder="Renault"></div>
         <div><label class="f" for="g_modele">Modèle *</label><input class="field" id="g_modele" maxlength="60" required placeholder="Clio IV"></div>
         <div class="s2"><label class="f" for="g_moteur">Motorisation</label><input class="field" id="g_moteur" maxlength="80" placeholder="1.5 dCi 90" aria-describedby="g_moteur_hint"><p class="hint" id="g_moteur_hint">Indiquée sur la carte grise (rubrique D.2) ou le carnet. Elle permet de relier la bonne fiche.</p></div>
+        <div><label class="f" for="g_achat">Achetée le</label><input class="field" type="date" id="g_achat"></div>
+        <div><label class="f" for="g_achatKm">Km à l'achat</label><input class="field" id="g_achatKm" inputmode="numeric" maxlength="9" placeholder="92 000"></div>
         <div><label class="f" for="g_annee">Année</label><input class="field" id="g_annee" inputmode="numeric" maxlength="4" placeholder="2016"></div>
         <div class="s2" id="g_kmWrap"><label class="f" for="g_km">Kilométrage actuel</label><input class="field" id="g_km" inputmode="numeric" maxlength="9" placeholder="85 000" aria-describedby="g_km_hint"><p class="hint" id="g_km_hint">Facultatif. Il sera votre premier relevé.</p></div>
         <div><label class="f" for="g_boite">Boîte</label>
@@ -613,6 +647,31 @@ footer{margin-top:var(--sp-7);font-size:var(--fs-xs);color:var(--muted);padding-
         <p class="hint full" id="carMsg" style="margin:0" role="alert"></p>
         <div class="formbtns"><button class="btn" type="submit" id="carSave">Enregistrer</button><button class="btn ghost" type="button" id="carCancel">Annuler</button></div>
       </form>
+      </div>
+      <!-- Page d'une voiture : en-tête, onglets ; « Sa vie » ici, les autres onglets réutilisent les vues ci-dessous -->
+      <div id="voitureView" hidden>
+        <button class="btn ghost small back" type="button" id="voitureBack">← Mon garage</button>
+        <div class="vhead">
+          <div class="vphoto" id="vPhoto"></div>
+          <div>
+            <h2 id="voitureTitre" tabindex="-1"></h2>
+            <p class="sub" id="voitureSub"></p>
+            <div class="rowbtns">
+              <label class="btn ghost small" for="vPhotoFile" id="vPhotoLabel">Ajouter une photo</label>
+              <input type="file" id="vPhotoFile" accept="image/jpeg,image/png,image/webp" class="sr">
+              <button class="btn ghost small" type="button" id="vPhotoDel" hidden>Retirer la photo</button>
+              <button class="btn ghost small" type="button" id="vEdit">Modifier</button>
+            </div>
+            <p class="hint" id="vPhotoMsg" role="status"></p>
+          </div>
+        </div>
+        <div class="tabs" role="tablist" aria-label="Cette voiture">
+          <button type="button" role="tab" data-vtab="vie" aria-selected="true">Sa vie</button>
+          <button type="button" role="tab" data-vtab="carnet" aria-selected="false">Carnet</button>
+          <button type="button" role="tab" data-vtab="avenir" aria-selected="false">À venir</button>
+          <button type="button" role="tab" data-vtab="valeur" aria-selected="false">Valeur</button>
+        </div>
+        <div id="vieView"></div>
       </div>
       <!-- Valeur indicative d'une voiture -->
       <div id="valeurView" hidden>
@@ -1213,7 +1272,7 @@ const STATUT = s => s === "verifie" ? "vérifiée" : "à vérifier";
 async function loadGarage(){
   cars = [];
   if(user){ const r = await api("GET", "/api/garage"); if(r.ok) cars = r.vehicules; }
-  editing = null; kmOpen = null; kmData = {}; carnetOf = null; avenirOf = null; valeurOf = null; renderGarage();
+  editing = null; kmOpen = null; kmData = {}; carnetOf = null; avenirOf = null; valeurOf = null; voitureOf = null; renderGarage();
 }
 const fmtNum = n => Number(n).toLocaleString("fr-FR");
 const fmtDate = d => new Date(d + "T00:00:00").toLocaleDateString("fr-FR", {day:"numeric", month:"long", year:"numeric"});
@@ -1261,21 +1320,25 @@ function renderGarage(){
   const inCarnet = !!user && carnetOf !== null && !!carById(carnetOf);
   const inAvenir = !!user && !inCarnet && avenirOf !== null && !!carById(avenirOf);
   const inValeur = !!user && !inCarnet && !inAvenir && valeurOf !== null && !!carById(valeurOf);
-  const detail = inCarnet || inAvenir || inValeur;
+  const inVoiture = !!user && voitureOf !== null && !!carById(voitureOf);
+  const detail = inCarnet || inAvenir || inValeur || inVoiture;
   $("#garageList").hidden = detail; $("#garageIntro").hidden = detail;
+  $("#voitureView").hidden = !inVoiture; $("#garageIn").classList.toggle("envoiture", inVoiture);
+  if(inVoiture) renderVoiture();
   $("#carnetView").hidden = !inCarnet; $("#avenirView").hidden = !inAvenir; $("#valeurView").hidden = !inValeur;
   if(inValeur) renderValeur();
   if(inCarnet) renderCarnet();
   if(inAvenir) renderAvenir();
   $("#cars").innerHTML = cars.length ? cars.map(c => `<li class="car" data-id="${c.id}">
-      <h3>${esc(c.surnom || c.marque+" "+c.modele)}${c.avenir?.enRetard ? `<span class="badge">${c.avenir.enRetard} en retard</span>` : ""}</h3>
+      ${c.photo ? `<img class="thumb" src="${esc(c.photo.url)}" alt="">` : ""}
+      <h3><button class="open" type="button" data-act="voiture">${esc(c.surnom || c.marque+" "+c.modele)}</button>${c.avenir?.enRetard ? `<span class="badge">${c.avenir.enRetard} en retard</span>` : ""}</h3>
       <p class="sub">${esc(carSub(c))}</p>
       ${kmHTML(c)}
       ${avenirLineHTML(c)}
       ${carnetLineHTML(c)}
       ${valeurLineHTML(c)}
       <p class="fiche">${ficheHTML(c)}</p>
-      <div class="rowbtns"><button class="btn soft small" type="button" data-act="ask">Poser une question</button><button class="btn ghost small" type="button" data-act="edit">Modifier</button><button class="btn ghost small" type="button" data-act="del">Supprimer</button></div>
+      <div class="rowbtns"><button class="btn soft small" type="button" data-act="voiture">Voir sa page</button><button class="btn ghost small" type="button" data-act="ask">Poser une question</button><button class="btn ghost small" type="button" data-act="edit">Modifier</button><button class="btn ghost small" type="button" data-act="del">Supprimer</button></div>
     </li>`).join("") : `<li class="empty">Votre garage est vide. Ajoutez votre première voiture.</li>`;
   $("#carForm").hidden = editing === null; $("#carAdd").hidden = editing !== null;
   /* Sélecteur « Mes voitures » à côté du champ « Votre véhicule ». */
@@ -1284,13 +1347,14 @@ function renderGarage(){
 }
 const carById = id => cars.find(c => c.id === +id);
 const carPayload = c => ({surnom:c.surnom, marque:c.marque, modele:c.modele, motorisation:c.motorisation, annee:c.annee, boite:c.boite,
-  miseEnCirculation:c.miseEnCirculation, dernierCt:c.dernierCt, assuranceEcheance:c.assuranceEcheance, pneusHiver:c.pneusHiver, vidangeKm:c.vidangeKm, vidangeMois:c.vidangeMois});
+  achatDate:c.achatDate, achatKm:c.achatKm, miseEnCirculation:c.miseEnCirculation, dernierCt:c.dernierCt, assuranceEcheance:c.assuranceEcheance, pneusHiver:c.pneusHiver, vidangeKm:c.vidangeKm, vidangeMois:c.vidangeMois});
 function openCarForm(c){
   editing = c ? c.id : "new";
   $("#g_surnom").value = c?.surnom || ""; $("#g_marque").value = c?.marque || ""; $("#g_modele").value = c?.modele || "";
   $("#g_moteur").value = c?.motorisation || ""; $("#g_annee").value = c?.annee || ""; $("#g_boite").value = c?.boite || "";
   $("#g_km").value = ""; $("#g_kmWrap").hidden = !!c;
   $("#g_mec").value = c?.miseEnCirculation || ""; $("#g_mec").max = todayISO();
+  $("#g_achat").value = c?.achatDate || ""; $("#g_achat").max = todayISO(); $("#g_achatKm").value = c?.achatKm ?? "";
   $("#g_dct").value = c?.dernierCt || ""; $("#g_dct").max = todayISO(); $("#g_assur").value = c?.assuranceEcheance || "";
   $("#g_vkm").value = c?.vidangeKm ?? ""; $("#g_vmois").value = c?.vidangeMois ?? ""; $("#g_hiver").checked = !!c?.pneusHiver;
   $("#carMsg").textContent = "";
@@ -1315,6 +1379,7 @@ $("#carForm").addEventListener("submit", async e => {
   $("#carSave").disabled = true;
   const err = await saveCar(id, {surnom:v("g_surnom"), marque:v("g_marque"), modele:v("g_modele"), motorisation:v("g_moteur"),
     annee:v("g_annee"), boite:v("g_boite"), ficheRefusee: !!prev?.ficheRefusee, ...(!id && v("g_km") ? {km:v("g_km")} : {}),
+    achatDate:v("g_achat"), achatKm:v("g_achatKm"),
     miseEnCirculation:v("g_mec"), dernierCt:v("g_dct"), assuranceEcheance:v("g_assur"), vidangeKm:v("g_vkm"), vidangeMois:v("g_vmois"), pneusHiver:$("#g_hiver").checked});
   $("#carSave").disabled = false;
   $("#carMsg").textContent = err || "";
@@ -1335,6 +1400,8 @@ $("#cars").addEventListener("click", async e => {
   }else if(act === "refuse" || act === "relink"){
     const err = await saveCar(c.id, {...carPayload(c), ficheRefusee: act === "refuse"});
     if(err) showNotice(err);
+  }else if(act === "voiture"){
+    await openVoiture(c.id, "vie");
   }else if(act === "valeur"){
     await openValeur(c.id);
   }else if(act === "avenir"){
@@ -1354,6 +1421,82 @@ $("#cars").addEventListener("click", async e => {
     applyReleves(c.id, r);
   }
 });
+/* ---------- page de vie d'une voiture ---------- */
+let voitureOf = null, voitureTab = "vie", vie = null;
+const CAR_ICON = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 16.5v-3l2.2-4.5h10l3.3 4.5H21v3z"/><circle cx="7.5" cy="17" r="1.5"/><circle cx="17" cy="17" r="1.5"/></svg>`;
+async function openVoiture(id, tab = "vie"){
+  if(tab === "carnet") return openCarnet(id);
+  if(tab === "avenir") return openAvenir(id);
+  if(tab === "valeur") return openValeur(id);
+  const r = await api("GET", `/api/garage/${id}/vie`);
+  if(!r.ok){ showNotice(r.error); return; }
+  vie = r; voitureOf = id; voitureTab = "vie"; carnetOf = null; avenirOf = null; valeurOf = null;
+  $("#vPhotoMsg").textContent = ""; renderGarage();
+  window.scrollTo({top:0}); $("#voitureTitre").focus();
+}
+function renderVoiture(){
+  const c = carById(voitureOf);
+  $("#voitureTitre").textContent = c.surnom || c.marque + " " + c.modele;
+  $("#voitureSub").textContent = carSub(c);
+  $("#vPhoto").innerHTML = c.photo ? `<img src="${esc(c.photo.url)}" alt="Photo de ${esc(c.surnom || c.marque + " " + c.modele)}">` : CAR_ICON;
+  $("#vPhotoLabel").textContent = c.photo ? "Changer la photo" : "Ajouter une photo";
+  $("#vPhotoDel").hidden = !c.photo;
+  document.querySelectorAll("[data-vtab]").forEach(b => b.setAttribute("aria-selected", String(b.dataset.vtab === voitureTab)));
+  $("#vieView").hidden = voitureTab !== "vie";
+  if(voitureTab === "vie" && vie) renderVie(c);
+}
+const fmtEurV = n => Number(n).toLocaleString("fr-FR", {style:"currency", currency:"EUR"});
+function renderVie(c){
+  const k = vie.chiffres, depuis = k.source === "achat" ? "depuis l'achat" : "depuis l'ajout au garage";
+  const kpi = (n, t) => `<div class="kpi"><strong>${n}</strong><span>${t}</span></div>`;
+  const kpis = `<div class="kpis">
+    ${kpi(k.kmParcourus != null ? fmtNum(k.kmParcourus) + " km" : "—", `parcourus ${depuis}`)}
+    ${kpi(fmtEurV(k.totalDepense), `dépensés en entretien ${depuis} (${k.entretiens} entretien${k.entretiens > 1 ? "s" : ""}, dont ${k.avecFacture} avec facture)`)}
+    ${kpi(k.coutParKm != null ? k.coutParKm.toLocaleString("fr-FR", {style:"currency", currency:"EUR", minimumFractionDigits:3, maximumFractionDigits:3}) : "—", "d'entretien par km")}
+    ${kpi(fmtEurV(k.coutParMois), `d'entretien par mois, sur ${k.moisDeSuivi || 1} mois`)}</div>`;
+  const conseil = k.source !== "achat" ? `<p class="hint" style="margin-top:calc(-1 * var(--sp-3))">Indiquez la date et le kilométrage d'achat (« Modifier ») pour que les chiffres partent de l'achat.</p>` : "";
+  const jalons = vie.jalons.length ? `<h3 class="sect" style="margin-bottom:var(--sp-3)">Étapes marquantes</h3>
+    <ul class="jalons">${vie.jalons.slice().reverse().map(j => `<li><span aria-hidden="true">★</span>${esc(j.titre)} <small>${esc(fmtShort(j.date))}</small></li>`).join("")}</ul>` : "";
+  let annee = "";
+  const frise = vie.evenements.map(e => {
+    const a = e.date.slice(0, 4), entete = a !== annee ? `<li class="annee" aria-hidden="true">${a}</li>` : "";
+    annee = a;
+    const det = [e.detail && esc(e.detail), e.km != null && !["releve", "achat", "jalon"].includes(e.type) && `${fmtNum(e.km)} km`, e.montant != null && fmtEurV(e.montant / 100)].filter(Boolean);
+    const preuve = e.preuve === "facture" ? `<a href="${esc(e.facture)}" target="_blank" rel="noopener">avec facture</a>` : e.preuve === "declare" ? `<span>déclaré</span>` : "";
+    return `${entete}<li class="ev" data-t="${e.type}"><div class="quand">${esc(fmtDate(e.date))}</div><div class="quoi">${e.type === "jalon" ? "★ " : ""}${esc(e.titre)}</div>
+      ${det.length || preuve ? `<div class="det">${det.map(d => `<span>${d}</span>`).join("")}${preuve}</div>` : ""}</li>`;
+  }).join("");
+  $("#vieView").innerHTML = `${kpis}${conseil}${jalons}
+    <h3 class="sect" style="margin-bottom:var(--sp-3)">Sa vie, de la plus récente à la plus ancienne</h3>
+    <ol class="frise" aria-label="Frise de la vie de la voiture">${frise}</ol>`;
+}
+$("#voitureBack").addEventListener("click", () => {
+  const id = voitureOf; voitureOf = null; carnetOf = null; avenirOf = null; valeurOf = null; renderGarage();
+  document.querySelector(`.car[data-id="${id}"] [data-act=voiture]`)?.focus();
+});
+document.querySelectorAll("[data-vtab]").forEach(b => b.addEventListener("click", () => openVoiture(voitureOf, b.dataset.vtab)));
+$("#vEdit").addEventListener("click", () => { const c = carById(voitureOf); voitureOf = null; carnetOf = null; avenirOf = null; valeurOf = null; openCarForm(c); });
+$("#vPhotoFile").addEventListener("change", async e => {
+  const file = e.target.files[0]; e.target.value = "";
+  if(!file) return;
+  if(file.size > 10 * 1024 * 1024){ $("#vPhotoMsg").textContent = "Photo trop lourde (10 Mo au plus)."; return; }
+  $("#vPhotoMsg").textContent = "Envoi de la photo…";
+  try{
+    const res = await fetch(`/api/garage/${voitureOf}/photo`, {method:"PUT", headers:{"Content-Type":"application/octet-stream"}, body:file});
+    let j = {}; try { j = await res.json(); } catch {}
+    if(!res.ok){ $("#vPhotoMsg").textContent = j.error || "La photo n'a pas pu être envoyée."; return; }
+    cars = cars.map(x => x.id === j.vehicule.id ? j.vehicule : x);
+    $("#vPhotoMsg").textContent = "Photo enregistrée."; renderGarage();
+  }catch{ $("#vPhotoMsg").textContent = "Le serveur ne répond pas."; }
+});
+$("#vPhotoDel").addEventListener("click", async () => {
+  if(!confirm("Retirer la photo de cette voiture ?")) return;
+  const r = await api("DELETE", `/api/garage/${voitureOf}/photo`);
+  if(!r.ok){ $("#vPhotoMsg").textContent = r.error; return; }
+  cars = cars.map(x => x.id === r.vehicule.id ? r.vehicule : x);
+  $("#vPhotoMsg").textContent = "Photo retirée."; renderGarage();
+});
+
 /* ---------- valeur indicative ---------- */
 const fmtShortD = d => new Date(d + "T00:00:00").toLocaleDateString("fr-FR", {day:"numeric", month:"short", year:"numeric"});
 function valeurLineHTML(c){
@@ -1365,7 +1508,7 @@ const fmtEur0 = n => Number(n).toLocaleString("fr-FR", {style:"currency", curren
 async function openValeur(id){
   const r = await api("GET", `/api/garage/${id}/valeur`);
   if(!r.ok){ showNotice(r.error); return; }
-  valeur = r; valeurOf = id; carnetOf = null; avenirOf = null; $("#valMsg").textContent = ""; renderGarage();
+  valeur = r; valeurOf = id; carnetOf = null; avenirOf = null; voitureOf = id; voitureTab = "valeur"; $("#valMsg").textContent = ""; renderGarage();
   window.scrollTo({top:0}); $("#valeurTitle").focus();
 }
 /* Courbe de la valeur probable, avec la fourchette en bande (SVG simple, une seule série). */
@@ -1498,7 +1641,7 @@ function avenirLineHTML(c){
 async function openAvenir(id){
   const r = await api("GET", `/api/garage/${id}/avenir`);
   if(!r.ok){ showNotice(r.error); return; }
-  avenir = r; avenirOf = id; carnetOf = null; valeurOf = null; rapOpen = false; $("#avPannes").open = false; renderGarage();
+  avenir = r; avenirOf = id; carnetOf = null; valeurOf = null; voitureOf = id; voitureTab = "avenir"; rapOpen = false; $("#avPannes").open = false; renderGarage();
   window.scrollTo({top:0}); $("#avenirTitle").focus();
 }
 function avHTML(it){
@@ -1563,7 +1706,7 @@ $("#avl").addEventListener("click", async e => {
     $("#e_type").value = it.fait.type; $("#e_desc").value = it.fait.description;
     entRappelId = it.rappelId ?? null;
   }else if(act === "vehicule"){
-    avenirOf = null; renderGarage(); openCarForm(carById(id));
+    avenirOf = null; voitureOf = null; renderGarage(); openCarForm(carById(id));
     const target = it.cle === "assurance" ? "#g_assur" : it.cle === "vidange" ? "#g_vkm" : it.aCompleter === "dernier_ct" ? "#g_dct" : "#g_mec";
     $(target).scrollIntoView({block:"center"}); $(target).focus();
   }else if(act === "suppr"){
@@ -1583,7 +1726,7 @@ async function refreshCar(id){
 async function openCarnet(id){
   const r = await api("GET", `/api/garage/${id}/entretiens`);
   if(!r.ok){ showNotice(r.error); return; }
-  carnet = r; carnetOf = id; avenirOf = null; valeurOf = null; entEditing = null; entRappelId = null; renderGarage();
+  carnet = r; carnetOf = id; avenirOf = null; valeurOf = null; voitureOf = id; voitureTab = "carnet"; entEditing = null; entRappelId = null; renderGarage();
   window.scrollTo({top:0}); $("#carnetTitle").focus();
 }
 function entHTML(e){
