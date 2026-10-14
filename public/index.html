@@ -173,6 +173,25 @@ label.f{display:block;font-weight:600;font-size:14px;margin-bottom:4px}
 .checks input:checked + label{color:var(--muted);text-decoration:line-through}
 .caveat{font-size:15px;color:var(--muted);border-left:3px solid var(--line);padding-left:12px}
 
+/* Compte */
+.acct{margin-left:auto;align-self:flex-start;display:flex;align-items:center;gap:10px;font-size:15px}
+.acct .who{color:var(--muted);max-width:24ch;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.acct .btn{padding:8px 14px}
+dialog.dlg{border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--ink);padding:22px;width:min(440px,calc(100vw - 32px));max-height:calc(100dvh - 32px)}
+dialog.dlg::backdrop{background:rgb(15 21 30 / .55)}
+.dlg h2{font-family:var(--cond);font-size:26px;font-weight:700;margin:0 0 14px;line-height:1.1}
+.dlg form{display:grid;gap:12px}
+.dlg .close{position:absolute;top:10px;right:10px;background:transparent;border:0;font-size:24px;line-height:1;padding:6px 10px;cursor:pointer;color:var(--muted)}
+.dlg .err{color:var(--red);font-weight:600;margin:0;font-size:15px}
+.dlg .err:empty{display:none}
+.dlg .link{background:none;border:0;padding:0;color:var(--accent);text-decoration:underline;cursor:pointer;font-size:15px}
+.dlg .meta{color:var(--muted);font-size:15px;margin:0 0 16px}
+.dlg .danger{border-top:1px solid var(--line);margin-top:18px;padding-top:14px}
+.dlg .danger summary{cursor:pointer;font-weight:600;color:var(--red)}
+.dlg .danger form{margin-top:10px}
+.btn.red{background:var(--red);color:#fff}
+.dlg [hidden]{display:none}
+
 footer{margin-top:40px;font-size:14px;color:var(--muted);border-top:1px solid var(--line);padding-top:14px}
 @media (prefers-reduced-motion: reduce){.item.flash{animation:none}}
 </style>
@@ -182,6 +201,43 @@ footer{margin-top:40px;font-size:14px;color:var(--muted);border-top:1px solid va
   <header>
     <h1 class="brand">Rétroviz</h1>
     <p class="tagline"><strong style="color:var(--ink);font-size:20px">Regardez dans le rétro, roulez l'esprit tranquille.</strong><br>Comprendre une panne, diagnostiquer comme un pro, acheter une occasion sans mauvaise surprise.</p>
+    <div class="acct" id="acct"><button class="btn ghost" type="button" id="acctBtn">Se connecter</button></div>
+  </header>
+
+  <dialog class="dlg" id="acctDlg" aria-labelledby="acctTitle">
+    <button class="close" type="button" id="acctClose" aria-label="Fermer">×</button>
+    <!-- Connexion / inscription -->
+    <div id="authView">
+      <h2 id="acctTitle">Se connecter</h2>
+      <form id="authForm" novalidate>
+        <div><label class="f" for="au_email">Adresse e-mail</label><input class="field" id="au_email" type="email" autocomplete="email" required></div>
+        <div><label class="f" for="au_pass">Mot de passe</label><input class="field" id="au_pass" type="password" autocomplete="current-password" required>
+          <p class="hint" id="au_passHint" hidden>12 caractères minimum. Une phrase facile à retenir fait un bon mot de passe.</p></div>
+        <p class="hint" id="au_info" hidden>Rétroviz conserve seulement votre adresse e-mail et une empreinte chiffrée de votre mot de passe. Vous pouvez télécharger ou supprimer vos données à tout moment depuis « Mon compte ».</p>
+        <p class="err" id="au_err" role="alert"></p>
+        <button class="btn" type="submit" id="au_submit">Se connecter</button>
+        <p class="hint" style="margin:0"><span id="au_switchTxt">Pas encore de compte ?</span> <button class="link" type="button" id="au_switch">Créer un compte</button></p>
+      </form>
+    </div>
+    <!-- Mon compte -->
+    <div id="meView" hidden>
+      <h2>Mon compte</h2>
+      <p class="meta" id="me_meta"></p>
+      <div class="rowbtns">
+        <a class="btn ghost" href="/api/account/export" download style="text-decoration:none">Télécharger mes données</a>
+        <button class="btn ghost" type="button" id="me_logout">Se déconnecter</button>
+      </div>
+      <details class="danger">
+        <summary>Supprimer mon compte</summary>
+        <form id="delForm" novalidate>
+          <p class="hint" style="margin:0">La suppression est immédiate et définitive : votre compte et toutes ses données sont effacés.</p>
+          <div><label class="f" for="del_pass">Confirmez avec votre mot de passe</label><input class="field" id="del_pass" type="password" autocomplete="current-password" required></div>
+          <p class="err" id="del_err" role="alert"></p>
+          <button class="btn red" type="submit">Supprimer définitivement</button>
+        </form>
+      </details>
+    </div>
+  </dialog>
 
   <div class="modes" role="tablist" aria-label="Choisir un mode">
     <button class="mode" role="tab" data-mode="particulier" aria-selected="true"><strong>J'ai une panne</strong><span>Pour tous : comprendre et savoir quoi faire</span></button>
@@ -674,6 +730,67 @@ function renderReport(d, car, sources){
   });
   $("#newCar").addEventListener("click", () => { rep.hidden=true; rep.innerHTML=""; window.scrollTo({top:0}); $("#a_marque").focus(); });
 }
+
+/* ---------- compte ---------- */
+let user = null, signup = false;
+async function api(method, url, body){
+  let res;
+  try{ res = await fetch(url, {method, headers: body ? {"Content-Type":"application/json"} : {}, body: body ? JSON.stringify(body) : undefined}); }
+  catch{ return {ok:false, error:"Le serveur ne répond pas. Vérifiez qu'il tourne bien (npm start)."}; }
+  let j = {}; try { j = await res.json(); } catch {}
+  return res.ok ? {ok:true, ...j} : {ok:false, error: j.error || "Une erreur est survenue. Réessayez."};
+}
+function renderAcct(){
+  $("#acct").innerHTML = user
+    ? `<span class="who" title="${esc(user.email)}">${esc(user.email)}</span><button class="btn ghost" type="button" id="acctBtn">Mon compte</button>`
+    : `<button class="btn ghost" type="button" id="acctBtn">Se connecter</button>`;
+  $("#authView").hidden = !!user; $("#meView").hidden = !user;
+  if(user) $("#me_meta").textContent = `${user.email} · compte créé le ${new Date(user.createdAt).toLocaleDateString("fr-FR", {day:"numeric", month:"long", year:"numeric"})}`;
+}
+function setSignup(on){
+  signup = on;
+  $("#acctTitle").textContent = on ? "Créer un compte" : "Se connecter";
+  $("#au_submit").textContent = on ? "Créer mon compte" : "Se connecter";
+  $("#au_switchTxt").textContent = on ? "Déjà un compte ?" : "Pas encore de compte ?";
+  $("#au_switch").textContent = on ? "Se connecter" : "Créer un compte";
+  $("#au_pass").autocomplete = on ? "new-password" : "current-password";
+  $("#au_passHint").hidden = !on; $("#au_info").hidden = !on;
+  $("#au_err").textContent = "";
+}
+$("#acct").addEventListener("click", e => {
+  if(!e.target.closest("#acctBtn")) return;
+  renderAcct(); $("#acctDlg").showModal();
+  (user ? $("#me_logout") : $("#au_email")).focus();
+});
+$("#acctClose").addEventListener("click", () => $("#acctDlg").close());
+$("#au_switch").addEventListener("click", () => { setSignup(!signup); $("#au_email").focus(); });
+$("#authForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  const email = $("#au_email").value.trim(), password = $("#au_pass").value;
+  if(!email || !password){ $("#au_err").textContent = "Indiquez votre adresse e-mail et votre mot de passe."; return; }
+  if(signup && password.length < 12){ $("#au_err").textContent = "Le mot de passe doit faire au moins 12 caractères."; $("#au_pass").focus(); return; }
+  $("#au_submit").disabled = true;
+  const r = await api("POST", signup ? "/api/auth/signup" : "/api/auth/login", {email, password});
+  $("#au_submit").disabled = false;
+  if(!r.ok){ $("#au_err").textContent = r.error; return; }
+  user = r.user; $("#au_pass").value = ""; $("#au_err").textContent = "";
+  renderAcct(); $("#acctDlg").close();
+});
+$("#me_logout").addEventListener("click", async () => {
+  await api("POST", "/api/auth/logout", {});
+  user = null; setSignup(false); renderAcct(); $("#acctDlg").close();
+});
+$("#delForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  const password = $("#del_pass").value;
+  if(!password){ $("#del_err").textContent = "Indiquez votre mot de passe."; return; }
+  const r = await api("DELETE", "/api/account", {password});
+  if(!r.ok){ $("#del_err").textContent = r.error; return; }
+  $("#del_pass").value = ""; $("#del_err").textContent = ""; $("#delForm").closest("details").open = false;
+  user = null; setSignup(false); renderAcct(); $("#acctDlg").close();
+  showNotice("Votre compte et ses données ont été supprimés.");
+});
+api("GET", "/api/auth/me").then(r => { if(r.ok){ user = r.user; renderAcct(); } });
 
 setMode("particulier");
 })();

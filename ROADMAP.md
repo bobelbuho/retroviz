@@ -2,7 +2,7 @@
 
 ## Phase 1 : comptes et garage (en cours)
 
-- Comptes utilisateurs (e-mail + mot de passe), conformes au RGPD : export et suppression des données.
+- ✅ Comptes utilisateurs (e-mail + mot de passe), conformes au RGPD : export et suppression des données.
 - Garage virtuel : mes voitures, reliées si possible à une fiche de la base Rétroviz.
 - Relevés de kilométrage et moyenne de km par mois.
 - Carnet d'entretien, avec photo ou PDF de facture.
@@ -51,3 +51,8 @@
 - Hébergement en Europe.
 - Conformité RGPD.
 - Politique de confidentialité et conditions d'utilisation rédigées avec un professionnel avant tout lancement public.
+
+## À faire avant le lancement public
+
+- Vérification de l'adresse e-mail à l'inscription (lien de confirmation).
+- Ne plus révéler si une adresse est déjà inscrite : l'inscription affiche le même message dans tous les cas, et un e-mail prévient le titulaire de l'adresse.
