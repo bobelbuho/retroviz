@@ -83,6 +83,59 @@ CREATE TABLE IF NOT EXISTS estimations (
   created_at      TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now')),
   UNIQUE (vehicle_id, date)              -- une estimation par voiture et par jour (coûts)
 );
+CREATE TABLE IF NOT EXISTS propositions (
+  id          INTEGER PRIMARY KEY,
+  origine     TEXT NOT NULL,             -- observateur ou utilisateur
+  type        TEXT NOT NULL,             -- creation, ajout, modification, contradiction, signalement
+  collection  TEXT,                      -- voyants, obd, vehicules (ou NULL pour un signalement général)
+  cible_id    TEXT,                      -- identifiant de la fiche visée
+  champ       TEXT,                      -- champ visé (ex. pannes), si besoin
+  valeur      TEXT,                      -- JSON : ce qui est proposé
+  resume      TEXT NOT NULL,             -- une phrase lisible
+  sources     TEXT NOT NULL DEFAULT '[]',-- JSON [{url, type, titre, date}]
+  confiance   TEXT,                      -- confirme ou signale
+  nb_sources  INTEGER NOT NULL DEFAULT 0,
+  statut      TEXT NOT NULL DEFAULT 'en_attente', -- en_attente, acceptee, rejetee
+  motif       TEXT,                      -- motif du rejet
+  decide_par  TEXT,
+  decide_le   TEXT,
+  passage_id  INTEGER,                   -- passage de l'Observateur qui l'a créée
+  cree_le     TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now'))
+);
+CREATE INDEX IF NOT EXISTS propositions_statut ON propositions(statut, type);
+-- Retours sous les réponses de l'assistant : anonymes (aucun lien avec un compte).
+CREATE TABLE IF NOT EXISTS retours (
+  id          INTEGER PRIMARY KEY,
+  mode        TEXT NOT NULL,
+  avis        TEXT NOT NULL,             -- oui, non, erreur
+  commentaire TEXT,
+  fiches      TEXT NOT NULL DEFAULT '[]',-- JSON : fiches Rétroviz citées sous la réponse
+  extrait     TEXT,                      -- début de la réponse de l'IA (jamais la question)
+  cree_le     TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now'))
+);
+-- Questions sans fiche : seulement la voiture indiquée et les codes cités, jamais le texte de la question.
+CREATE TABLE IF NOT EXISTS questions_sans_fiche (
+  id       INTEGER PRIMARY KEY,
+  mode     TEXT NOT NULL,
+  vehicule TEXT NOT NULL DEFAULT '',
+  codes    TEXT NOT NULL DEFAULT '[]',
+  cree_le  TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now'))
+);
+-- Passages de l'Observateur : journal et dépenses.
+CREATE TABLE IF NOT EXISTS observateur_passages (
+  id          INTEGER PRIMARY KEY,
+  debut       TEXT NOT NULL,
+  fin         TEXT,
+  cible       TEXT NOT NULL,             -- modèle ou liste traitée
+  statut      TEXT NOT NULL DEFAULT 'en_cours', -- en_cours, termine, budget_atteint, erreur
+  sources     INTEGER NOT NULL DEFAULT 0, -- pages et API consultées
+  refusees    INTEGER NOT NULL DEFAULT 0, -- pages écartées (robots.txt, refus, connexion, paywall)
+  faits       INTEGER NOT NULL DEFAULT 0,
+  propositions INTEGER NOT NULL DEFAULT 0,
+  rappels     INTEGER NOT NULL DEFAULT 0, -- rappels officiels ajoutés automatiquement
+  cout_eur    REAL NOT NULL DEFAULT 0,
+  journal     TEXT NOT NULL DEFAULT '[]' -- JSON : lignes de journal
+);
 `;
 
 // Colonnes ajoutées après la création des tables : ajoutées aux bases existantes au démarrage.
@@ -94,6 +147,9 @@ const MIGRATIONS = {
     vidange_km: "INTEGER",       // NULL : fiche Rétroviz ou valeur par défaut
     vidange_mois: "INTEGER",
     dernier_ct: "TEXT",          // date du dernier contrôle technique, si connue
+  },
+  users: {
+    stats_consent: "INTEGER NOT NULL DEFAULT 0", // 1 : accepte que son carnet serve aux statistiques anonymes
   },
 };
 

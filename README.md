@@ -22,6 +22,8 @@ retroviz/
 ├── valeur.js           ← valeur indicative estimée par l'IA, historique
 ├── relecture.js        ← page « Relecture » (administrateurs) : corriger et valider les fiches
 ├── fiabilite.js        ← règles de fiabilité des fiches, partagées par les tests et la Relecture
+├── propositions.js     ← propositions d'amélioration de la base (Observateur, signalements)
+├── retours.js          ← retours sous les réponses, questions sans fiche, statistiques anonymes
 ├── storage.js          ← stockage des fichiers (factures) : enregistrer, lire, supprimer
 ├── db.js               ← la base SQLite (comptes, garages)
 ├── storage/            ← la base (retroviz.db) et les factures (uploads/), créés au démarrage, jamais publiés
@@ -150,6 +152,19 @@ Depuis la carte d'une voiture, « Estimer la valeur » demande à l'IA une fourc
 - **Modèle** : le même que l'assistant (variable `MODEL`). Si le modèle décline la demande, l'API la relance sur un autre modèle (repli côté serveur). Sans clé API, l'estimation est désactivée avec un message clair.
 - **RGPD** : les estimations sont dans l'export, et effacées avec la voiture ou le compte.
 - **Routes** (connexion requise) : `GET /api/garage/:id/valeur` (historique) et `POST /api/garage/:id/valeur` (nouvelle estimation).
+
+## Relecture et apprentissage depuis l'usage
+
+- **Page « Relecture »** (comptes de `ADMIN_EMAILS` seulement), avec cinq onglets :
+  - **Tableau de bord** : propositions et signalements en attente, dépense de l'Observateur, fiches par statut, retours des 30 derniers jours, voitures les plus demandées sans fiche.
+  - **Fiches** : corriger, ajouter une source, passer en vérifiée (voir `data/README.md`).
+  - **Propositions** : accepter, modifier puis accepter, ou rejeter avec un motif. Une proposition acceptée est écrite dans la fiche avec ses sources ; la fiche reste « à vérifier ».
+  - **Signalements** : les erreurs signalées par les utilisateurs.
+  - **Questions sans fiche** : la liste prioritaire de l'Observateur.
+- **Sous chaque réponse** : « Cette réponse vous a aidé ? Oui / Non / Signaler une erreur ». C'est anonyme : aucun lien avec le compte. Le commentaire est nettoyé des adresses, numéros et plaques, et la question n'est jamais gardée.
+- **Questions sans fiche** : quand la base n'a pas de fiche pour la question ou pour la voiture indiquée, seuls la voiture et les codes défaut sont notés.
+- **Statistiques anonymes des carnets** : seulement pour les comptes qui l'ont accepté dans « Mon compte » (désactivé par défaut). Elles ne sont publiées qu'à partir de 10 véhicules, en fourchette arrondie au millier de km (`GET /api/stats/entretiens`).
+- **Confidentialité** : la page `public/confidentialite.html`, en version provisoire, à faire relire par un professionnel.
 
 ## Où modifier quoi
 

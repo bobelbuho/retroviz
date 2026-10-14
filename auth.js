@@ -86,12 +86,12 @@ export const needUser = (req, res, next) =>
 export function createAuth(db, { now = () => Date.now(), exportData = () => ({}), beforeDeleteUser = () => null, isAdmin = () => false } = {}) {
   const q = {
     userByEmail: db.prepare("SELECT * FROM users WHERE email = ?"),
-    userById: db.prepare("SELECT id, email, created_at FROM users WHERE id = ?"),
+    userById: db.prepare("SELECT id, email, created_at, stats_consent FROM users WHERE id = ?"),
     insertUser: db.prepare("INSERT INTO users (email, password_hash) VALUES (?, ?)"),
     deleteUser: db.prepare("DELETE FROM users WHERE id = ?"),
     passwordOf: db.prepare("SELECT password_hash FROM users WHERE id = ?"),
     insertSession: db.prepare("INSERT INTO sessions (token_hash, user_id, expires_at) VALUES (?, ?, ?)"),
-    sessionUser: db.prepare(`SELECT u.id, u.email, u.created_at FROM sessions s JOIN users u ON u.id = s.user_id
+    sessionUser: db.prepare(`SELECT u.id, u.email, u.created_at, u.stats_consent FROM sessions s JOIN users u ON u.id = s.user_id
                              WHERE s.token_hash = ? AND s.expires_at > ?`),
     deleteSession: db.prepare("DELETE FROM sessions WHERE token_hash = ?"),
     sessionsOf: db.prepare("SELECT created_at, expires_at FROM sessions WHERE user_id = ? AND expires_at > ? ORDER BY created_at"),
@@ -122,7 +122,7 @@ export function createAuth(db, { now = () => Date.now(), exportData = () => ({})
     if (token) q.deleteSession.run(sha256(token));
     setSessionCookie(req, res, "", 0);
   }
-  const publicUser = u => ({ email: u.email, createdAt: u.created_at, ...(isAdmin(u) && { admin: true }) });
+  const publicUser = u => ({ email: u.email, createdAt: u.created_at, statsConsent: !!u.stats_consent, ...(isAdmin(u) && { admin: true }) });
 
   const router = express.Router();
 

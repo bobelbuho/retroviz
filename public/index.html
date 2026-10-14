@@ -76,6 +76,7 @@ html{scroll-padding-top:env(safe-area-inset-top,0px)}
 [hidden]{display:none !important}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);font-size:var(--fs-md);line-height:var(--lh);-webkit-font-smoothing:antialiased;overflow-wrap:break-word}
 button,input,select,textarea{font:inherit;color:inherit}
+a{color:var(--primary);text-underline-offset:2px}
 :focus-visible{outline:3px solid var(--primary);outline-offset:2px;border-radius:var(--r-sm)}
 .wrap{max-width:var(--page-max);margin:0 auto;padding:var(--sp-4) var(--gutter) var(--sp-7)}
 @media (min-width:600px){.wrap{padding-top:var(--sp-5);--gutter:24px}}
@@ -116,6 +117,12 @@ label.f{display:block;font-weight:var(--fw-semibold);font-size:var(--fs-sm);marg
 .field:focus{border-color:var(--primary);outline:none;box-shadow:0 0 0 3px color-mix(in srgb,var(--primary) 30%,transparent)}
 .hint{font-size:var(--fs-xs);color:var(--muted);margin:var(--sp-1) 0 0}
 .veh{margin-bottom:var(--sp-4)}
+/* Retours sous les réponses */
+.fb{display:flex;flex-wrap:wrap;align-items:center;gap:var(--sp-1) var(--sp-2);margin-top:var(--sp-3);font-size:var(--fs-sm);color:var(--muted)}
+.fb .btn{min-height:36px}
+.fb form{flex-basis:100%;display:grid;gap:var(--sp-2);margin-top:var(--sp-2)}
+.fb textarea{min-height:64px;resize:vertical}
+
 /* Relecture (administrateur) */
 .nav{flex-wrap:wrap;justify-content:flex-end}
 .tabs{display:flex;flex-wrap:wrap;gap:var(--sp-1);border-bottom:1px solid var(--line);margin:0 0 var(--sp-5)}
@@ -138,6 +145,16 @@ label.f{display:block;font-weight:var(--fw-semibold);font-size:var(--fs-sm);marg
 .rsrc{display:flex;gap:var(--sp-2);flex-wrap:wrap}
 .rsrc .field{flex:1 1 260px;width:auto}
 .rmsg{margin:0;font-weight:var(--fw-semibold);font-size:var(--fs-sm)}
+.prop{background:var(--surface);border-radius:var(--r-lg);padding:var(--sp-4) var(--sp-5);box-shadow:var(--shadow);display:grid;gap:var(--sp-2)}
+.props{list-style:none;margin:0;padding:0;display:grid;gap:var(--sp-3)}
+.prop .meta{color:var(--muted);font-size:var(--fs-xs)}
+.prop ul{margin:0;padding-left:20px;font-size:var(--fs-sm)}
+.prop textarea{min-height:110px}
+.prop .rejet{display:flex;gap:var(--sp-2);flex-wrap:wrap}
+.prop .rejet .field{flex:1 1 220px;width:auto}
+.qsf{width:100%;border-collapse:collapse;font-size:var(--fs-sm);background:var(--surface);border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--shadow)}
+.qsf th,.qsf td{text-align:left;padding:var(--sp-2) var(--sp-3);border-top:1px solid var(--line)}
+.qsf th{color:var(--muted);font-weight:var(--fw-semibold);border-top:0}
 .rmsg.ok{color:var(--green-ink)}.rmsg.ko{color:var(--red-ink)}
 
 /* Voyants */
@@ -420,7 +437,7 @@ footer{margin-top:var(--sp-7);font-size:var(--fs-xs);color:var(--muted);padding-
         <div><label class="f" for="au_email">Adresse e-mail</label><input class="field" id="au_email" type="email" autocomplete="email" required></div>
         <div><label class="f" for="au_pass">Mot de passe</label><input class="field" id="au_pass" type="password" autocomplete="current-password" required>
           <p class="hint" id="au_passHint" hidden>12 caractères minimum. Une phrase facile à retenir fait un bon mot de passe.</p></div>
-        <p class="hint" id="au_info" hidden>Rétroviz conserve seulement votre adresse e-mail et une empreinte chiffrée de votre mot de passe. Vous pouvez télécharger ou supprimer vos données à tout moment depuis « Mon compte ».</p>
+        <p class="hint" id="au_info" hidden>Rétroviz conserve seulement votre adresse e-mail et une empreinte chiffrée de votre mot de passe. Vous pouvez télécharger ou supprimer vos données à tout moment depuis « Mon compte ». <a href="/confidentialite.html">Confidentialité</a></p>
         <p class="err" id="au_err" role="alert"></p>
         <button class="btn" type="submit" id="au_submit">Se connecter</button>
         <p class="hint" style="margin:0"><span id="au_switchTxt">Pas encore de compte ?</span> <button class="link" type="button" id="au_switch">Créer un compte</button></p>
@@ -433,6 +450,11 @@ footer{margin-top:var(--sp-7);font-size:var(--fs-xs);color:var(--muted);padding-
       <div class="rowbtns">
         <a class="btn soft" href="/api/account/export" download>Télécharger mes données</a>
         <button class="btn ghost" type="button" id="me_logout">Se déconnecter</button>
+      </div>
+      <div style="margin-top:var(--sp-5)">
+        <label class="check"><input type="checkbox" id="me_stats"><span>Partager anonymement les données de mon carnet d'entretien pour les statistiques Rétroviz</span></label>
+        <p class="hint">Par exemple « embrayage changé entre 100 000 et 130 000 km sur 12 véhicules ». Jamais votre adresse, ni le détail de vos entretiens ; une statistique n'est affichée qu'à partir de 10 véhicules. Désactivé par défaut. <a href="/confidentialite.html">En savoir plus</a></p>
+        <p class="hint" id="me_statsMsg" role="status"></p>
       </div>
       <details class="danger">
         <summary>Supprimer mon compte</summary>
@@ -514,8 +536,17 @@ footer{margin-top:var(--sp-7);font-size:var(--fs-xs);color:var(--muted);padding-
     <div class="tabs" role="tablist" aria-label="Relecture">
       <button type="button" role="tab" data-rtab="tableau" aria-selected="true">Tableau de bord</button>
       <button type="button" role="tab" data-rtab="fiches" aria-selected="false">Fiches</button>
+      <button type="button" role="tab" data-rtab="propositions" aria-selected="false">Propositions</button>
+      <button type="button" role="tab" data-rtab="signalements" aria-selected="false">Signalements</button>
+      <button type="button" role="tab" data-rtab="questions" aria-selected="false">Questions sans fiche</button>
     </div>
     <div id="rTableau"></div>
+    <div id="rProps" hidden>
+      <div class="rfilters"><label class="sr" for="rPStatut">Statut</label>
+        <select class="field" id="rPStatut"><option value="en_attente">En attente</option><option value="acceptee">Acceptées</option><option value="rejetee">Rejetées</option></select></div>
+      <ul class="props" id="rPList"></ul>
+    </div>
+    <div id="rQuestions" hidden></div>
     <div id="rFiches" hidden>
       <div id="rListe">
         <div class="rfilters">
@@ -636,7 +667,7 @@ footer{margin-top:var(--sp-7);font-size:var(--fs-xs);color:var(--muted);padding-
     </div>
   </section>
 
-  <footer>Rétroviz donne des pistes, pas un diagnostic certifié : ses informations peuvent être incomplètes ou inexactes. Au moindre doute sur les freins, la direction, un voyant rouge ou une odeur de carburant, arrêtez-vous et contactez un professionnel.</footer>
+  <footer>Rétroviz donne des pistes, pas un diagnostic certifié : ses informations peuvent être incomplètes ou inexactes. Au moindre doute sur les freins, la direction, un voyant rouge ou une odeur de carburant, arrêtez-vous et contactez un professionnel. <a href="/confidentialite.html">Confidentialité</a></footer>
 </div>
 
 <script>
@@ -806,6 +837,7 @@ function aiHTML(msg){
   if(msg.note) h += `<p class="note">${esc(msg.note)}</p>`;
   if(msg.done && msg.sources) h += `<p class="src">${esc(sourcesText(msg.sources))}</p>`;
   if(msg.done && body.trim()) h += `<button class="btn ghost small copy" type="button">Copier la réponse</button>`;
+  if(msg.done && body.trim()) h += fbHTML(msg);
   return h;
 }
 function renderThread(){
@@ -821,6 +853,53 @@ function renderThread(){
 }
 
 /* Copier une réponse : niveau (s'il y en a un) + texte mis en forme. */
+/* « Cette réponse vous a aidé ? » : retour anonyme ; un signalement arrive dans la Relecture. */
+function fbHTML(state){
+  if(state.fb === "envoye") return `<p class="fb" role="status">Merci pour votre retour.</p>`;
+  return `<div class="fb"><span>Cette réponse vous a aidé ?</span>
+    <button class="btn ghost small" type="button" data-fb="oui">Oui</button><button class="btn ghost small" type="button" data-fb="non">Non</button>
+    <button class="btn ghost small" type="button" data-fb="erreur" aria-expanded="${!!state.fbOuvert}">Signaler une erreur</button>
+    ${state.fbOuvert ? `<form data-fbform><label class="f" for="fbTxt${state.fbId}">Qu'est-ce qui est faux ?</label>
+      <textarea class="field" id="fbTxt${state.fbId}" maxlength="1000" placeholder="Ex. ce voyant n'oblige pas à s'arrêter, d'après la notice"></textarea>
+      <p class="hint" style="margin:0">Ne mettez ni nom, ni téléphone, ni plaque : votre message est anonyme.</p>
+      <p class="hint" data-fbmsg role="alert" style="margin:0"></p>
+      <div class="rowbtns"><button class="btn soft small" type="submit">Envoyer le signalement</button></div></form>` : ""}</div>`;
+}
+let fbSeq = 0;
+async function envoyerRetour(state, payload){
+  const r = await api("POST", "/api/retours", payload);
+  if(r.ok){ state.fb = "envoye"; state.fbOuvert = false; }
+  return r;
+}
+/* Retour sur une réponse de la conversation (l'état est gardé dans le message). */
+async function fbClick(e, msg, box, rerender){
+  const b = e.target.closest("[data-fb]");
+  if(!b) return false;
+  if(b.dataset.fb === "erreur"){ msg.fbOuvert = !msg.fbOuvert; msg.fbId ??= ++fbSeq; rerender(); box.querySelector("textarea")?.focus(); return true; }
+  await envoyerRetour(msg, {mode:msg.fbMode, avis:b.dataset.fb, fiches:msg.sources || [], extrait:(msg.fbExtrait || "").slice(0, 600)});
+  rerender(); return true;
+}
+async function fbSubmit(e, msg, box, rerender){
+  const f = e.target.closest("[data-fbform]"); if(!f) return;
+  e.preventDefault();
+  const commentaire = f.querySelector("textarea").value.trim();
+  if(!commentaire){ f.querySelector("[data-fbmsg]").textContent = "Dites en quelques mots ce qui est faux."; return; }
+  const r = await envoyerRetour(msg, {mode:msg.fbMode, avis:"erreur", commentaire, fiches:msg.sources || [], extrait:(msg.fbExtrait || "").slice(0, 600)});
+  if(!r.ok){ f.querySelector("[data-fbmsg]").textContent = r.error; return; }
+  rerender();
+}
+const msgOf = box => (convo[mode] || []).filter(t => t.role === "assistant")[[...$("#thread").querySelectorAll(".msg-ai")].indexOf(box)];
+$("#thread").addEventListener("click", async e => {
+  const box = e.target.closest(".msg-ai"); if(!box) return;
+  const msg = msgOf(box); if(!msg) return;
+  msg.fbMode = msg.mode; msg.fbExtrait = msg.content;
+  await fbClick(e, msg, box, () => { box.innerHTML = aiHTML(msg); });
+});
+$("#thread").addEventListener("submit", async e => {
+  const box = e.target.closest(".msg-ai"); if(!box) return;
+  const msg = msgOf(box); if(!msg) return;
+  await fbSubmit(e, msg, box, () => { box.innerHTML = aiHTML(msg); });
+});
 $("#thread").addEventListener("click", async e => {
   const b = e.target.closest(".copy"); if(!b) return;
   const box = b.closest(".msg-ai");
@@ -973,7 +1052,12 @@ $("#achatForm").addEventListener("submit", async e => {
   }finally{ ctl=null; setBusy(false); $("#sendBtn").hidden=false; $("#stopBtn").hidden=true; }
 });
 
+let achatFbState = null;
+function renderAchatFb(){ const el = $("#achatFb"); if(el && achatFbState) el.innerHTML = fbHTML(achatFbState); }
+$("#report").addEventListener("click", e => { if(achatFbState && e.target.closest("#achatFb")) fbClick(e, achatFbState, $("#achatFb"), renderAchatFb); });
+$("#report").addEventListener("submit", e => { if(achatFbState && e.target.closest("#achatFb")) fbSubmit(e, achatFbState, $("#achatFb"), renderAchatFb); });
 function renderReport(d, car, sources){
+  achatFbState = {fbMode:"achat", sources, fbExtrait:`${d.vehicule || ""} : ${d.resume || ""}`, fbId:++fbSeq};
   const rep = $("#report");
   const arr = x => Array.isArray(x) ? x.filter(Boolean).map(String) : [];
   const pannes = (Array.isArray(d.pannes) ? d.pannes : [])
@@ -1033,9 +1117,11 @@ function renderReport(d, car, sources){
 
     ${d.incertitude?`<p class="sect caveat">${esc(d.incertitude)}</p>`:""}
     ${sources ? `<p class="sect src">${esc(sourcesText(sources))}</p>` : ""}
+    <div class="sect" id="achatFb"></div>
     <p class="sect caveat">Ces informations peuvent être incomplètes ou inexactes : recoupez-les avec un historique d'entretien, un contrôle technique récent et, si possible, l'avis d'un garagiste avant d'acheter.</p>
     <div class="rowbtns"><button class="btn" type="button" id="askAbout">Poser une question sur ce véhicule</button><button class="btn ghost" type="button" id="newCar">Analyser une autre voiture</button></div>`;
 
+  renderAchatFb();
   rep.querySelectorAll(".dot").forEach(b => b.addEventListener("click", () => {
     const el = $("#pn"+b.dataset.i); if(!el) return;
     el.scrollIntoView({behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block:"center"});
@@ -1062,6 +1148,7 @@ function renderAcct(){
   if(!user?.admin && mode === "relecture") setMode("particulier");
   $("#acct").innerHTML = `<button class="navlink" type="button" id="acctBtn" ${user ? `title="${esc(user.email)}"` : ""}>${user ? "Mon compte" : "Se connecter"}</button>`;
   $("#authView").hidden = !!user; $("#meView").hidden = !user;
+  if(user) $("#me_stats").checked = !!user.statsConsent;
   if(user) $("#me_meta").textContent = `${user.email} · compte créé le ${new Date(user.createdAt).toLocaleDateString("fr-FR", {day:"numeric", month:"long", year:"numeric"})}`;
 }
 function setSignup(on){
@@ -1092,6 +1179,12 @@ $("#authForm").addEventListener("submit", async e => {
   if(!r.ok){ $("#au_err").textContent = r.error; return; }
   user = r.user; $("#au_pass").value = ""; $("#au_err").textContent = "";
   renderAcct(); $("#acctDlg").close(); loadGarage();
+});
+$("#me_stats").addEventListener("change", async e => {
+  const r = await api("PUT", "/api/account/consentement", {stats:e.target.checked});
+  if(!r.ok){ e.target.checked = !e.target.checked; $("#me_statsMsg").textContent = r.error; return; }
+  user.statsConsent = r.statsConsent;
+  $("#me_statsMsg").textContent = r.statsConsent ? "Merci : votre carnet compte, anonymement, dans les statistiques." : "Votre carnet ne compte plus dans les statistiques.";
 });
 $("#me_logout").addEventListener("click", async () => {
   await api("POST", "/api/auth/logout", {});
@@ -1615,14 +1708,26 @@ function setRTab(t){
   rTab = t;
   document.querySelectorAll("[data-rtab]").forEach(b => b.setAttribute("aria-selected", String(b.dataset.rtab === t)));
   $("#rTableau").hidden = t !== "tableau"; $("#rFiches").hidden = t !== "fiches";
+  $("#rProps").hidden = t !== "propositions" && t !== "signalements"; $("#rQuestions").hidden = t !== "questions";
   if(t === "tableau") loadRTableau(); else if(t === "fiches"){ rFiche = null; loadRFiches(); }
+  else if(t === "propositions" || t === "signalements") loadRProps(); else if(t === "questions") loadRQuestions();
 }
 function openRelecture(){ setRTab(rTab); }
 async function loadRTableau(){
   const r = await api("GET", "/api/admin/tableau");
   if(!r.ok){ $("#rTableau").innerHTML = `<p class="notice">${esc(r.error)}</p>`; return; }
   const cartes = Object.entries(r.fiches).map(([c, n]) => `<div class="kpi"><strong>${n.a_verifier}</strong><span>${esc(COL_NOM[c] || c)} à vérifier, sur ${n.total} (${n.verifie} vérifiée${n.verifie > 1 ? "s" : ""})</span></div>`).join("");
-  $("#rTableau").innerHTML = `<h3 class="sect" style="margin-bottom:var(--sp-3)">Fiches par statut</h3><div class="kpis">${cartes}</div>`;
+  const p = r.propositions || {}, nProps = Object.entries(p).filter(([k]) => k !== "signalement").reduce((n, [, v]) => n + v, 0);
+  const rt = r.retours || {}, eur = n => Number(n || 0).toLocaleString("fr-FR", {style:"currency", currency:"EUR"});
+  const kpi = (n, t) => `<div class="kpi"><strong>${n}</strong><span>${t}</span></div>`;
+  $("#rTableau").innerHTML = `
+    <h3 class="sect" style="margin-bottom:var(--sp-3)">À traiter</h3>
+    <div class="kpis">${kpi(nProps, "propositions en attente")}${kpi(p.signalement || 0, "signalements d'erreur en attente")}
+      ${kpi(eur(r.depenseObservateurMois), `dépensés par l'Observateur ce mois-ci${r.budgetObservateur ? ` (budget ${eur(r.budgetObservateur)})` : " (pas de budget défini)"}`)}</div>
+    <h3 class="sect" style="margin-bottom:var(--sp-3)">Fiches par statut</h3><div class="kpis">${cartes}</div>
+    <h3 class="sect" style="margin-bottom:var(--sp-3)">Retours des utilisateurs (30 derniers jours)</h3>
+    <div class="kpis">${kpi(rt.oui || 0, "« oui, ça m'a aidé »")}${kpi(rt.non || 0, "« non »")}${kpi(rt.erreur || 0, "erreurs signalées")}${kpi(r.statistiquesPubliables || 0, "statistiques anonymes publiables (10 véhicules et plus)")}</div>
+    ${(r.questionsSansFiche || []).length ? `<h3 class="sect" style="margin-bottom:var(--sp-3)">Voitures les plus demandées sans fiche</h3><ul>${r.questionsSansFiche.map(q => `<li>${esc(q.vehicule)} : ${q.nombre} question${q.nombre > 1 ? "s" : ""}</li>`).join("")}</ul>` : ""}`;
 }
 async function loadRFiches(){
   $("#rListe").hidden = !!rFiche; $("#rEdit").hidden = !rFiche;
@@ -1663,6 +1768,57 @@ async function rAction(method, url, body, okMsg){
   if(!r.ok) return renderREditKeep(r.error);
   rFiche.fiche = r.fiche; renderREdit(okMsg, true);
 }
+const TYPE_PROP = {creation:"Nouvelle fiche", ajout:"Ajout", modification:"Modification", contradiction:"Contradiction", signalement:"Signalement d'erreur"};
+let rProps = [];
+async function loadRProps(){
+  const sig = rTab === "signalements";
+  const r = await api("GET", `/api/admin/propositions?statut=${$("#rPStatut").value}&type=${sig ? "signalement" : "propositions"}`);
+  if(!r.ok){ $("#rPList").innerHTML = `<li class="notice">${esc(r.error)}</li>`; return; }
+  rProps = r.propositions;
+  const attente = $("#rPStatut").value === "en_attente";
+  $("#rPList").innerHTML = rProps.length ? rProps.map(p => {
+    const v = p.valeur || {};
+    const corps = p.type === "signalement"
+      ? `<p style="margin:0"><strong>« ${esc(v.commentaire || p.resume)} »</strong></p>
+         ${v.extrait ? `<p class="meta">Réponse concernée : ${esc(v.extrait)}</p>` : ""}
+         <p class="meta">Mode ${esc(v.mode || "")}${(v.fiches || []).length ? " · fiches citées : " + esc(v.fiches.map(f => f.label || f.id).join(", ")) : " · aucune fiche citée"}</p>`
+      : `<p style="margin:0"><strong>${esc(p.resume)}</strong></p>
+         <p class="meta">${esc(p.collection || "")}${p.cibleId ? " › " + esc(p.cibleId) : ""}${p.champ ? " › " + esc(p.champ) : ""} · ${p.confiance === "confirme" ? `confirmé par ${p.nbSources} sources` : `signalé par ${p.nbSources} source${p.nbSources > 1 ? "s" : ""}`}</p>
+         ${p.sources.length ? `<ul>${p.sources.map(s => `<li><a href="${esc(s.url)}" target="_blank" rel="noopener noreferrer">${esc(s.titre || s.url)}</a> <span class="meta">(${esc(s.type || "?")}${s.date ? ", " + esc(s.date) : ""})</span></li>`).join("")}</ul>` : ""}
+         ${attente ? `<label class="f" for="pv${p.id}">Valeur proposée (modifiable avant d'accepter)</label><textarea class="field mono" id="pv${p.id}" spellcheck="false">${esc(JSON.stringify(p.valeur, null, 2))}</textarea>` : `<pre class="meta" style="white-space:pre-wrap;margin:0">${esc(JSON.stringify(p.valeur, null, 2))}</pre>`}`;
+    return `<li class="prop" data-pid="${p.id}">
+      <div class="av-top"><span class="pill" data-s="${p.type === "contradiction" || p.type === "signalement" ? "bientot" : "verifier"}">${TYPE_PROP[p.type] || p.type}</span><span class="av-cat">${p.origine === "observateur" ? "Observateur" : "Utilisateur"} · ${esc(p.creeLe.slice(0, 10))}</span></div>
+      ${corps}
+      ${attente ? `<div class="rowbtns"><button class="btn small" type="button" data-pact="accepter">${p.type === "signalement" ? "Marquer comme traité" : "Accepter"}</button></div>
+        <div class="rejet"><label class="sr" for="pm${p.id}">Motif du rejet</label><input class="field" id="pm${p.id}" placeholder="Motif du rejet (obligatoire)"><button class="btn ghost small" type="button" data-pact="rejeter">Rejeter</button></div>`
+        : `<p class="meta">${p.statut === "acceptee" ? "Acceptée" : "Rejetée"} par ${esc(p.decidePar || "")} le ${esc((p.decideLe || "").slice(0, 10))}${p.motif ? " : " + esc(p.motif) : ""}</p>`}
+      <p class="rmsg ko" data-pmsg role="alert"></p></li>`;
+  }).join("") : `<li class="empty">Rien ${$("#rPStatut").value === "en_attente" ? "en attente" : "ici"}.</li>`;
+}
+$("#rPStatut").addEventListener("change", loadRProps);
+$("#rPList").addEventListener("click", async e => {
+  const b = e.target.closest("[data-pact]"); if(!b) return;
+  const li = b.closest("[data-pid]"), id = li.dataset.pid, msg = li.querySelector("[data-pmsg]");
+  let body = {};
+  if(b.dataset.pact === "accepter"){
+    const ta = li.querySelector("textarea");
+    if(ta){ try{ body.valeur = JSON.parse(ta.value); }catch(err){ msg.textContent = "JSON invalide : " + err.message; return; } }
+  }else{
+    body.motif = li.querySelector(`#pm${id}`).value.trim();
+    if(!body.motif){ msg.textContent = "Indiquez le motif du rejet."; return; }
+  }
+  const r = await api("POST", `/api/admin/propositions/${id}/${b.dataset.pact}`, body);
+  if(!r.ok){ msg.textContent = r.error; return; }
+  loadRProps();
+});
+async function loadRQuestions(){
+  const r = await api("GET", "/api/admin/questions-sans-fiche");
+  if(!r.ok){ $("#rQuestions").innerHTML = `<p class="notice">${esc(r.error)}</p>`; return; }
+  $("#rQuestions").innerHTML = `<p class="hint" style="margin-top:0">Voitures citées dans des questions pour lesquelles la base n'avait pas de fiche : la liste prioritaire de l'Observateur. Le texte des questions n'est jamais gardé.</p>
+    ${r.prioritaires.length ? `<table class="qsf"><thead><tr><th>Voiture indiquée</th><th>Questions</th><th>Codes sans fiche</th><th>Dernière</th></tr></thead><tbody>
+      ${r.prioritaires.map(q => `<tr><td>${esc(q.vehicule)}</td><td>${q.nombre}</td><td>${esc(q.codes.join(", ") || "—")}</td><td>${esc(q.dernier.slice(0, 10))}</td></tr>`).join("")}</tbody></table>` : `<p class="empty">Aucune pour l'instant.</p>`}`;
+}
+
 // Garde le texte saisi en cas d'erreur.
 function renderREditKeep(err){ $("#rMsg").textContent = err; $("#rMsg").className = "rmsg ko"; }
 document.querySelectorAll("[data-rtab]").forEach(b => b.addEventListener("click", () => setRTab(b.dataset.rtab)));

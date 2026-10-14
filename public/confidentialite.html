@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Confidentialité – Rétroviz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+/* Mêmes variables que l'application (voir DESIGN.md). */
+:root{--bg:#F6F9FD;--surface:#FFFFFF;--soft:#E8F0FB;--line:#D8E3F0;--ink:#0E1F3B;--muted:#4E5F78;--primary:#123F8C;--amber-ink:#8A4F00;
+  --font:"Barlow","Segoe UI",Roboto,Helvetica,Arial,sans-serif;--r-lg:16px;color-scheme:light}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#0A1426;--surface:#101D33;--soft:#172A4A;--line:#24375A;--ink:#E6EEF9;--muted:#A3B4CF;--primary:#8DB8F7;--amber-ink:#F4C468;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0A1426;--surface:#101D33;--soft:#172A4A;--line:#24375A;--ink:#E6EEF9;--muted:#A3B4CF;--primary:#8DB8F7;--amber-ink:#F4C468;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);font-size:17px;line-height:1.6}
+main{max-width:760px;margin:0 auto;padding:24px 16px 64px}
+a{color:var(--primary)}
+:focus-visible{outline:3px solid var(--primary);outline-offset:2px}
+h1{font-size:32px;line-height:1.2;margin:16px 0 8px;color:var(--primary)}
+h2{font-size:21px;margin:32px 0 8px;color:var(--primary)}
+.brouillon{background:var(--soft);border-left:4px solid var(--amber-ink);border-radius:8px;padding:12px 16px;margin:16px 0}
+ul{padding-left:22px}
+li{margin:4px 0}
+.muted{color:var(--muted);font-size:15px}
+</style>
+</head>
+<body>
+<main>
+  <p><a href="/">← Retour à Rétroviz</a></p>
+  <h1>Confidentialité</h1>
+  <p class="brouillon"><strong>Version provisoire.</strong> Ce texte décrit ce que fait Rétroviz aujourd'hui, pendant sa phase d'essai. Il sera relu par un professionnel avant tout lancement public.</p>
+
+  <h2>Ce que Rétroviz garde</h2>
+  <ul>
+    <li><strong>Votre compte</strong> : votre adresse e-mail et une empreinte chiffrée de votre mot de passe (jamais le mot de passe lui-même).</li>
+    <li><strong>Votre garage</strong>, si vous l'utilisez : vos voitures, relevés de kilométrage, entretiens, factures, rappels et estimations de valeur.</li>
+    <li><strong>Vos conversations avec l'assistant ne sont pas enregistrées</strong> sur le serveur.</li>
+  </ul>
+
+  <h2>Ce qui sert à améliorer Rétroviz, sans vous identifier</h2>
+  <ul>
+    <li><strong>Questions sans fiche</strong> : quand la base Rétroviz n'a pas de fiche pour une question, on note seulement la voiture indiquée et les codes défaut cités, jamais le texte de la question ni votre compte. Cela décide des fiches à rédiger en priorité.</li>
+    <li><strong>« Cette réponse vous a aidé ? »</strong> : votre réponse (oui, non, erreur) est enregistrée sans lien avec votre compte. Pour un signalement d'erreur, on garde votre commentaire (adresses, numéros et plaques sont retirés automatiquement) et le début de la réponse de l'assistant, pas votre question.</li>
+    <li><strong>Statistiques des carnets</strong> : <em>seulement si vous l'acceptez</em> dans « Mon compte » (c'est désactivé par défaut). Les entretiens de votre carnet comptent alors, anonymement, dans des statistiques du type « embrayage changé entre 100 000 et 130 000 km sur 12 véhicules ». Une statistique n'est jamais affichée en dessous de 10 véhicules, et les kilométrages sont arrondis. Vous pouvez retirer votre accord à tout moment.</li>
+  </ul>
+
+  <h2>Qui reçoit vos informations</h2>
+  <ul>
+    <li><strong>L'intelligence artificielle</strong> : vos questions, la voiture indiquée et les fiches Rétroviz utiles sont envoyées à Anthropic (fournisseur du modèle Claude) pour produire la réponse. Pour la valeur indicative, seules les caractéristiques de la voiture, son kilométrage et un résumé de son carnet sont envoyés : ni votre adresse e-mail, ni le surnom de la voiture, ni le nom du garage.</li>
+    <li>Rien n'est vendu, ni partagé avec des annonceurs.</li>
+  </ul>
+
+  <h2>L'Observateur</h2>
+  <p>Rétroviz utilise un outil, l'Observateur, qui consulte des sources publiques (données officielles de rappels, presse, sites professionnels, forums) pour proposer des améliorations de sa base. Il respecte les fichiers <code>robots.txt</code> et les refus d'analyse automatisée, ne consulte rien derrière une connexion ou un abonnement, reformule les informations au lieu de les copier, et ne garde ni pseudonyme ni donnée personnelle. Chaque proposition est relue par un humain avant d'entrer dans la base.</p>
+
+  <h2>Cookies</h2>
+  <p>Un seul cookie, nécessaire pour rester connecté (30 jours). Aucun cookie publicitaire ni de mesure d'audience.</p>
+
+  <h2>Vos droits</h2>
+  <ul>
+    <li><strong>Télécharger vos données</strong> : « Mon compte » › « Télécharger mes données » (fichier JSON).</li>
+    <li><strong>Tout supprimer</strong> : « Mon compte » › « Supprimer mon compte ». Votre compte, vos voitures, votre carnet et vos factures sont effacés immédiatement et définitivement.</li>
+    <li><strong>Statistiques</strong> : retirez votre accord à tout moment dans « Mon compte ».</li>
+  </ul>
+  <p class="muted">Pendant la phase d'essai, Rétroviz fonctionne sur la machine de son auteur. L'hébergement définitif sera situé en Europe.</p>
+</main>
+</body>
+</html>

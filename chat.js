@@ -1,7 +1,7 @@
 // Route /api/chat : la page envoie le mode, la conversation et la voiture ; le serveur ajoute ses consignes
 // (prompts.js) et les fiches de la base, puis relaie la réponse de l'IA en flux.
 import express from "express";
-import { buildContext } from "./knowledge.js";
+import { buildContext, detectCodes } from "./knowledge.js";
 import { buildSystem, cleanAchat, buildAchatPrompt, designationAchat, MODES_VALIDES } from "./prompts.js";
 
 export const MAX_HISTORIQUE = 12; // derniers messages gardés de la conversation
@@ -34,7 +34,8 @@ function errorCode(status) {
 }
 
 // client : client Anthropic (ou faux client dans les tests).
-export function createChat({ client, kb, model, maxTokens = 8000, log = console.error }) {
+// onSansFiche({ mode, vehicule, codes }) : appelé quand la base n'a pas de fiche pour la question (liste prioritaire de l'Observateur).
+export function createChat({ client, kb, model, maxTokens = 8000, log = console.error, onSansFiche = null }) {
   const router = express.Router();
 
   router.post("/api/chat", async (req, res) => {
@@ -59,6 +60,10 @@ export function createChat({ client, kb, model, maxTokens = 8000, log = console.
     }
 
     const { text: kbText, sources } = buildContext({ vehicule, texte }, kb);
+    // Pas de fiche pour la question, ou pas de fiche pour la voiture indiquée : on le note (anonymement).
+    if (onSansFiche && (!sources.length || (vehicule && !sources.some(s => s.type === "vehicule")))) {
+      try { onSansFiche({ mode, vehicule, codes: detectCodes(`${vehicule} ${texte}`).filter(c => !kb.codes.has(c)) }); } catch (e) { log("Questions sans fiche :", e.message); }
+    }
     // Fiches utilisées, en JSON encodé pour rester en ASCII dans l'en-tête HTTP.
     res.setHeader("X-Retroviz-Sources", encodeURIComponent(JSON.stringify(sources)));
 

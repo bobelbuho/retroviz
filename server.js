@@ -5,6 +5,8 @@ import express from "express";
 import Anthropic from "@anthropic-ai/sdk";
 import { loadKnowledge, DATA_DIR } from "./knowledge.js";
 import { createRelecture, parseAdmins } from "./relecture.js";
+import { createPropositions } from "./propositions.js";
+import { createRetours } from "./retours.js";
 import { createChat } from "./chat.js";
 import { openDb } from "./db.js";
 import { createAuth } from "./auth.js";
@@ -37,7 +39,20 @@ const client = new Anthropic(); // lit ANTHROPIC_API_KEY dans l'environnement
 const valeur = createValeur(db, { estimate: process.env.ANTHROPIC_API_KEY ? anthropicEstimator(client, MODEL) : null });
 const garage = createGarage(db, kb, { carnet, rappels, valeur });
 // Relecture des fiches : réservée aux adresses de ADMIN_EMAILS (séparées par des virgules).
-const relecture = createRelecture({ dataDir: DATA_DIR, kb, admins: parseAdmins(process.env.ADMIN_EMAILS) });
+const relecture = createRelecture({ dataDir: DATA_DIR, kb, admins: parseAdmins(process.env.ADMIN_EMAILS), extraTableau: () => tableau() });
+const propositions = createPropositions(db, relecture);
+// Retours sous les réponses, questions sans fiche, statistiques anonymes (avec consentement).
+const retours = createRetours(db);
+retours.onSignalement = p => propositions.creer(p); // les signalements arrivent dans la Relecture
+const depenseDuMois = db.prepare("SELECT COALESCE(SUM(cout_eur), 0) AS eur FROM observateur_passages WHERE debut >= ?");
+const tableau = () => ({
+  propositions: propositions.enAttente(),
+  retours: retours.statsRetours(),
+  questionsSansFiche: retours.prioritaires(5),
+  statistiquesPubliables: retours.statistiques().length,
+  depenseObservateurMois: Math.round(depenseDuMois.get(new Date().toISOString().slice(0, 7) + "-01").eur * 100) / 100,
+  budgetObservateur: Number(process.env.OBSERVER_BUDGET_EUR) || 0,
+});
 const app = express();
 app.use(express.json({ limit: "1mb" }));
 app.use(createAuth(db, { exportData: garage.exportFor, beforeDeleteUser: carnet.beforeDeleteUser, isAdmin: relecture.isAdmin }));
@@ -46,10 +61,12 @@ app.use(carnet);
 app.use(rappels);
 app.use(valeur);
 app.use(relecture);
+app.use(propositions);
+app.use(retours);
 app.use(express.static("public"));
 
 // Assistant : consignes et fiches ajoutées côté serveur (chat.js, prompts.js).
-app.use(createChat({ client, kb, model: MODEL, maxTokens: MAX_TOKENS }));
+app.use(createChat({ client, kb, model: MODEL, maxTokens: MAX_TOKENS, onSansFiche: retours.noterSansFiche }));
 
 // Voyants du tableau de bord (fiches et icônes), publics.
 app.get("/api/voyants", (req, res) => {
