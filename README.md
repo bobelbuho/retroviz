@@ -13,6 +13,7 @@ retroviz/
 ├── knowledge.js        ← la recherche dans la base de connaissances
 ├── auth.js             ← les comptes (inscription, connexion, export, suppression)
 ├── garage.js           ← « Mon garage » : les voitures de chaque compte
+├── kilometrage.js      ← relevés de kilométrage : validation, cohérence, moyenne par mois
 ├── db.js               ← la base SQLite (comptes, garages)
 ├── storage/            ← le fichier de la base des comptes (créé au démarrage, jamais publié)
 ├── data/               ← la base de connaissances (fiches JSON + mode d'emploi)
@@ -79,8 +80,9 @@ Les comptes sont facultatifs : l'assistant reste utilisable sans compte. Le bout
 
 - **Fiche reliée** : à chaque enregistrement, le serveur cherche une fiche de `data/vehicules.json`. Il ne la relie que si le modèle **et** le moteur correspondent, et si l'année tombe dans la période de la fiche (une fiche fausse est pire que pas de fiche). L'utilisateur peut écarter une fiche (« Ce n'est pas ma voiture ») ou en chercher une à nouveau.
 - **Poser une question** : remplit le champ « Votre véhicule » avec la désignation de la voiture et ouvre « J'ai une panne ». Le menu « Mes voitures… » à côté de ce champ fait la même chose depuis les modes de discussion.
-- Les voitures sont incluses dans l'export des données et effacées avec le compte.
-- Routes (connexion requise) : `GET /api/garage`, `POST /api/garage`, `PUT /api/garage/:id`, `DELETE /api/garage/:id`.
+- Les voitures et leurs relevés sont inclus dans l'export des données et effacés avec le compte.
+- **Kilométrage** : chaque voiture a ses relevés (date et kilométrage). Le « Kilométrage actuel » saisi à l'ajout devient le premier relevé. Un relevé à la même date remplace le précédent. Un relevé incohérent est refusé : un compteur ne recule pas. La **moyenne de km par mois** est calculée entre le premier et le dernier relevé, s'ils sont espacés d'au moins 30 jours. Le dernier kilométrage est ajouté à la désignation envoyée à l'assistant.
+- Routes (connexion requise) : `GET /api/garage`, `POST /api/garage`, `PUT /api/garage/:id`, `DELETE /api/garage/:id`, et pour les relevés `GET` et `POST /api/garage/:id/releves`, `DELETE /api/garage/:id/releves/:rid`.
 
 ## Où modifier quoi
 
@@ -92,5 +94,5 @@ Les comptes sont facultatifs : l'assistant reste utilisable sans compte. Le bout
 - La consigne donnée à l'IA sur l'usage des fiches : la constante `KB_RULES` dans `server.js`.
 - La recherche (scores, taille maximale du contexte `MAX_CONTEXT`) : `knowledge.js`. Lancez `npm test` après toute modification.
 - Les comptes (longueur minimale du mot de passe, durée de session, blocage après échecs) : les constantes en haut de `auth.js`. Lancez `npm test` après toute modification.
-- Le garage (nombre maximal de voitures, champs, règle de rattachement à une fiche `matchFiche`) : `garage.js`. Lancez `npm test` après toute modification.
+- Le garage (nombre maximal de voitures, champs, règle de rattachement à une fiche `matchFiche`) : `garage.js`. Les relevés (écart minimal pour la moyenne, nombre maximal, contrôles) : `kilometrage.js`. Lancez `npm test` après toute modification.
 - L'apparence (couleurs claires et sombres, tailles de texte, espacements, arrondis) : les variables en haut du `<style>` de `public/index.html`, documentées dans [DESIGN.md](DESIGN.md). Tout nouvel écran suit ce système.

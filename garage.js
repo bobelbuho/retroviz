@@ -2,6 +2,7 @@
 import express from "express";
 import { findVehicle, vehicleLabel } from "./knowledge.js";
 import { needUser, sameSiteJson } from "./auth.js";
+import { cleanReleve, incoherence, stats, kmText, MAX_RELEVES } from "./kilometrage.js";
 
 export const MAX_VEHICLES = 30;
 const BOITES = ["manuelle", "automatique"];
@@ -43,9 +44,10 @@ export function matchFiche(v, kb) {
   return best.fiche.id;
 }
 
-// Désignation utilisée pour les questions à l'assistant (champ « Votre véhicule »).
-export const designation = v =>
-  [[v.marque, v.modele, v.motorisation].filter(Boolean).join(" "), v.annee, v.boite && `boîte ${v.boite}`].filter(Boolean).join(", ");
+// Désignation utilisée pour les questions à l'assistant (champ « Votre véhicule »), avec le dernier kilométrage connu.
+export const designation = (v, km = null) =>
+  [[v.marque, v.modele, v.motorisation].filter(Boolean).join(" "), v.annee, v.boite && `boîte ${v.boite}`, km !== null && kmText(km)]
+    .filter(Boolean).join(", ");
 
 /* ---------- routeur ---------- */
 export function createGarage(db, kb) {
@@ -59,17 +61,24 @@ export function createGarage(db, kb) {
                         fiche_id = ?, fiche_refusee = ?, updated_at = strftime('%Y-%m-%dT%H:%M:%fZ', 'now')
                         WHERE id = ? AND user_id = ?`),
     remove: db.prepare("DELETE FROM vehicles WHERE id = ? AND user_id = ?"),
+    releves: db.prepare("SELECT id, date, km FROM releves WHERE vehicle_id = ? ORDER BY date DESC"),
+    countReleves: db.prepare("SELECT COUNT(*) AS n FROM releves WHERE vehicle_id = ?"),
+    upsertReleve: db.prepare(`INSERT INTO releves (vehicle_id, date, km) VALUES (?, ?, ?)
+                              ON CONFLICT (vehicle_id, date) DO UPDATE SET km = excluded.km`),
+    removeReleve: db.prepare("DELETE FROM releves WHERE id = ? AND vehicle_id = ?"),
   };
   const fichesById = new Map(kb.vehicules.map(f => [f.id, f]));
 
   const toPublic = row => {
     const fiche = row.fiche_id ? fichesById.get(row.fiche_id) : null; // fiche retirée de la base : plus de lien
+    const kilometrage = stats(q.releves.all(row.id));
     return {
       id: row.id, surnom: row.surnom, marque: row.marque, modele: row.modele, motorisation: row.motorisation,
       annee: row.annee, boite: row.boite,
       fiche: fiche ? { id: fiche.id, label: vehicleLabel(fiche), statut: fiche.statut === "verifie" ? "verifie" : "a_verifier" } : null,
       ficheRefusee: !!row.fiche_refusee,
-      designation: designation(row),
+      kilometrage,
+      designation: designation(row, kilometrage.dernier?.km ?? null),
       createdAt: row.created_at, updatedAt: row.updated_at,
     };
   };
@@ -77,6 +86,10 @@ export function createGarage(db, kb) {
   const params = d => [d.surnom, d.marque, d.modele, d.motorisation, d.annee, d.boite, ficheFor(d), d.ficheRefusee ? 1 : 0];
   const notFound = res => res.status(404).json({ code: "not_found", error: "Voiture introuvable dans votre garage." });
   const vehicleId = req => (/^\d+$/.test(req.params.id) ? Number(req.params.id) : -1);
+  const releveOut = (vid, extra = {}) => {
+    const list = q.releves.all(vid);
+    return { releves: list, ...stats(list), ...extra };
+  };
 
   const router = express.Router();
   router.use("/api/garage", sameSiteJson, needUser);
@@ -89,10 +102,15 @@ export function createGarage(db, kb) {
   router.post("/api/garage", (req, res) => {
     const { data, error } = cleanVehicle(req.body);
     if (error) return res.status(400).json({ code: "invalid_vehicle", error });
+    // Kilométrage actuel facultatif : devient le premier relevé, daté du jour.
+    const hasKm = req.body?.km !== undefined && req.body?.km !== null && req.body?.km !== "";
+    const first = hasKm ? cleanReleve({ km: req.body.km }) : null;
+    if (first?.error) return res.status(400).json({ code: "invalid_releve", error: first.error });
     if (q.count.get(req.user.id).n >= MAX_VEHICLES) {
       return res.status(409).json({ code: "garage_full", error: `Votre garage est plein (${MAX_VEHICLES} voitures au plus).` });
     }
     const { lastInsertRowid } = q.insert.run(req.user.id, ...params(data));
+    if (first) q.upsertReleve.run(lastInsertRowid, first.data.date, first.data.km);
     res.status(201).json({ vehicule: toPublic(q.get.get(lastInsertRowid, req.user.id)) });
   });
 
@@ -111,7 +129,40 @@ export function createGarage(db, kb) {
     res.json({ ok: true });
   });
 
-  // Pour l'export RGPD.
-  router.exportFor = userId => ({ vehicules: q.list.all(userId).map(toPublic) });
+  /* ---------- relevés de kilométrage ---------- */
+  router.get("/api/garage/:id/releves", (req, res) => {
+    const id = vehicleId(req);
+    if (!q.get.get(id, req.user.id)) return notFound(res);
+    res.setHeader("Cache-Control", "no-store");
+    res.json(releveOut(id));
+  });
+
+  router.post("/api/garage/:id/releves", (req, res) => {
+    const id = vehicleId(req);
+    if (!q.get.get(id, req.user.id)) return notFound(res);
+    const { data, error } = cleanReleve(req.body);
+    if (error) return res.status(400).json({ code: "invalid_releve", error });
+    const existing = q.releves.all(id);
+    const problem = incoherence(existing, data);
+    if (problem) return res.status(409).json({ code: "incoherent_releve", error: problem });
+    if (!existing.some(r => r.date === data.date) && q.countReleves.get(id).n >= MAX_RELEVES) {
+      return res.status(409).json({ code: "too_many_releves", error: `${MAX_RELEVES} relevés au plus par voiture.` });
+    }
+    q.upsertReleve.run(id, data.date, data.km);
+    res.status(201).json(releveOut(id, { vehicule: toPublic(q.get.get(id, req.user.id)) }));
+  });
+
+  router.delete("/api/garage/:id/releves/:rid", (req, res) => {
+    const id = vehicleId(req);
+    if (!q.get.get(id, req.user.id)) return notFound(res);
+    const rid = /^\d+$/.test(req.params.rid) ? Number(req.params.rid) : -1;
+    if (!q.removeReleve.run(rid, id).changes) return res.status(404).json({ code: "not_found", error: "Relevé introuvable." });
+    res.json(releveOut(id, { vehicule: toPublic(q.get.get(id, req.user.id)) }));
+  });
+
+  // Pour l'export RGPD : chaque voiture avec tous ses relevés.
+  router.exportFor = userId => ({
+    vehicules: q.list.all(userId).map(row => ({ ...toPublic(row), releves: q.releves.all(row.id).map(({ date, km }) => ({ date, km })) })),
+  });
   return router;
 }

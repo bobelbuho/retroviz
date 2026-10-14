@@ -251,6 +251,20 @@ label.f{display:block;font-weight:var(--fw-semibold);font-size:var(--fs-sm);marg
 .car .fiche{font-size:var(--fs-sm);margin:0 0 var(--sp-4);padding:var(--sp-2) var(--sp-3);border-radius:var(--r-sm);background:var(--soft)}
 .car .rowbtns{margin-left:calc(-1 * var(--sp-1))}
 @media (max-width:420px){.car{padding:var(--sp-4)}}
+.kmbox{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:var(--sp-1) var(--sp-3);margin:0 0 var(--sp-4)}
+.kmbox p{margin:0;color:var(--muted);font-size:var(--fs-sm)}
+.kmbox strong{font-size:var(--fs-lg);color:var(--ink);margin-right:var(--sp-1)}
+.kmpanel{background:var(--soft);border-radius:var(--r-md);padding:var(--sp-4);margin:0 0 var(--sp-4)}
+.kmpanel h4{font-size:var(--fs-md);font-weight:var(--fw-bold);margin:0 0 var(--sp-3)}
+.kmform{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) auto;gap:var(--sp-3);align-items:end}
+.kmform .err{grid-column:1/-1;margin:0;color:var(--red-ink);font-weight:var(--fw-semibold);font-size:var(--fs-sm)}
+.kmform .err:empty{display:none}
+@media (max-width:480px){.kmform{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.kmform .btn{grid-column:1/-1}}
+.kmlist{list-style:none;margin:var(--sp-4) 0 0;padding:0}
+.kmlist li{display:flex;align-items:center;gap:var(--sp-2);padding:var(--sp-1) 0;border-top:1px solid var(--line);font-variant-numeric:tabular-nums;font-size:var(--fs-sm)}
+.kmlist li span{white-space:nowrap}
+.kmlist li span:last-of-type{margin-left:auto;font-weight:var(--fw-semibold)}
+.kmlist .btn{padding:0 var(--sp-2)}
 .empty{background:var(--soft);border-radius:var(--r-lg);padding:var(--sp-5);margin:0 0 var(--sp-4);color:var(--muted)}
 
 /* ---------- compte (fenêtre) ---------- */
@@ -395,6 +409,7 @@ footer{margin-top:var(--sp-7);font-size:var(--fs-xs);color:var(--muted);padding-
         <div><label class="f" for="g_modele">Modèle *</label><input class="field" id="g_modele" maxlength="60" required placeholder="Clio IV"></div>
         <div class="s2"><label class="f" for="g_moteur">Motorisation</label><input class="field" id="g_moteur" maxlength="80" placeholder="1.5 dCi 90" aria-describedby="g_moteur_hint"><p class="hint" id="g_moteur_hint">Indiquée sur la carte grise (rubrique D.2) ou le carnet. Elle permet de relier la bonne fiche.</p></div>
         <div><label class="f" for="g_annee">Année</label><input class="field" id="g_annee" inputmode="numeric" maxlength="4" placeholder="2016"></div>
+        <div class="s2" id="g_kmWrap"><label class="f" for="g_km">Kilométrage actuel</label><input class="field" id="g_km" inputmode="numeric" maxlength="9" placeholder="85 000" aria-describedby="g_km_hint"><p class="hint" id="g_km_hint">Facultatif. Il sera votre premier relevé.</p></div>
         <div><label class="f" for="g_boite">Boîte</label>
           <select class="field" id="g_boite"><option value="">Je ne sais pas</option><option value="manuelle">Manuelle</option><option value="automatique">Automatique</option></select></div>
         <p class="hint full" id="carMsg" style="margin:0" role="alert"></p>
@@ -899,11 +914,39 @@ api("GET", "/api/auth/me").then(r => { if(r.ok){ user = r.user; renderAcct(); lo
 
 /* ---------- mon garage ---------- */
 let cars = [], editing = null; // editing : id de la voiture modifiée, "new" pour un ajout, null sinon
+let kmOpen = null, kmData = {};  // voiture dont les relevés sont dépliés ; relevés chargés, par voiture
 const STATUT = s => s === "verifie" ? "vérifiée" : "à vérifier";
 async function loadGarage(){
   cars = [];
   if(user){ const r = await api("GET", "/api/garage"); if(r.ok) cars = r.vehicules; }
-  editing = null; renderGarage();
+  editing = null; kmOpen = null; kmData = {}; renderGarage();
+}
+const fmtNum = n => Number(n).toLocaleString("fr-FR");
+const fmtDate = d => new Date(d + "T00:00:00").toLocaleDateString("fr-FR", {day:"numeric", month:"long", year:"numeric"});
+const fmtShort = d => new Date(d + "T00:00:00").toLocaleDateString("fr-FR", {day:"numeric", month:"short", year:"numeric"});
+const todayISO = () => new Date().toLocaleDateString("sv-SE");
+/* Ligne sous le nom : la voiture sans le kilométrage (affiché à part). */
+const carSub = c => [[c.marque, c.modele, c.motorisation].filter(Boolean).join(" "), c.annee, c.boite && "boîte " + c.boite].filter(Boolean).join(", ");
+function kmHTML(c){
+  const k = c.kilometrage || {}, open = kmOpen === c.id;
+  const line = k.dernier
+    ? `<p><strong>${fmtNum(k.dernier.km)} km</strong> au ${fmtDate(k.dernier.date)}${k.moyenneMensuelle !== null ? ` · environ ${fmtNum(k.moyenneMensuelle)} km par mois` : ""}</p>`
+    : `<p>Aucun relevé de kilométrage.</p>`;
+  let h = `<div class="kmbox">${line}<button class="link" type="button" data-act="km" aria-expanded="${open}">${open ? "Masquer les relevés" : k.dernier ? "Relevés" : "Ajouter un relevé"}</button></div>`;
+  if(!open) return h;
+  const list = kmData[c.id] || [];
+  h += `<div class="kmpanel">
+    <h4>Nouveau relevé</h4>
+    <form class="kmform" novalidate>
+      <div><label class="f" for="kmd${c.id}">Date</label><input class="field" type="date" id="kmd${c.id}" name="date" value="${todayISO()}" max="${todayISO()}" required></div>
+      <div><label class="f" for="kmk${c.id}">Kilométrage</label><input class="field" id="kmk${c.id}" name="km" inputmode="numeric" maxlength="9" placeholder="${k.dernier ? fmtNum(k.dernier.km) : "85 000"}" required></div>
+      <button class="btn" type="submit">Enregistrer</button>
+      <p class="err" role="alert"></p>
+    </form>
+    ${k.moyenneMensuelle === null ? `<p class="hint">Avec deux relevés espacés d'au moins un mois, Rétroviz calcule votre moyenne de kilomètres par mois.</p>` : ""}
+    ${list.length ? `<ul class="kmlist" aria-label="Relevés">${list.map(r => `<li><span>${esc(fmtShort(r.date))}</span><span>${fmtNum(r.km)} km</span><button class="btn ghost small" type="button" data-act="kmdel" data-rid="${r.id}" aria-label="Supprimer le relevé du ${esc(fmtDate(r.date))}">Supprimer</button></li>`).join("")}</ul>` : ""}
+  </div>`;
+  return h;
 }
 function ficheHTML(c){
   if(c.fiche) return `Fiche Rétroviz : <strong>${esc(c.fiche.label)}</strong> (${STATUT(c.fiche.statut)}). <button class="link" type="button" data-act="refuse">Ce n'est pas ma voiture</button>`;
@@ -915,7 +958,8 @@ function renderGarage(){
   $("#garageOut").hidden = !!user; $("#garageIn").hidden = !user;
   $("#cars").innerHTML = cars.length ? cars.map(c => `<li class="car" data-id="${c.id}">
       <h3>${esc(c.surnom || c.marque+" "+c.modele)}</h3>
-      <p class="sub">${esc(c.designation)}</p>
+      <p class="sub">${esc(carSub(c))}</p>
+      ${kmHTML(c)}
       <p class="fiche">${ficheHTML(c)}</p>
       <div class="rowbtns"><button class="btn soft small" type="button" data-act="ask">Poser une question</button><button class="btn ghost small" type="button" data-act="edit">Modifier</button><button class="btn ghost small" type="button" data-act="del">Supprimer</button></div>
     </li>`).join("") : `<li class="empty">Votre garage est vide. Ajoutez votre première voiture.</li>`;
@@ -930,6 +974,7 @@ function openCarForm(c){
   editing = c ? c.id : "new";
   $("#g_surnom").value = c?.surnom || ""; $("#g_marque").value = c?.marque || ""; $("#g_modele").value = c?.modele || "";
   $("#g_moteur").value = c?.motorisation || ""; $("#g_annee").value = c?.annee || ""; $("#g_boite").value = c?.boite || "";
+  $("#g_km").value = ""; $("#g_kmWrap").hidden = !!c;
   $("#carMsg").textContent = "";
   renderGarage(); $("#g_marque").focus();
 }
@@ -951,7 +996,7 @@ $("#carForm").addEventListener("submit", async e => {
   const prev = id ? carById(id) : null;
   $("#carSave").disabled = true;
   const err = await saveCar(id, {surnom:v("g_surnom"), marque:v("g_marque"), modele:v("g_modele"), motorisation:v("g_moteur"),
-    annee:v("g_annee"), boite:v("g_boite"), ficheRefusee: !!prev?.ficheRefusee});
+    annee:v("g_annee"), boite:v("g_boite"), ficheRefusee: !!prev?.ficheRefusee, ...(!id && v("g_km") ? {km:v("g_km")} : {})});
   $("#carSave").disabled = false;
   $("#carMsg").textContent = err || "";
 });
@@ -971,7 +1016,36 @@ $("#cars").addEventListener("click", async e => {
   }else if(act === "refuse" || act === "relink"){
     const err = await saveCar(c.id, {...carPayload(c), ficheRefusee: act === "refuse"});
     if(err) showNotice(err);
+  }else if(act === "km"){
+    if(kmOpen === c.id){ kmOpen = null; renderGarage(); return; }
+    const r = await api("GET", `/api/garage/${c.id}/releves`);
+    if(!r.ok){ showNotice(r.error); return; }
+    kmData[c.id] = r.releves; kmOpen = c.id; renderGarage();
+    $(`#kmk${c.id}`).focus();
+  }else if(act === "kmdel"){
+    if(!confirm("Supprimer ce relevé ?")) return;
+    const r = await api("DELETE", `/api/garage/${c.id}/releves/${b.dataset.rid}`);
+    if(!r.ok){ showNotice(r.error); return; }
+    applyReleves(c.id, r);
   }
+});
+function applyReleves(id, r){
+  kmData[id] = r.releves;
+  cars = cars.map(x => x.id === id ? r.vehicule : x);
+  renderGarage();
+}
+$("#cars").addEventListener("submit", async e => {
+  const f = e.target.closest(".kmform"); if(!f) return;
+  e.preventDefault();
+  const id = +f.closest(".car").dataset.id;
+  const date = f.elements.date.value, km = f.elements.km.value.trim(), err = f.querySelector(".err");
+  if(!km){ err.textContent = "Indiquez le kilométrage."; f.elements.km.focus(); return; }
+  f.querySelector("button[type=submit]").disabled = true;
+  const r = await api("POST", `/api/garage/${id}/releves`, {date, km});
+  f.querySelector("button[type=submit]").disabled = false;
+  if(!r.ok){ err.textContent = r.error; return; }
+  applyReleves(id, r);
+  $(`#kmk${id}`).focus();
 });
 $("#vehPick").addEventListener("change", e => {
   const c = carById(e.target.value); if(c) $("#vehicle").value = c.designation;

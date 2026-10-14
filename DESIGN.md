@@ -89,6 +89,7 @@ Les titres de section sont en `--primary`, en gras. Le texte courant ne descend 
 | `.form` | Formulaire en grille de 4 colonnes (`.s2` = 2 colonnes, `.full` = toute la largeur). |
 | `.car`, `.box`, `.msg-ai`, `.odo` | Cartes : `--surface`, `--r-lg`, `--shadow`, sans bordure. |
 | `.help`, `.empty`, `.notice`, `.fiche` | Blocs d'information : fond `--soft`, sans bordure. |
+| `.kmbox`, `.kmpanel`, `.kmlist` | Kilométrage d'une voiture : chiffre clé en `--fs-lg`, panneau dépliable sur fond `--soft`, liste en chiffres tabulaires. |
 | `.level`, `.tag`, `.item` | Éléments porteurs de sens : la variable locale `--c` reçoit `--green`, `--amber`, `--red` ou `--grey`. |
 | `.danger-box` | Alerte « arrêtez-vous » : fond rouge très clair, filet rouge à gauche, texte `--red-ink`. |
 | `dialog.dlg` | Fenêtre modale (compte). |

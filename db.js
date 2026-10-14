@@ -35,6 +35,14 @@ CREATE TABLE IF NOT EXISTS vehicles (
   updated_at    TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now'))
 );
 CREATE INDEX IF NOT EXISTS vehicles_user ON vehicles(user_id);
+CREATE TABLE IF NOT EXISTS releves (
+  id         INTEGER PRIMARY KEY,
+  vehicle_id INTEGER NOT NULL REFERENCES vehicles(id) ON DELETE CASCADE,
+  date       TEXT NOT NULL,              -- AAAA-MM-JJ
+  km         INTEGER NOT NULL,
+  created_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now')),
+  UNIQUE (vehicle_id, date)              -- un relevé par jour : le nouveau remplace l'ancien
+);
 `;
 
 // Ouvre (et crée si besoin) la base. ":memory:" pour les tests.
