@@ -1,0 +1,323 @@
+{
+  "id": "audi",
+  "nom": "Audi",
+  "pays": "Allemagne (groupe Volkswagen)",
+  "image": "Marque premium du groupe Volkswagen, réputée pour la finition et la transmission intégrale quattro. Partage moteurs et boîtes avec Volkswagen.",
+  "cout_entretien": "eleve",
+  "cout_entretien_texte": "Entretien plus cher que Volkswagen pour une mécanique proche ; boîtes S tronic coûteuses.",
+  "reseau": "Réseau premium en France ; pièces communes avec Volkswagen, nombreux spécialistes.",
+  "statut": "a_verifier",
+  "sources": [],
+  "redige_par": "ia",
+  "mise_a_jour": "2026-10-14",
+  "incertitudes": [
+    "Image et coûts relatifs : appréciation générale, à recouper."
+  ],
+  "modeles": [
+    {
+      "id": "audi-a3",
+      "nom": "A3",
+      "alias": [
+        "audi a3",
+        "a3 sportback"
+      ],
+      "qualites": [
+        "Finition",
+        "Moteurs sobres",
+        "Bonne valeur à la revente"
+      ],
+      "defauts": [
+        "Entretien cher",
+        "Anciens TFSI gros consommateurs d'huile",
+        "Boîte S tronic à sec à surveiller"
+      ],
+      "pour_qui": "Compacte premium polyvalente.",
+      "a_verifier_achat": [
+        "Consommation d'huile (1.8 et 2.0 TFSI anciens)",
+        "Pompe à huile et culasse (2.0 TDI 140 PD)",
+        "Boîte S tronic : à-coups",
+        "Historique d'entretien"
+      ],
+      "statut": "a_verifier",
+      "sources": [],
+      "redige_par": "ia",
+      "mise_a_jour": "2026-10-14",
+      "generations": [
+        {
+          "id": "audi-a3-8p",
+          "nom": "A3 8P",
+          "annees": "2003-2012",
+          "alias": [
+            "a3 8p",
+            "a3 2"
+          ],
+          "motorisations": [
+            {
+              "id": "audi-a3-8p-19-tdi",
+              "moteurs": [
+                "1.9 TDI 105",
+                "2.0 TDI 140 (PD)",
+                "1.6 TDI 105 (CR)",
+                "2.0 TDI 140 et 170 (CR, 2008+)"
+              ],
+              "codes_moteur": [
+                "BKC",
+                "BKD",
+                "CAYC",
+                "CFFB"
+              ],
+              "energie": "thermique",
+              "carburant": "diesel",
+              "conseil": "neutre",
+              "conseil_texte": "Le 1.9 TDI est robuste ; le 2.0 TDI PD (BKD) a des faiblesses connues ; les CR (2008+) sont plus sains.",
+              "pannes": [
+                {
+                  "titre": "Entraînement de pompe à huile usé (2.0 TDI PD, BKD)",
+                  "km_typique": 150000,
+                  "gravite": "elevee",
+                  "symptomes": "Alerte de pression d'huile, casse moteur.",
+                  "solution": "Remplacement de l'arbre d'entraînement et de la pompe.",
+                  "cout_indicatif": "400 à 800 € en préventif"
+                },
+                {
+                  "titre": "Culasse fissurée (2.0 TDI PD)",
+                  "km_typique": 180000,
+                  "gravite": "elevee",
+                  "symptomes": "Perte de liquide, surchauffe.",
+                  "solution": "Remplacement de la culasse.",
+                  "cout_indicatif": "1 500 à 3 000 €"
+                },
+                {
+                  "titre": "Volant moteur bimasse",
+                  "km_typique": 160000,
+                  "gravite": "moyenne",
+                  "symptomes": "Vibrations.",
+                  "solution": "Kit embrayage avec volant.",
+                  "cout_indicatif": "1 000 à 1 800 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtres",
+                  "km": 15000,
+                  "cout_indicatif": "150 à 250 €"
+                },
+                {
+                  "titre": "Courroie de distribution et pompe à eau",
+                  "km": 120000,
+                  "cout_indicatif": "600 à 1 000 €"
+                }
+              ],
+              "points_forts": [
+                "Robuste (1.9)",
+                "Sobre"
+              ],
+              "points_faibles": [
+                "Pompe à huile et culasse (BKD)",
+                "Bimasse"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            },
+            {
+              "id": "audi-a3-8p-tfsi",
+              "moteurs": [
+                "1.4 TFSI 125",
+                "1.8 TFSI 160",
+                "2.0 TFSI 200"
+              ],
+              "codes_moteur": [
+                "CAXC",
+                "BYT",
+                "BWA"
+              ],
+              "energie": "thermique",
+              "carburant": "essence",
+              "conseil": "a_eviter",
+              "conseil_texte": "Consommation d'huile massive (1.8 et 2.0) et chaîne fragile (1.4) : à éviter sans historique.",
+              "pannes": [
+                {
+                  "titre": "Consommation d'huile importante (TFSI EA888 de première génération)",
+                  "km_typique": 80000,
+                  "gravite": "elevee",
+                  "symptomes": "Niveau d'huile qui baisse fortement, fumée bleue.",
+                  "solution": "Segments et pistons révisés ; prises en charge constructeur selon les cas.",
+                  "cout_indicatif": "1 500 à 4 000 €"
+                },
+                {
+                  "titre": "Chaîne de distribution qui saute ou s'allonge (1.2 et 1.4 TSI EA111)",
+                  "km_typique": 80000,
+                  "gravite": "elevee",
+                  "symptomes": "Cliquetis au démarrage à froid, voyant moteur ; casse moteur si la chaîne saute.",
+                  "solution": "Remplacement du kit de chaîne et du tendeur (version révisée).",
+                  "cout_indicatif": "800 à 1 500 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtre",
+                  "km": 15000,
+                  "cout_indicatif": "150 à 250 €"
+                }
+              ],
+              "points_forts": [
+                "Performant"
+              ],
+              "points_faibles": [
+                "Huile",
+                "Chaîne"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "audi-a3-8v",
+          "nom": "A3 8V",
+          "annees": "2012-2020",
+          "alias": [
+            "a3 8v",
+            "a3 3"
+          ],
+          "motorisations": [
+            {
+              "id": "audi-a3-8v-tdi",
+              "moteurs": [
+                "1.6 TDI 105 et 110",
+                "2.0 TDI 150 et 184"
+              ],
+              "codes_moteur": [
+                "EA288"
+              ],
+              "energie": "thermique",
+              "carburant": "diesel",
+              "conseil": "a_privilegier",
+              "conseil_texte": "Diesels sérieux pour les gros rouleurs.",
+              "pannes": [
+                {
+                  "titre": "Vanne EGR ou refroidisseur EGR encrassé",
+                  "km_typique": 120000,
+                  "gravite": "moyenne",
+                  "symptomes": "Perte de puissance, voyant moteur.",
+                  "solution": "Nettoyage ou remplacement.",
+                  "cout_indicatif": "300 à 1 200 €"
+                },
+                {
+                  "titre": "Filtre à particules colmaté",
+                  "km_typique": 120000,
+                  "gravite": "moyenne",
+                  "symptomes": "Voyant FAP, mode dégradé.",
+                  "solution": "Régénération forcée, nettoyage ou remplacement ; trajets plus longs.",
+                  "cout_indicatif": "150 à 1 800 €"
+                },
+                {
+                  "titre": "Fuite de pompe à eau",
+                  "km_typique": 100000,
+                  "gravite": "moyenne",
+                  "symptomes": "Perte de liquide, température qui monte.",
+                  "solution": "Remplacement de la pompe (souvent avec la distribution).",
+                  "cout_indicatif": "300 à 700 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtres (entretien fixe ou variable « LongLife »)",
+                  "km": 20000,
+                  "cout_indicatif": "150 à 250 €"
+                },
+                {
+                  "titre": "Courroie de distribution et pompe à eau",
+                  "km": 210000,
+                  "cout_indicatif": "600 à 1 000 €"
+                },
+                {
+                  "titre": "Vidange de boîte DSG (versions à double embrayage humide)",
+                  "km": 60000,
+                  "cout_indicatif": "200 à 350 €"
+                }
+              ],
+              "points_forts": [
+                "Sobre",
+                "Agréable"
+              ],
+              "points_faibles": [
+                "EGR, FAP"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            },
+            {
+              "id": "audi-a3-8v-tfsi",
+              "moteurs": [
+                "1.0 TFSI 116",
+                "1.2 TFSI 110",
+                "1.4 TFSI 125 et 150 COD",
+                "1.5 TFSI 150",
+                "e-tron 204"
+              ],
+              "codes_moteur": [
+                "EA211"
+              ],
+              "energie": "thermique",
+              "carburant": "essence",
+              "conseil": "a_privilegier",
+              "conseil_texte": "Moteurs EA211 à courroie, sains ; S tronic 7 à sec à vérifier.",
+              "pannes": [
+                {
+                  "titre": "Mécatronique ou embrayages de la boîte DSG 7 à sec (DQ200)",
+                  "km_typique": 100000,
+                  "gravite": "elevee",
+                  "symptomes": "À-coups au démarrage, rapports qui ne passent plus, voyant de boîte.",
+                  "solution": "Diagnostic ; réparation ou remplacement de la mécatronique ou du double embrayage.",
+                  "cout_indicatif": "1 200 à 3 000 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtre",
+                  "km": 20000,
+                  "cout_indicatif": "150 à 250 €"
+                },
+                {
+                  "titre": "Courroie de distribution",
+                  "km": 210000,
+                  "cout_indicatif": "500 à 900 €"
+                }
+              ],
+              "points_forts": [
+                "Sobre",
+                "Agréable"
+              ],
+              "points_faibles": [
+                "S tronic à sec"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

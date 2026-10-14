@@ -1,0 +1,1995 @@
+{
+  "id": "peugeot",
+  "nom": "Peugeot",
+  "pays": "France",
+  "image": "Marque généraliste du groupe Stellantis, réputée pour le style et la tenue de route. Les moteurs essence 1.2 PureTech à courroie humide ont terni sa réputation de fiabilité entre 2013 et 2022.",
+  "cout_entretien": "moyen",
+  "cout_entretien_texte": "Entretien courant dans la moyenne des généralistes ; certaines pannes moteur connues (courroie humide, AdBlue) peuvent coûter cher hors garantie.",
+  "reseau": "Réseau très dense en France (concessions, agents, garages indépendants) ; pièces faciles à trouver et souvent communes avec Citroën, DS et Opel.",
+  "statut": "a_verifier",
+  "sources": [],
+  "redige_par": "ia",
+  "mise_a_jour": "2026-10-14",
+  "incertitudes": [
+    "Image et coûts relatifs : appréciation générale, à recouper."
+  ],
+  "modeles": [
+    {
+      "id": "peugeot-208",
+      "nom": "208",
+      "qualites": [
+        "Conduite agréable et précise",
+        "Consommation modérée",
+        "Pièces et garages partout"
+      ],
+      "defauts": [
+        "Moteurs PureTech à surveiller",
+        "Place limitée à l'arrière",
+        "Petit volant et compteurs placés haut (i-Cockpit) qui ne conviennent pas à tous"
+      ],
+      "pour_qui": "Citadine polyvalente pour un usage urbain et périurbain, premier achat ou deuxième voiture.",
+      "a_verifier_achat": [
+        "Factures de vidange à l'huile de la bonne norme (PureTech)",
+        "Date et kilométrage du dernier remplacement de courroie",
+        "Niveau d'huile à la jauge",
+        "Fonctionnement de l'écran tactile et de la climatisation",
+        "Voyant AdBlue sur les diesels récents"
+      ],
+      "statut": "a_verifier",
+      "sources": [],
+      "redige_par": "ia",
+      "mise_a_jour": "2026-10-14",
+      "generations": [
+        {
+          "id": "peugeot-208-1",
+          "nom": "208 I",
+          "annees": "2012-2019",
+          "alias": [
+            "208 1",
+            "208 phase 1",
+            "208 phase 2"
+          ],
+          "motorisations": [
+            {
+              "id": "peugeot-208-1-12-puretech",
+              "energie": "thermique",
+              "carburant": "essence",
+              "conseil": "neutre",
+              "conseil_texte": "Bon moteur si l'entretien est prouvé ; à éviter sans factures de vidange.",
+              "moteurs": [
+                "1.2 PureTech 82",
+                "1.2 PureTech 110",
+                "1.2 PureTech 130"
+              ],
+              "codes_moteur": [
+                "EB2",
+                "EB2F",
+                "EB2DT",
+                "EB2DTS"
+              ],
+              "pannes": [
+                {
+                  "titre": "Dégradation de la courroie de distribution « humide » (dans l'huile)",
+                  "km_typique": 80000,
+                  "gravite": "elevee",
+                  "symptomes": "Voyant ou alerte pression d'huile, morceaux de courroie dans l'huile, parfois aucun signe avant la casse.",
+                  "solution": "Contrôle de l'état de la courroie, remplacement de la courroie et nettoyage ou remplacement de la crépine d'huile si débris.",
+                  "cout_indicatif": "800 à 1 500 €"
+                },
+                {
+                  "titre": "Pompe à vide de freinage colmatée par des débris de courroie",
+                  "km_typique": 90000,
+                  "gravite": "elevee",
+                  "symptomes": "Pédale de frein dure, assistance de freinage réduite, alerte de freinage.",
+                  "solution": "Remplacement de la pompe à vide et traitement de la cause (courroie, crépine).",
+                  "cout_indicatif": "300 à 700 €"
+                },
+                {
+                  "titre": "Consommation d'huile excessive",
+                  "km_typique": 70000,
+                  "gravite": "moyenne",
+                  "symptomes": "Niveau d'huile qui baisse entre deux vidanges, alerte niveau d'huile, fumée bleutée possible.",
+                  "solution": "Mesure de la consommation, contrôle de la segmentation ; décalaminage ou remplacement de la segmentation selon le cas.",
+                  "cout_indicatif": "200 à 3 000 € selon l'intervention"
+                },
+                {
+                  "titre": "Calamine sur les soupapes et ratés d'allumage (versions turbo à injection directe)",
+                  "km_typique": 90000,
+                  "gravite": "moyenne",
+                  "symptomes": "Moteur qui tremble, voyant moteur, codes de ratés (P0300 à P0303), perte de puissance.",
+                  "solution": "Contrôle des bougies et bobines, décalaminage si nécessaire.",
+                  "cout_indicatif": "150 à 600 €"
+                },
+                {
+                  "titre": "Fuite du boîtier de sortie d'eau / thermostat",
+                  "km_typique": 100000,
+                  "gravite": "moyenne",
+                  "symptomes": "Baisse du niveau de liquide de refroidissement, traces de liquide séché, odeur sucrée.",
+                  "solution": "Remplacement du boîtier de sortie d'eau ou du thermostat.",
+                  "cout_indicatif": "200 à 450 €"
+                },
+                {
+                  "titre": "Bobine d'allumage défaillante",
+                  "km_typique": 80000,
+                  "gravite": "faible",
+                  "symptomes": "À-coups, moteur qui tourne sur deux cylindres, voyant moteur.",
+                  "solution": "Remplacement de la bobine concernée, contrôle des bougies.",
+                  "cout_indicatif": "80 à 200 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange avec une huile à la norme constructeur exacte",
+                  "km": 15000,
+                  "cout_indicatif": "100 à 180 €"
+                },
+                {
+                  "titre": "Bougies d'allumage",
+                  "km": 60000,
+                  "cout_indicatif": "80 à 150 €"
+                },
+                {
+                  "titre": "Courroie de distribution (préconisation constructeur révisée à la baisse : intervalle à confirmer selon l'année et le moteur)",
+                  "km": 100000,
+                  "cout_indicatif": "700 à 1 200 €"
+                }
+              ],
+              "points_forts": [
+                "Consommation de carburant modérée",
+                "Agréable en ville",
+                "Entretien courant peu coûteux"
+              ],
+              "points_faibles": [
+                "Courroie de distribution dans l'huile sensible à la qualité de l'huile",
+                "Consommation d'huile sur certains moteurs",
+                "Historique d'entretien indispensable avant achat"
+              ],
+              "sources": [],
+              "statut": "a_verifier",
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-13"
+            },
+            {
+              "id": "peugeot-208-1-16-hdi",
+              "moteurs": [
+                "1.6 HDi 92",
+                "1.6 e-HDi 115",
+                "1.6 BlueHDi 75",
+                "1.6 BlueHDi 100"
+              ],
+              "codes_moteur": [
+                "DV6"
+              ],
+              "energie": "thermique",
+              "carburant": "diesel",
+              "conseil": "a_privilegier",
+              "conseil_texte": "Diesel sobre et éprouvé, pour qui roule beaucoup hors des villes.",
+              "pannes": [
+                {
+                  "titre": "Injecteurs et joints d'injecteurs (boue de calamine sous le cache-culbuteurs)",
+                  "km_typique": 120000,
+                  "gravite": "moyenne",
+                  "symptomes": "Odeur de gasoil, fumée, claquements, démarrage difficile.",
+                  "solution": "Remplacement des joints (« rondelles pare-flamme ») et nettoyage ; injecteurs si besoin.",
+                  "cout_indicatif": "200 à 1 200 €"
+                },
+                {
+                  "titre": "Turbo endommagé par une mauvaise lubrification",
+                  "km_typique": 150000,
+                  "gravite": "elevee",
+                  "symptomes": "Sifflement, fumée bleue, perte de puissance.",
+                  "solution": "Remplacement du turbo, nettoyage de la crépine et des conduites d'huile.",
+                  "cout_indicatif": "900 à 1 800 €"
+                },
+                {
+                  "titre": "Filtre à particules colmaté, additif à remplir",
+                  "km_typique": 120000,
+                  "gravite": "moyenne",
+                  "symptomes": "Voyant FAP, mode dégradé ; additif (Eolys) épuisé sur les versions qui en utilisent.",
+                  "solution": "Régénération, remplissage d'additif, nettoyage ou remplacement du FAP.",
+                  "cout_indicatif": "150 à 1 500 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtres",
+                  "km": 20000,
+                  "cout_indicatif": "120 à 200 €"
+                },
+                {
+                  "titre": "Courroie de distribution et pompe à eau",
+                  "km": 180000,
+                  "cout_indicatif": "500 à 800 €"
+                },
+                {
+                  "titre": "Additif de FAP (versions concernées)",
+                  "km": 120000,
+                  "cout_indicatif": "100 à 300 €"
+                }
+              ],
+              "points_forts": [
+                "Très faible consommation",
+                "Moteur très répandu",
+                "Bonne longévité si bien entretenu"
+              ],
+              "points_faibles": [
+                "Mal adapté aux petits trajets (FAP, EGR)",
+                "Injecteurs et turbo à surveiller"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            },
+            {
+              "id": "peugeot-208-1-14-vti",
+              "moteurs": [
+                "1.0 VTi 68",
+                "1.2 VTi 82 (avant PureTech)",
+                "1.4 VTi 95",
+                "1.6 VTi 120"
+              ],
+              "codes_moteur": [
+                "EP3",
+                "EP6"
+              ],
+              "energie": "thermique",
+              "carburant": "essence",
+              "conseil": "neutre",
+              "conseil_texte": "Le 1.0 et le 1.2 atmosphériques sont simples ; le 1.6 VTi (moteur Prince) demande un suivi de la chaîne.",
+              "annees_propres": "2012-2015",
+              "pannes": [
+                {
+                  "titre": "Chaîne de distribution qui s'allonge (1.6 VTi)",
+                  "km_typique": 120000,
+                  "gravite": "elevee",
+                  "symptomes": "Cliquetis au démarrage, voyant moteur.",
+                  "solution": "Remplacement du kit de chaîne et du tendeur.",
+                  "cout_indicatif": "800 à 1 400 €"
+                },
+                {
+                  "titre": "Consommation d'huile",
+                  "km_typique": 100000,
+                  "gravite": "moyenne",
+                  "symptomes": "Niveau d'huile qui baisse.",
+                  "solution": "Contrôle ; segmentation dans les cas sérieux.",
+                  "cout_indicatif": "100 à 2 000 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtre",
+                  "km": 20000,
+                  "cout_indicatif": "100 à 170 €"
+                },
+                {
+                  "titre": "Bougies d'allumage",
+                  "km": 60000,
+                  "cout_indicatif": "80 à 160 €"
+                }
+              ],
+              "points_forts": [
+                "Pas de turbo : mécanique plus simple",
+                "Prix d'achat bas en occasion"
+              ],
+              "points_faibles": [
+                "Chaîne de distribution à surveiller sur le 1.6 VTi",
+                "Consommation d'huile possible"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "peugeot-208-2",
+          "nom": "208 II",
+          "annees": "2019-auj.",
+          "alias": [
+            "208 2",
+            "nouvelle 208",
+            "e-208",
+            "208 phase 2 2023"
+          ],
+          "motorisations": [
+            {
+              "id": "peugeot-208-2-12-puretech",
+              "moteurs": [
+                "1.2 PureTech 75",
+                "1.2 PureTech 100",
+                "1.2 PureTech 130"
+              ],
+              "codes_moteur": [
+                "EB2",
+                "EB2ADT",
+                "EB2ADTS"
+              ],
+              "energie": "thermique",
+              "carburant": "essence",
+              "conseil": "neutre",
+              "conseil_texte": "Préférez une voiture entretenue en concession avec factures, ou les versions à chaîne de distribution (fin 2023 et après, à vérifier).",
+              "pannes": [
+                {
+                  "titre": "Dégradation de la courroie de distribution « humide » (dans l'huile)",
+                  "km_typique": 80000,
+                  "gravite": "elevee",
+                  "symptomes": "Alerte de pression d'huile, débris de courroie dans l'huile, freinage plus dur (pompe à vide colmatée), parfois aucun signe avant la casse.",
+                  "solution": "Contrôle de la courroie (gabarit), remplacement avec nettoyage de la crépine si débris ; huile à la norme exacte.",
+                  "cout_indicatif": "800 à 1 500 €"
+                },
+                {
+                  "titre": "Consommation d'huile excessive",
+                  "km_typique": 70000,
+                  "gravite": "moyenne",
+                  "symptomes": "Niveau d'huile qui baisse entre deux vidanges, alerte de niveau.",
+                  "solution": "Contrôle de consommation ; selon les cas segmentation ou mise à jour. Prise en charge possible par le constructeur selon l'âge et l'entretien.",
+                  "cout_indicatif": "200 à 3 000 € selon l'intervention"
+                },
+                {
+                  "titre": "Ratés d'allumage (bobines, bougies, calamine)",
+                  "km_typique": 60000,
+                  "gravite": "moyenne",
+                  "symptomes": "À-coups, voyant moteur qui clignote, moteur qui tourne sur 2 cylindres.",
+                  "solution": "Lecture des codes défaut, remplacement de la bobine ou des bougies, décalaminage si besoin.",
+                  "cout_indicatif": "100 à 500 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange avec une huile à la norme constructeur exacte (PSA B71 2290 ou B71 2312)",
+                  "km": 15000,
+                  "cout_indicatif": "100 à 180 €"
+                },
+                {
+                  "titre": "Contrôle de l'état de la courroie de distribution humide",
+                  "km": 20000,
+                  "cout_indicatif": "50 à 100 €"
+                },
+                {
+                  "titre": "Courroie de distribution (intervalle réduit par le constructeur : à vérifier selon l'année)",
+                  "km": 100000,
+                  "cout_indicatif": "800 à 1 200 €"
+                }
+              ],
+              "points_forts": [
+                "Moteur souple et sobre",
+                "Agrément en ville et sur route"
+              ],
+              "points_faibles": [
+                "Courroie de distribution humide jusqu'à l'arrivée de la chaîne",
+                "Consommation d'huile sur certaines séries"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture).",
+                "Date de passage à la chaîne de distribution selon les versions : à vérifier."
+              ]
+            },
+            {
+              "id": "peugeot-208-2-e208",
+              "moteurs": [
+                "e-208 136 (50 kWh)",
+                "e-208 156 (51 kWh)"
+              ],
+              "codes_moteur": [],
+              "energie": "electrique",
+              "conseil": "a_privilegier",
+              "conseil_texte": "Bon choix pour les trajets quotidiens avec recharge à domicile ; vérifiez l'autonomie réelle et l'état de santé de la batterie.",
+              "pannes": [
+                {
+                  "titre": "Chargeur embarqué ou boîtier de charge défaillant",
+                  "km_typique": 40000,
+                  "gravite": "moyenne",
+                  "symptomes": "Charge qui ne démarre pas ou s'interrompt.",
+                  "solution": "Diagnostic, mise à jour ou remplacement du chargeur.",
+                  "cout_indicatif": "0 à 2 000 € (souvent sous garantie)"
+                },
+                {
+                  "titre": "Batterie 12 V qui se décharge",
+                  "km_typique": 50000,
+                  "gravite": "faible",
+                  "symptomes": "Voiture qui ne démarre pas, messages d'erreur.",
+                  "solution": "Remplacement de la batterie 12 V.",
+                  "cout_indicatif": "150 à 250 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Contrôle des freins et du liquide de frein (tous les 2 ans)",
+                  "km": 30000,
+                  "cout_indicatif": "50 à 120 €"
+                },
+                {
+                  "titre": "Filtre d'habitacle",
+                  "km": 15000,
+                  "cout_indicatif": "30 à 60 €"
+                },
+                {
+                  "titre": "Contrôle de la batterie de traction (état de santé)",
+                  "km": 30000,
+                  "cout_indicatif": "0 à 100 €"
+                }
+              ],
+              "points_forts": [
+                "Silence et agrément",
+                "Coût d'usage très bas avec recharge à domicile",
+                "Peu d'entretien"
+              ],
+              "points_faibles": [
+                "Autonomie réduite sur autoroute et par temps froid",
+                "Recharge rapide limitée sur les premières versions"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            },
+            {
+              "id": "peugeot-208-2-15-bluehdi",
+              "moteurs": [
+                "1.5 BlueHDi 100",
+                "1.5 BlueHDi 102"
+              ],
+              "codes_moteur": [
+                "DV5"
+              ],
+              "energie": "thermique",
+              "carburant": "diesel",
+              "conseil": "neutre",
+              "conseil_texte": "Très sobre, mais le système AdBlue est un point faible connu : vérifiez qu'il a été traité.",
+              "pannes": [
+                {
+                  "titre": "Système AdBlue : pompe, réservoir ou capteur de niveau défaillant",
+                  "km_typique": 80000,
+                  "gravite": "elevee",
+                  "symptomes": "Voyant de défaut antipollution, compte à rebours avant interdiction de démarrer.",
+                  "solution": "Diagnostic ; remplacement du réservoir avec pompe (souvent d'un bloc). Extension de garantie constructeur possible selon l'âge.",
+                  "cout_indicatif": "800 à 1 500 €"
+                },
+                {
+                  "titre": "Vanne EGR et FAP encrassés en usage urbain",
+                  "km_typique": 100000,
+                  "gravite": "moyenne",
+                  "symptomes": "Perte de puissance, voyant moteur, régénérations fréquentes.",
+                  "solution": "Nettoyage ou remplacement ; trajets plus longs réguliers.",
+                  "cout_indicatif": "200 à 1 500 €"
+                },
+                {
+                  "titre": "Courroie de distribution (1.5 BlueHDi) qui s'use prématurément",
+                  "km_typique": 100000,
+                  "gravite": "elevee",
+                  "symptomes": "Bruit de distribution ; parfois aucun signe.",
+                  "solution": "Contrôle et remplacement préventif selon la note du constructeur.",
+                  "cout_indicatif": "600 à 1 000 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtres",
+                  "km": 20000,
+                  "cout_indicatif": "130 à 220 €"
+                },
+                {
+                  "titre": "Plein d'AdBlue",
+                  "km": 10000,
+                  "cout_indicatif": "10 à 30 €"
+                },
+                {
+                  "titre": "Courroie de distribution (intervalle à vérifier selon la version)",
+                  "km": 150000,
+                  "cout_indicatif": "600 à 1 000 €"
+                }
+              ],
+              "points_forts": [
+                "Consommation très basse",
+                "Couple utile sur route"
+              ],
+              "points_faibles": [
+                "AdBlue fragile",
+                "Inutile pour de petits trajets"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "peugeot-308",
+      "nom": "308",
+      "qualites": [
+        "Confort et insonorisation",
+        "Comportement routier sûr",
+        "Grand coffre (308 II)"
+      ],
+      "defauts": [
+        "Moteurs PureTech et THP à surveiller",
+        "Ergonomie de l'écran tactile",
+        "Frais de réparation électronique sur les versions récentes"
+      ],
+      "pour_qui": "Compacte familiale pour une famille de 3 ou 4 personnes, à l'aise sur autoroute.",
+      "a_verifier_achat": [
+        "Historique d'entretien complet",
+        "Bruit de distribution au démarrage (THP, VTi)",
+        "Fonctionnement de l'écran et des aides à la conduite",
+        "Voyant AdBlue (BlueHDi)"
+      ],
+      "statut": "a_verifier",
+      "sources": [],
+      "redige_par": "ia",
+      "mise_a_jour": "2026-10-14",
+      "generations": [
+        {
+          "id": "peugeot-308-1",
+          "nom": "308 I",
+          "annees": "2007-2013",
+          "alias": [
+            "308 1",
+            "308 phase 1"
+          ],
+          "motorisations": [
+            {
+              "id": "peugeot-308-1-16-hdi",
+              "moteurs": [
+                "1.6 HDi 90",
+                "1.6 HDi 110",
+                "1.6 e-HDi 112"
+              ],
+              "codes_moteur": [
+                "DV6"
+              ],
+              "energie": "thermique",
+              "carburant": "diesel",
+              "conseil": "a_privilegier",
+              "conseil_texte": "Le choix le plus sûr de cette génération si l'entretien est suivi.",
+              "pannes": [
+                {
+                  "titre": "Injecteurs et joints d'injecteurs (boue de calamine sous le cache-culbuteurs)",
+                  "km_typique": 120000,
+                  "gravite": "moyenne",
+                  "symptomes": "Odeur de gasoil, fumée, claquements, démarrage difficile.",
+                  "solution": "Remplacement des joints (« rondelles pare-flamme ») et nettoyage ; injecteurs si besoin.",
+                  "cout_indicatif": "200 à 1 200 €"
+                },
+                {
+                  "titre": "Turbo endommagé par une mauvaise lubrification",
+                  "km_typique": 150000,
+                  "gravite": "elevee",
+                  "symptomes": "Sifflement, fumée bleue, perte de puissance.",
+                  "solution": "Remplacement du turbo, nettoyage de la crépine et des conduites d'huile.",
+                  "cout_indicatif": "900 à 1 800 €"
+                },
+                {
+                  "titre": "Filtre à particules colmaté, additif à remplir",
+                  "km_typique": 120000,
+                  "gravite": "moyenne",
+                  "symptomes": "Voyant FAP, mode dégradé ; additif (Eolys) épuisé sur les versions qui en utilisent.",
+                  "solution": "Régénération, remplissage d'additif, nettoyage ou remplacement du FAP.",
+                  "cout_indicatif": "150 à 1 500 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtres",
+                  "km": 20000,
+                  "cout_indicatif": "120 à 200 €"
+                },
+                {
+                  "titre": "Courroie de distribution et pompe à eau",
+                  "km": 180000,
+                  "cout_indicatif": "500 à 800 €"
+                },
+                {
+                  "titre": "Additif de FAP (versions concernées)",
+                  "km": 120000,
+                  "cout_indicatif": "100 à 300 €"
+                }
+              ],
+              "points_forts": [
+                "Sobre",
+                "Pièces bon marché"
+              ],
+              "points_faibles": [
+                "Turbo et injecteurs à surveiller",
+                "FAP avec additif"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            },
+            {
+              "id": "peugeot-308-1-16-thp",
+              "moteurs": [
+                "1.6 VTi 120",
+                "1.6 THP 150",
+                "1.6 THP 156",
+                "1.6 THP 175"
+              ],
+              "codes_moteur": [
+                "EP6",
+                "EP6DT",
+                "EP6CDT"
+              ],
+              "energie": "thermique",
+              "carburant": "essence",
+              "conseil": "a_eviter",
+              "conseil_texte": "Moteur Prince (avec BMW) aux soucis nombreux sur les premières années : à éviter sauf historique irréprochable.",
+              "pannes": [
+                {
+                  "titre": "Chaîne de distribution qui s'allonge ou saute (moteur Prince)",
+                  "km_typique": 80000,
+                  "gravite": "elevee",
+                  "symptomes": "Cliquetis à froid (« bruit de diesel »), voyant moteur.",
+                  "solution": "Remplacement du kit de chaîne, tendeur révisé.",
+                  "cout_indicatif": "900 à 1 600 €"
+                },
+                {
+                  "titre": "Calamine sur les soupapes (injection directe THP)",
+                  "km_typique": 80000,
+                  "gravite": "moyenne",
+                  "symptomes": "Ratés, perte de puissance.",
+                  "solution": "Décalaminage.",
+                  "cout_indicatif": "300 à 800 €"
+                },
+                {
+                  "titre": "Consommation d'huile",
+                  "km_typique": 90000,
+                  "gravite": "moyenne",
+                  "symptomes": "Niveau qui baisse, fumée bleue.",
+                  "solution": "Contrôle ; segmentation dans les cas sérieux.",
+                  "cout_indicatif": "200 à 2 500 €"
+                },
+                {
+                  "titre": "Pompe à eau et boîtier thermostat qui fuient",
+                  "km_typique": 90000,
+                  "gravite": "moyenne",
+                  "symptomes": "Perte de liquide, température qui monte.",
+                  "solution": "Remplacement.",
+                  "cout_indicatif": "300 à 700 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtre (rapprocher à 10 000 km conseillé)",
+                  "km": 15000,
+                  "cout_indicatif": "120 à 200 €"
+                },
+                {
+                  "titre": "Contrôle de la chaîne de distribution",
+                  "km": 60000,
+                  "cout_indicatif": "50 à 100 €"
+                }
+              ],
+              "points_forts": [
+                "Agréable et performant (THP)"
+              ],
+              "points_faibles": [
+                "Chaîne de distribution fragile",
+                "Calamine et consommation d'huile",
+                "Pompe à eau et thermostat"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "peugeot-308-2",
+          "nom": "308 II",
+          "annees": "2013-2021",
+          "alias": [
+            "308 2",
+            "308 t9",
+            "308 phase 2"
+          ],
+          "motorisations": [
+            {
+              "id": "peugeot-308-2-12-puretech",
+              "moteurs": [
+                "1.2 PureTech 110",
+                "1.2 PureTech 130"
+              ],
+              "codes_moteur": [
+                "EB2DT",
+                "EB2DTS"
+              ],
+              "energie": "thermique",
+              "carburant": "essence",
+              "conseil": "neutre",
+              "conseil_texte": "À choisir avec factures d'entretien à l'huile prescrite.",
+              "pannes": [
+                {
+                  "titre": "Dégradation de la courroie de distribution « humide » (dans l'huile)",
+                  "km_typique": 80000,
+                  "gravite": "elevee",
+                  "symptomes": "Alerte de pression d'huile, débris de courroie dans l'huile, freinage plus dur (pompe à vide colmatée), parfois aucun signe avant la casse.",
+                  "solution": "Contrôle de la courroie (gabarit), remplacement avec nettoyage de la crépine si débris ; huile à la norme exacte.",
+                  "cout_indicatif": "800 à 1 500 €"
+                },
+                {
+                  "titre": "Consommation d'huile excessive",
+                  "km_typique": 70000,
+                  "gravite": "moyenne",
+                  "symptomes": "Niveau d'huile qui baisse entre deux vidanges, alerte de niveau.",
+                  "solution": "Contrôle de consommation ; selon les cas segmentation ou mise à jour. Prise en charge possible par le constructeur selon l'âge et l'entretien.",
+                  "cout_indicatif": "200 à 3 000 € selon l'intervention"
+                },
+                {
+                  "titre": "Ratés d'allumage (bobines, bougies, calamine)",
+                  "km_typique": 60000,
+                  "gravite": "moyenne",
+                  "symptomes": "À-coups, voyant moteur qui clignote, moteur qui tourne sur 2 cylindres.",
+                  "solution": "Lecture des codes défaut, remplacement de la bobine ou des bougies, décalaminage si besoin.",
+                  "cout_indicatif": "100 à 500 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange avec une huile à la norme constructeur exacte (PSA B71 2290 ou B71 2312)",
+                  "km": 15000,
+                  "cout_indicatif": "100 à 180 €"
+                },
+                {
+                  "titre": "Contrôle de l'état de la courroie de distribution humide",
+                  "km": 20000,
+                  "cout_indicatif": "50 à 100 €"
+                },
+                {
+                  "titre": "Courroie de distribution (intervalle réduit par le constructeur : à vérifier selon l'année)",
+                  "km": 100000,
+                  "cout_indicatif": "800 à 1 200 €"
+                }
+              ],
+              "points_forts": [
+                "Souple et sobre",
+                "Agréable sur route"
+              ],
+              "points_faibles": [
+                "Courroie humide",
+                "Consommation d'huile"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            },
+            {
+              "id": "peugeot-308-2-16-bluehdi",
+              "moteurs": [
+                "1.6 BlueHDi 100",
+                "1.6 BlueHDi 120",
+                "1.5 BlueHDi 130"
+              ],
+              "codes_moteur": [
+                "DV6",
+                "DV5"
+              ],
+              "energie": "thermique",
+              "carburant": "diesel",
+              "conseil": "a_privilegier",
+              "conseil_texte": "Le 1.6 BlueHDi (avant 2018) est un des choix les plus sûrs ; le 1.5 (2018+) demande de vérifier l'AdBlue.",
+              "pannes": [
+                {
+                  "titre": "Système AdBlue : pompe, réservoir ou capteur de niveau défaillant",
+                  "km_typique": 80000,
+                  "gravite": "elevee",
+                  "symptomes": "Voyant de défaut antipollution, compte à rebours avant interdiction de démarrer.",
+                  "solution": "Diagnostic ; remplacement du réservoir avec pompe (souvent d'un bloc). Extension de garantie constructeur possible selon l'âge.",
+                  "cout_indicatif": "800 à 1 500 €"
+                },
+                {
+                  "titre": "Vanne EGR et FAP encrassés en usage urbain",
+                  "km_typique": 100000,
+                  "gravite": "moyenne",
+                  "symptomes": "Perte de puissance, voyant moteur, régénérations fréquentes.",
+                  "solution": "Nettoyage ou remplacement ; trajets plus longs réguliers.",
+                  "cout_indicatif": "200 à 1 500 €"
+                },
+                {
+                  "titre": "Courroie de distribution (1.5 BlueHDi) qui s'use prématurément",
+                  "km_typique": 100000,
+                  "gravite": "elevee",
+                  "symptomes": "Bruit de distribution ; parfois aucun signe.",
+                  "solution": "Contrôle et remplacement préventif selon la note du constructeur.",
+                  "cout_indicatif": "600 à 1 000 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtres",
+                  "km": 20000,
+                  "cout_indicatif": "130 à 220 €"
+                },
+                {
+                  "titre": "Plein d'AdBlue",
+                  "km": 10000,
+                  "cout_indicatif": "10 à 30 €"
+                },
+                {
+                  "titre": "Courroie de distribution (intervalle à vérifier selon la version)",
+                  "km": 150000,
+                  "cout_indicatif": "600 à 1 000 €"
+                }
+              ],
+              "points_forts": [
+                "Très sobre",
+                "Fiable si entretenu"
+              ],
+              "points_faibles": [
+                "AdBlue sur les versions récentes",
+                "FAP en usage urbain"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            },
+            {
+              "id": "peugeot-308-2-20-bluehdi",
+              "moteurs": [
+                "2.0 BlueHDi 150",
+                "2.0 BlueHDi 180"
+              ],
+              "codes_moteur": [
+                "DW10"
+              ],
+              "energie": "thermique",
+              "carburant": "diesel",
+              "conseil": "a_privilegier",
+              "conseil_texte": "Moteur robuste pour les gros rouleurs ; boîte automatique EAT6/EAT8 agréable.",
+              "pannes": [
+                {
+                  "titre": "Système AdBlue : pompe, réservoir ou capteur de niveau défaillant",
+                  "km_typique": 80000,
+                  "gravite": "elevee",
+                  "symptomes": "Voyant de défaut antipollution, compte à rebours avant interdiction de démarrer.",
+                  "solution": "Diagnostic ; remplacement du réservoir avec pompe (souvent d'un bloc). Extension de garantie constructeur possible selon l'âge.",
+                  "cout_indicatif": "800 à 1 500 €"
+                },
+                {
+                  "titre": "Vanne EGR et FAP encrassés en usage urbain",
+                  "km_typique": 100000,
+                  "gravite": "moyenne",
+                  "symptomes": "Perte de puissance, voyant moteur, régénérations fréquentes.",
+                  "solution": "Nettoyage ou remplacement ; trajets plus longs réguliers.",
+                  "cout_indicatif": "200 à 1 500 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtres",
+                  "km": 20000,
+                  "cout_indicatif": "150 à 250 €"
+                },
+                {
+                  "titre": "Plein d'AdBlue",
+                  "km": 10000,
+                  "cout_indicatif": "10 à 30 €"
+                },
+                {
+                  "titre": "Vidange de boîte automatique (conseillée)",
+                  "km": 80000,
+                  "cout_indicatif": "250 à 400 €"
+                }
+              ],
+              "points_forts": [
+                "Robuste",
+                "Couple généreux"
+              ],
+              "points_faibles": [
+                "Entretien plus cher",
+                "AdBlue"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "peugeot-308-3",
+          "nom": "308 III",
+          "annees": "2021-auj.",
+          "alias": [
+            "308 3",
+            "nouvelle 308",
+            "308 hybrid"
+          ],
+          "motorisations": [
+            {
+              "id": "peugeot-308-3-12-puretech",
+              "moteurs": [
+                "1.2 PureTech 110",
+                "1.2 PureTech 130"
+              ],
+              "codes_moteur": [
+                "EB2ADTS"
+              ],
+              "energie": "thermique",
+              "carburant": "essence",
+              "conseil": "neutre",
+              "conseil_texte": "Vérifiez la version (courroie humide ou chaîne) et le suivi en concession.",
+              "pannes": [
+                {
+                  "titre": "Dégradation de la courroie de distribution « humide » (dans l'huile)",
+                  "km_typique": 80000,
+                  "gravite": "elevee",
+                  "symptomes": "Alerte de pression d'huile, débris de courroie dans l'huile, freinage plus dur (pompe à vide colmatée), parfois aucun signe avant la casse.",
+                  "solution": "Contrôle de la courroie (gabarit), remplacement avec nettoyage de la crépine si débris ; huile à la norme exacte.",
+                  "cout_indicatif": "800 à 1 500 €"
+                },
+                {
+                  "titre": "Consommation d'huile excessive",
+                  "km_typique": 70000,
+                  "gravite": "moyenne",
+                  "symptomes": "Niveau d'huile qui baisse entre deux vidanges, alerte de niveau.",
+                  "solution": "Contrôle de consommation ; selon les cas segmentation ou mise à jour. Prise en charge possible par le constructeur selon l'âge et l'entretien.",
+                  "cout_indicatif": "200 à 3 000 € selon l'intervention"
+                },
+                {
+                  "titre": "Ratés d'allumage (bobines, bougies, calamine)",
+                  "km_typique": 60000,
+                  "gravite": "moyenne",
+                  "symptomes": "À-coups, voyant moteur qui clignote, moteur qui tourne sur 2 cylindres.",
+                  "solution": "Lecture des codes défaut, remplacement de la bobine ou des bougies, décalaminage si besoin.",
+                  "cout_indicatif": "100 à 500 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange avec une huile à la norme constructeur exacte (PSA B71 2290 ou B71 2312)",
+                  "km": 15000,
+                  "cout_indicatif": "100 à 180 €"
+                },
+                {
+                  "titre": "Contrôle de l'état de la courroie de distribution humide",
+                  "km": 20000,
+                  "cout_indicatif": "50 à 100 €"
+                },
+                {
+                  "titre": "Courroie de distribution (intervalle réduit par le constructeur : à vérifier selon l'année)",
+                  "km": 100000,
+                  "cout_indicatif": "800 à 1 200 €"
+                }
+              ],
+              "points_forts": [
+                "Sobre",
+                "Boîte EAT8 agréable"
+              ],
+              "points_faibles": [
+                "Courroie humide sur les premières années"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            },
+            {
+              "id": "peugeot-308-3-hybrid",
+              "moteurs": [
+                "Hybrid 180",
+                "Hybrid 225"
+              ],
+              "codes_moteur": [],
+              "energie": "hybride_rechargeable",
+              "carburant": "essence",
+              "conseil": "neutre",
+              "conseil_texte": "Intéressante si vous rechargez tous les jours ; sinon la consommation monte vite.",
+              "pannes": [
+                {
+                  "titre": "Défauts de charge et mises à jour logicielles",
+                  "km_typique": 30000,
+                  "gravite": "faible",
+                  "symptomes": "Charge interrompue, messages d'erreur.",
+                  "solution": "Mise à jour en concession.",
+                  "cout_indicatif": "0 à 300 €"
+                },
+                {
+                  "titre": "Dégradation de la courroie de distribution « humide » (dans l'huile)",
+                  "km_typique": 80000,
+                  "gravite": "elevee",
+                  "symptomes": "Alerte de pression d'huile, débris de courroie dans l'huile, freinage plus dur (pompe à vide colmatée), parfois aucun signe avant la casse.",
+                  "solution": "Contrôle de la courroie (gabarit), remplacement avec nettoyage de la crépine si débris ; huile à la norme exacte.",
+                  "cout_indicatif": "800 à 1 500 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtre",
+                  "km": 20000,
+                  "cout_indicatif": "150 à 250 €"
+                },
+                {
+                  "titre": "Contrôle des freins et du liquide de frein (tous les 2 ans)",
+                  "km": 30000,
+                  "cout_indicatif": "50 à 120 €"
+                }
+              ],
+              "points_forts": [
+                "Trajets quotidiens en électrique",
+                "Performances"
+              ],
+              "points_faibles": [
+                "Poids et prix",
+                "Électronique complexe, bugs de charge"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "peugeot-2008",
+      "nom": "2008",
+      "qualites": [
+        "Position de conduite surélevée",
+        "Gabarit facile en ville",
+        "Bonne tenue de route"
+      ],
+      "defauts": [
+        "Moteurs PureTech à surveiller",
+        "Pas de quatre roues motrices",
+        "Habitabilité arrière moyenne (2008 I)"
+      ],
+      "pour_qui": "Petit SUV urbain pour qui veut une position haute sans le prix ni le gabarit d'un grand SUV.",
+      "a_verifier_achat": [
+        "Historique d'entretien (PureTech)",
+        "Voyant AdBlue (diesels récents)",
+        "Autonomie et état de batterie (e-2008)",
+        "Usure des pneus avant"
+      ],
+      "statut": "a_verifier",
+      "sources": [],
+      "redige_par": "ia",
+      "mise_a_jour": "2026-10-14",
+      "generations": [
+        {
+          "id": "peugeot-2008-1",
+          "nom": "2008 I",
+          "annees": "2013-2019",
+          "alias": [
+            "2008 1",
+            "2008 phase 1"
+          ],
+          "motorisations": [
+            {
+              "id": "peugeot-2008-1-12-puretech",
+              "moteurs": [
+                "1.2 PureTech 82",
+                "1.2 PureTech 110",
+                "1.2 PureTech 130"
+              ],
+              "codes_moteur": [
+                "EB2",
+                "EB2DT"
+              ],
+              "energie": "thermique",
+              "carburant": "essence",
+              "conseil": "neutre",
+              "conseil_texte": "Avec factures d'entretien seulement.",
+              "pannes": [
+                {
+                  "titre": "Dégradation de la courroie de distribution « humide » (dans l'huile)",
+                  "km_typique": 80000,
+                  "gravite": "elevee",
+                  "symptomes": "Alerte de pression d'huile, débris de courroie dans l'huile, freinage plus dur (pompe à vide colmatée), parfois aucun signe avant la casse.",
+                  "solution": "Contrôle de la courroie (gabarit), remplacement avec nettoyage de la crépine si débris ; huile à la norme exacte.",
+                  "cout_indicatif": "800 à 1 500 €"
+                },
+                {
+                  "titre": "Consommation d'huile excessive",
+                  "km_typique": 70000,
+                  "gravite": "moyenne",
+                  "symptomes": "Niveau d'huile qui baisse entre deux vidanges, alerte de niveau.",
+                  "solution": "Contrôle de consommation ; selon les cas segmentation ou mise à jour. Prise en charge possible par le constructeur selon l'âge et l'entretien.",
+                  "cout_indicatif": "200 à 3 000 € selon l'intervention"
+                },
+                {
+                  "titre": "Ratés d'allumage (bobines, bougies, calamine)",
+                  "km_typique": 60000,
+                  "gravite": "moyenne",
+                  "symptomes": "À-coups, voyant moteur qui clignote, moteur qui tourne sur 2 cylindres.",
+                  "solution": "Lecture des codes défaut, remplacement de la bobine ou des bougies, décalaminage si besoin.",
+                  "cout_indicatif": "100 à 500 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange avec une huile à la norme constructeur exacte (PSA B71 2290 ou B71 2312)",
+                  "km": 15000,
+                  "cout_indicatif": "100 à 180 €"
+                },
+                {
+                  "titre": "Contrôle de l'état de la courroie de distribution humide",
+                  "km": 20000,
+                  "cout_indicatif": "50 à 100 €"
+                },
+                {
+                  "titre": "Courroie de distribution (intervalle réduit par le constructeur : à vérifier selon l'année)",
+                  "km": 100000,
+                  "cout_indicatif": "800 à 1 200 €"
+                }
+              ],
+              "points_forts": [
+                "Sobre",
+                "Agréable"
+              ],
+              "points_faibles": [
+                "Courroie humide",
+                "Consommation d'huile"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            },
+            {
+              "id": "peugeot-2008-1-16-bluehdi",
+              "moteurs": [
+                "1.6 BlueHDi 75",
+                "1.6 BlueHDi 100",
+                "1.6 BlueHDi 120"
+              ],
+              "codes_moteur": [
+                "DV6"
+              ],
+              "energie": "thermique",
+              "carburant": "diesel",
+              "conseil": "a_privilegier",
+              "conseil_texte": "Bon choix pour les gros rouleurs.",
+              "pannes": [
+                {
+                  "titre": "Injecteurs et joints d'injecteurs (boue de calamine sous le cache-culbuteurs)",
+                  "km_typique": 120000,
+                  "gravite": "moyenne",
+                  "symptomes": "Odeur de gasoil, fumée, claquements, démarrage difficile.",
+                  "solution": "Remplacement des joints (« rondelles pare-flamme ») et nettoyage ; injecteurs si besoin.",
+                  "cout_indicatif": "200 à 1 200 €"
+                },
+                {
+                  "titre": "Turbo endommagé par une mauvaise lubrification",
+                  "km_typique": 150000,
+                  "gravite": "elevee",
+                  "symptomes": "Sifflement, fumée bleue, perte de puissance.",
+                  "solution": "Remplacement du turbo, nettoyage de la crépine et des conduites d'huile.",
+                  "cout_indicatif": "900 à 1 800 €"
+                },
+                {
+                  "titre": "Filtre à particules colmaté, additif à remplir",
+                  "km_typique": 120000,
+                  "gravite": "moyenne",
+                  "symptomes": "Voyant FAP, mode dégradé ; additif (Eolys) épuisé sur les versions qui en utilisent.",
+                  "solution": "Régénération, remplissage d'additif, nettoyage ou remplacement du FAP.",
+                  "cout_indicatif": "150 à 1 500 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtres",
+                  "km": 20000,
+                  "cout_indicatif": "120 à 200 €"
+                },
+                {
+                  "titre": "Courroie de distribution et pompe à eau",
+                  "km": 180000,
+                  "cout_indicatif": "500 à 800 €"
+                },
+                {
+                  "titre": "Additif de FAP (versions concernées)",
+                  "km": 120000,
+                  "cout_indicatif": "100 à 300 €"
+                }
+              ],
+              "points_forts": [
+                "Sobre",
+                "Éprouvé"
+              ],
+              "points_faibles": [
+                "FAP en ville"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "peugeot-2008-2",
+          "nom": "2008 II",
+          "annees": "2019-auj.",
+          "alias": [
+            "2008 2",
+            "nouveau 2008",
+            "e-2008"
+          ],
+          "motorisations": [
+            {
+              "id": "peugeot-2008-2-12-puretech",
+              "moteurs": [
+                "1.2 PureTech 100",
+                "1.2 PureTech 130",
+                "1.2 PureTech 155"
+              ],
+              "codes_moteur": [
+                "EB2ADT",
+                "EB2ADTS"
+              ],
+              "energie": "thermique",
+              "carburant": "essence",
+              "conseil": "neutre",
+              "conseil_texte": "Préférez un suivi en concession et vérifiez la version de distribution.",
+              "pannes": [
+                {
+                  "titre": "Dégradation de la courroie de distribution « humide » (dans l'huile)",
+                  "km_typique": 80000,
+                  "gravite": "elevee",
+                  "symptomes": "Alerte de pression d'huile, débris de courroie dans l'huile, freinage plus dur (pompe à vide colmatée), parfois aucun signe avant la casse.",
+                  "solution": "Contrôle de la courroie (gabarit), remplacement avec nettoyage de la crépine si débris ; huile à la norme exacte.",
+                  "cout_indicatif": "800 à 1 500 €"
+                },
+                {
+                  "titre": "Consommation d'huile excessive",
+                  "km_typique": 70000,
+                  "gravite": "moyenne",
+                  "symptomes": "Niveau d'huile qui baisse entre deux vidanges, alerte de niveau.",
+                  "solution": "Contrôle de consommation ; selon les cas segmentation ou mise à jour. Prise en charge possible par le constructeur selon l'âge et l'entretien.",
+                  "cout_indicatif": "200 à 3 000 € selon l'intervention"
+                },
+                {
+                  "titre": "Ratés d'allumage (bobines, bougies, calamine)",
+                  "km_typique": 60000,
+                  "gravite": "moyenne",
+                  "symptomes": "À-coups, voyant moteur qui clignote, moteur qui tourne sur 2 cylindres.",
+                  "solution": "Lecture des codes défaut, remplacement de la bobine ou des bougies, décalaminage si besoin.",
+                  "cout_indicatif": "100 à 500 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange avec une huile à la norme constructeur exacte (PSA B71 2290 ou B71 2312)",
+                  "km": 15000,
+                  "cout_indicatif": "100 à 180 €"
+                },
+                {
+                  "titre": "Contrôle de l'état de la courroie de distribution humide",
+                  "km": 20000,
+                  "cout_indicatif": "50 à 100 €"
+                },
+                {
+                  "titre": "Courroie de distribution (intervalle réduit par le constructeur : à vérifier selon l'année)",
+                  "km": 100000,
+                  "cout_indicatif": "800 à 1 200 €"
+                }
+              ],
+              "points_forts": [
+                "Sobre",
+                "Boîte EAT8 agréable"
+              ],
+              "points_faibles": [
+                "Courroie humide sur les premières années"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            },
+            {
+              "id": "peugeot-2008-2-e2008",
+              "moteurs": [
+                "e-2008 136 (50 kWh)",
+                "e-2008 156 (54 kWh)"
+              ],
+              "codes_moteur": [],
+              "energie": "electrique",
+              "conseil": "a_privilegier",
+              "conseil_texte": "Bon choix avec recharge à domicile ; autonomie modeste sur autoroute.",
+              "pannes": [
+                {
+                  "titre": "Chargeur embarqué défaillant",
+                  "km_typique": 40000,
+                  "gravite": "moyenne",
+                  "symptomes": "Charge qui ne démarre pas.",
+                  "solution": "Mise à jour ou remplacement.",
+                  "cout_indicatif": "0 à 2 000 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Contrôle des freins et du liquide de frein (tous les 2 ans)",
+                  "km": 30000,
+                  "cout_indicatif": "50 à 120 €"
+                },
+                {
+                  "titre": "Filtre d'habitacle",
+                  "km": 15000,
+                  "cout_indicatif": "30 à 60 €"
+                },
+                {
+                  "titre": "Contrôle de la batterie de traction (état de santé)",
+                  "km": 30000,
+                  "cout_indicatif": "0 à 100 €"
+                }
+              ],
+              "points_forts": [
+                "Silence",
+                "Peu d'entretien"
+              ],
+              "points_faibles": [
+                "Autonomie limitée sur les premières versions"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "peugeot-3008",
+      "nom": "3008",
+      "qualites": [
+        "Intérieur moderne et soigné (3008 II)",
+        "Confort",
+        "Grand coffre"
+      ],
+      "defauts": [
+        "Moteurs PureTech 130 et THP à surveiller",
+        "Écrans et électronique parfois capricieux",
+        "Prix d'occasion élevé"
+      ],
+      "pour_qui": "SUV familial pour une famille avec enfants, à l'aise sur les longs trajets.",
+      "a_verifier_achat": [
+        "Historique d'entretien complet",
+        "Fonctionnement des écrans et des aides à la conduite",
+        "Voyant AdBlue",
+        "Boîte automatique : à-coups au passage des rapports"
+      ],
+      "statut": "a_verifier",
+      "sources": [],
+      "redige_par": "ia",
+      "mise_a_jour": "2026-10-14",
+      "generations": [
+        {
+          "id": "peugeot-3008-1",
+          "nom": "3008 I",
+          "annees": "2009-2016",
+          "alias": [
+            "3008 1",
+            "3008 phase 1"
+          ],
+          "motorisations": [
+            {
+              "id": "peugeot-3008-1-16-hdi",
+              "moteurs": [
+                "1.6 HDi 110",
+                "1.6 e-HDi 115",
+                "1.6 BlueHDi 120"
+              ],
+              "codes_moteur": [
+                "DV6"
+              ],
+              "energie": "thermique",
+              "carburant": "diesel",
+              "conseil": "neutre",
+              "conseil_texte": "Correct si l'entretien est suivi ; boîte robotisée ETG6 (e-HDi) moins agréable.",
+              "pannes": [
+                {
+                  "titre": "Injecteurs et joints d'injecteurs (boue de calamine sous le cache-culbuteurs)",
+                  "km_typique": 120000,
+                  "gravite": "moyenne",
+                  "symptomes": "Odeur de gasoil, fumée, claquements, démarrage difficile.",
+                  "solution": "Remplacement des joints (« rondelles pare-flamme ») et nettoyage ; injecteurs si besoin.",
+                  "cout_indicatif": "200 à 1 200 €"
+                },
+                {
+                  "titre": "Turbo endommagé par une mauvaise lubrification",
+                  "km_typique": 150000,
+                  "gravite": "elevee",
+                  "symptomes": "Sifflement, fumée bleue, perte de puissance.",
+                  "solution": "Remplacement du turbo, nettoyage de la crépine et des conduites d'huile.",
+                  "cout_indicatif": "900 à 1 800 €"
+                },
+                {
+                  "titre": "Filtre à particules colmaté, additif à remplir",
+                  "km_typique": 120000,
+                  "gravite": "moyenne",
+                  "symptomes": "Voyant FAP, mode dégradé ; additif (Eolys) épuisé sur les versions qui en utilisent.",
+                  "solution": "Régénération, remplissage d'additif, nettoyage ou remplacement du FAP.",
+                  "cout_indicatif": "150 à 1 500 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtres",
+                  "km": 20000,
+                  "cout_indicatif": "120 à 200 €"
+                },
+                {
+                  "titre": "Courroie de distribution et pompe à eau",
+                  "km": 180000,
+                  "cout_indicatif": "500 à 800 €"
+                },
+                {
+                  "titre": "Additif de FAP (versions concernées)",
+                  "km": 120000,
+                  "cout_indicatif": "100 à 300 €"
+                }
+              ],
+              "points_forts": [
+                "Sobre"
+              ],
+              "points_faibles": [
+                "Turbo, injecteurs",
+                "Boîte robotisée lente"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            },
+            {
+              "id": "peugeot-3008-1-20-hdi",
+              "moteurs": [
+                "2.0 HDi 150",
+                "2.0 HDi 163 (automatique)",
+                "HYbrid4"
+              ],
+              "codes_moteur": [
+                "DW10"
+              ],
+              "energie": "thermique",
+              "carburant": "diesel",
+              "conseil": "a_privilegier",
+              "conseil_texte": "Le 2.0 HDi est robuste ; le HYbrid4 est plus complexe à réparer.",
+              "pannes": [
+                {
+                  "titre": "Volant moteur bimasse et embrayage",
+                  "km_typique": 150000,
+                  "gravite": "moyenne",
+                  "symptomes": "Vibrations, claquements.",
+                  "solution": "Kit embrayage avec volant.",
+                  "cout_indicatif": "1 000 à 1 800 €"
+                },
+                {
+                  "titre": "Filtre à particules colmaté, additif à remplir",
+                  "km_typique": 120000,
+                  "gravite": "moyenne",
+                  "symptomes": "Voyant FAP, mode dégradé ; additif (Eolys) épuisé sur les versions qui en utilisent.",
+                  "solution": "Régénération, remplissage d'additif, nettoyage ou remplacement du FAP.",
+                  "cout_indicatif": "150 à 1 500 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtres",
+                  "km": 20000,
+                  "cout_indicatif": "150 à 250 €"
+                },
+                {
+                  "titre": "Courroie de distribution",
+                  "km": 180000,
+                  "cout_indicatif": "600 à 900 €"
+                }
+              ],
+              "points_forts": [
+                "Robuste",
+                "Couple"
+              ],
+              "points_faibles": [
+                "Volant bimasse",
+                "FAP"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "peugeot-3008-2",
+          "nom": "3008 II",
+          "annees": "2016-2024",
+          "alias": [
+            "3008 2",
+            "3008 phase 2"
+          ],
+          "motorisations": [
+            {
+              "id": "peugeot-3008-2-12-puretech",
+              "moteurs": [
+                "1.2 PureTech 130"
+              ],
+              "codes_moteur": [
+                "EB2DTS",
+                "EB2ADTS"
+              ],
+              "energie": "thermique",
+              "carburant": "essence",
+              "conseil": "neutre",
+              "conseil_texte": "Moteur juste pour ce poids ; avec factures d'entretien seulement.",
+              "pannes": [
+                {
+                  "titre": "Dégradation de la courroie de distribution « humide » (dans l'huile)",
+                  "km_typique": 80000,
+                  "gravite": "elevee",
+                  "symptomes": "Alerte de pression d'huile, débris de courroie dans l'huile, freinage plus dur (pompe à vide colmatée), parfois aucun signe avant la casse.",
+                  "solution": "Contrôle de la courroie (gabarit), remplacement avec nettoyage de la crépine si débris ; huile à la norme exacte.",
+                  "cout_indicatif": "800 à 1 500 €"
+                },
+                {
+                  "titre": "Consommation d'huile excessive",
+                  "km_typique": 70000,
+                  "gravite": "moyenne",
+                  "symptomes": "Niveau d'huile qui baisse entre deux vidanges, alerte de niveau.",
+                  "solution": "Contrôle de consommation ; selon les cas segmentation ou mise à jour. Prise en charge possible par le constructeur selon l'âge et l'entretien.",
+                  "cout_indicatif": "200 à 3 000 € selon l'intervention"
+                },
+                {
+                  "titre": "Ratés d'allumage (bobines, bougies, calamine)",
+                  "km_typique": 60000,
+                  "gravite": "moyenne",
+                  "symptomes": "À-coups, voyant moteur qui clignote, moteur qui tourne sur 2 cylindres.",
+                  "solution": "Lecture des codes défaut, remplacement de la bobine ou des bougies, décalaminage si besoin.",
+                  "cout_indicatif": "100 à 500 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange avec une huile à la norme constructeur exacte (PSA B71 2290 ou B71 2312)",
+                  "km": 15000,
+                  "cout_indicatif": "100 à 180 €"
+                },
+                {
+                  "titre": "Contrôle de l'état de la courroie de distribution humide",
+                  "km": 20000,
+                  "cout_indicatif": "50 à 100 €"
+                },
+                {
+                  "titre": "Courroie de distribution (intervalle réduit par le constructeur : à vérifier selon l'année)",
+                  "km": 100000,
+                  "cout_indicatif": "800 à 1 200 €"
+                }
+              ],
+              "points_forts": [
+                "Prix d'achat plus bas que le diesel"
+              ],
+              "points_faibles": [
+                "Courroie humide",
+                "Un peu juste chargé"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            },
+            {
+              "id": "peugeot-3008-2-15-bluehdi",
+              "moteurs": [
+                "1.6 BlueHDi 120",
+                "1.5 BlueHDi 130",
+                "2.0 BlueHDi 150",
+                "2.0 BlueHDi 180"
+              ],
+              "codes_moteur": [
+                "DV6",
+                "DV5",
+                "DW10"
+              ],
+              "energie": "thermique",
+              "carburant": "diesel",
+              "conseil": "a_privilegier",
+              "conseil_texte": "Bon choix pour les gros rouleurs ; vérifiez le système AdBlue.",
+              "pannes": [
+                {
+                  "titre": "Système AdBlue : pompe, réservoir ou capteur de niveau défaillant",
+                  "km_typique": 80000,
+                  "gravite": "elevee",
+                  "symptomes": "Voyant de défaut antipollution, compte à rebours avant interdiction de démarrer.",
+                  "solution": "Diagnostic ; remplacement du réservoir avec pompe (souvent d'un bloc). Extension de garantie constructeur possible selon l'âge.",
+                  "cout_indicatif": "800 à 1 500 €"
+                },
+                {
+                  "titre": "Vanne EGR et FAP encrassés en usage urbain",
+                  "km_typique": 100000,
+                  "gravite": "moyenne",
+                  "symptomes": "Perte de puissance, voyant moteur, régénérations fréquentes.",
+                  "solution": "Nettoyage ou remplacement ; trajets plus longs réguliers.",
+                  "cout_indicatif": "200 à 1 500 €"
+                },
+                {
+                  "titre": "Courroie de distribution (1.5 BlueHDi) qui s'use prématurément",
+                  "km_typique": 100000,
+                  "gravite": "elevee",
+                  "symptomes": "Bruit de distribution ; parfois aucun signe.",
+                  "solution": "Contrôle et remplacement préventif selon la note du constructeur.",
+                  "cout_indicatif": "600 à 1 000 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtres",
+                  "km": 20000,
+                  "cout_indicatif": "130 à 220 €"
+                },
+                {
+                  "titre": "Plein d'AdBlue",
+                  "km": 10000,
+                  "cout_indicatif": "10 à 30 €"
+                },
+                {
+                  "titre": "Courroie de distribution (intervalle à vérifier selon la version)",
+                  "km": 150000,
+                  "cout_indicatif": "600 à 1 000 €"
+                }
+              ],
+              "points_forts": [
+                "Sobre",
+                "Autonomie"
+              ],
+              "points_faibles": [
+                "AdBlue",
+                "FAP en ville"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            },
+            {
+              "id": "peugeot-3008-2-hybrid",
+              "moteurs": [
+                "Hybrid 225",
+                "Hybrid4 300"
+              ],
+              "codes_moteur": [],
+              "energie": "hybride_rechargeable",
+              "carburant": "essence",
+              "conseil": "neutre",
+              "conseil_texte": "Si vous rechargez chaque jour ; sinon, préférez un diesel ou un essence.",
+              "pannes": [
+                {
+                  "titre": "Défauts de charge, mises à jour logicielles",
+                  "km_typique": 30000,
+                  "gravite": "faible",
+                  "symptomes": "Charge interrompue, messages d'erreur.",
+                  "solution": "Mise à jour en concession.",
+                  "cout_indicatif": "0 à 300 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtre",
+                  "km": 20000,
+                  "cout_indicatif": "150 à 250 €"
+                }
+              ],
+              "points_forts": [
+                "Trajets quotidiens électriques",
+                "4 roues motrices (Hybrid4)"
+              ],
+              "points_faibles": [
+                "Prix",
+                "Bugs de charge et de boîte"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "peugeot-207",
+      "nom": "207",
+      "qualites": [
+        "Prix d'occasion bas",
+        "Comportement routier sain",
+        "Pièces nombreuses et bon marché"
+      ],
+      "defauts": [
+        "Qualité de finition moyenne",
+        "Moteurs essence VTi et THP à éviter",
+        "Électricité parfois capricieuse (BSI)"
+      ],
+      "pour_qui": "Petit budget, jeune conducteur, voiture de ville ou de dépannage.",
+      "a_verifier_achat": [
+        "Bruit de chaîne au démarrage (VTi, THP)",
+        "Fumée et démarrage (HDi)",
+        "Fonctionnement de tous les équipements électriques",
+        "Rouille et état des trains roulants"
+      ],
+      "statut": "a_verifier",
+      "sources": [],
+      "redige_par": "ia",
+      "mise_a_jour": "2026-10-14",
+      "generations": [
+        {
+          "id": "peugeot-207-1",
+          "nom": "207",
+          "annees": "2006-2014",
+          "alias": [
+            "207 phase 1",
+            "207 phase 2",
+            "207 sw",
+            "207 cc"
+          ],
+          "motorisations": [
+            {
+              "id": "peugeot-207-14-hdi",
+              "moteurs": [
+                "1.4 HDi 70",
+                "1.6 HDi 90",
+                "1.6 HDi 110"
+              ],
+              "codes_moteur": [
+                "DV4",
+                "DV6"
+              ],
+              "energie": "thermique",
+              "carburant": "diesel",
+              "conseil": "a_privilegier",
+              "conseil_texte": "Le 1.4 HDi est réputé robuste et simple.",
+              "pannes": [
+                {
+                  "titre": "Injecteurs et joints d'injecteurs (boue de calamine sous le cache-culbuteurs)",
+                  "km_typique": 120000,
+                  "gravite": "moyenne",
+                  "symptomes": "Odeur de gasoil, fumée, claquements, démarrage difficile.",
+                  "solution": "Remplacement des joints (« rondelles pare-flamme ») et nettoyage ; injecteurs si besoin.",
+                  "cout_indicatif": "200 à 1 200 €"
+                },
+                {
+                  "titre": "Turbo endommagé par une mauvaise lubrification",
+                  "km_typique": 150000,
+                  "gravite": "elevee",
+                  "symptomes": "Sifflement, fumée bleue, perte de puissance.",
+                  "solution": "Remplacement du turbo, nettoyage de la crépine et des conduites d'huile.",
+                  "cout_indicatif": "900 à 1 800 €"
+                },
+                {
+                  "titre": "Filtre à particules colmaté, additif à remplir",
+                  "km_typique": 120000,
+                  "gravite": "moyenne",
+                  "symptomes": "Voyant FAP, mode dégradé ; additif (Eolys) épuisé sur les versions qui en utilisent.",
+                  "solution": "Régénération, remplissage d'additif, nettoyage ou remplacement du FAP.",
+                  "cout_indicatif": "150 à 1 500 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtres",
+                  "km": 20000,
+                  "cout_indicatif": "120 à 200 €"
+                },
+                {
+                  "titre": "Courroie de distribution et pompe à eau",
+                  "km": 180000,
+                  "cout_indicatif": "500 à 800 €"
+                },
+                {
+                  "titre": "Additif de FAP (versions concernées)",
+                  "km": 120000,
+                  "cout_indicatif": "100 à 300 €"
+                }
+              ],
+              "points_forts": [
+                "Robuste (1.4 HDi)",
+                "Très sobre"
+              ],
+              "points_faibles": [
+                "Turbo et injecteurs (1.6 HDi)"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            },
+            {
+              "id": "peugeot-207-14-8v",
+              "moteurs": [
+                "1.4 75 (8 soupapes)",
+                "1.4 16V 90"
+              ],
+              "codes_moteur": [
+                "TU3",
+                "ET3"
+              ],
+              "energie": "thermique",
+              "carburant": "essence",
+              "conseil": "a_privilegier",
+              "conseil_texte": "Moteurs anciens, simples et durables.",
+              "pannes": [
+                {
+                  "titre": "Bobine d'allumage ou faisceau",
+                  "km_typique": 120000,
+                  "gravite": "faible",
+                  "symptomes": "Ratés, voyant moteur.",
+                  "solution": "Remplacement.",
+                  "cout_indicatif": "80 à 200 €"
+                },
+                {
+                  "titre": "Fuite de joint de culasse sur moteur surchauffé",
+                  "km_typique": 180000,
+                  "gravite": "elevee",
+                  "symptomes": "Perte de liquide, fumée blanche.",
+                  "solution": "Joint de culasse.",
+                  "cout_indicatif": "800 à 1 500 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtre",
+                  "km": 15000,
+                  "cout_indicatif": "90 à 150 €"
+                },
+                {
+                  "titre": "Courroie de distribution",
+                  "km": 120000,
+                  "cout_indicatif": "350 à 600 €"
+                }
+              ],
+              "points_forts": [
+                "Simple",
+                "Réparation bon marché"
+              ],
+              "points_faibles": [
+                "Consommation plus élevée",
+                "Peu performant"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            },
+            {
+              "id": "peugeot-207-16-vti-thp",
+              "moteurs": [
+                "1.4 VTi 95",
+                "1.6 VTi 120",
+                "1.6 THP 150",
+                "1.6 THP 156 (RC)"
+              ],
+              "codes_moteur": [
+                "EP3",
+                "EP6",
+                "EP6DT"
+              ],
+              "energie": "thermique",
+              "carburant": "essence",
+              "conseil": "a_eviter",
+              "conseil_texte": "Moteur Prince fragile (chaîne, calamine, huile) : à éviter sans historique sérieux.",
+              "pannes": [
+                {
+                  "titre": "Chaîne de distribution qui s'allonge ou saute (moteur Prince)",
+                  "km_typique": 80000,
+                  "gravite": "elevee",
+                  "symptomes": "Cliquetis à froid, voyant moteur.",
+                  "solution": "Kit de chaîne et tendeur.",
+                  "cout_indicatif": "900 à 1 600 €"
+                },
+                {
+                  "titre": "Calamine et consommation d'huile",
+                  "km_typique": 80000,
+                  "gravite": "moyenne",
+                  "symptomes": "Ratés, niveau d'huile qui baisse.",
+                  "solution": "Décalaminage, segmentation.",
+                  "cout_indicatif": "300 à 2 500 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtre (rapprochée)",
+                  "km": 10000,
+                  "cout_indicatif": "120 à 200 €"
+                }
+              ],
+              "points_forts": [
+                "Agréable et performant"
+              ],
+              "points_faibles": [
+                "Chaîne de distribution",
+                "Calamine",
+                "Consommation d'huile"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

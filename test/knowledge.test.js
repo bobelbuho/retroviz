@@ -20,8 +20,9 @@ describe("findVehicle", () => {
     const r = findVehicle("PEUGEOT 208 1.2 PURETECH 2016", kb);
     assert.equal(r[0].fiche.id, "peugeot-208-1-12-puretech");
     assert.equal(r[0].correspondance, "modele_moteur");
-    assert.equal(ids(findVehicle("citroën c3", kb))[0], "citroen-c3-3-12-puretech");
-    assert.equal(ids(findVehicle("CITROEN C3", kb))[0], "citroen-c3-3-12-puretech");
+    // Modèle seul : les fiches de ce modèle (plusieurs générations possibles).
+    assert.ok(ids(findVehicle("citroën c3", kb)).every(id => id.startsWith("citroen-c3-")));
+    assert.ok(ids(findVehicle("CITROEN C3 1.2 puretech 2018", kb)).includes("citroen-c3-3-12-puretech"));
   });
 
   test("tolère « pure tech » et « 1,2 »", () => {
@@ -31,14 +32,16 @@ describe("findVehicle", () => {
   });
 
   test("autre modèle avec le même moteur : correspondance « moteur », 2 fiches au plus", () => {
-    const r = findVehicle("308 1.2 puretech 2017 98000 km", kb);
+    const r = findVehicle("DS3 1.2 puretech 2017 98000 km", kb); // modèle absent de la base
     assert.ok(r.length >= 1 && r.length <= 2);
     assert.ok(r.every(x => x.correspondance === "moteur"));
     assert.ok(ids(r).every(id => id.includes("puretech")));
   });
 
   test("le modèle exact écarte les fiches qui ne partagent que le moteur", () => {
-    assert.deepEqual(ids(findVehicle("208 1.2 puretech", kb)), ["peugeot-208-1-12-puretech"]);
+    assert.deepEqual(ids(findVehicle("208 1.2 puretech", kb)).sort(), ["peugeot-208-1-12-puretech", "peugeot-208-2-12-puretech"]);
+    assert.equal(ids(findVehicle("208 1.2 puretech 2016", kb))[0], "peugeot-208-1-12-puretech", "l'année départage les générations");
+    assert.equal(ids(findVehicle("208 1.2 puretech 2021", kb))[0], "peugeot-208-2-12-puretech");
   });
 
   test("alias et génération : Clio 4 / Clio IV, Golf 7", () => {
@@ -48,8 +51,8 @@ describe("findVehicle", () => {
   });
 
   test("une cylindrée différente écarte la fiche", () => {
-    assert.deepEqual(findVehicle("Golf 1.4 TSI 2015", kb), []);
-    assert.deepEqual(findVehicle("Peugeot 208 1.6 HDi", kb), []);
+    assert.deepEqual(findVehicle("Golf 1.9 TDI 2010", kb), []);
+    assert.deepEqual(findVehicle("Peugeot 208 2.0 HDi", kb), []);
   });
 
   test("une année hors période baisse le score", () => {
@@ -59,7 +62,7 @@ describe("findVehicle", () => {
   });
 
   test("aucune correspondance", () => {
-    assert.deepEqual(findVehicle("Toyota Yaris hybride 2020", kb), []);
+    assert.deepEqual(findVehicle("Lada Niva 1.7 2020", kb), []);
     assert.deepEqual(findVehicle("", kb), []);
     assert.deepEqual(findVehicle(undefined, kb), []);
   });
@@ -102,7 +105,7 @@ describe("buildContext", () => {
   });
 
   test("plusieurs messages : un code cité dans un message précédent est retrouvé", () => {
-    const texte = ["et combien ça coûte ?", "c'est grave ?", "J'ai le code P0300 sur ma 208 1.2 PureTech"].join("\n");
+    const texte = ["et combien ça coûte ?", "c'est grave ?", "J'ai le code P0300 sur ma 208 1.2 PureTech de 2015"].join("\n");
     const { sources } = buildContext({ vehicule: "", texte }, kb);
     assert.deepEqual(sources.map(s => s.id || s.code), ["peugeot-208-1-12-puretech", "P0300"]);
   });
@@ -114,7 +117,7 @@ describe("buildContext", () => {
   });
 
   test("aucune correspondance : texte vide", () => {
-    assert.deepEqual(buildContext({ vehicule: "Toyota Yaris", texte: "bruit au freinage" }, kb), { text: "", sources: [] });
+    assert.deepEqual(buildContext({ vehicule: "Lada Niva", texte: "bruit au freinage" }, kb), { text: "", sources: [] });
     assert.deepEqual(buildContext({}, kb), { text: "", sources: [] });
   });
 

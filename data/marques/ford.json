@@ -1,0 +1,623 @@
+{
+  "id": "ford",
+  "nom": "Ford",
+  "pays": "États-Unis (conçue en Europe pour les Fiesta et Focus)",
+  "image": "Généraliste réputé pour le plaisir de conduite et la tenue de route. Le 1.0 EcoBoost et la boîte PowerShift ont connu des soucis sérieux.",
+  "cout_entretien": "moyen",
+  "cout_entretien_texte": "Entretien dans la moyenne ; certaines pannes (EcoBoost, PowerShift) coûtent cher.",
+  "reseau": "Réseau moins dense qu'avant en France ; pièces courantes faciles à trouver, spécialistes indépendants nombreux.",
+  "statut": "a_verifier",
+  "sources": [],
+  "redige_par": "ia",
+  "mise_a_jour": "2026-10-14",
+  "incertitudes": [
+    "Image et coûts relatifs : appréciation générale, à recouper."
+  ],
+  "modeles": [
+    {
+      "id": "ford-fiesta",
+      "nom": "Fiesta",
+      "qualites": [
+        "Plaisir de conduite",
+        "Tenue de route",
+        "Prix d'occasion attractifs"
+      ],
+      "defauts": [
+        "1.0 EcoBoost à surveiller (refroidissement)",
+        "Boîte PowerShift à éviter",
+        "Places arrière"
+      ],
+      "pour_qui": "Citadine pour qui aime conduire, jeunes conducteurs.",
+      "a_verifier_achat": [
+        "Niveau de liquide de refroidissement et traces de surchauffe (EcoBoost)",
+        "Boîte PowerShift : à éviter",
+        "Embrayage",
+        "Rouille des anciennes"
+      ],
+      "statut": "a_verifier",
+      "sources": [],
+      "redige_par": "ia",
+      "mise_a_jour": "2026-10-14",
+      "generations": [
+        {
+          "id": "ford-fiesta-6",
+          "nom": "Fiesta VI",
+          "annees": "2008-2017",
+          "alias": [
+            "fiesta 6",
+            "fiesta vi",
+            "fiesta mk7"
+          ],
+          "motorisations": [
+            {
+              "id": "ford-fiesta-6-10-ecoboost",
+              "moteurs": [
+                "1.0 EcoBoost 100",
+                "1.0 EcoBoost 125",
+                "1.0 EcoBoost 140"
+              ],
+              "codes_moteur": [
+                "M1JA",
+                "M1JE"
+              ],
+              "energie": "thermique",
+              "carburant": "essence",
+              "conseil": "a_eviter",
+              "conseil_texte": "Surchauffes et casses connues sur les premières années : à éviter sans historique sérieux.",
+              "pannes": [
+                {
+                  "titre": "Surchauffe et joint de culasse (durite ou vase d'expansion qui fuit)",
+                  "km_typique": 80000,
+                  "gravite": "elevee",
+                  "symptomes": "Température qui monte, perte de liquide de refroidissement, fumée blanche.",
+                  "solution": "Remplacement des durites et du vase ; joint de culasse si surchauffe. Surveiller le niveau de liquide.",
+                  "cout_indicatif": "300 à 3 000 €"
+                },
+                {
+                  "titre": "Courroie de distribution « humide » qui se dégrade",
+                  "km_typique": 100000,
+                  "gravite": "elevee",
+                  "symptomes": "Débris dans l'huile, alerte de pression d'huile.",
+                  "solution": "Contrôle et remplacement de la courroie et de la crépine.",
+                  "cout_indicatif": "800 à 1 500 €"
+                },
+                {
+                  "titre": "Ratés d'allumage (bobines)",
+                  "km_typique": 70000,
+                  "gravite": "faible",
+                  "symptomes": "À-coups, voyant moteur.",
+                  "solution": "Remplacement de la bobine en cause.",
+                  "cout_indicatif": "100 à 300 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange à l'huile prescrite (norme Ford WSS-M2C948-B ou suivante)",
+                  "km": 15000,
+                  "cout_indicatif": "100 à 180 €"
+                },
+                {
+                  "titre": "Contrôle du niveau de liquide de refroidissement",
+                  "km": 10000,
+                  "cout_indicatif": "0 €"
+                },
+                {
+                  "titre": "Courroie de distribution humide",
+                  "km": 160000,
+                  "cout_indicatif": "800 à 1 300 €"
+                }
+              ],
+              "points_forts": [
+                "Agréable et sobre"
+              ],
+              "points_faibles": [
+                "Refroidissement",
+                "Courroie humide"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            },
+            {
+              "id": "ford-fiesta-6-125-duratec",
+              "moteurs": [
+                "1.25 60 et 82",
+                "1.4 96",
+                "1.6 Ti-VCT 120"
+              ],
+              "codes_moteur": [
+                "Sigma"
+              ],
+              "energie": "thermique",
+              "carburant": "essence",
+              "conseil": "a_privilegier",
+              "conseil_texte": "Moteurs simples et durables.",
+              "pannes": [
+                {
+                  "titre": "Bobine d'allumage",
+                  "km_typique": 120000,
+                  "gravite": "faible",
+                  "symptomes": "Ratés.",
+                  "solution": "Remplacement.",
+                  "cout_indicatif": "100 à 250 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtre",
+                  "km": 20000,
+                  "cout_indicatif": "90 à 150 €"
+                },
+                {
+                  "titre": "Courroie de distribution",
+                  "km": 160000,
+                  "cout_indicatif": "350 à 600 €"
+                }
+              ],
+              "points_forts": [
+                "Fiable",
+                "Simple"
+              ],
+              "points_faibles": [
+                "Consommation"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            },
+            {
+              "id": "ford-fiesta-6-16-tdci",
+              "moteurs": [
+                "1.4 TDCi 70",
+                "1.6 TDCi 90 et 95",
+                "1.5 TDCi 75 et 95"
+              ],
+              "codes_moteur": [
+                "DV4",
+                "DV6"
+              ],
+              "energie": "thermique",
+              "carburant": "diesel",
+              "conseil": "a_privilegier",
+              "conseil_texte": "Moteurs d'origine PSA, sobres.",
+              "pannes": [
+                {
+                  "titre": "Injecteurs et joints d'injecteurs",
+                  "km_typique": 150000,
+                  "gravite": "moyenne",
+                  "symptomes": "Odeur de gasoil, fumée.",
+                  "solution": "Joints, injecteurs.",
+                  "cout_indicatif": "200 à 1 000 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtres",
+                  "km": 20000,
+                  "cout_indicatif": "120 à 200 €"
+                },
+                {
+                  "titre": "Courroie de distribution",
+                  "km": 180000,
+                  "cout_indicatif": "500 à 800 €"
+                }
+              ],
+              "points_forts": [
+                "Sobre"
+              ],
+              "points_faibles": [
+                "Injecteurs, FAP"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "ford-fiesta-7",
+          "nom": "Fiesta VII",
+          "annees": "2017-2023",
+          "alias": [
+            "fiesta 7",
+            "fiesta vii",
+            "fiesta mk8"
+          ],
+          "motorisations": [
+            {
+              "id": "ford-fiesta-7-10-ecoboost",
+              "moteurs": [
+                "1.0 EcoBoost 100 et 125",
+                "1.0 EcoBoost Hybrid (mHEV) 125 et 155"
+              ],
+              "codes_moteur": [
+                "M0JA",
+                "B7JA"
+              ],
+              "energie": "thermique",
+              "carburant": "essence",
+              "conseil": "neutre",
+              "conseil_texte": "Améliorée, mais surveillez le liquide de refroidissement et l'entretien de la courroie humide.",
+              "pannes": [
+                {
+                  "titre": "Surchauffe et joint de culasse (durite ou vase d'expansion qui fuit)",
+                  "km_typique": 80000,
+                  "gravite": "elevee",
+                  "symptomes": "Température qui monte, perte de liquide de refroidissement, fumée blanche.",
+                  "solution": "Remplacement des durites et du vase ; joint de culasse si surchauffe. Surveiller le niveau de liquide.",
+                  "cout_indicatif": "300 à 3 000 €"
+                },
+                {
+                  "titre": "Courroie de distribution « humide » qui se dégrade",
+                  "km_typique": 100000,
+                  "gravite": "elevee",
+                  "symptomes": "Débris dans l'huile, alerte de pression d'huile.",
+                  "solution": "Contrôle et remplacement de la courroie et de la crépine.",
+                  "cout_indicatif": "800 à 1 500 €"
+                },
+                {
+                  "titre": "Ratés d'allumage (bobines)",
+                  "km_typique": 70000,
+                  "gravite": "faible",
+                  "symptomes": "À-coups, voyant moteur.",
+                  "solution": "Remplacement de la bobine en cause.",
+                  "cout_indicatif": "100 à 300 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange à l'huile prescrite (norme Ford WSS-M2C948-B ou suivante)",
+                  "km": 15000,
+                  "cout_indicatif": "100 à 180 €"
+                },
+                {
+                  "titre": "Contrôle du niveau de liquide de refroidissement",
+                  "km": 10000,
+                  "cout_indicatif": "0 €"
+                },
+                {
+                  "titre": "Courroie de distribution humide",
+                  "km": 160000,
+                  "cout_indicatif": "800 à 1 300 €"
+                }
+              ],
+              "points_forts": [
+                "Agréable",
+                "Sobre"
+              ],
+              "points_faibles": [
+                "Courroie humide",
+                "Refroidissement"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ford-focus",
+      "nom": "Focus",
+      "qualites": [
+        "Tenue de route",
+        "Confort",
+        "Bon rapport prix-équipement en occasion"
+      ],
+      "defauts": [
+        "Boîte PowerShift à éviter (Focus III)",
+        "1.0 EcoBoost à surveiller",
+        "Finition moyenne"
+      ],
+      "pour_qui": "Compacte familiale pour qui aime conduire.",
+      "a_verifier_achat": [
+        "Boîte automatique : PowerShift (à éviter) ou convertisseur",
+        "Refroidissement (EcoBoost)",
+        "Électronique SYNC",
+        "FAP (diesel)"
+      ],
+      "statut": "a_verifier",
+      "sources": [],
+      "redige_par": "ia",
+      "mise_a_jour": "2026-10-14",
+      "generations": [
+        {
+          "id": "ford-focus-3",
+          "nom": "Focus III",
+          "annees": "2011-2018",
+          "alias": [
+            "focus 3",
+            "focus iii",
+            "focus mk3"
+          ],
+          "motorisations": [
+            {
+              "id": "ford-focus-3-10-ecoboost",
+              "moteurs": [
+                "1.0 EcoBoost 100 et 125",
+                "1.5 EcoBoost 150"
+              ],
+              "codes_moteur": [
+                "M1DA",
+                "M2DA"
+              ],
+              "energie": "thermique",
+              "carburant": "essence",
+              "conseil": "a_eviter",
+              "conseil_texte": "Refroidissement fragile sur les premières années.",
+              "pannes": [
+                {
+                  "titre": "Surchauffe et joint de culasse (durite ou vase d'expansion qui fuit)",
+                  "km_typique": 80000,
+                  "gravite": "elevee",
+                  "symptomes": "Température qui monte, perte de liquide de refroidissement, fumée blanche.",
+                  "solution": "Remplacement des durites et du vase ; joint de culasse si surchauffe. Surveiller le niveau de liquide.",
+                  "cout_indicatif": "300 à 3 000 €"
+                },
+                {
+                  "titre": "Courroie de distribution « humide » qui se dégrade",
+                  "km_typique": 100000,
+                  "gravite": "elevee",
+                  "symptomes": "Débris dans l'huile, alerte de pression d'huile.",
+                  "solution": "Contrôle et remplacement de la courroie et de la crépine.",
+                  "cout_indicatif": "800 à 1 500 €"
+                },
+                {
+                  "titre": "Ratés d'allumage (bobines)",
+                  "km_typique": 70000,
+                  "gravite": "faible",
+                  "symptomes": "À-coups, voyant moteur.",
+                  "solution": "Remplacement de la bobine en cause.",
+                  "cout_indicatif": "100 à 300 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange à l'huile prescrite (norme Ford WSS-M2C948-B ou suivante)",
+                  "km": 15000,
+                  "cout_indicatif": "100 à 180 €"
+                },
+                {
+                  "titre": "Contrôle du niveau de liquide de refroidissement",
+                  "km": 10000,
+                  "cout_indicatif": "0 €"
+                },
+                {
+                  "titre": "Courroie de distribution humide",
+                  "km": 160000,
+                  "cout_indicatif": "800 à 1 300 €"
+                }
+              ],
+              "points_forts": [
+                "Sobre"
+              ],
+              "points_faibles": [
+                "Surchauffe",
+                "Courroie humide"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            },
+            {
+              "id": "ford-focus-3-16-tdci",
+              "moteurs": [
+                "1.6 TDCi 95 et 115",
+                "1.5 TDCi 95 et 120",
+                "2.0 TDCi 150"
+              ],
+              "codes_moteur": [
+                "DV6",
+                "XWDB"
+              ],
+              "energie": "thermique",
+              "carburant": "diesel",
+              "conseil": "a_privilegier",
+              "conseil_texte": "Avec boîte manuelle, choix sûr pour les gros rouleurs.",
+              "pannes": [
+                {
+                  "titre": "Boîte PowerShift : embrayages et calculateur",
+                  "km_typique": 80000,
+                  "gravite": "elevee",
+                  "symptomes": "À-coups, broutements, voyant de boîte.",
+                  "solution": "Embrayages, calculateur (TCM) ; extensions de garantie constructeur selon les cas.",
+                  "cout_indicatif": "800 à 2 500 €"
+                },
+                {
+                  "titre": "Filtre à particules colmaté",
+                  "km_typique": 120000,
+                  "gravite": "moyenne",
+                  "symptomes": "Voyant, mode dégradé.",
+                  "solution": "Régénération, nettoyage.",
+                  "cout_indicatif": "150 à 1 500 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtres",
+                  "km": 20000,
+                  "cout_indicatif": "120 à 200 €"
+                },
+                {
+                  "titre": "Courroie de distribution",
+                  "km": 200000,
+                  "cout_indicatif": "500 à 900 €"
+                }
+              ],
+              "points_forts": [
+                "Sobre"
+              ],
+              "points_faibles": [
+                "FAP",
+                "PowerShift sur certaines versions automatiques"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "ford-focus-4",
+          "nom": "Focus IV",
+          "annees": "2018-2025",
+          "alias": [
+            "focus 4",
+            "focus iv",
+            "focus mk4"
+          ],
+          "motorisations": [
+            {
+              "id": "ford-focus-4-10-ecoboost",
+              "moteurs": [
+                "1.0 EcoBoost 100 et 125",
+                "1.0 EcoBoost Hybrid 125 et 155",
+                "1.5 EcoBoost 150 et 182"
+              ],
+              "codes_moteur": [
+                "M1DA",
+                "B7DA"
+              ],
+              "energie": "thermique",
+              "carburant": "essence",
+              "conseil": "neutre",
+              "conseil_texte": "Courroie humide à entretenir rigoureusement.",
+              "pannes": [
+                {
+                  "titre": "Surchauffe et joint de culasse (durite ou vase d'expansion qui fuit)",
+                  "km_typique": 80000,
+                  "gravite": "elevee",
+                  "symptomes": "Température qui monte, perte de liquide de refroidissement, fumée blanche.",
+                  "solution": "Remplacement des durites et du vase ; joint de culasse si surchauffe. Surveiller le niveau de liquide.",
+                  "cout_indicatif": "300 à 3 000 €"
+                },
+                {
+                  "titre": "Courroie de distribution « humide » qui se dégrade",
+                  "km_typique": 100000,
+                  "gravite": "elevee",
+                  "symptomes": "Débris dans l'huile, alerte de pression d'huile.",
+                  "solution": "Contrôle et remplacement de la courroie et de la crépine.",
+                  "cout_indicatif": "800 à 1 500 €"
+                },
+                {
+                  "titre": "Ratés d'allumage (bobines)",
+                  "km_typique": 70000,
+                  "gravite": "faible",
+                  "symptomes": "À-coups, voyant moteur.",
+                  "solution": "Remplacement de la bobine en cause.",
+                  "cout_indicatif": "100 à 300 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange à l'huile prescrite (norme Ford WSS-M2C948-B ou suivante)",
+                  "km": 15000,
+                  "cout_indicatif": "100 à 180 €"
+                },
+                {
+                  "titre": "Contrôle du niveau de liquide de refroidissement",
+                  "km": 10000,
+                  "cout_indicatif": "0 €"
+                },
+                {
+                  "titre": "Courroie de distribution humide",
+                  "km": 160000,
+                  "cout_indicatif": "800 à 1 300 €"
+                }
+              ],
+              "points_forts": [
+                "Agréable",
+                "Tenue de route"
+              ],
+              "points_faibles": [
+                "Courroie humide"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            },
+            {
+              "id": "ford-focus-4-15-ecoblue",
+              "moteurs": [
+                "1.5 EcoBlue 95 et 120",
+                "2.0 EcoBlue 150"
+              ],
+              "codes_moteur": [
+                "XWGA",
+                "ZTDA"
+              ],
+              "energie": "thermique",
+              "carburant": "diesel",
+              "conseil": "a_privilegier",
+              "conseil_texte": "Sobres et agréables ; AdBlue à surveiller.",
+              "pannes": [
+                {
+                  "titre": "Système AdBlue défaillant",
+                  "km_typique": 80000,
+                  "gravite": "moyenne",
+                  "symptomes": "Voyant antipollution.",
+                  "solution": "Diagnostic, remplacement.",
+                  "cout_indicatif": "500 à 1 500 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtres",
+                  "km": 20000,
+                  "cout_indicatif": "130 à 220 €"
+                },
+                {
+                  "titre": "Plein d'AdBlue",
+                  "km": 10000,
+                  "cout_indicatif": "10 à 30 €"
+                }
+              ],
+              "points_forts": [
+                "Très sobre"
+              ],
+              "points_faibles": [
+                "AdBlue"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

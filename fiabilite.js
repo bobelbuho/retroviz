@@ -8,12 +8,17 @@ export const REDACTEURS = ["ia", "humain"];
 export const COLLECTIONS = {
   voyants: { fichier: "voyants.json", cle: "id", titre: f => f.nom, format: "ligne" },
   obd: { fichier: "obd.json", cle: "code", titre: f => `${f.code} – ${f.libelle}`, format: "ligne" },
-  vehicules: { fichier: "vehicules.json", cle: "id", titre: f => `${f.marque} ${f.modele} (${(f.moteurs || []).join(", ")})`, format: "indente" },
+  // Stockées dans data/marques/ (un fichier par marque, voir marques.js) et vues « à plat ».
+  vehicules: { stockage: "marques", cle: "id", titre: f => `${f.marque} ${f.generation || f.modele} (${(f.moteurs || []).join(", ")})`, format: "indente" },
+  marques: { stockage: "marques", cle: "id", titre: f => f.nom, format: "indente" },
+  modeles: { stockage: "marques", cle: "id", titre: f => f.nom, format: "indente" },
   pieces: { fichier: "pieces.json", cle: "id", titre: f => f.nom, format: "indente" },
 };
 // Zones du schéma interactif (l'ordre est celui de l'affichage).
 export const ZONES = ["moteur", "transmission", "freins", "direction-suspension", "electricite", "echappement-depollution", "pneus", "carrosserie"];
 export const ENERGIES_PIECES = ["thermique", "hybride", "hybride_rechargeable", "electrique"];
+// Conseil d'achat d'une motorisation.
+export const CONSEILS = ["a_privilegier", "neutre", "a_eviter"];
 
 // Contenu d'une icône de voyant : seulement path, circle, rect et text, avec des attributs de dessin (insérée telle quelle dans la page).
 const BALISES = /^<\/?(path|circle|rect|text)\b/;
@@ -53,7 +58,21 @@ export function problemesFiche(collection, f) {
     if (ip) p.push(`icône : ${ip}`);
   }
   if (collection === "obd" && !/^[PBCU][0-3][0-9A-F]{3}$/.test(f.code || "")) p.push("code OBD invalide");
-  if (collection === "vehicules" && (!f.marque || !f.modele || !Array.isArray(f.moteurs))) p.push("marque, modèle et moteurs obligatoires");
+  if (collection === "vehicules") {
+    if (!f.marque || !f.modele || !Array.isArray(f.moteurs)) p.push("marque, modèle et moteurs obligatoires");
+    for (const k of ["pannes", "entretiens", "points_forts", "points_faibles"]) if (f[k] !== undefined && !Array.isArray(f[k])) p.push(`${k} : liste`);
+    if (f.energie !== undefined && !ENERGIES_PIECES.includes(f.energie)) p.push("energie invalide");
+    if (f.conseil !== undefined && !CONSEILS.includes(f.conseil)) p.push(`conseil : ${CONSEILS.join(", ")}`);
+  }
+  if (collection === "marques") {
+    for (const k of ["nom", "pays", "image", "reseau", "cout_entretien_texte"]) if (typeof f[k] !== "string" || !f[k].trim()) p.push(`${k} manquant`);
+    if (!["faible", "moyen", "eleve"].includes(f.cout_entretien)) p.push("cout_entretien : faible, moyen ou eleve");
+  }
+  if (collection === "modeles") {
+    for (const k of ["nom", "marque", "pour_qui"]) if (typeof f[k] !== "string" || !f[k].trim()) p.push(`${k} manquant`);
+    for (const k of ["qualites", "defauts", "a_verifier_achat"]) if (!Array.isArray(f[k]) || !f[k].length) p.push(`${k} : liste non vide`);
+    if (!Array.isArray(f.generations) || !f.generations.length || !f.generations.every(g => g.id && g.nom && /^\d{4}-(\d{4}|auj\.)$/.test(g.annees || ""))) p.push("generations : id, nom et annees (AAAA-AAAA ou AAAA-auj.)");
+  }
   if (collection === "pieces") {
     for (const k of ["nom", "role", "duree_vie", "prix"]) if (typeof f[k] !== "string" || !f[k].trim()) p.push(`${k} manquant`);
     if (!ZONES.includes(f.zone)) p.push(`zone : ${ZONES.join(", ")}`);

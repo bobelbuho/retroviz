@@ -6,6 +6,8 @@ import path from "node:path";
 import express from "express";
 import { sameSiteJson } from "./auth.js";
 import { COLLECTIONS, problemesFiche, serialiser } from "./fiabilite.js";
+import { lireMarques, ecrireMarque, aplatir, remplacer } from "./marques.js";
+class ErreurFiche extends Error {}
 import { reloadKnowledge } from "./knowledge.js";
 import { today } from "./kilometrage.js";
 
@@ -24,11 +26,21 @@ export function createRelecture({ dataDir, kb, admins = new Set(), now = today, 
   /* ---------- lecture et écriture des fichiers ---------- */
   const fichier = c => path.join(dataDir, COLLECTIONS[c].fichier);
   // Fichier pas encore créé (nouvelle collection) : collection vide.
-  const lire = c => (fs.existsSync(fichier(c)) ? JSON.parse(fs.readFileSync(fichier(c), "utf8")) : []);
+  // Marques, modèles et motorisations : lus et écrits dans data/marques/ (marques.js).
+  const lire = c => {
+    if (COLLECTIONS[c].stockage === "marques") return aplatir(lireMarques(dataDir) || [])[c];
+    return fs.existsSync(fichier(c)) ? JSON.parse(fs.readFileSync(fichier(c), "utf8")) : [];
+  };
   function ecrire(c, fiches) {
-    const tmp = fichier(c) + ".tmp";
-    fs.writeFileSync(tmp, serialiser(c, fiches));
-    fs.renameSync(tmp, fichier(c)); // écriture atomique : jamais de fichier à moitié écrit
+    if (COLLECTIONS[c].stockage === "marques") {
+      const r = remplacer(lireMarques(dataDir) || [], c, fiches);
+      if (r.error) throw new ErreurFiche(r.error);
+      for (const m of r.marques.filter(x => r.modifiees.includes(x.id))) ecrireMarque(dataDir, m);
+    } else {
+      const tmp = fichier(c) + ".tmp";
+      fs.writeFileSync(tmp, serialiser(c, fiches));
+      fs.renameSync(tmp, fichier(c)); // écriture atomique : jamais de fichier à moitié écrit
+    }
     reloadKnowledge(kb, dataDir);
   }
   const trouver = (c, id) => {
@@ -60,7 +72,7 @@ export function createRelecture({ dataDir, kb, admins = new Set(), now = today, 
     const pb = problemesFiche(c, f);
     if (pb.length) return { status: 400, error: `Fiche refusée : ${pb.join(" ; ")}.` };
     fiches[i] = f;
-    ecrire(c, fiches);
+    try { ecrire(c, fiches); } catch (e) { if (e instanceof ErreurFiche) return { status: 400, error: e.message }; throw e; }
     return { fiche: f };
   }
 
@@ -139,7 +151,7 @@ export function createRelecture({ dataDir, kb, admins = new Set(), now = today, 
     revision(f, par, action);
     const pb = problemesFiche(c, f);
     if (pb.length) return { status: 400, error: `Fiche refusée : ${pb.join(" ; ")}.` };
-    ecrire(c, [...fiches, f]);
+    try { ecrire(c, [...fiches, f]); } catch (e) { if (e instanceof ErreurFiche) return { status: 400, error: e.message }; throw e; }
     return { fiche: f };
   };
   router.isAdmin = isAdmin;

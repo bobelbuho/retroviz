@@ -1,0 +1,230 @@
+{
+  "id": "fiat",
+  "nom": "Fiat",
+  "pays": "Italie (groupe Stellantis)",
+  "image": "Constructeur italien spécialiste des petites voitures au style marqué. Fiabilité variable selon les moteurs et les boîtes.",
+  "cout_entretien": "faible",
+  "cout_entretien_texte": "Petits moteurs simples et bon marché à entretenir ; certaines boîtes robotisées coûteuses.",
+  "reseau": "Réseau moyennement dense en France ; pièces courantes faciles à trouver.",
+  "statut": "a_verifier",
+  "sources": [],
+  "redige_par": "ia",
+  "mise_a_jour": "2026-10-14",
+  "incertitudes": [
+    "Image et coûts relatifs : appréciation générale, à recouper."
+  ],
+  "modeles": [
+    {
+      "id": "fiat-500",
+      "nom": "500",
+      "alias": [
+        "fiat 500",
+        "500c",
+        "500e"
+      ],
+      "qualites": [
+        "Style et personnalisation",
+        "Facile en ville",
+        "Bonne cote d'occasion"
+      ],
+      "defauts": [
+        "Très petite (places arrière et coffre)",
+        "Boîte robotisée Dualogic à éviter",
+        "TwinAir gourmand et fragile"
+      ],
+      "pour_qui": "Citadine de style pour la ville, une ou deux personnes.",
+      "a_verifier_achat": [
+        "Boîte Dualogic : à éviter",
+        "Embrayage",
+        "Toit en toile (500C)",
+        "Direction assistée électrique"
+      ],
+      "statut": "a_verifier",
+      "sources": [],
+      "redige_par": "ia",
+      "mise_a_jour": "2026-10-14",
+      "incertitudes": [
+        "La 500e de 2020 est une génération différente de la 500 thermique : à séparer lors de la relecture."
+      ],
+      "generations": [
+        {
+          "id": "fiat-500-1",
+          "nom": "500 (2007)",
+          "annees": "2007-2024",
+          "alias": [
+            "500 2007",
+            "500 phase 1",
+            "500 phase 2",
+            "500 hybrid"
+          ],
+          "motorisations": [
+            {
+              "id": "fiat-500-12-8v",
+              "moteurs": [
+                "1.2 8V 69",
+                "1.0 Hybrid 70 (2020+)"
+              ],
+              "codes_moteur": [
+                "FIRE 169A4",
+                "FireFly"
+              ],
+              "energie": "thermique",
+              "carburant": "essence",
+              "conseil": "a_privilegier",
+              "conseil_texte": "Le 1.2 8V est simple et durable.",
+              "pannes": [
+                {
+                  "titre": "Direction assistée électrique (colonne) défaillante",
+                  "km_typique": 100000,
+                  "gravite": "moyenne",
+                  "symptomes": "Volant dur, voyant.",
+                  "solution": "Remplacement de la colonne ou du moteur d'assistance.",
+                  "cout_indicatif": "300 à 900 €"
+                },
+                {
+                  "titre": "Embrayage",
+                  "km_typique": 100000,
+                  "gravite": "faible",
+                  "symptomes": "Patinage.",
+                  "solution": "Kit d'embrayage.",
+                  "cout_indicatif": "400 à 700 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtre",
+                  "km": 15000,
+                  "cout_indicatif": "80 à 140 €"
+                },
+                {
+                  "titre": "Courroie de distribution (1.2 8V)",
+                  "km": 120000,
+                  "cout_indicatif": "350 à 550 €"
+                }
+              ],
+              "points_forts": [
+                "Simple",
+                "Entretien bon marché"
+              ],
+              "points_faibles": [
+                "Peu puissant"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            },
+            {
+              "id": "fiat-500-09-twinair",
+              "moteurs": [
+                "0.9 TwinAir 65, 85 et 105"
+              ],
+              "codes_moteur": [
+                "312A2"
+              ],
+              "energie": "thermique",
+              "carburant": "essence",
+              "conseil": "a_eviter",
+              "conseil_texte": "Consomme bien plus qu'annoncé, plusieurs faiblesses mécaniques.",
+              "pannes": [
+                {
+                  "titre": "Système MultiAir (actionneur des soupapes) défaillant",
+                  "km_typique": 90000,
+                  "gravite": "elevee",
+                  "symptomes": "Ratés, perte de puissance, voyant.",
+                  "solution": "Remplacement du module MultiAir.",
+                  "cout_indicatif": "800 à 1 500 €"
+                },
+                {
+                  "titre": "Vibrations et volant moteur",
+                  "km_typique": 100000,
+                  "gravite": "moyenne",
+                  "symptomes": "Vibrations fortes.",
+                  "solution": "Volant moteur, supports.",
+                  "cout_indicatif": "600 à 1 200 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange à l'huile prescrite (essentielle pour MultiAir)",
+                  "km": 15000,
+                  "cout_indicatif": "100 à 160 €"
+                }
+              ],
+              "points_forts": [
+                "Caractère et sonorité"
+              ],
+              "points_faibles": [
+                "Consommation réelle élevée",
+                "Fragilités"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            },
+            {
+              "id": "fiat-500e",
+              "moteurs": [
+                "500e 95 (24 kWh)",
+                "500e 118 (42 kWh)"
+              ],
+              "codes_moteur": [],
+              "energie": "electrique",
+              "conseil": "neutre",
+              "conseil_texte": "Pour la ville ; la version 42 kWh est plus polyvalente.",
+              "annees_propres": "2020-auj.",
+              "pannes": [
+                {
+                  "titre": "Batterie 12 V",
+                  "km_typique": 40000,
+                  "gravite": "faible",
+                  "symptomes": "Démarrage impossible.",
+                  "solution": "Batterie 12 V.",
+                  "cout_indicatif": "120 à 220 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Contrôle des freins et du liquide de frein (tous les 2 ans)",
+                  "km": 30000,
+                  "cout_indicatif": "50 à 120 €"
+                },
+                {
+                  "titre": "Filtre d'habitacle",
+                  "km": 15000,
+                  "cout_indicatif": "30 à 60 €"
+                },
+                {
+                  "titre": "Contrôle de la batterie de traction (état de santé)",
+                  "km": 30000,
+                  "cout_indicatif": "0 à 100 €"
+                }
+              ],
+              "points_forts": [
+                "Idéale en ville"
+              ],
+              "points_faibles": [
+                "Prix",
+                "Autonomie (24 kWh)"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

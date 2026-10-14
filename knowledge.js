@@ -2,6 +2,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { lireMarques, aplatir } from "./marques.js";
 
 // Dossier des fiches : data/ du projet, ou DATA_DIR (par exemple une copie pour des essais).
 export const DATA_DIR = process.env.DATA_DIR || path.join(path.dirname(fileURLToPath(import.meta.url)), "data");
@@ -24,14 +25,18 @@ function readList(file, log, { optional = false } = {}) {
 
 // Renvoie { vehicules: [...], codes: Map(code -> fiche) }. Un fichier invalide est ignoré avec un message clair.
 export function loadKnowledge(dir = DATA_DIR, log = console.warn) {
-  const vehicules = readList(path.join(dir, "vehicules.json"), log).filter(v => v && v.id && v.marque && v.modele);
+  // Marques et modèles : data/marques/ (un fichier par marque) ; ancien format data/vehicules.json accepté s'il n'existe pas encore.
+  let marques = null;
+  try { marques = lireMarques(dir); } catch (e) { log(`⚠️  Base Rétroviz : data/marques/ ignoré (${e.message}).`); marques = []; }
+  const plat = marques ? aplatir(marques) : null;
+  const vehicules = (plat ? plat.vehicules : readList(path.join(dir, "vehicules.json"), log)).filter(v => v && v.id && v.marque && v.modele);
   const codes = new Map();
   for (const c of readList(path.join(dir, "obd.json"), log)) {
     if (c && c.code) codes.set(String(c.code).toUpperCase(), { ...c, code: String(c.code).toUpperCase() });
   }
   const voyants = readList(path.join(dir, "voyants.json"), log, { optional: true }).filter(v => v && v.id && v.nom);
   const pieces = readList(path.join(dir, "pieces.json"), log, { optional: true }).filter(p => p && p.id && p.nom && p.zone);
-  return { vehicules, codes, voyants, pieces };
+  return { vehicules, codes, voyants, pieces, marques: plat?.marques || [], modeles: plat?.modeles || [] };
 }
 
 // Recharge la base en place (après une correction dans la Relecture) : les modules qui gardent une
@@ -42,7 +47,7 @@ export function reloadKnowledge(kb, dir = DATA_DIR, log = console.warn) {
   kb.codes.clear();
   for (const [k, v] of fresh.codes) kb.codes.set(k, v);
   kb.voyants.splice(0, kb.voyants.length, ...fresh.voyants);
-  if (kb.pieces) kb.pieces.splice(0, kb.pieces.length, ...fresh.pieces); else kb.pieces = fresh.pieces;
+  for (const k of ["pieces", "marques", "modeles"]) { if (kb[k]) kb[k].splice(0, kb[k].length, ...fresh[k]); else kb[k] = fresh[k]; }
   return kb;
 }
 
@@ -88,6 +93,7 @@ export function findVehicle(text, kb, max = 2) {
   const years = (t.n.match(/\b(19[5-9]\d|20[0-4]\d)\b/g) || []).map(Number);
   const asked = displacements(t.n);
   const results = [];
+  let modeleVu = false; // le modèle demandé est connu, même si aucune de ses fiches n'a la bonne cylindrée
 
   for (const v of kbOrDefault(kb).vehicules) {
     const moteurs = Array.isArray(v.moteurs) ? v.moteurs : [];
@@ -96,6 +102,7 @@ export function findVehicle(text, kb, max = 2) {
     const engineHit = engineTerms.some(m => has(t, m)) || (v.codes_moteur || []).some(c => has(t, c));
 
     if (!modelHit && !engineHit) continue;
+    if (modelHit) modeleVu = true;
     // Une cylindrée indiquée qui ne correspond à aucun moteur de la fiche : autre motorisation, on écarte.
     const own = new Set(moteurs.flatMap(m => [...displacements(m)]));
     if (asked.size && own.size && ![...asked].some(d => own.has(d))) continue;
@@ -103,18 +110,23 @@ export function findVehicle(text, kb, max = 2) {
     let score = 0;
     if (has(t, v.marque)) score += 2;
     if (modelHit) score += 6;
-    if ((v.alias || []).some(a => has(t, a)) || has(t, v.generation)) score += 2;
+    // Génération nommée (« Golf VII », « golf 7 ») : départage les générations d'un même modèle.
+    if ((v.alias_generation ?? v.alias ?? []).some(a => has(t, a)) || has(t, v.generation)) score += 2;
     if (engineHit) score += 4;
     const span = String(v.annees || "").match(/(\d{4})\D+(\d{4})/);
     if (span && years.length) score += years.some(y => y >= +span[1] && y <= +span[2]) ? 1 : -4;
 
     const correspondance = modelHit ? (engineHit ? "modele_moteur" : "modele") : "moteur";
-    if (score > 0) results.push({ fiche: v, score, correspondance });
+    const dansPeriode = span && years.length ? years.some(y => y >= +span[1] && y <= +span[2]) : null;
+    if (score > 0) results.push({ fiche: v, score, correspondance, dansPeriode });
   }
 
-  // Si au moins un modèle correspond, on ne garde pas les fiches qui ne partagent que le moteur.
-  const byModel = results.filter(r => r.correspondance !== "moteur");
-  return (byModel.length ? byModel : results).sort((a, b) => b.score - a.score).slice(0, max);
+  // Si le modèle est reconnu, on ne garde pas les fiches d'autres modèles qui partagent seulement le moteur
+  // (« Golf 1.9 TDI » ne doit pas renvoyer l'Audi A3 1.9 TDI).
+  let garde = modeleVu ? results.filter(r => r.correspondance !== "moteur") : results;
+  // Une année qui tombe dans la période d'une génération écarte les générations hors période.
+  if (garde.some(r => r.dansPeriode === true)) garde = garde.filter(r => r.dansPeriode !== false);
+  return garde.sort((a, b) => b.score - a.score).slice(0, max).map(({ dansPeriode, ...r }) => r);
 }
 
 /* ---------- codes OBD ---------- */

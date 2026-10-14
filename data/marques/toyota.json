@@ -1,0 +1,463 @@
+{
+  "id": "toyota",
+  "nom": "Toyota",
+  "pays": "Japon",
+  "image": "Constructeur réputé pour la fiabilité, leader de l'hybride non rechargeable. Comportement et finition plus sages que spectaculaires.",
+  "cout_entretien": "faible",
+  "cout_entretien_texte": "Entretien raisonnable et peu de grosses pannes ; garantie de la batterie hybride prolongée avec l'entretien en concession.",
+  "reseau": "Réseau correct en France, moins dense que les marques françaises ; pièces disponibles, quelques délais sur les pièces spécifiques à l'hybride.",
+  "statut": "a_verifier",
+  "sources": [],
+  "redige_par": "ia",
+  "mise_a_jour": "2026-10-14",
+  "incertitudes": [
+    "Image et coûts relatifs : appréciation générale, à recouper."
+  ],
+  "modeles": [
+    {
+      "id": "toyota-yaris",
+      "nom": "Yaris",
+      "alias": [
+        "yaris hybrid"
+      ],
+      "qualites": [
+        "Fiabilité",
+        "Hybride très sobre en ville",
+        "Coût d'usage bas"
+      ],
+      "defauts": [
+        "Places arrière et coffre limités (Yaris IV)",
+        "Bruit du moteur en accélération (hybride)",
+        "Finition plastique"
+      ],
+      "pour_qui": "Citadine sobre et fiable, surtout pour la ville et le périurbain.",
+      "a_verifier_achat": [
+        "Entretiens en concession (garantie de la batterie hybride)",
+        "Disques arrière rouillés",
+        "Batterie 12 V",
+        "Consommation d'huile (1.33 VVT-i)"
+      ],
+      "statut": "a_verifier",
+      "sources": [],
+      "redige_par": "ia",
+      "mise_a_jour": "2026-10-14",
+      "generations": [
+        {
+          "id": "toyota-yaris-3",
+          "nom": "Yaris III",
+          "annees": "2011-2020",
+          "alias": [
+            "yaris 3",
+            "yaris iii",
+            "yaris hsd"
+          ],
+          "motorisations": [
+            {
+              "id": "toyota-yaris-3-15-hybrid",
+              "moteurs": [
+                "1.5 Hybrid 100"
+              ],
+              "codes_moteur": [
+                "1NZ-FXE"
+              ],
+              "energie": "hybride",
+              "carburant": "essence",
+              "conseil": "a_privilegier",
+              "conseil_texte": "Un des choix les plus fiables du marché, idéal en ville.",
+              "pannes": [
+                {
+                  "titre": "Batterie 12 V faible (voiture qui ne passe pas en « Ready »)",
+                  "km_typique": 60000,
+                  "gravite": "faible",
+                  "symptomes": "Message d'erreur, démarrage impossible après une longue immobilisation.",
+                  "solution": "Recharge ou remplacement de la petite batterie 12 V.",
+                  "cout_indicatif": "120 à 250 €"
+                },
+                {
+                  "titre": "Disques arrière rouillés (freins peu sollicités grâce au freinage régénératif)",
+                  "km_typique": 80000,
+                  "gravite": "faible",
+                  "symptomes": "Bruit, freinage irrégulier, contre-visite au contrôle technique.",
+                  "solution": "Remplacement des disques et plaquettes arrière.",
+                  "cout_indicatif": "150 à 350 €"
+                },
+                {
+                  "titre": "Filtre de ventilation de la batterie hybride encrassé (versions concernées)",
+                  "km_typique": 100000,
+                  "gravite": "faible",
+                  "symptomes": "Ventilateur bruyant, batterie hybride qui chauffe.",
+                  "solution": "Nettoyage du filtre sous la banquette.",
+                  "cout_indicatif": "0 à 80 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtre",
+                  "km": 15000,
+                  "cout_indicatif": "100 à 170 €"
+                },
+                {
+                  "titre": "Contrôle annuel du système hybride (pour prolonger la garantie)",
+                  "km": 15000,
+                  "cout_indicatif": "0 à 100 €"
+                },
+                {
+                  "titre": "Liquide de refroidissement de l'onduleur",
+                  "km": 160000,
+                  "cout_indicatif": "80 à 150 €"
+                }
+              ],
+              "points_forts": [
+                "Fiable",
+                "Très sobre en ville"
+              ],
+              "points_faibles": [
+                "Bruyante en accélération",
+                "Peu à l'aise sur autoroute"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            },
+            {
+              "id": "toyota-yaris-3-10-vvti",
+              "moteurs": [
+                "1.0 VVT-i 69",
+                "1.33 Dual VVT-i 99"
+              ],
+              "codes_moteur": [
+                "1KR-FE",
+                "1NR-FE"
+              ],
+              "energie": "thermique",
+              "carburant": "essence",
+              "conseil": "a_privilegier",
+              "conseil_texte": "Simples et fiables ; surveillez l'huile sur le 1.33.",
+              "pannes": [
+                {
+                  "titre": "Consommation d'huile (1.33 Dual VVT-i)",
+                  "km_typique": 100000,
+                  "gravite": "moyenne",
+                  "symptomes": "Niveau qui baisse.",
+                  "solution": "Contrôle de consommation.",
+                  "cout_indicatif": "100 à 1 500 €"
+                },
+                {
+                  "titre": "Embrayage",
+                  "km_typique": 120000,
+                  "gravite": "faible",
+                  "symptomes": "Patinage.",
+                  "solution": "Kit d'embrayage.",
+                  "cout_indicatif": "500 à 800 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtre",
+                  "km": 15000,
+                  "cout_indicatif": "100 à 160 €"
+                },
+                {
+                  "titre": "Bougies d'allumage",
+                  "km": 90000,
+                  "cout_indicatif": "80 à 160 €"
+                }
+              ],
+              "points_forts": [
+                "Fiable",
+                "Chaîne de distribution"
+              ],
+              "points_faibles": [
+                "Consommation d'huile possible (1.33)"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "toyota-yaris-4",
+          "nom": "Yaris IV",
+          "annees": "2020-auj.",
+          "alias": [
+            "yaris 4",
+            "yaris iv",
+            "nouvelle yaris"
+          ],
+          "motorisations": [
+            {
+              "id": "toyota-yaris-4-15-hybrid",
+              "moteurs": [
+                "1.5 Hybrid 116",
+                "1.5 Hybrid 130"
+              ],
+              "codes_moteur": [
+                "M15A-FXE"
+              ],
+              "energie": "hybride",
+              "carburant": "essence",
+              "conseil": "a_privilegier",
+              "conseil_texte": "Très sobre et fiable ; un peu petite à l'arrière.",
+              "pannes": [
+                {
+                  "titre": "Batterie 12 V faible (voiture qui ne passe pas en « Ready »)",
+                  "km_typique": 60000,
+                  "gravite": "faible",
+                  "symptomes": "Message d'erreur, démarrage impossible après une longue immobilisation.",
+                  "solution": "Recharge ou remplacement de la petite batterie 12 V.",
+                  "cout_indicatif": "120 à 250 €"
+                },
+                {
+                  "titre": "Disques arrière rouillés (freins peu sollicités grâce au freinage régénératif)",
+                  "km_typique": 80000,
+                  "gravite": "faible",
+                  "symptomes": "Bruit, freinage irrégulier, contre-visite au contrôle technique.",
+                  "solution": "Remplacement des disques et plaquettes arrière.",
+                  "cout_indicatif": "150 à 350 €"
+                },
+                {
+                  "titre": "Filtre de ventilation de la batterie hybride encrassé (versions concernées)",
+                  "km_typique": 100000,
+                  "gravite": "faible",
+                  "symptomes": "Ventilateur bruyant, batterie hybride qui chauffe.",
+                  "solution": "Nettoyage du filtre sous la banquette.",
+                  "cout_indicatif": "0 à 80 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtre",
+                  "km": 15000,
+                  "cout_indicatif": "100 à 170 €"
+                },
+                {
+                  "titre": "Contrôle annuel du système hybride (pour prolonger la garantie)",
+                  "km": 15000,
+                  "cout_indicatif": "0 à 100 €"
+                },
+                {
+                  "titre": "Liquide de refroidissement de l'onduleur",
+                  "km": 160000,
+                  "cout_indicatif": "80 à 150 €"
+                }
+              ],
+              "points_forts": [
+                "Consommation très basse",
+                "Fiabilité"
+              ],
+              "points_faibles": [
+                "Places arrière",
+                "Bruit en accélération"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "toyota-aygo",
+      "nom": "Aygo / 107-108 / C1",
+      "alias": [
+        "aygo",
+        "peugeot 107",
+        "peugeot 108",
+        "citroen c1",
+        "aygo x",
+        "107",
+        "108",
+        "c1"
+      ],
+      "qualites": [
+        "Prix bas",
+        "Très sobre",
+        "Mécanique Toyota fiable"
+      ],
+      "defauts": [
+        "Très petite (4 places justes, coffre minuscule)",
+        "Bruyante et peu à l'aise sur autoroute",
+        "Boîte robotisée à éviter"
+      ],
+      "pour_qui": "Citadine pure pour la ville et les petits trajets ; mêmes voitures sous trois marques (Toyota, Peugeot, Citroën).",
+      "a_verifier_achat": [
+        "Embrayage (usure précoce en ville)",
+        "Boîte robotisée (x-shift, ETG) : à éviter",
+        "Fuites d'eau dans l'habitacle",
+        "Rouille des anciennes"
+      ],
+      "statut": "a_verifier",
+      "sources": [],
+      "redige_par": "ia",
+      "mise_a_jour": "2026-10-14",
+      "incertitudes": [
+        "Une seule fiche pour trois marques jumelles : vérifier les différences de moteurs (107 diesel, 108 1.2 PureTech)."
+      ],
+      "generations": [
+        {
+          "id": "toyota-aygo-1",
+          "nom": "Aygo I / 107 / C1 I",
+          "annees": "2005-2014",
+          "alias": [
+            "aygo 1",
+            "aygo i",
+            "107",
+            "c1 1"
+          ],
+          "motorisations": [
+            {
+              "id": "toyota-aygo-1-10-vvti",
+              "moteurs": [
+                "1.0 VVT-i 68",
+                "1.0 68",
+                "1.4 HDi 54 (107 et C1)"
+              ],
+              "codes_moteur": [
+                "1KR-FE",
+                "DV4"
+              ],
+              "energie": "thermique",
+              "carburant": "essence",
+              "conseil": "a_privilegier",
+              "conseil_texte": "Le 1.0 est très fiable ; évitez la boîte robotisée.",
+              "pannes": [
+                {
+                  "titre": "Embrayage usé tôt en ville",
+                  "km_typique": 70000,
+                  "gravite": "moyenne",
+                  "symptomes": "Patinage, pédale haute.",
+                  "solution": "Kit d'embrayage.",
+                  "cout_indicatif": "400 à 700 €"
+                },
+                {
+                  "titre": "Boîte robotisée (MMT) : actionneur d'embrayage",
+                  "km_typique": 80000,
+                  "gravite": "moyenne",
+                  "symptomes": "Passages lents, voyant, voiture bloquée.",
+                  "solution": "Réparation ou remplacement de l'actionneur.",
+                  "cout_indicatif": "600 à 1 500 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtre",
+                  "km": 15000,
+                  "cout_indicatif": "80 à 140 €"
+                },
+                {
+                  "titre": "Bougies d'allumage",
+                  "km": 60000,
+                  "cout_indicatif": "60 à 120 €"
+                }
+              ],
+              "points_forts": [
+                "Fiable",
+                "Très sobre"
+              ],
+              "points_faibles": [
+                "Embrayage précoce",
+                "Boîte robotisée lente"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "toyota-aygo-2",
+          "nom": "Aygo II / 108 / C1 II",
+          "annees": "2014-2022",
+          "alias": [
+            "aygo 2",
+            "aygo ii",
+            "108",
+            "c1 2"
+          ],
+          "motorisations": [
+            {
+              "id": "toyota-aygo-2-10-vvti",
+              "moteurs": [
+                "1.0 VVT-i 69",
+                "1.0 VTi 68 et 72",
+                "1.2 PureTech 82 (108)"
+              ],
+              "codes_moteur": [
+                "1KR-FE",
+                "1KR-FE (72)",
+                "EB2"
+              ],
+              "energie": "thermique",
+              "carburant": "essence",
+              "conseil": "a_privilegier",
+              "conseil_texte": "Le 1.0 trois cylindres Toyota est le plus sûr.",
+              "pannes": [
+                {
+                  "titre": "Embrayage usé tôt en ville",
+                  "km_typique": 70000,
+                  "gravite": "moyenne",
+                  "symptomes": "Patinage.",
+                  "solution": "Kit d'embrayage.",
+                  "cout_indicatif": "400 à 700 €"
+                },
+                {
+                  "titre": "Fuites d'eau (joints de porte, pare-brise)",
+                  "km_typique": 60000,
+                  "gravite": "faible",
+                  "symptomes": "Moquette humide, buée.",
+                  "solution": "Remplacement des joints.",
+                  "cout_indicatif": "100 à 300 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtre",
+                  "km": 15000,
+                  "cout_indicatif": "80 à 140 €"
+                },
+                {
+                  "titre": "Bougies d'allumage",
+                  "km": 60000,
+                  "cout_indicatif": "60 à 120 €"
+                }
+              ],
+              "points_forts": [
+                "Fiable",
+                "Sobre"
+              ],
+              "points_faibles": [
+                "Embrayage",
+                "Bruit"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

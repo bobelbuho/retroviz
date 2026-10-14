@@ -1,0 +1,555 @@
+{
+  "id": "citroen",
+  "nom": "Citroën",
+  "pays": "France",
+  "image": "Marque de Stellantis axée sur le confort et la praticité, avec des prix souvent plus bas que Peugeot pour la même mécanique.",
+  "cout_entretien": "moyen",
+  "cout_entretien_texte": "Entretien dans la moyenne ; mêmes moteurs que Peugeot (PureTech, BlueHDi) avec les mêmes points faibles.",
+  "reseau": "Réseau dense en France ; pièces communes avec Peugeot, DS et Opel.",
+  "statut": "a_verifier",
+  "sources": [],
+  "redige_par": "ia",
+  "mise_a_jour": "2026-10-14",
+  "incertitudes": [
+    "Image et coûts relatifs : appréciation générale, à recouper."
+  ],
+  "modeles": [
+    {
+      "id": "citroen-c3",
+      "nom": "C3",
+      "qualites": [
+        "Confort de suspension",
+        "Prix d'achat bas",
+        "Look personnalisable (C3 III)"
+      ],
+      "defauts": [
+        "Moteurs PureTech à surveiller",
+        "Finition simple",
+        "Places arrière moyennes"
+      ],
+      "pour_qui": "Citadine confortable pour la ville et la route, petits budgets.",
+      "a_verifier_achat": [
+        "Historique d'entretien (PureTech)",
+        "Niveau d'huile",
+        "Écran tactile",
+        "Airbump et carrosserie"
+      ],
+      "statut": "a_verifier",
+      "sources": [],
+      "redige_par": "ia",
+      "mise_a_jour": "2026-10-14",
+      "generations": [
+        {
+          "id": "citroen-c3-2",
+          "nom": "C3 II",
+          "annees": "2009-2016",
+          "alias": [
+            "c3 2",
+            "c3 ii"
+          ],
+          "motorisations": [
+            {
+              "id": "citroen-c3-2-14-hdi",
+              "moteurs": [
+                "1.4 HDi 70",
+                "1.6 HDi 90",
+                "1.6 e-HDi 92",
+                "1.6 BlueHDi 100"
+              ],
+              "codes_moteur": [
+                "DV4",
+                "DV6"
+              ],
+              "energie": "thermique",
+              "carburant": "diesel",
+              "conseil": "a_privilegier",
+              "conseil_texte": "Le 1.4 HDi est robuste ; le 1.6 demande un suivi.",
+              "pannes": [
+                {
+                  "titre": "Injecteurs et joints d'injecteurs (boue de calamine sous le cache-culbuteurs)",
+                  "km_typique": 120000,
+                  "gravite": "moyenne",
+                  "symptomes": "Odeur de gasoil, fumée, claquements, démarrage difficile.",
+                  "solution": "Remplacement des joints (« rondelles pare-flamme ») et nettoyage ; injecteurs si besoin.",
+                  "cout_indicatif": "200 à 1 200 €"
+                },
+                {
+                  "titre": "Turbo endommagé par une mauvaise lubrification",
+                  "km_typique": 150000,
+                  "gravite": "elevee",
+                  "symptomes": "Sifflement, fumée bleue, perte de puissance.",
+                  "solution": "Remplacement du turbo, nettoyage de la crépine et des conduites d'huile.",
+                  "cout_indicatif": "900 à 1 800 €"
+                },
+                {
+                  "titre": "Filtre à particules colmaté, additif à remplir",
+                  "km_typique": 120000,
+                  "gravite": "moyenne",
+                  "symptomes": "Voyant FAP, mode dégradé ; additif (Eolys) épuisé sur les versions qui en utilisent.",
+                  "solution": "Régénération, remplissage d'additif, nettoyage ou remplacement du FAP.",
+                  "cout_indicatif": "150 à 1 500 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtres",
+                  "km": 20000,
+                  "cout_indicatif": "120 à 200 €"
+                },
+                {
+                  "titre": "Courroie de distribution et pompe à eau",
+                  "km": 180000,
+                  "cout_indicatif": "500 à 800 €"
+                },
+                {
+                  "titre": "Additif de FAP (versions concernées)",
+                  "km": 120000,
+                  "cout_indicatif": "100 à 300 €"
+                }
+              ],
+              "points_forts": [
+                "Sobre",
+                "Robuste (1.4)"
+              ],
+              "points_faibles": [
+                "Turbo et injecteurs (1.6)"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            },
+            {
+              "id": "citroen-c3-2-11-14",
+              "moteurs": [
+                "1.1 60",
+                "1.4 VTi 95",
+                "1.0 VTi 68",
+                "1.2 VTi 82"
+              ],
+              "codes_moteur": [
+                "TU1",
+                "EP3",
+                "EB0",
+                "EB2"
+              ],
+              "energie": "thermique",
+              "carburant": "essence",
+              "conseil": "neutre",
+              "conseil_texte": "Le 1.1 est simple ; les VTi demandent de surveiller l'huile.",
+              "pannes": [
+                {
+                  "titre": "Consommation d'huile (VTi)",
+                  "km_typique": 100000,
+                  "gravite": "moyenne",
+                  "symptomes": "Niveau qui baisse.",
+                  "solution": "Contrôle, segmentation.",
+                  "cout_indicatif": "100 à 2 000 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtre",
+                  "km": 20000,
+                  "cout_indicatif": "90 à 150 €"
+                },
+                {
+                  "titre": "Courroie de distribution (1.1)",
+                  "km": 120000,
+                  "cout_indicatif": "350 à 550 €"
+                }
+              ],
+              "points_forts": [
+                "Simple"
+              ],
+              "points_faibles": [
+                "Consommation d'huile (VTi)"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "citroen-c3-3",
+          "nom": "C3 III",
+          "annees": "2016-2023",
+          "alias": [
+            "c3 3",
+            "c3 iii",
+            "nouvelle c3"
+          ],
+          "motorisations": [
+            {
+              "id": "citroen-c3-3-12-puretech",
+              "energie": "thermique",
+              "carburant": "essence",
+              "conseil": "neutre",
+              "conseil_texte": "Avec factures d'entretien à l'huile prescrite ; sinon, prudence.",
+              "moteurs": [
+                "1.2 PureTech 68",
+                "1.2 PureTech 82",
+                "1.2 PureTech 83",
+                "1.2 PureTech 110"
+              ],
+              "codes_moteur": [
+                "EB2",
+                "EB2F",
+                "EB2FA",
+                "EB2DT"
+              ],
+              "pannes": [
+                {
+                  "titre": "Dégradation de la courroie de distribution « humide » (dans l'huile)",
+                  "km_typique": 80000,
+                  "gravite": "elevee",
+                  "symptomes": "Alerte pression d'huile, morceaux de courroie dans l'huile, parfois aucun signe avant la casse.",
+                  "solution": "Contrôle de l'état de la courroie, remplacement de la courroie et nettoyage ou remplacement de la crépine si débris.",
+                  "cout_indicatif": "800 à 1 500 €"
+                },
+                {
+                  "titre": "Pompe à vide de freinage colmatée par des débris de courroie",
+                  "km_typique": 90000,
+                  "gravite": "elevee",
+                  "symptomes": "Pédale de frein dure, assistance de freinage réduite.",
+                  "solution": "Remplacement de la pompe à vide et traitement de la cause.",
+                  "cout_indicatif": "300 à 700 €"
+                },
+                {
+                  "titre": "Consommation d'huile excessive",
+                  "km_typique": 70000,
+                  "gravite": "moyenne",
+                  "symptomes": "Niveau d'huile qui baisse entre deux vidanges, alerte niveau d'huile.",
+                  "solution": "Mesure de la consommation, contrôle de la segmentation et intervention adaptée.",
+                  "cout_indicatif": "200 à 3 000 € selon l'intervention"
+                },
+                {
+                  "titre": "Ratés d'allumage (bobines, bougies, calamine)",
+                  "km_typique": 80000,
+                  "gravite": "moyenne",
+                  "symptomes": "Moteur qui tremble, voyant moteur, codes P0300 à P0303.",
+                  "solution": "Contrôle des bougies et bobines, décalaminage si nécessaire.",
+                  "cout_indicatif": "100 à 600 €"
+                },
+                {
+                  "titre": "Fuite du boîtier de sortie d'eau / thermostat",
+                  "km_typique": 100000,
+                  "gravite": "moyenne",
+                  "symptomes": "Baisse du niveau de liquide de refroidissement, odeur sucrée.",
+                  "solution": "Remplacement du boîtier ou du thermostat.",
+                  "cout_indicatif": "200 à 450 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange avec une huile à la norme constructeur exacte",
+                  "km": 15000,
+                  "cout_indicatif": "100 à 180 €"
+                },
+                {
+                  "titre": "Bougies d'allumage",
+                  "km": 60000,
+                  "cout_indicatif": "80 à 150 €"
+                },
+                {
+                  "titre": "Courroie de distribution (intervalle constructeur révisé : à confirmer selon l'année)",
+                  "km": 100000,
+                  "cout_indicatif": "700 à 1 200 €"
+                }
+              ],
+              "points_forts": [
+                "Confort de suspension",
+                "Consommation modérée",
+                "Faible coût d'usage courant"
+              ],
+              "points_faibles": [
+                "Courroie de distribution dans l'huile sensible à la qualité de l'huile",
+                "Consommation d'huile sur certains moteurs",
+                "Historique d'entretien indispensable avant achat"
+              ],
+              "sources": [],
+              "statut": "a_verifier",
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-13"
+            },
+            {
+              "id": "citroen-c3-3-15-bluehdi",
+              "moteurs": [
+                "1.6 BlueHDi 75",
+                "1.6 BlueHDi 100",
+                "1.5 BlueHDi 100"
+              ],
+              "codes_moteur": [
+                "DV6",
+                "DV5"
+              ],
+              "energie": "thermique",
+              "carburant": "diesel",
+              "conseil": "neutre",
+              "conseil_texte": "Pour les gros rouleurs ; AdBlue sur les versions récentes.",
+              "pannes": [
+                {
+                  "titre": "Système AdBlue : pompe, réservoir ou capteur de niveau défaillant",
+                  "km_typique": 80000,
+                  "gravite": "elevee",
+                  "symptomes": "Voyant de défaut antipollution, compte à rebours avant interdiction de démarrer.",
+                  "solution": "Diagnostic ; remplacement du réservoir avec pompe (souvent d'un bloc). Extension de garantie constructeur possible selon l'âge.",
+                  "cout_indicatif": "800 à 1 500 €"
+                },
+                {
+                  "titre": "Vanne EGR et FAP encrassés en usage urbain",
+                  "km_typique": 100000,
+                  "gravite": "moyenne",
+                  "symptomes": "Perte de puissance, voyant moteur, régénérations fréquentes.",
+                  "solution": "Nettoyage ou remplacement ; trajets plus longs réguliers.",
+                  "cout_indicatif": "200 à 1 500 €"
+                },
+                {
+                  "titre": "Courroie de distribution (1.5 BlueHDi) qui s'use prématurément",
+                  "km_typique": 100000,
+                  "gravite": "elevee",
+                  "symptomes": "Bruit de distribution ; parfois aucun signe.",
+                  "solution": "Contrôle et remplacement préventif selon la note du constructeur.",
+                  "cout_indicatif": "600 à 1 000 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtres",
+                  "km": 20000,
+                  "cout_indicatif": "130 à 220 €"
+                },
+                {
+                  "titre": "Plein d'AdBlue",
+                  "km": 10000,
+                  "cout_indicatif": "10 à 30 €"
+                },
+                {
+                  "titre": "Courroie de distribution (intervalle à vérifier selon la version)",
+                  "km": 150000,
+                  "cout_indicatif": "600 à 1 000 €"
+                }
+              ],
+              "points_forts": [
+                "Très sobre"
+              ],
+              "points_faibles": [
+                "AdBlue",
+                "FAP en ville"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "citroen-c4-picasso",
+      "nom": "C4 Picasso / SpaceTourer",
+      "alias": [
+        "c4 picasso",
+        "grand c4 picasso",
+        "c4 spacetourer",
+        "grand c4 spacetourer"
+      ],
+      "qualites": [
+        "Habitabilité et luminosité",
+        "Modularité (sièges indépendants)",
+        "Version 7 places (Grand)"
+      ],
+      "defauts": [
+        "Électronique (écrans, frein de parking électrique)",
+        "Boîte robotisée ETG6 à éviter",
+        "PureTech 130 à surveiller"
+      ],
+      "pour_qui": "Monospace familial, voyages en famille, 7 places pour le Grand.",
+      "a_verifier_achat": [
+        "Frein de parking électrique",
+        "Écrans et climatisation",
+        "Boîte automatique : EAT6/EAT8 plutôt que ETG6",
+        "Voyant AdBlue"
+      ],
+      "statut": "a_verifier",
+      "sources": [],
+      "redige_par": "ia",
+      "mise_a_jour": "2026-10-14",
+      "generations": [
+        {
+          "id": "citroen-c4-picasso-2",
+          "nom": "C4 Picasso II / SpaceTourer",
+          "annees": "2013-2022",
+          "alias": [
+            "c4 picasso 2",
+            "c4 picasso ii",
+            "grand c4 picasso 2",
+            "spacetourer"
+          ],
+          "motorisations": [
+            {
+              "id": "citroen-c4-picasso-2-bluehdi",
+              "moteurs": [
+                "1.6 BlueHDi 100",
+                "1.6 BlueHDi 120",
+                "1.5 BlueHDi 130",
+                "2.0 BlueHDi 150"
+              ],
+              "codes_moteur": [
+                "DV6",
+                "DV5",
+                "DW10"
+              ],
+              "energie": "thermique",
+              "carburant": "diesel",
+              "conseil": "a_privilegier",
+              "conseil_texte": "Le bon choix pour un monospace familial qui roule beaucoup ; préférez la boîte EAT6/EAT8 à l'ETG6.",
+              "pannes": [
+                {
+                  "titre": "Système AdBlue : pompe, réservoir ou capteur de niveau défaillant",
+                  "km_typique": 80000,
+                  "gravite": "elevee",
+                  "symptomes": "Voyant de défaut antipollution, compte à rebours avant interdiction de démarrer.",
+                  "solution": "Diagnostic ; remplacement du réservoir avec pompe (souvent d'un bloc). Extension de garantie constructeur possible selon l'âge.",
+                  "cout_indicatif": "800 à 1 500 €"
+                },
+                {
+                  "titre": "Vanne EGR et FAP encrassés en usage urbain",
+                  "km_typique": 100000,
+                  "gravite": "moyenne",
+                  "symptomes": "Perte de puissance, voyant moteur, régénérations fréquentes.",
+                  "solution": "Nettoyage ou remplacement ; trajets plus longs réguliers.",
+                  "cout_indicatif": "200 à 1 500 €"
+                },
+                {
+                  "titre": "Courroie de distribution (1.5 BlueHDi) qui s'use prématurément",
+                  "km_typique": 100000,
+                  "gravite": "elevee",
+                  "symptomes": "Bruit de distribution ; parfois aucun signe.",
+                  "solution": "Contrôle et remplacement préventif selon la note du constructeur.",
+                  "cout_indicatif": "600 à 1 000 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtres",
+                  "km": 20000,
+                  "cout_indicatif": "130 à 220 €"
+                },
+                {
+                  "titre": "Plein d'AdBlue",
+                  "km": 10000,
+                  "cout_indicatif": "10 à 30 €"
+                },
+                {
+                  "titre": "Courroie de distribution (intervalle à vérifier selon la version)",
+                  "km": 150000,
+                  "cout_indicatif": "600 à 1 000 €"
+                }
+              ],
+              "points_forts": [
+                "Sobre",
+                "Autonomie"
+              ],
+              "points_faibles": [
+                "AdBlue",
+                "Boîte ETG6 lente"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            },
+            {
+              "id": "citroen-c4-picasso-2-puretech",
+              "moteurs": [
+                "1.2 PureTech 110",
+                "1.2 PureTech 130"
+              ],
+              "codes_moteur": [
+                "EB2DT",
+                "EB2DTS"
+              ],
+              "energie": "thermique",
+              "carburant": "essence",
+              "conseil": "neutre",
+              "conseil_texte": "Juste pour ce gabarit chargé ; avec factures d'entretien.",
+              "pannes": [
+                {
+                  "titre": "Dégradation de la courroie de distribution « humide » (dans l'huile)",
+                  "km_typique": 80000,
+                  "gravite": "elevee",
+                  "symptomes": "Alerte de pression d'huile, débris de courroie dans l'huile, freinage plus dur (pompe à vide colmatée), parfois aucun signe avant la casse.",
+                  "solution": "Contrôle de la courroie (gabarit), remplacement avec nettoyage de la crépine si débris ; huile à la norme exacte.",
+                  "cout_indicatif": "800 à 1 500 €"
+                },
+                {
+                  "titre": "Consommation d'huile excessive",
+                  "km_typique": 70000,
+                  "gravite": "moyenne",
+                  "symptomes": "Niveau d'huile qui baisse entre deux vidanges, alerte de niveau.",
+                  "solution": "Contrôle de consommation ; selon les cas segmentation ou mise à jour. Prise en charge possible par le constructeur selon l'âge et l'entretien.",
+                  "cout_indicatif": "200 à 3 000 € selon l'intervention"
+                },
+                {
+                  "titre": "Ratés d'allumage (bobines, bougies, calamine)",
+                  "km_typique": 60000,
+                  "gravite": "moyenne",
+                  "symptomes": "À-coups, voyant moteur qui clignote, moteur qui tourne sur 2 cylindres.",
+                  "solution": "Lecture des codes défaut, remplacement de la bobine ou des bougies, décalaminage si besoin.",
+                  "cout_indicatif": "100 à 500 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange avec une huile à la norme constructeur exacte (PSA B71 2290 ou B71 2312)",
+                  "km": 15000,
+                  "cout_indicatif": "100 à 180 €"
+                },
+                {
+                  "titre": "Contrôle de l'état de la courroie de distribution humide",
+                  "km": 20000,
+                  "cout_indicatif": "50 à 100 €"
+                },
+                {
+                  "titre": "Courroie de distribution (intervalle réduit par le constructeur : à vérifier selon l'année)",
+                  "km": 100000,
+                  "cout_indicatif": "800 à 1 200 €"
+                }
+              ],
+              "points_forts": [
+                "Agréable à vide"
+              ],
+              "points_faibles": [
+                "Courroie humide",
+                "Juste chargé"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

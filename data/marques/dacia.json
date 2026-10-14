@@ -1,0 +1,677 @@
+{
+  "id": "dacia",
+  "nom": "Dacia",
+  "pays": "Roumanie",
+  "image": "Marque à bas prix du groupe Renault, appréciée pour sa simplicité et son rapport prix-prestations. Finition et équipements restent simples.",
+  "cout_entretien": "faible",
+  "cout_entretien_texte": "Parmi les voitures les moins chères à entretenir : mécaniques Renault éprouvées, pièces bon marché.",
+  "reseau": "Distribuée par le réseau Renault-Dacia, très dense en France ; pièces communes avec Renault.",
+  "statut": "a_verifier",
+  "sources": [],
+  "redige_par": "ia",
+  "mise_a_jour": "2026-10-14",
+  "incertitudes": [
+    "Image et coûts relatifs : appréciation générale, à recouper."
+  ],
+  "modeles": [
+    {
+      "id": "dacia-sandero",
+      "nom": "Sandero",
+      "alias": [
+        "sandero stepway"
+      ],
+      "qualites": [
+        "Prix d'achat et d'entretien très bas",
+        "Mécanique simple",
+        "Habitabilité pour la taille"
+      ],
+      "defauts": [
+        "Finition et insonorisation sommaires",
+        "Sécurité en retrait (Sandero II)",
+        "Rouille du soubassement"
+      ],
+      "pour_qui": "Petit budget, usage quotidien sans chichis, jeunes conducteurs.",
+      "a_verifier_achat": [
+        "Rouille du soubassement et des éléments arrière",
+        "Embrayage",
+        "Consommation d'huile (0.9 TCe)",
+        "Équipements de sécurité selon la version"
+      ],
+      "statut": "a_verifier",
+      "sources": [],
+      "redige_par": "ia",
+      "mise_a_jour": "2026-10-14",
+      "generations": [
+        {
+          "id": "dacia-sandero-2",
+          "nom": "Sandero II",
+          "annees": "2012-2020",
+          "alias": [
+            "sandero 2",
+            "sandero ii"
+          ],
+          "motorisations": [
+            {
+              "id": "dacia-sandero-2-09-tce",
+              "energie": "thermique",
+              "carburant": "essence",
+              "conseil": "neutre",
+              "conseil_texte": "Agréable en ville ; surveillez le niveau d'huile et la chaîne.",
+              "moteurs": [
+                "0.9 TCe 90"
+              ],
+              "codes_moteur": [
+                "H4B"
+              ],
+              "pannes": [
+                {
+                  "titre": "Bobine d'allumage ou bougie défaillante",
+                  "km_typique": 60000,
+                  "gravite": "faible",
+                  "symptomes": "À-coups, moteur qui tremble, voyant moteur, codes de ratés.",
+                  "solution": "Remplacement de la bobine et des bougies.",
+                  "cout_indicatif": "80 à 250 €"
+                },
+                {
+                  "titre": "Défaut de régulation du turbo",
+                  "km_typique": 100000,
+                  "gravite": "moyenne",
+                  "symptomes": "Perte de puissance, mode dégradé, code P0299.",
+                  "solution": "Contrôle du circuit d'air et de la commande de wastegate, remplacement si nécessaire.",
+                  "cout_indicatif": "150 à 1 200 €"
+                },
+                {
+                  "titre": "Allongement de la chaîne de distribution",
+                  "km_typique": 150000,
+                  "gravite": "elevee",
+                  "symptomes": "Bruit de cliquetis au démarrage à froid, voyant moteur, codes de calage d'arbre à cames.",
+                  "solution": "Contrôle du calage et remplacement du kit de chaîne si allongement confirmé.",
+                  "cout_indicatif": "700 à 1 400 €"
+                },
+                {
+                  "titre": "Usure de l'embrayage",
+                  "km_typique": 120000,
+                  "gravite": "moyenne",
+                  "symptomes": "Pédale qui durcit, embrayage qui patine ou point de patinage haut.",
+                  "solution": "Remplacement du kit d'embrayage.",
+                  "cout_indicatif": "500 à 900 €"
+                },
+                {
+                  "titre": "Corrosion du soubassement et des éléments de train arrière",
+                  "km_typique": 120000,
+                  "gravite": "faible",
+                  "symptomes": "Points de rouille visibles, bruits de suspension.",
+                  "solution": "Contrôle au pont, traitement ou remplacement des pièces corrodées.",
+                  "cout_indicatif": "100 à 600 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtres",
+                  "km": 20000,
+                  "cout_indicatif": "100 à 170 €"
+                },
+                {
+                  "titre": "Bougies d'allumage",
+                  "km": 60000,
+                  "cout_indicatif": "60 à 120 €"
+                },
+                {
+                  "titre": "Kit d'embrayage",
+                  "km": 120000,
+                  "cout_indicatif": "500 à 900 €"
+                }
+              ],
+              "points_forts": [
+                "Prix d'achat et d'entretien bas",
+                "Mécanique simple et répandue",
+                "Habitabilité correcte pour la taille"
+              ],
+              "points_faibles": [
+                "Finition et insonorisation sommaires",
+                "Équipements de sécurité limités sur les premières versions",
+                "Petit moteur turbo qui consomme plus qu'annoncé sur autoroute"
+              ],
+              "sources": [],
+              "statut": "a_verifier",
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-13"
+            },
+            {
+              "id": "dacia-sandero-2-15-dci",
+              "moteurs": [
+                "1.5 dCi 75",
+                "1.5 dCi 90"
+              ],
+              "codes_moteur": [
+                "K9K"
+              ],
+              "energie": "thermique",
+              "carburant": "diesel",
+              "conseil": "a_privilegier",
+              "conseil_texte": "Très sobre et peu coûteux pour les gros rouleurs.",
+              "pannes": [
+                {
+                  "titre": "Coussinets de bielle usés (versions anciennes du 1.5 dCi)",
+                  "km_typique": 150000,
+                  "gravite": "elevee",
+                  "symptomes": "Claquement métallique, voyant de pression d'huile, casse moteur.",
+                  "solution": "Remplacement des coussinets si détecté tôt ; moteur d'échange sinon. Vidanges rapprochées en prévention.",
+                  "cout_indicatif": "800 à 4 000 €"
+                },
+                {
+                  "titre": "Injecteurs fuyards ou encrassés",
+                  "km_typique": 150000,
+                  "gravite": "moyenne",
+                  "symptomes": "Démarrage difficile, fumée, claquements.",
+                  "solution": "Test et remplacement des injecteurs concernés.",
+                  "cout_indicatif": "300 à 1 200 €"
+                },
+                {
+                  "titre": "Vanne EGR et FAP encrassés en usage urbain",
+                  "km_typique": 100000,
+                  "gravite": "moyenne",
+                  "symptomes": "Perte de puissance, voyant moteur, mode dégradé.",
+                  "solution": "Nettoyage ou remplacement ; trajets plus longs réguliers.",
+                  "cout_indicatif": "200 à 1 500 €"
+                },
+                {
+                  "titre": "Volant moteur bimasse et embrayage usés",
+                  "km_typique": 150000,
+                  "gravite": "moyenne",
+                  "symptomes": "Vibrations au démarrage et à l'arrêt, claquements au ralenti, embrayage qui patine.",
+                  "solution": "Remplacement du kit d'embrayage avec le volant moteur.",
+                  "cout_indicatif": "900 à 1 600 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtres (rapprocher à 15 000 km en usage sévère)",
+                  "km": 20000,
+                  "cout_indicatif": "120 à 200 €"
+                },
+                {
+                  "titre": "Courroie de distribution et pompe à eau",
+                  "km": 120000,
+                  "cout_indicatif": "500 à 900 €"
+                },
+                {
+                  "titre": "Filtre à gasoil",
+                  "km": 40000,
+                  "cout_indicatif": "40 à 90 €"
+                }
+              ],
+              "points_forts": [
+                "Très sobre"
+              ],
+              "points_faibles": [
+                "FAP, EGR",
+                "Bimasse"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            },
+            {
+              "id": "dacia-sandero-2-10-sce",
+              "moteurs": [
+                "1.2 16V 75",
+                "1.0 SCe 75"
+              ],
+              "codes_moteur": [
+                "D4F",
+                "B4D"
+              ],
+              "energie": "thermique",
+              "carburant": "essence",
+              "conseil": "a_privilegier",
+              "conseil_texte": "Le plus simple et le plus économique à l'achat.",
+              "pannes": [
+                {
+                  "titre": "Bobine d'allumage",
+                  "km_typique": 100000,
+                  "gravite": "faible",
+                  "symptomes": "Ratés.",
+                  "solution": "Remplacement.",
+                  "cout_indicatif": "80 à 200 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtre",
+                  "km": 20000,
+                  "cout_indicatif": "80 à 140 €"
+                },
+                {
+                  "titre": "Courroie de distribution (1.2 16V)",
+                  "km": 120000,
+                  "cout_indicatif": "350 à 550 €"
+                }
+              ],
+              "points_forts": [
+                "Simple"
+              ],
+              "points_faibles": [
+                "Peu puissant"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "dacia-sandero-3",
+          "nom": "Sandero III",
+          "annees": "2020-auj.",
+          "alias": [
+            "sandero 3",
+            "sandero iii",
+            "nouvelle sandero"
+          ],
+          "motorisations": [
+            {
+              "id": "dacia-sandero-3-10-tce",
+              "moteurs": [
+                "1.0 TCe 90",
+                "1.0 TCe 100 ECO-G (GPL)",
+                "1.0 SCe 65"
+              ],
+              "codes_moteur": [
+                "H4D",
+                "HR10"
+              ],
+              "energie": "thermique",
+              "carburant": "essence",
+              "conseil": "a_privilegier",
+              "conseil_texte": "La version GPL (ECO-G) est très économique.",
+              "pannes": [
+                {
+                  "titre": "Calage, à-coups à froid sur les premières versions (mises à jour)",
+                  "km_typique": 30000,
+                  "gravite": "faible",
+                  "symptomes": "Moteur qui cale ou broute à froid.",
+                  "solution": "Mise à jour du calculateur en concession.",
+                  "cout_indicatif": "0 à 150 €"
+                },
+                {
+                  "titre": "Fuite d'huile au joint de cache-culbuteurs",
+                  "km_typique": 90000,
+                  "gravite": "faible",
+                  "symptomes": "Traces d'huile, odeur de brûlé.",
+                  "solution": "Remplacement du joint.",
+                  "cout_indicatif": "150 à 300 €"
+                },
+                {
+                  "titre": "Injecteurs ou détendeur GPL",
+                  "km_typique": 80000,
+                  "gravite": "faible",
+                  "symptomes": "Passage essence intempestif, à-coups au GPL.",
+                  "solution": "Diagnostic GPL, remplacement.",
+                  "cout_indicatif": "150 à 600 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtre",
+                  "km": 20000,
+                  "cout_indicatif": "100 à 170 €"
+                },
+                {
+                  "titre": "Bougies d'allumage",
+                  "km": 60000,
+                  "cout_indicatif": "80 à 180 €"
+                },
+                {
+                  "titre": "Filtre GPL",
+                  "km": 30000,
+                  "cout_indicatif": "40 à 80 €"
+                }
+              ],
+              "points_forts": [
+                "Économique",
+                "GPL d'origine"
+              ],
+              "points_faibles": [
+                "Insonorisation"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dacia-duster",
+      "nom": "Duster",
+      "qualites": [
+        "Prix bas pour un SUV",
+        "Version 4x4 efficace",
+        "Robuste"
+      ],
+      "defauts": [
+        "Finition simple",
+        "Insonorisation",
+        "Rouille du soubassement (4x4)"
+      ],
+      "pour_qui": "SUV économique, campagne, chemins, remorque légère.",
+      "a_verifier_achat": [
+        "Rouille du soubassement",
+        "Transmission 4x4 (bruits)",
+        "Consommation d'huile (1.2 TCe)",
+        "Embrayage"
+      ],
+      "statut": "a_verifier",
+      "sources": [],
+      "redige_par": "ia",
+      "mise_a_jour": "2026-10-14",
+      "generations": [
+        {
+          "id": "dacia-duster-1",
+          "nom": "Duster I",
+          "annees": "2010-2017",
+          "alias": [
+            "duster 1",
+            "duster i"
+          ],
+          "motorisations": [
+            {
+              "id": "dacia-duster-1-15-dci",
+              "moteurs": [
+                "1.5 dCi 90",
+                "1.5 dCi 110"
+              ],
+              "codes_moteur": [
+                "K9K"
+              ],
+              "energie": "thermique",
+              "carburant": "diesel",
+              "conseil": "a_privilegier",
+              "conseil_texte": "Le choix logique, surtout en 4x4.",
+              "pannes": [
+                {
+                  "titre": "Coussinets de bielle usés (versions anciennes du 1.5 dCi)",
+                  "km_typique": 150000,
+                  "gravite": "elevee",
+                  "symptomes": "Claquement métallique, voyant de pression d'huile, casse moteur.",
+                  "solution": "Remplacement des coussinets si détecté tôt ; moteur d'échange sinon. Vidanges rapprochées en prévention.",
+                  "cout_indicatif": "800 à 4 000 €"
+                },
+                {
+                  "titre": "Injecteurs fuyards ou encrassés",
+                  "km_typique": 150000,
+                  "gravite": "moyenne",
+                  "symptomes": "Démarrage difficile, fumée, claquements.",
+                  "solution": "Test et remplacement des injecteurs concernés.",
+                  "cout_indicatif": "300 à 1 200 €"
+                },
+                {
+                  "titre": "Vanne EGR et FAP encrassés en usage urbain",
+                  "km_typique": 100000,
+                  "gravite": "moyenne",
+                  "symptomes": "Perte de puissance, voyant moteur, mode dégradé.",
+                  "solution": "Nettoyage ou remplacement ; trajets plus longs réguliers.",
+                  "cout_indicatif": "200 à 1 500 €"
+                },
+                {
+                  "titre": "Volant moteur bimasse et embrayage usés",
+                  "km_typique": 150000,
+                  "gravite": "moyenne",
+                  "symptomes": "Vibrations au démarrage et à l'arrêt, claquements au ralenti, embrayage qui patine.",
+                  "solution": "Remplacement du kit d'embrayage avec le volant moteur.",
+                  "cout_indicatif": "900 à 1 600 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtres (rapprocher à 15 000 km en usage sévère)",
+                  "km": 20000,
+                  "cout_indicatif": "120 à 200 €"
+                },
+                {
+                  "titre": "Courroie de distribution et pompe à eau",
+                  "km": 120000,
+                  "cout_indicatif": "500 à 900 €"
+                },
+                {
+                  "titre": "Filtre à gasoil",
+                  "km": 40000,
+                  "cout_indicatif": "40 à 90 €"
+                }
+              ],
+              "points_forts": [
+                "Sobre",
+                "Robuste"
+              ],
+              "points_faibles": [
+                "Bimasse",
+                "FAP"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            },
+            {
+              "id": "dacia-duster-1-16-16v",
+              "moteurs": [
+                "1.6 16V 105",
+                "1.6 SCe 115",
+                "1.2 TCe 125"
+              ],
+              "codes_moteur": [
+                "K4M",
+                "H4M",
+                "H5Ft"
+              ],
+              "energie": "thermique",
+              "carburant": "essence",
+              "conseil": "neutre",
+              "conseil_texte": "Le 1.6 est simple mais gourmand ; évitez le 1.2 TCe.",
+              "pannes": [
+                {
+                  "titre": "Bobines d'allumage",
+                  "km_typique": 120000,
+                  "gravite": "faible",
+                  "symptomes": "Ratés.",
+                  "solution": "Remplacement.",
+                  "cout_indicatif": "100 à 300 €"
+                },
+                {
+                  "titre": "Consommation d'huile importante (1.2 TCe H5Ft)",
+                  "km_typique": 60000,
+                  "gravite": "elevee",
+                  "symptomes": "Niveau d'huile qui baisse vite, fumée bleue, risque de casse moteur faute d'huile.",
+                  "solution": "Contrôle de consommation, mise à jour, segmentation ou moteur ; prises en charge constructeur selon les cas.",
+                  "cout_indicatif": "300 à 6 000 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtre",
+                  "km": 20000,
+                  "cout_indicatif": "100 à 160 €"
+                },
+                {
+                  "titre": "Courroie de distribution (1.6 16V)",
+                  "km": 120000,
+                  "cout_indicatif": "400 à 650 €"
+                }
+              ],
+              "points_forts": [
+                "Simple (1.6)"
+              ],
+              "points_faibles": [
+                "Consommation",
+                "1.2 TCe : huile"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "dacia-duster-2",
+          "nom": "Duster II",
+          "annees": "2017-2024",
+          "alias": [
+            "duster 2",
+            "duster ii"
+          ],
+          "motorisations": [
+            {
+              "id": "dacia-duster-2-15-bluedci",
+              "moteurs": [
+                "1.5 Blue dCi 95",
+                "1.5 Blue dCi 115"
+              ],
+              "codes_moteur": [
+                "K9K"
+              ],
+              "energie": "thermique",
+              "carburant": "diesel",
+              "conseil": "a_privilegier",
+              "conseil_texte": "Sobre, idéal en 4x4.",
+              "pannes": [
+                {
+                  "titre": "Coussinets de bielle usés (versions anciennes du 1.5 dCi)",
+                  "km_typique": 150000,
+                  "gravite": "elevee",
+                  "symptomes": "Claquement métallique, voyant de pression d'huile, casse moteur.",
+                  "solution": "Remplacement des coussinets si détecté tôt ; moteur d'échange sinon. Vidanges rapprochées en prévention.",
+                  "cout_indicatif": "800 à 4 000 €"
+                },
+                {
+                  "titre": "Injecteurs fuyards ou encrassés",
+                  "km_typique": 150000,
+                  "gravite": "moyenne",
+                  "symptomes": "Démarrage difficile, fumée, claquements.",
+                  "solution": "Test et remplacement des injecteurs concernés.",
+                  "cout_indicatif": "300 à 1 200 €"
+                },
+                {
+                  "titre": "Vanne EGR et FAP encrassés en usage urbain",
+                  "km_typique": 100000,
+                  "gravite": "moyenne",
+                  "symptomes": "Perte de puissance, voyant moteur, mode dégradé.",
+                  "solution": "Nettoyage ou remplacement ; trajets plus longs réguliers.",
+                  "cout_indicatif": "200 à 1 500 €"
+                },
+                {
+                  "titre": "Volant moteur bimasse et embrayage usés",
+                  "km_typique": 150000,
+                  "gravite": "moyenne",
+                  "symptomes": "Vibrations au démarrage et à l'arrêt, claquements au ralenti, embrayage qui patine.",
+                  "solution": "Remplacement du kit d'embrayage avec le volant moteur.",
+                  "cout_indicatif": "900 à 1 600 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtres (rapprocher à 15 000 km en usage sévère)",
+                  "km": 20000,
+                  "cout_indicatif": "120 à 200 €"
+                },
+                {
+                  "titre": "Courroie de distribution et pompe à eau",
+                  "km": 120000,
+                  "cout_indicatif": "500 à 900 €"
+                },
+                {
+                  "titre": "Filtre à gasoil",
+                  "km": 40000,
+                  "cout_indicatif": "40 à 90 €"
+                }
+              ],
+              "points_forts": [
+                "Sobre"
+              ],
+              "points_faibles": [
+                "AdBlue",
+                "FAP"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            },
+            {
+              "id": "dacia-duster-2-13-tce",
+              "moteurs": [
+                "1.0 TCe 100",
+                "1.0 TCe 100 ECO-G",
+                "1.3 TCe 130",
+                "1.3 TCe 150"
+              ],
+              "codes_moteur": [
+                "H4D",
+                "HR10",
+                "H5H"
+              ],
+              "energie": "thermique",
+              "carburant": "essence",
+              "conseil": "a_privilegier",
+              "conseil_texte": "Bons moteurs ; le 1.3 TCe est agréable.",
+              "pannes": [
+                {
+                  "titre": "Filtre à particules essence encrassé (1.3 TCe)",
+                  "km_typique": 80000,
+                  "gravite": "faible",
+                  "symptomes": "Voyant moteur.",
+                  "solution": "Régénération.",
+                  "cout_indicatif": "150 à 800 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtre",
+                  "km": 20000,
+                  "cout_indicatif": "100 à 170 €"
+                }
+              ],
+              "points_forts": [
+                "Agréable (1.3)",
+                "GPL économique"
+              ],
+              "points_faibles": [
+                "Consommation en 4x4"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

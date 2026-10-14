@@ -1,0 +1,461 @@
+{
+  "id": "bmw",
+  "nom": "BMW",
+  "pays": "Allemagne",
+  "image": "Constructeur premium réputé pour le plaisir de conduite (propulsion historique). Entretien et réparations plus chers ; certains moteurs (N47) ont une faiblesse connue.",
+  "cout_entretien": "eleve",
+  "cout_entretien_texte": "Entretien et pièces plus chers qu'un généraliste ; garages spécialisés indépendants moins chers que le réseau.",
+  "reseau": "Réseau premium en France (moins dense) ; nombreux spécialistes indépendants, pièces disponibles.",
+  "statut": "a_verifier",
+  "sources": [],
+  "redige_par": "ia",
+  "mise_a_jour": "2026-10-14",
+  "incertitudes": [
+    "Image et coûts relatifs : appréciation générale, à recouper."
+  ],
+  "modeles": [
+    {
+      "id": "bmw-serie-1",
+      "nom": "Série 1",
+      "alias": [
+        "serie 1",
+        "série 1",
+        "bmw 1"
+      ],
+      "qualites": [
+        "Plaisir de conduite (propulsion jusqu'en 2019)",
+        "Moteurs performants et sobres",
+        "Finition"
+      ],
+      "defauts": [
+        "Places arrière et coffre limités (F20)",
+        "Entretien cher",
+        "Chaîne de distribution du N47"
+      ],
+      "pour_qui": "Compacte premium pour qui aime conduire.",
+      "a_verifier_achat": [
+        "Bruit de chaîne côté boîte (diesel N47, 2011-2015)",
+        "Historique en réseau ou spécialiste",
+        "Fuites d'huile",
+        "Pneus runflat chers"
+      ],
+      "statut": "a_verifier",
+      "sources": [],
+      "redige_par": "ia",
+      "mise_a_jour": "2026-10-14",
+      "generations": [
+        {
+          "id": "bmw-serie-1-f20",
+          "nom": "Série 1 F20",
+          "annees": "2011-2019",
+          "alias": [
+            "f20",
+            "f21",
+            "serie 1 f20"
+          ],
+          "motorisations": [
+            {
+              "id": "bmw-serie-1-f20-118d",
+              "moteurs": [
+                "116d",
+                "118d",
+                "120d"
+              ],
+              "codes_moteur": [
+                "N47",
+                "B47 (2015+)"
+              ],
+              "energie": "thermique",
+              "carburant": "diesel",
+              "conseil": "neutre",
+              "conseil_texte": "Préférez les B47 (2015 et après) ; sur un N47, exigez une preuve de remplacement de la chaîne.",
+              "pannes": [
+                {
+                  "titre": "Chaîne de distribution (située côté boîte) qui s'allonge, moteur N47",
+                  "km_typique": 150000,
+                  "gravite": "elevee",
+                  "symptomes": "Bruit de sifflement ou de cliquetis côté boîte de vitesses ; casse moteur si elle cède.",
+                  "solution": "Remplacement de la chaîne et des guides : moteur à déposer.",
+                  "cout_indicatif": "1 800 à 3 500 €"
+                },
+                {
+                  "titre": "Vanne EGR et refroidisseur EGR",
+                  "km_typique": 120000,
+                  "gravite": "moyenne",
+                  "symptomes": "Perte de puissance, voyant.",
+                  "solution": "Remplacement.",
+                  "cout_indicatif": "500 à 1 200 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtres (rapprocher à 15 000 km conseillé)",
+                  "km": 20000,
+                  "cout_indicatif": "180 à 300 €"
+                },
+                {
+                  "titre": "Liquide de frein",
+                  "km": 30000,
+                  "cout_indicatif": "80 à 130 €"
+                }
+              ],
+              "points_forts": [
+                "Sobre et performant"
+              ],
+              "points_faibles": [
+                "Chaîne N47",
+                "Entretien cher"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            },
+            {
+              "id": "bmw-serie-1-f20-118i",
+              "moteurs": [
+                "114i, 116i, 118i (1.6, N13)",
+                "116i, 118i (1.5 trois cylindres, B38, 2015+)"
+              ],
+              "codes_moteur": [
+                "N13",
+                "B38"
+              ],
+              "energie": "thermique",
+              "carburant": "essence",
+              "conseil": "neutre",
+              "conseil_texte": "Préférez le B38 (2015+) ; le N13 a des soucis de chaîne et de calamine.",
+              "pannes": [
+                {
+                  "titre": "Chaîne de distribution (N13)",
+                  "km_typique": 100000,
+                  "gravite": "elevee",
+                  "symptomes": "Cliquetis à froid.",
+                  "solution": "Kit de chaîne.",
+                  "cout_indicatif": "1 200 à 2 000 €"
+                },
+                {
+                  "titre": "Calamine et ratés (injection directe)",
+                  "km_typique": 90000,
+                  "gravite": "moyenne",
+                  "symptomes": "Ratés, voyant.",
+                  "solution": "Décalaminage, bobines.",
+                  "cout_indicatif": "300 à 900 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtre",
+                  "km": 15000,
+                  "cout_indicatif": "160 à 260 €"
+                },
+                {
+                  "titre": "Bougies d'allumage",
+                  "km": 60000,
+                  "cout_indicatif": "150 à 300 €"
+                }
+              ],
+              "points_forts": [
+                "Agréable"
+              ],
+              "points_faibles": [
+                "Chaîne (N13)",
+                "Calamine"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "bmw-serie-1-f40",
+          "nom": "Série 1 F40",
+          "annees": "2019-auj.",
+          "alias": [
+            "f40",
+            "serie 1 f40"
+          ],
+          "motorisations": [
+            {
+              "id": "bmw-serie-1-f40",
+              "moteurs": [
+                "116d",
+                "118d",
+                "118i",
+                "120i",
+                "128ti"
+              ],
+              "codes_moteur": [
+                "B37",
+                "B47",
+                "B38",
+                "B48"
+              ],
+              "energie": "thermique",
+              "carburant": "diesel",
+              "conseil": "a_privilegier",
+              "conseil_texte": "Traction désormais ; moteurs B plus sains que les anciens.",
+              "pannes": [
+                {
+                  "titre": "Bugs logiciels et capteurs",
+                  "km_typique": 20000,
+                  "gravite": "faible",
+                  "symptomes": "Messages d'erreur.",
+                  "solution": "Mises à jour.",
+                  "cout_indicatif": "0 à 300 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtres",
+                  "km": 25000,
+                  "cout_indicatif": "200 à 320 €"
+                }
+              ],
+              "points_forts": [
+                "Habitabilité améliorée",
+                "Moteurs sains"
+              ],
+              "points_faibles": [
+                "Plus de propulsion",
+                "Prix"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture).",
+                "Peu de recul sur les pannes : fiche à compléter avec les retours des propriétaires."
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bmw-serie-3",
+      "nom": "Série 3",
+      "alias": [
+        "serie 3",
+        "série 3",
+        "bmw 3"
+      ],
+      "qualites": [
+        "Plaisir de conduite",
+        "Confort et finition",
+        "Moteurs diesel très sobres"
+      ],
+      "defauts": [
+        "Entretien cher",
+        "Chaîne N47 (2012-2014)",
+        "Électronique complexe"
+      ],
+      "pour_qui": "Berline ou break premium pour gros rouleurs qui aiment conduire.",
+      "a_verifier_achat": [
+        "Bruit de chaîne (N47, N20)",
+        "Historique d'entretien",
+        "Fuites d'huile (couvercle, filtre)",
+        "Boîte automatique : vidange"
+      ],
+      "statut": "a_verifier",
+      "sources": [],
+      "redige_par": "ia",
+      "mise_a_jour": "2026-10-14",
+      "generations": [
+        {
+          "id": "bmw-serie-3-f30",
+          "nom": "Série 3 F30",
+          "annees": "2012-2019",
+          "alias": [
+            "f30",
+            "f31",
+            "serie 3 f30"
+          ],
+          "motorisations": [
+            {
+              "id": "bmw-serie-3-f30-320d",
+              "moteurs": [
+                "318d",
+                "320d",
+                "325d"
+              ],
+              "codes_moteur": [
+                "N47",
+                "B47 (2014+)"
+              ],
+              "energie": "thermique",
+              "carburant": "diesel",
+              "conseil": "neutre",
+              "conseil_texte": "Préférez le B47 ; sur un N47, preuve de chaîne remplacée.",
+              "pannes": [
+                {
+                  "titre": "Chaîne de distribution (située côté boîte) qui s'allonge, moteur N47",
+                  "km_typique": 150000,
+                  "gravite": "elevee",
+                  "symptomes": "Bruit de sifflement ou de cliquetis côté boîte de vitesses ; casse moteur si elle cède.",
+                  "solution": "Remplacement de la chaîne et des guides : moteur à déposer.",
+                  "cout_indicatif": "1 800 à 3 500 €"
+                },
+                {
+                  "titre": "Fuite au joint de support de filtre à huile",
+                  "km_typique": 120000,
+                  "gravite": "moyenne",
+                  "symptomes": "Traces d'huile, odeur.",
+                  "solution": "Remplacement du joint.",
+                  "cout_indicatif": "300 à 600 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtres",
+                  "km": 20000,
+                  "cout_indicatif": "200 à 320 €"
+                },
+                {
+                  "titre": "Vidange de boîte automatique (conseillée)",
+                  "km": 100000,
+                  "cout_indicatif": "350 à 550 €"
+                }
+              ],
+              "points_forts": [
+                "Très sobre",
+                "Agréable"
+              ],
+              "points_faibles": [
+                "Chaîne N47",
+                "Fuites d'huile"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            },
+            {
+              "id": "bmw-serie-3-f30-320i",
+              "moteurs": [
+                "320i",
+                "328i (N20)",
+                "318i (B38)",
+                "320i, 330i (B48)"
+              ],
+              "codes_moteur": [
+                "N20",
+                "B38",
+                "B48"
+              ],
+              "energie": "thermique",
+              "carburant": "essence",
+              "conseil": "neutre",
+              "conseil_texte": "Méfiance sur le N20 (2012-2015, guides de chaîne) ; B48 plus sain.",
+              "pannes": [
+                {
+                  "titre": "Guides de chaîne de distribution (N20, 2012-2015)",
+                  "km_typique": 100000,
+                  "gravite": "elevee",
+                  "symptomes": "Sifflement, cliquetis.",
+                  "solution": "Kit de chaîne.",
+                  "cout_indicatif": "1 500 à 2 500 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtre",
+                  "km": 15000,
+                  "cout_indicatif": "180 à 280 €"
+                }
+              ],
+              "points_forts": [
+                "Agréable"
+              ],
+              "points_faibles": [
+                "Chaîne N20"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "bmw-serie-3-g20",
+          "nom": "Série 3 G20",
+          "annees": "2019-auj.",
+          "alias": [
+            "g20",
+            "g21",
+            "serie 3 g20",
+            "330e"
+          ],
+          "motorisations": [
+            {
+              "id": "bmw-serie-3-g20-320d",
+              "moteurs": [
+                "318d",
+                "320d (mild hybrid)",
+                "330e (hybride rechargeable)",
+                "320i"
+              ],
+              "codes_moteur": [
+                "B47",
+                "B48"
+              ],
+              "energie": "thermique",
+              "carburant": "diesel",
+              "conseil": "a_privilegier",
+              "conseil_texte": "Moteurs sains ; la 330e convient si vous rechargez.",
+              "pannes": [
+                {
+                  "titre": "Bugs logiciels et capteurs",
+                  "km_typique": 20000,
+                  "gravite": "faible",
+                  "symptomes": "Messages d'erreur.",
+                  "solution": "Mises à jour.",
+                  "cout_indicatif": "0 à 300 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtres",
+                  "km": 25000,
+                  "cout_indicatif": "220 à 350 €"
+                }
+              ],
+              "points_forts": [
+                "Sobre",
+                "Agréable"
+              ],
+              "points_faibles": [
+                "Prix",
+                "Électronique"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture).",
+                "Peu de recul : à compléter."
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

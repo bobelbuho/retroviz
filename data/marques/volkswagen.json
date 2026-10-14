@@ -1,0 +1,829 @@
+{
+  "id": "volkswagen",
+  "nom": "Volkswagen",
+  "pays": "Allemagne",
+  "image": "Premier constructeur européen, réputé pour la qualité de construction et la bonne tenue de la valeur à la revente. Réparations souvent plus chères que chez les généralistes français.",
+  "cout_entretien": "moyen",
+  "cout_entretien_texte": "Entretien un peu plus cher que la moyenne ; boîtes DSG et électronique coûteuses hors garantie.",
+  "reseau": "Réseau dense en France (Volkswagen et groupe : Audi, Seat, Skoda) ; pièces très répandues, nombreux spécialistes indépendants.",
+  "statut": "a_verifier",
+  "sources": [],
+  "redige_par": "ia",
+  "mise_a_jour": "2026-10-14",
+  "incertitudes": [
+    "Image et coûts relatifs : appréciation générale, à recouper."
+  ],
+  "modeles": [
+    {
+      "id": "volkswagen-golf",
+      "nom": "Golf",
+      "alias": [
+        "vw golf",
+        "volkswagen golf"
+      ],
+      "qualites": [
+        "Qualité de construction",
+        "Confort et insonorisation",
+        "Bonne valeur à la revente"
+      ],
+      "defauts": [
+        "Réparations plus chères que la moyenne",
+        "Boîte DSG à surveiller",
+        "Bugs logiciels (Golf VIII)"
+      ],
+      "pour_qui": "Compacte polyvalente pour qui veut une voiture solide et qui se revend bien.",
+      "a_verifier_achat": [
+        "Historique d'entretien (vidanges DSG)",
+        "Comportement de la boîte DSG (à-coups)",
+        "Bruit de chaîne au démarrage (1.2/1.4 TSI EA111)",
+        "Écran et logiciels (Golf VIII)"
+      ],
+      "statut": "a_verifier",
+      "sources": [],
+      "redige_par": "ia",
+      "mise_a_jour": "2026-10-14",
+      "generations": [
+        {
+          "id": "volkswagen-golf-6",
+          "nom": "Golf VI",
+          "annees": "2008-2012",
+          "alias": [
+            "golf 6",
+            "golf vi",
+            "golf mk6"
+          ],
+          "motorisations": [
+            {
+              "id": "volkswagen-golf-6-16-tdi",
+              "moteurs": [
+                "1.6 TDI 90",
+                "1.6 TDI 105",
+                "2.0 TDI 110",
+                "2.0 TDI 140"
+              ],
+              "codes_moteur": [
+                "CAYC",
+                "CAYB",
+                "CBDB",
+                "CFFB"
+              ],
+              "energie": "thermique",
+              "carburant": "diesel",
+              "conseil": "a_privilegier",
+              "conseil_texte": "Diesels à rampe commune sérieux, pour les gros rouleurs.",
+              "pannes": [
+                {
+                  "titre": "Vanne EGR ou refroidisseur EGR encrassé",
+                  "km_typique": 120000,
+                  "gravite": "moyenne",
+                  "symptomes": "Perte de puissance, voyant moteur.",
+                  "solution": "Nettoyage ou remplacement.",
+                  "cout_indicatif": "300 à 1 200 €"
+                },
+                {
+                  "titre": "Filtre à particules colmaté",
+                  "km_typique": 120000,
+                  "gravite": "moyenne",
+                  "symptomes": "Voyant FAP, mode dégradé.",
+                  "solution": "Régénération forcée, nettoyage ou remplacement ; trajets plus longs.",
+                  "cout_indicatif": "150 à 1 800 €"
+                },
+                {
+                  "titre": "Volant moteur bimasse",
+                  "km_typique": 160000,
+                  "gravite": "moyenne",
+                  "symptomes": "Vibrations, claquements.",
+                  "solution": "Kit embrayage avec volant.",
+                  "cout_indicatif": "1 000 à 1 800 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtres",
+                  "km": 20000,
+                  "cout_indicatif": "150 à 250 €"
+                },
+                {
+                  "titre": "Courroie de distribution et pompe à eau",
+                  "km": 180000,
+                  "cout_indicatif": "600 à 1 000 €"
+                }
+              ],
+              "points_forts": [
+                "Robuste",
+                "Sobre"
+              ],
+              "points_faibles": [
+                "EGR et FAP",
+                "Volant bimasse"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            },
+            {
+              "id": "volkswagen-golf-6-14-tsi",
+              "moteurs": [
+                "1.2 TSI 105",
+                "1.4 TSI 122",
+                "1.4 TSI 160"
+              ],
+              "codes_moteur": [
+                "CBZB",
+                "CAXA",
+                "CAVD"
+              ],
+              "energie": "thermique",
+              "carburant": "essence",
+              "conseil": "a_eviter",
+              "conseil_texte": "Chaîne de distribution fragile sur ces moteurs : à éviter sans preuve de remplacement.",
+              "pannes": [
+                {
+                  "titre": "Chaîne de distribution qui saute ou s'allonge (1.2 et 1.4 TSI EA111)",
+                  "km_typique": 80000,
+                  "gravite": "elevee",
+                  "symptomes": "Cliquetis au démarrage à froid, voyant moteur ; casse moteur si la chaîne saute.",
+                  "solution": "Remplacement du kit de chaîne et du tendeur (version révisée).",
+                  "cout_indicatif": "800 à 1 500 €"
+                },
+                {
+                  "titre": "Consommation d'huile et calamine",
+                  "km_typique": 100000,
+                  "gravite": "moyenne",
+                  "symptomes": "Niveau qui baisse, ratés d'allumage.",
+                  "solution": "Contrôle de consommation, décalaminage.",
+                  "cout_indicatif": "200 à 1 500 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtre",
+                  "km": 15000,
+                  "cout_indicatif": "120 à 200 €"
+                },
+                {
+                  "titre": "Bougies d'allumage",
+                  "km": 60000,
+                  "cout_indicatif": "100 à 200 €"
+                }
+              ],
+              "points_forts": [
+                "Agréable",
+                "Sobre pour un essence"
+              ],
+              "points_faibles": [
+                "Chaîne de distribution",
+                "Calamine"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "volkswagen-golf-7",
+          "nom": "Golf VII",
+          "annees": "2012-2020",
+          "alias": [
+            "golf 7",
+            "golf vii",
+            "golf mk7"
+          ],
+          "motorisations": [
+            {
+              "id": "volkswagen-golf-7-16-tdi",
+              "energie": "thermique",
+              "carburant": "diesel",
+              "conseil": "a_privilegier",
+              "conseil_texte": "Sobre et sérieux ; DSG à vérifier sur les versions automatiques.",
+              "moteurs": [
+                "1.6 TDI 90",
+                "1.6 TDI 105",
+                "1.6 TDI 110",
+                "1.6 TDI 115"
+              ],
+              "codes_moteur": [
+                "EA288",
+                "CLHA",
+                "CXXB",
+                "DDYA"
+              ],
+              "pannes": [
+                {
+                  "titre": "Vanne EGR ou refroidisseur EGR encrassé",
+                  "km_typique": 120000,
+                  "gravite": "moyenne",
+                  "symptomes": "Perte de puissance, voyant moteur, codes EGR (P0401, P0404).",
+                  "solution": "Nettoyage ou remplacement de la vanne ou du refroidisseur EGR.",
+                  "cout_indicatif": "300 à 1 000 €"
+                },
+                {
+                  "titre": "Filtre à particules colmaté",
+                  "km_typique": 150000,
+                  "gravite": "moyenne",
+                  "symptomes": "Voyant FAP, mode dégradé, régénérations fréquentes.",
+                  "solution": "Régénération forcée, nettoyage ou remplacement du FAP.",
+                  "cout_indicatif": "150 à 2 000 €"
+                },
+                {
+                  "titre": "Capteur de pression différentielle FAP défaillant",
+                  "km_typique": 100000,
+                  "gravite": "faible",
+                  "symptomes": "Voyant moteur, code P2452 ou P2453, régénérations incohérentes.",
+                  "solution": "Contrôle des durites puis remplacement du capteur.",
+                  "cout_indicatif": "80 à 250 €"
+                },
+                {
+                  "titre": "Fuite de pompe à eau",
+                  "km_typique": 120000,
+                  "gravite": "moyenne",
+                  "symptomes": "Baisse du niveau de liquide de refroidissement, traces sous le moteur.",
+                  "solution": "Remplacement de la pompe à eau, idéalement avec la distribution.",
+                  "cout_indicatif": "300 à 700 €"
+                },
+                {
+                  "titre": "Mécatronique de boîte DSG 7 (versions automatiques)",
+                  "km_typique": 120000,
+                  "gravite": "elevee",
+                  "symptomes": "À-coups au démarrage, passages de rapports brutaux, voyant de boîte, mode secours.",
+                  "solution": "Diagnostic de la boîte, réparation ou échange de la mécatronique.",
+                  "cout_indicatif": "800 à 2 500 €"
+                },
+                {
+                  "titre": "Volant moteur bimasse et embrayage (boîte manuelle)",
+                  "km_typique": 180000,
+                  "gravite": "moyenne",
+                  "symptomes": "Vibrations au ralenti, claquements à l'arrêt du moteur.",
+                  "solution": "Remplacement du kit d'embrayage avec le volant moteur.",
+                  "cout_indicatif": "1 000 à 1 800 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange (intervalle fixe ou variable selon le carnet)",
+                  "km": 20000,
+                  "cout_indicatif": "150 à 250 €"
+                },
+                {
+                  "titre": "Courroie de distribution et pompe à eau (intervalle à confirmer dans le carnet)",
+                  "km": 150000,
+                  "cout_indicatif": "700 à 1 200 €"
+                },
+                {
+                  "titre": "Vidange de la boîte DSG (versions automatiques, selon préconisation)",
+                  "km": 60000,
+                  "cout_indicatif": "200 à 350 €"
+                }
+              ],
+              "points_forts": [
+                "Qualité de construction et confort",
+                "Faible consommation",
+                "Bonne valeur à la revente"
+              ],
+              "points_faibles": [
+                "Peu adapté aux petits trajets (FAP, EGR)",
+                "Réparations plus chères que la moyenne",
+                "Boîte DSG à surveiller"
+              ],
+              "sources": [],
+              "statut": "a_verifier",
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-13"
+            },
+            {
+              "id": "volkswagen-golf-7-14-tsi",
+              "moteurs": [
+                "1.0 TSI 110",
+                "1.2 TSI 110",
+                "1.4 TSI 125",
+                "1.4 TSI 150 ACT",
+                "1.5 TSI 130 et 150"
+              ],
+              "codes_moteur": [
+                "EA211"
+              ],
+              "energie": "thermique",
+              "carburant": "essence",
+              "conseil": "a_privilegier",
+              "conseil_texte": "Moteurs EA211 à courroie, plus sains que les anciens TSI à chaîne.",
+              "pannes": [
+                {
+                  "titre": "Mécatronique ou embrayages de la boîte DSG 7 à sec (DQ200)",
+                  "km_typique": 100000,
+                  "gravite": "elevee",
+                  "symptomes": "À-coups au démarrage, rapports qui ne passent plus, voyant de boîte.",
+                  "solution": "Diagnostic ; réparation ou remplacement de la mécatronique ou du double embrayage.",
+                  "cout_indicatif": "1 200 à 3 000 €"
+                },
+                {
+                  "titre": "Hésitations à froid (1.5 TSI, premières séries)",
+                  "km_typique": 20000,
+                  "gravite": "faible",
+                  "symptomes": "À-coups à faible charge, moteur froid.",
+                  "solution": "Mise à jour logicielle.",
+                  "cout_indicatif": "0 à 200 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtre",
+                  "km": 20000,
+                  "cout_indicatif": "130 à 220 €"
+                },
+                {
+                  "titre": "Courroie de distribution",
+                  "km": 210000,
+                  "cout_indicatif": "500 à 900 €"
+                },
+                {
+                  "titre": "Bougies d'allumage",
+                  "km": 60000,
+                  "cout_indicatif": "100 à 200 €"
+                }
+              ],
+              "points_forts": [
+                "Souple et sobre",
+                "Courroie de distribution"
+              ],
+              "points_faibles": [
+                "Boîte DSG 7 à sec à surveiller",
+                "Calages à froid (1.5 TSI, premières séries)"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            },
+            {
+              "id": "volkswagen-golf-7-20-tdi",
+              "moteurs": [
+                "2.0 TDI 150",
+                "2.0 TDI 184 (GTD)"
+              ],
+              "codes_moteur": [
+                "EA288"
+              ],
+              "energie": "thermique",
+              "carburant": "diesel",
+              "conseil": "a_privilegier",
+              "conseil_texte": "Robuste pour les gros rouleurs ; boîte DSG 6 (humide) plus solide que la DSG 7 à sec.",
+              "pannes": [
+                {
+                  "titre": "Vanne EGR ou refroidisseur EGR encrassé",
+                  "km_typique": 120000,
+                  "gravite": "moyenne",
+                  "symptomes": "Perte de puissance, voyant moteur.",
+                  "solution": "Nettoyage ou remplacement.",
+                  "cout_indicatif": "300 à 1 200 €"
+                },
+                {
+                  "titre": "Filtre à particules colmaté",
+                  "km_typique": 120000,
+                  "gravite": "moyenne",
+                  "symptomes": "Voyant FAP, mode dégradé.",
+                  "solution": "Régénération forcée, nettoyage ou remplacement ; trajets plus longs.",
+                  "cout_indicatif": "150 à 1 800 €"
+                },
+                {
+                  "titre": "Fuite de pompe à eau",
+                  "km_typique": 100000,
+                  "gravite": "moyenne",
+                  "symptomes": "Perte de liquide, température qui monte.",
+                  "solution": "Remplacement de la pompe (souvent avec la distribution).",
+                  "cout_indicatif": "300 à 700 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtres (entretien fixe ou variable « LongLife »)",
+                  "km": 20000,
+                  "cout_indicatif": "150 à 250 €"
+                },
+                {
+                  "titre": "Courroie de distribution et pompe à eau",
+                  "km": 210000,
+                  "cout_indicatif": "600 à 1 000 €"
+                },
+                {
+                  "titre": "Vidange de boîte DSG (versions à double embrayage humide)",
+                  "km": 60000,
+                  "cout_indicatif": "200 à 350 €"
+                }
+              ],
+              "points_forts": [
+                "Couple",
+                "Sobre"
+              ],
+              "points_faibles": [
+                "EGR et pompe à eau"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "volkswagen-golf-8",
+          "nom": "Golf VIII",
+          "annees": "2020-auj.",
+          "alias": [
+            "golf 8",
+            "golf viii",
+            "golf mk8"
+          ],
+          "motorisations": [
+            {
+              "id": "volkswagen-golf-8-15-etsi",
+              "moteurs": [
+                "1.0 TSI 110",
+                "1.5 TSI 130 et 150",
+                "1.0 eTSI 110",
+                "1.5 eTSI 130 et 150"
+              ],
+              "codes_moteur": [
+                "EA211 evo"
+              ],
+              "energie": "thermique",
+              "carburant": "essence",
+              "conseil": "neutre",
+              "conseil_texte": "Mécanique saine, mais logiciels et écrans parfois capricieux : vérifiez les mises à jour.",
+              "pannes": [
+                {
+                  "titre": "Bugs du système multimédia et des commandes tactiles",
+                  "km_typique": 10000,
+                  "gravite": "faible",
+                  "symptomes": "Écran figé, commandes qui ne répondent plus.",
+                  "solution": "Mises à jour logicielles en concession.",
+                  "cout_indicatif": "0 à 200 €"
+                },
+                {
+                  "titre": "Mécatronique ou embrayages de la boîte DSG 7 à sec (DQ200)",
+                  "km_typique": 100000,
+                  "gravite": "elevee",
+                  "symptomes": "À-coups au démarrage, rapports qui ne passent plus, voyant de boîte.",
+                  "solution": "Diagnostic ; réparation ou remplacement de la mécatronique ou du double embrayage.",
+                  "cout_indicatif": "1 200 à 3 000 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtre",
+                  "km": 20000,
+                  "cout_indicatif": "140 à 230 €"
+                },
+                {
+                  "titre": "Vidange de boîte DSG (si boîte humide)",
+                  "km": 60000,
+                  "cout_indicatif": "200 à 350 €"
+                }
+              ],
+              "points_forts": [
+                "Sobre",
+                "Confort"
+              ],
+              "points_faibles": [
+                "Bugs logiciels",
+                "Commandes tactiles"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            },
+            {
+              "id": "volkswagen-golf-8-20-tdi",
+              "moteurs": [
+                "2.0 TDI 115",
+                "2.0 TDI 150"
+              ],
+              "codes_moteur": [
+                "EA288 evo"
+              ],
+              "energie": "thermique",
+              "carburant": "diesel",
+              "conseil": "a_privilegier",
+              "conseil_texte": "Pour les gros rouleurs.",
+              "pannes": [
+                {
+                  "titre": "Filtre à particules colmaté",
+                  "km_typique": 120000,
+                  "gravite": "moyenne",
+                  "symptomes": "Voyant FAP, mode dégradé.",
+                  "solution": "Régénération forcée, nettoyage ou remplacement ; trajets plus longs.",
+                  "cout_indicatif": "150 à 1 800 €"
+                },
+                {
+                  "titre": "Système AdBlue (capteur, injecteur)",
+                  "km_typique": 80000,
+                  "gravite": "moyenne",
+                  "symptomes": "Voyant antipollution.",
+                  "solution": "Diagnostic, remplacement.",
+                  "cout_indicatif": "400 à 1 200 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtres (entretien fixe ou variable « LongLife »)",
+                  "km": 20000,
+                  "cout_indicatif": "150 à 250 €"
+                },
+                {
+                  "titre": "Courroie de distribution et pompe à eau",
+                  "km": 210000,
+                  "cout_indicatif": "600 à 1 000 €"
+                },
+                {
+                  "titre": "Vidange de boîte DSG (versions à double embrayage humide)",
+                  "km": 60000,
+                  "cout_indicatif": "200 à 350 €"
+                }
+              ],
+              "points_forts": [
+                "Très sobre"
+              ],
+              "points_faibles": [
+                "AdBlue",
+                "FAP en ville"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "volkswagen-polo",
+      "nom": "Polo",
+      "alias": [
+        "vw polo"
+      ],
+      "qualites": [
+        "Qualité de construction",
+        "Confort de grande voiture",
+        "Valeur à la revente"
+      ],
+      "defauts": [
+        "Prix d'achat élevé",
+        "Boîte DSG 7 à sec à surveiller",
+        "Anciens 1.2 essence à chaîne fragiles"
+      ],
+      "pour_qui": "Citadine soignée pour qui veut du confort et une bonne revente.",
+      "a_verifier_achat": [
+        "Bruit de chaîne au démarrage (1.2 TSI et 1.2 60/70 ch)",
+        "Boîte DSG : à-coups",
+        "Historique d'entretien",
+        "Électronique"
+      ],
+      "statut": "a_verifier",
+      "sources": [],
+      "redige_par": "ia",
+      "mise_a_jour": "2026-10-14",
+      "generations": [
+        {
+          "id": "volkswagen-polo-5",
+          "nom": "Polo V",
+          "annees": "2009-2017",
+          "alias": [
+            "polo 5",
+            "polo v",
+            "polo 6r"
+          ],
+          "motorisations": [
+            {
+              "id": "volkswagen-polo-5-12-tsi",
+              "moteurs": [
+                "1.2 60",
+                "1.2 70",
+                "1.2 TSI 90",
+                "1.2 TSI 105",
+                "1.0 TSI 95 (2014+)"
+              ],
+              "codes_moteur": [
+                "CGPA",
+                "CBZA",
+                "CBZB"
+              ],
+              "energie": "thermique",
+              "carburant": "essence",
+              "conseil": "neutre",
+              "conseil_texte": "Évitez les 1.2 à chaîne sans preuve d'intervention ; le 1.0 et le 1.2 TSI à courroie (2014+) sont plus sains.",
+              "pannes": [
+                {
+                  "titre": "Chaîne de distribution qui saute ou s'allonge (1.2 et 1.4 TSI EA111)",
+                  "km_typique": 80000,
+                  "gravite": "elevee",
+                  "symptomes": "Cliquetis au démarrage à froid, voyant moteur ; casse moteur si la chaîne saute.",
+                  "solution": "Remplacement du kit de chaîne et du tendeur (version révisée).",
+                  "cout_indicatif": "800 à 1 500 €"
+                },
+                {
+                  "titre": "Consommation d'huile et calamine",
+                  "km_typique": 100000,
+                  "gravite": "moyenne",
+                  "symptomes": "Niveau qui baisse, ratés d'allumage.",
+                  "solution": "Contrôle de consommation, décalaminage.",
+                  "cout_indicatif": "200 à 1 500 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtre",
+                  "km": 15000,
+                  "cout_indicatif": "120 à 200 €"
+                },
+                {
+                  "titre": "Bougies d'allumage",
+                  "km": 60000,
+                  "cout_indicatif": "100 à 200 €"
+                }
+              ],
+              "points_forts": [
+                "Agréable"
+              ],
+              "points_faibles": [
+                "Chaîne de distribution (anciens)"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            },
+            {
+              "id": "volkswagen-polo-5-16-tdi",
+              "moteurs": [
+                "1.2 TDI 75",
+                "1.6 TDI 90",
+                "1.4 TDI 75 et 90 (2014+)"
+              ],
+              "codes_moteur": [
+                "CFWA",
+                "CAYB",
+                "CUSB"
+              ],
+              "energie": "thermique",
+              "carburant": "diesel",
+              "conseil": "a_privilegier",
+              "conseil_texte": "Sobre et solide.",
+              "pannes": [
+                {
+                  "titre": "Vanne EGR ou refroidisseur EGR encrassé",
+                  "km_typique": 120000,
+                  "gravite": "moyenne",
+                  "symptomes": "Perte de puissance, voyant moteur.",
+                  "solution": "Nettoyage ou remplacement.",
+                  "cout_indicatif": "300 à 1 200 €"
+                },
+                {
+                  "titre": "Filtre à particules colmaté",
+                  "km_typique": 120000,
+                  "gravite": "moyenne",
+                  "symptomes": "Voyant FAP, mode dégradé.",
+                  "solution": "Régénération forcée, nettoyage ou remplacement ; trajets plus longs.",
+                  "cout_indicatif": "150 à 1 800 €"
+                },
+                {
+                  "titre": "Fuite de pompe à eau",
+                  "km_typique": 100000,
+                  "gravite": "moyenne",
+                  "symptomes": "Perte de liquide, température qui monte.",
+                  "solution": "Remplacement de la pompe (souvent avec la distribution).",
+                  "cout_indicatif": "300 à 700 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtres (entretien fixe ou variable « LongLife »)",
+                  "km": 20000,
+                  "cout_indicatif": "150 à 250 €"
+                },
+                {
+                  "titre": "Courroie de distribution et pompe à eau",
+                  "km": 210000,
+                  "cout_indicatif": "600 à 1 000 €"
+                },
+                {
+                  "titre": "Vidange de boîte DSG (versions à double embrayage humide)",
+                  "km": 60000,
+                  "cout_indicatif": "200 à 350 €"
+                }
+              ],
+              "points_forts": [
+                "Très sobre"
+              ],
+              "points_faibles": [
+                "FAP en ville",
+                "Vibrations (1.4 TDI 3 cylindres)"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "volkswagen-polo-6",
+          "nom": "Polo VI",
+          "annees": "2017-auj.",
+          "alias": [
+            "polo 6",
+            "polo vi",
+            "polo aw"
+          ],
+          "motorisations": [
+            {
+              "id": "volkswagen-polo-6-10-tsi",
+              "moteurs": [
+                "1.0 MPI 65 et 80",
+                "1.0 TSI 95 et 110"
+              ],
+              "codes_moteur": [
+                "EA211"
+              ],
+              "energie": "thermique",
+              "carburant": "essence",
+              "conseil": "a_privilegier",
+              "conseil_texte": "Moteurs à courroie sains ; préférez la boîte manuelle si vous craignez la DSG.",
+              "pannes": [
+                {
+                  "titre": "Mécatronique ou embrayages de la boîte DSG 7 à sec (DQ200)",
+                  "km_typique": 100000,
+                  "gravite": "elevee",
+                  "symptomes": "À-coups au démarrage, rapports qui ne passent plus, voyant de boîte.",
+                  "solution": "Diagnostic ; réparation ou remplacement de la mécatronique ou du double embrayage.",
+                  "cout_indicatif": "1 200 à 3 000 €"
+                },
+                {
+                  "titre": "Bobine d'allumage",
+                  "km_typique": 80000,
+                  "gravite": "faible",
+                  "symptomes": "Ratés.",
+                  "solution": "Remplacement.",
+                  "cout_indicatif": "100 à 250 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtre",
+                  "km": 20000,
+                  "cout_indicatif": "120 à 200 €"
+                },
+                {
+                  "titre": "Courroie de distribution",
+                  "km": 210000,
+                  "cout_indicatif": "450 à 800 €"
+                }
+              ],
+              "points_forts": [
+                "Sobre",
+                "Agréable"
+              ],
+              "points_faibles": [
+                "DSG 7 à sec"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

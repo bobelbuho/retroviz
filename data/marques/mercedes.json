@@ -1,0 +1,246 @@
+{
+  "id": "mercedes",
+  "nom": "Mercedes-Benz",
+  "pays": "Allemagne",
+  "image": "Constructeur premium réputé pour le confort et la sécurité. Les Classe A récentes partagent certains moteurs avec Renault-Nissan.",
+  "cout_entretien": "eleve",
+  "cout_entretien_texte": "Entretien et pièces chers ; spécialistes indépendants nombreux.",
+  "reseau": "Réseau premium en France ; pièces disponibles, certaines communes avec Renault (moteurs 1.5 dCi et 1.33).",
+  "statut": "a_verifier",
+  "sources": [],
+  "redige_par": "ia",
+  "mise_a_jour": "2026-10-14",
+  "incertitudes": [
+    "Image et coûts relatifs : appréciation générale, à recouper."
+  ],
+  "modeles": [
+    {
+      "id": "mercedes-classe-a",
+      "nom": "Classe A",
+      "alias": [
+        "classe a",
+        "a180",
+        "a200"
+      ],
+      "qualites": [
+        "Image premium",
+        "Confort et équipement",
+        "Intérieur soigné (W177)"
+      ],
+      "defauts": [
+        "Entretien cher",
+        "Suspension ferme (W176)",
+        "Boîte 7G-DCT à surveiller"
+      ],
+      "pour_qui": "Compacte premium pour la ville et la route.",
+      "a_verifier_achat": [
+        "Boîte automatique 7G-DCT : à-coups",
+        "Historique d'entretien",
+        "Moteur d'origine Renault ou Mercedes selon la version",
+        "Électronique (écrans MBUX)"
+      ],
+      "statut": "a_verifier",
+      "sources": [],
+      "redige_par": "ia",
+      "mise_a_jour": "2026-10-14",
+      "generations": [
+        {
+          "id": "mercedes-classe-a-w176",
+          "nom": "Classe A W176",
+          "annees": "2012-2018",
+          "alias": [
+            "w176",
+            "classe a 3"
+          ],
+          "motorisations": [
+            {
+              "id": "mercedes-classe-a-w176-180d",
+              "moteurs": [
+                "A 180 CDI",
+                "A 180 d (1.5, Renault)",
+                "A 200 CDI",
+                "A 200 d (2.1 et 2.2)"
+              ],
+              "codes_moteur": [
+                "OM607 (K9K)",
+                "OM651"
+              ],
+              "energie": "thermique",
+              "carburant": "diesel",
+              "conseil": "neutre",
+              "conseil_texte": "Le A 180 d utilise le 1.5 dCi Renault ; préférez une version bien entretenue.",
+              "pannes": [
+                {
+                  "titre": "Coussinets de bielle usés (versions anciennes du 1.5 dCi)",
+                  "km_typique": 150000,
+                  "gravite": "elevee",
+                  "symptomes": "Claquement métallique, voyant de pression d'huile, casse moteur.",
+                  "solution": "Remplacement des coussinets si détecté tôt ; moteur d'échange sinon. Vidanges rapprochées en prévention.",
+                  "cout_indicatif": "800 à 4 000 €"
+                },
+                {
+                  "titre": "Injecteurs (2.1 CDI, OM651)",
+                  "km_typique": 150000,
+                  "gravite": "moyenne",
+                  "symptomes": "Ratés, fumée.",
+                  "solution": "Remplacement.",
+                  "cout_indicatif": "400 à 1 500 €"
+                },
+                {
+                  "titre": "Boîte 7G-DCT : à-coups, mécatronique",
+                  "km_typique": 100000,
+                  "gravite": "moyenne",
+                  "symptomes": "À-coups, voyant.",
+                  "solution": "Mise à jour, vidange, réparation.",
+                  "cout_indicatif": "300 à 2 500 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtres",
+                  "km": 25000,
+                  "cout_indicatif": "200 à 320 €"
+                },
+                {
+                  "titre": "Vidange de boîte 7G-DCT",
+                  "km": 60000,
+                  "cout_indicatif": "300 à 450 €"
+                }
+              ],
+              "points_forts": [
+                "Sobre"
+              ],
+              "points_faibles": [
+                "Coussinets (1.5)",
+                "Injecteurs (2.1)"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            },
+            {
+              "id": "mercedes-classe-a-w176-180",
+              "moteurs": [
+                "A 180",
+                "A 200",
+                "A 250 (1.6 et 2.0)"
+              ],
+              "codes_moteur": [
+                "M270"
+              ],
+              "energie": "thermique",
+              "carburant": "essence",
+              "conseil": "neutre",
+              "conseil_texte": "Sans faiblesse majeure ; boîte à surveiller.",
+              "pannes": [
+                {
+                  "titre": "Boîte 7G-DCT : à-coups, mécatronique",
+                  "km_typique": 100000,
+                  "gravite": "moyenne",
+                  "symptomes": "À-coups.",
+                  "solution": "Mise à jour, réparation.",
+                  "cout_indicatif": "300 à 2 500 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtre",
+                  "km": 25000,
+                  "cout_indicatif": "180 à 300 €"
+                }
+              ],
+              "points_forts": [
+                "Agréable"
+              ],
+              "points_faibles": [
+                "Boîte 7G-DCT"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "mercedes-classe-a-w177",
+          "nom": "Classe A W177",
+          "annees": "2018-auj.",
+          "alias": [
+            "w177",
+            "classe a 4",
+            "a250e"
+          ],
+          "motorisations": [
+            {
+              "id": "mercedes-classe-a-w177",
+              "moteurs": [
+                "A 180 d (1.5)",
+                "A 200 d (2.0)",
+                "A 180 et A 200 (1.33)",
+                "A 250 e (hybride rechargeable)"
+              ],
+              "codes_moteur": [
+                "OM608",
+                "OM654q",
+                "M282"
+              ],
+              "energie": "thermique",
+              "carburant": "essence",
+              "conseil": "neutre",
+              "conseil_texte": "Moteur 1.33 commun avec Renault-Nissan ; vérifiez l'électronique.",
+              "pannes": [
+                {
+                  "titre": "Bugs du système MBUX",
+                  "km_typique": 20000,
+                  "gravite": "faible",
+                  "symptomes": "Écrans figés.",
+                  "solution": "Mises à jour.",
+                  "cout_indicatif": "0 à 300 €"
+                },
+                {
+                  "titre": "Filtre à particules essence (1.33)",
+                  "km_typique": 80000,
+                  "gravite": "faible",
+                  "symptomes": "Voyant moteur.",
+                  "solution": "Régénération.",
+                  "cout_indicatif": "150 à 800 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtres",
+                  "km": 25000,
+                  "cout_indicatif": "220 à 350 €"
+                }
+              ],
+              "points_forts": [
+                "Intérieur moderne",
+                "Sobre"
+              ],
+              "points_faibles": [
+                "Électronique complexe",
+                "Prix"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture).",
+                "Peu de recul : à compléter."
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

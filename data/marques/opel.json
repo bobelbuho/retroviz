@@ -1,0 +1,636 @@
+{
+  "id": "opel",
+  "nom": "Opel",
+  "pays": "Allemagne (groupe Stellantis depuis 2017)",
+  "image": "Généraliste allemand longtemps sous GM, aujourd'hui sur des bases Peugeot. Bon rapport prix-équipement, image moins valorisée à la revente.",
+  "cout_entretien": "moyen",
+  "cout_entretien_texte": "Entretien dans la moyenne ; les modèles récents partagent moteurs et pièces avec Peugeot.",
+  "reseau": "Réseau moyennement dense en France ; pièces communes avec Peugeot et Citroën pour les modèles récents.",
+  "statut": "a_verifier",
+  "sources": [],
+  "redige_par": "ia",
+  "mise_a_jour": "2026-10-14",
+  "incertitudes": [
+    "Image et coûts relatifs : appréciation générale, à recouper."
+  ],
+  "modeles": [
+    {
+      "id": "opel-corsa",
+      "nom": "Corsa",
+      "qualites": [
+        "Prix d'occasion bas",
+        "Bonne habitabilité",
+        "Corsa F : bases Peugeot modernes"
+      ],
+      "defauts": [
+        "Boîte Easytronic à éviter (Corsa D)",
+        "Chaîne qui s'allonge sur les anciens essence",
+        "PureTech à surveiller (Corsa F)"
+      ],
+      "pour_qui": "Citadine économique, premier achat.",
+      "a_verifier_achat": [
+        "Bruit de chaîne au démarrage (1.2 et 1.4 Twinport)",
+        "Boîte robotisée Easytronic : à éviter",
+        "Historique (PureTech, Corsa F)",
+        "Rouille (Corsa D)"
+      ],
+      "statut": "a_verifier",
+      "sources": [],
+      "redige_par": "ia",
+      "mise_a_jour": "2026-10-14",
+      "generations": [
+        {
+          "id": "opel-corsa-d",
+          "nom": "Corsa D",
+          "annees": "2006-2014",
+          "alias": [
+            "corsa d",
+            "corsa 4"
+          ],
+          "motorisations": [
+            {
+              "id": "opel-corsa-d-12-twinport",
+              "moteurs": [
+                "1.0 60",
+                "1.2 Twinport 80",
+                "1.4 Twinport 90 et 100"
+              ],
+              "codes_moteur": [
+                "Z12XEP",
+                "A12XER",
+                "Z14XEP"
+              ],
+              "energie": "thermique",
+              "carburant": "essence",
+              "conseil": "neutre",
+              "conseil_texte": "Correct si la chaîne a été vérifiée ; évitez l'Easytronic.",
+              "pannes": [
+                {
+                  "titre": "Chaîne de distribution qui s'allonge",
+                  "km_typique": 100000,
+                  "gravite": "elevee",
+                  "symptomes": "Cliquetis à froid.",
+                  "solution": "Kit de chaîne.",
+                  "cout_indicatif": "600 à 1 200 €"
+                },
+                {
+                  "titre": "Cassette de bobines d'allumage",
+                  "km_typique": 100000,
+                  "gravite": "faible",
+                  "symptomes": "Ratés.",
+                  "solution": "Remplacement.",
+                  "cout_indicatif": "150 à 300 €"
+                },
+                {
+                  "titre": "Boîte Easytronic : actionneur d'embrayage",
+                  "km_typique": 80000,
+                  "gravite": "moyenne",
+                  "symptomes": "Passages lents, voiture bloquée.",
+                  "solution": "Actionneur, réglage.",
+                  "cout_indicatif": "500 à 1 300 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtre",
+                  "km": 15000,
+                  "cout_indicatif": "90 à 150 €"
+                },
+                {
+                  "titre": "Bougies d'allumage",
+                  "km": 60000,
+                  "cout_indicatif": "60 à 140 €"
+                }
+              ],
+              "points_forts": [
+                "Simple"
+              ],
+              "points_faibles": [
+                "Chaîne qui s'allonge",
+                "Bobines"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            },
+            {
+              "id": "opel-corsa-d-13-cdti",
+              "moteurs": [
+                "1.3 CDTI 75, 90 et 95"
+              ],
+              "codes_moteur": [
+                "Z13DTJ",
+                "A13DTE"
+              ],
+              "energie": "thermique",
+              "carburant": "diesel",
+              "conseil": "neutre",
+              "conseil_texte": "Moteur d'origine Fiat (Multijet), sobre ; EGR et FAP à surveiller.",
+              "pannes": [
+                {
+                  "titre": "Vanne EGR et FAP encrassés",
+                  "km_typique": 100000,
+                  "gravite": "moyenne",
+                  "symptomes": "Perte de puissance.",
+                  "solution": "Nettoyage, remplacement.",
+                  "cout_indicatif": "200 à 1 200 €"
+                },
+                {
+                  "titre": "Chaîne de distribution qui s'allonge",
+                  "km_typique": 160000,
+                  "gravite": "moyenne",
+                  "symptomes": "Bruit.",
+                  "solution": "Kit de chaîne.",
+                  "cout_indicatif": "600 à 1 000 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtres",
+                  "km": 20000,
+                  "cout_indicatif": "110 à 180 €"
+                }
+              ],
+              "points_forts": [
+                "Sobre",
+                "Chaîne de distribution"
+              ],
+              "points_faibles": [
+                "EGR, FAP",
+                "Bimasse"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "opel-corsa-e",
+          "nom": "Corsa E",
+          "annees": "2014-2019",
+          "alias": [
+            "corsa e",
+            "corsa 5"
+          ],
+          "motorisations": [
+            {
+              "id": "opel-corsa-e-10-turbo",
+              "moteurs": [
+                "1.0 Turbo 90 et 115",
+                "1.2 70",
+                "1.4 90",
+                "1.3 CDTI 75 et 95"
+              ],
+              "codes_moteur": [
+                "B10XFT",
+                "A12XEL",
+                "B14XER"
+              ],
+              "energie": "thermique",
+              "carburant": "essence",
+              "conseil": "neutre",
+              "conseil_texte": "Sans défaut majeur connu ; vérifiez l'entretien.",
+              "pannes": [
+                {
+                  "titre": "Fuite de liquide de refroidissement (boîtier thermostat)",
+                  "km_typique": 80000,
+                  "gravite": "moyenne",
+                  "symptomes": "Perte de liquide.",
+                  "solution": "Remplacement.",
+                  "cout_indicatif": "200 à 450 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtre",
+                  "km": 15000,
+                  "cout_indicatif": "100 à 160 €"
+                }
+              ],
+              "points_forts": [
+                "Agréable (1.0 Turbo)"
+              ],
+              "points_faibles": [
+                "Finition simple"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture).",
+                "Points faibles moins documentés que pour les autres générations."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "opel-corsa-f",
+          "nom": "Corsa F",
+          "annees": "2019-auj.",
+          "alias": [
+            "corsa f",
+            "corsa 6",
+            "corsa-e"
+          ],
+          "motorisations": [
+            {
+              "id": "opel-corsa-f-12-puretech",
+              "moteurs": [
+                "1.2 75",
+                "1.2 Turbo 100",
+                "1.2 Turbo 130"
+              ],
+              "codes_moteur": [
+                "EB2",
+                "EB2ADT",
+                "EB2ADTS"
+              ],
+              "energie": "thermique",
+              "carburant": "essence",
+              "conseil": "neutre",
+              "conseil_texte": "Même moteur que la Peugeot 208 : factures d'entretien indispensables.",
+              "pannes": [
+                {
+                  "titre": "Dégradation de la courroie de distribution « humide » (dans l'huile)",
+                  "km_typique": 80000,
+                  "gravite": "elevee",
+                  "symptomes": "Alerte de pression d'huile, débris de courroie dans l'huile, freinage plus dur (pompe à vide colmatée), parfois aucun signe avant la casse.",
+                  "solution": "Contrôle de la courroie (gabarit), remplacement avec nettoyage de la crépine si débris ; huile à la norme exacte.",
+                  "cout_indicatif": "800 à 1 500 €"
+                },
+                {
+                  "titre": "Consommation d'huile excessive",
+                  "km_typique": 70000,
+                  "gravite": "moyenne",
+                  "symptomes": "Niveau d'huile qui baisse entre deux vidanges, alerte de niveau.",
+                  "solution": "Contrôle de consommation ; selon les cas segmentation ou mise à jour. Prise en charge possible par le constructeur selon l'âge et l'entretien.",
+                  "cout_indicatif": "200 à 3 000 € selon l'intervention"
+                },
+                {
+                  "titre": "Ratés d'allumage (bobines, bougies, calamine)",
+                  "km_typique": 60000,
+                  "gravite": "moyenne",
+                  "symptomes": "À-coups, voyant moteur qui clignote, moteur qui tourne sur 2 cylindres.",
+                  "solution": "Lecture des codes défaut, remplacement de la bobine ou des bougies, décalaminage si besoin.",
+                  "cout_indicatif": "100 à 500 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange avec une huile à la norme constructeur exacte (PSA B71 2290 ou B71 2312)",
+                  "km": 15000,
+                  "cout_indicatif": "100 à 180 €"
+                },
+                {
+                  "titre": "Contrôle de l'état de la courroie de distribution humide",
+                  "km": 20000,
+                  "cout_indicatif": "50 à 100 €"
+                },
+                {
+                  "titre": "Courroie de distribution (intervalle réduit par le constructeur : à vérifier selon l'année)",
+                  "km": 100000,
+                  "cout_indicatif": "800 à 1 200 €"
+                }
+              ],
+              "points_forts": [
+                "Sobre"
+              ],
+              "points_faibles": [
+                "Courroie humide"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            },
+            {
+              "id": "opel-corsa-f-e",
+              "moteurs": [
+                "Corsa-e 136 (50 kWh)",
+                "Corsa Electric 156"
+              ],
+              "codes_moteur": [],
+              "energie": "electrique",
+              "conseil": "a_privilegier",
+              "conseil_texte": "Même base que la e-208.",
+              "pannes": [
+                {
+                  "titre": "Chargeur embarqué défaillant",
+                  "km_typique": 40000,
+                  "gravite": "moyenne",
+                  "symptomes": "Charge impossible.",
+                  "solution": "Mise à jour ou remplacement.",
+                  "cout_indicatif": "0 à 2 000 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Contrôle des freins et du liquide de frein (tous les 2 ans)",
+                  "km": 30000,
+                  "cout_indicatif": "50 à 120 €"
+                },
+                {
+                  "titre": "Filtre d'habitacle",
+                  "km": 15000,
+                  "cout_indicatif": "30 à 60 €"
+                },
+                {
+                  "titre": "Contrôle de la batterie de traction (état de santé)",
+                  "km": 30000,
+                  "cout_indicatif": "0 à 100 €"
+                }
+              ],
+              "points_forts": [
+                "Silence",
+                "Peu d'entretien"
+              ],
+              "points_faibles": [
+                "Autonomie sur autoroute"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "opel-astra",
+      "nom": "Astra",
+      "qualites": [
+        "Confort et habitabilité",
+        "Prix d'occasion attractifs",
+        "Équipement"
+      ],
+      "defauts": [
+        "Image moins valorisée à la revente",
+        "Électronique (Astra J)",
+        "Quelques moteurs essence turbo à surveiller"
+      ],
+      "pour_qui": "Compacte familiale à bon prix.",
+      "a_verifier_achat": [
+        "Fuites d'huile et de liquide (1.4 Turbo)",
+        "Volant bimasse (diesel)",
+        "Électronique et écran",
+        "FAP"
+      ],
+      "statut": "a_verifier",
+      "sources": [],
+      "redige_par": "ia",
+      "mise_a_jour": "2026-10-14",
+      "generations": [
+        {
+          "id": "opel-astra-j",
+          "nom": "Astra J",
+          "annees": "2009-2015",
+          "alias": [
+            "astra j",
+            "astra 4"
+          ],
+          "motorisations": [
+            {
+              "id": "opel-astra-j-17-cdti",
+              "moteurs": [
+                "1.7 CDTI 110 et 130",
+                "2.0 CDTI 160"
+              ],
+              "codes_moteur": [
+                "A17DTR",
+                "A20DTH"
+              ],
+              "energie": "thermique",
+              "carburant": "diesel",
+              "conseil": "neutre",
+              "conseil_texte": "Sobres ; volant bimasse et EGR à surveiller.",
+              "pannes": [
+                {
+                  "titre": "Volant moteur bimasse",
+                  "km_typique": 150000,
+                  "gravite": "moyenne",
+                  "symptomes": "Vibrations.",
+                  "solution": "Kit embrayage avec volant.",
+                  "cout_indicatif": "1 000 à 1 700 €"
+                },
+                {
+                  "titre": "Vanne EGR encrassée",
+                  "km_typique": 120000,
+                  "gravite": "moyenne",
+                  "symptomes": "Perte de puissance.",
+                  "solution": "Nettoyage, remplacement.",
+                  "cout_indicatif": "300 à 800 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtres",
+                  "km": 20000,
+                  "cout_indicatif": "120 à 200 €"
+                },
+                {
+                  "titre": "Courroie de distribution",
+                  "km": 150000,
+                  "cout_indicatif": "500 à 900 €"
+                }
+              ],
+              "points_forts": [
+                "Sobre"
+              ],
+              "points_faibles": [
+                "Bimasse",
+                "EGR"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            },
+            {
+              "id": "opel-astra-j-14-turbo",
+              "moteurs": [
+                "1.4 Turbo 120 et 140",
+                "1.6 115"
+              ],
+              "codes_moteur": [
+                "A14NET",
+                "A16XER"
+              ],
+              "energie": "thermique",
+              "carburant": "essence",
+              "conseil": "neutre",
+              "conseil_texte": "Correct ; surveillez fuites et pompe à eau.",
+              "pannes": [
+                {
+                  "titre": "Fuite de pompe à eau ou de boîtier thermostat",
+                  "km_typique": 90000,
+                  "gravite": "moyenne",
+                  "symptomes": "Perte de liquide.",
+                  "solution": "Remplacement.",
+                  "cout_indicatif": "250 à 600 €"
+                },
+                {
+                  "titre": "Couvercle de culasse (séparateur d'huile) défaillant",
+                  "km_typique": 100000,
+                  "gravite": "faible",
+                  "symptomes": "Sifflement, ralenti instable.",
+                  "solution": "Remplacement du couvercle.",
+                  "cout_indicatif": "200 à 400 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtre",
+                  "km": 15000,
+                  "cout_indicatif": "100 à 170 €"
+                },
+                {
+                  "titre": "Courroie de distribution",
+                  "km": 150000,
+                  "cout_indicatif": "400 à 700 €"
+                }
+              ],
+              "points_forts": [
+                "Agréable"
+              ],
+              "points_faibles": [
+                "Fuites",
+                "Pompe à eau"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "opel-astra-k",
+          "nom": "Astra K",
+          "annees": "2015-2021",
+          "alias": [
+            "astra k",
+            "astra 5"
+          ],
+          "motorisations": [
+            {
+              "id": "opel-astra-k-16-cdti",
+              "moteurs": [
+                "1.6 CDTI 110 et 136",
+                "1.5 diesel 105 et 122 (2019+)"
+              ],
+              "codes_moteur": [
+                "B16DTH",
+                "D15DT"
+              ],
+              "energie": "thermique",
+              "carburant": "diesel",
+              "conseil": "a_privilegier",
+              "conseil_texte": "Diesel discret et sobre.",
+              "pannes": [
+                {
+                  "titre": "Système AdBlue (versions Euro 6d)",
+                  "km_typique": 80000,
+                  "gravite": "moyenne",
+                  "symptomes": "Voyant antipollution.",
+                  "solution": "Diagnostic, remplacement.",
+                  "cout_indicatif": "500 à 1 500 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtres",
+                  "km": 20000,
+                  "cout_indicatif": "120 à 200 €"
+                }
+              ],
+              "points_forts": [
+                "Très sobre",
+                "Silencieux"
+              ],
+              "points_faibles": [
+                "AdBlue (versions récentes)",
+                "FAP"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            },
+            {
+              "id": "opel-astra-k-10-turbo",
+              "moteurs": [
+                "1.0 Turbo 105",
+                "1.4 Turbo 125 et 150",
+                "1.2 Turbo 110 à 145 (2019+)"
+              ],
+              "codes_moteur": [
+                "B10XFT",
+                "B14XFT"
+              ],
+              "energie": "thermique",
+              "carburant": "essence",
+              "conseil": "neutre",
+              "conseil_texte": "Sans faiblesse majeure connue.",
+              "pannes": [
+                {
+                  "titre": "Bobine d'allumage",
+                  "km_typique": 80000,
+                  "gravite": "faible",
+                  "symptomes": "Ratés.",
+                  "solution": "Remplacement.",
+                  "cout_indicatif": "100 à 250 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtre",
+                  "km": 15000,
+                  "cout_indicatif": "100 à 170 €"
+                }
+              ],
+              "points_forts": [
+                "Agréable"
+              ],
+              "points_faibles": [
+                "Peu de recul sur les 1.2 Turbo"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,2336 @@
+{
+  "id": "renault",
+  "nom": "Renault",
+  "pays": "France",
+  "image": "Premier constructeur français par les volumes, réputé pour le confort et le prix d'entretien raisonnable. Certains moteurs essence turbo (1.2 TCe) et l'électronique ont déçu.",
+  "cout_entretien": "faible",
+  "cout_entretien_texte": "Entretien parmi les moins chers : pièces abondantes, mécaniques très répandues, nombreux garages compétents.",
+  "reseau": "Réseau très dense en France ; pièces d'origine et adaptables faciles à trouver, souvent communes avec Dacia et Nissan.",
+  "statut": "a_verifier",
+  "sources": [],
+  "redige_par": "ia",
+  "mise_a_jour": "2026-10-14",
+  "incertitudes": [
+    "Image et coûts relatifs : appréciation générale, à recouper."
+  ],
+  "modeles": [
+    {
+      "id": "renault-clio",
+      "nom": "Clio",
+      "qualites": [
+        "Confort de suspension",
+        "Coût d'usage bas",
+        "Pièces partout"
+      ],
+      "defauts": [
+        "Finition qui vieillit moyennement (Clio III et IV)",
+        "Moteur 1.2 TCe 120 à éviter",
+        "Électronique de la Clio V parfois capricieuse"
+      ],
+      "pour_qui": "Citadine polyvalente, de l'apprenti conducteur au gros rouleur (diesel).",
+      "a_verifier_achat": [
+        "Bruit du moteur à froid et voyant de pression d'huile (dCi)",
+        "Consommation d'huile (TCe)",
+        "Carte mains libres et électronique",
+        "Embrayage et volant bimasse (dCi)"
+      ],
+      "statut": "a_verifier",
+      "sources": [],
+      "redige_par": "ia",
+      "mise_a_jour": "2026-10-14",
+      "generations": [
+        {
+          "id": "renault-clio-3",
+          "nom": "Clio III",
+          "annees": "2005-2012",
+          "alias": [
+            "clio 3",
+            "clio iii"
+          ],
+          "motorisations": [
+            {
+              "id": "renault-clio-3-15-dci",
+              "moteurs": [
+                "1.5 dCi 70",
+                "1.5 dCi 85",
+                "1.5 dCi 105"
+              ],
+              "codes_moteur": [
+                "K9K"
+              ],
+              "energie": "thermique",
+              "carburant": "diesel",
+              "conseil": "neutre",
+              "conseil_texte": "Sobre et répandu, mais les premiers K9K souffrent des coussinets de bielle : vidanges prouvées indispensables.",
+              "pannes": [
+                {
+                  "titre": "Coussinets de bielle usés (versions anciennes du 1.5 dCi)",
+                  "km_typique": 150000,
+                  "gravite": "elevee",
+                  "symptomes": "Claquement métallique, voyant de pression d'huile, casse moteur.",
+                  "solution": "Remplacement des coussinets si détecté tôt ; moteur d'échange sinon. Vidanges rapprochées en prévention.",
+                  "cout_indicatif": "800 à 4 000 €"
+                },
+                {
+                  "titre": "Injecteurs fuyards ou encrassés",
+                  "km_typique": 150000,
+                  "gravite": "moyenne",
+                  "symptomes": "Démarrage difficile, fumée, claquements.",
+                  "solution": "Test et remplacement des injecteurs concernés.",
+                  "cout_indicatif": "300 à 1 200 €"
+                },
+                {
+                  "titre": "Vanne EGR et FAP encrassés en usage urbain",
+                  "km_typique": 100000,
+                  "gravite": "moyenne",
+                  "symptomes": "Perte de puissance, voyant moteur, mode dégradé.",
+                  "solution": "Nettoyage ou remplacement ; trajets plus longs réguliers.",
+                  "cout_indicatif": "200 à 1 500 €"
+                },
+                {
+                  "titre": "Volant moteur bimasse et embrayage usés",
+                  "km_typique": 150000,
+                  "gravite": "moyenne",
+                  "symptomes": "Vibrations au démarrage et à l'arrêt, claquements au ralenti, embrayage qui patine.",
+                  "solution": "Remplacement du kit d'embrayage avec le volant moteur.",
+                  "cout_indicatif": "900 à 1 600 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtres (rapprocher à 15 000 km en usage sévère)",
+                  "km": 20000,
+                  "cout_indicatif": "120 à 200 €"
+                },
+                {
+                  "titre": "Courroie de distribution et pompe à eau",
+                  "km": 120000,
+                  "cout_indicatif": "500 à 900 €"
+                },
+                {
+                  "titre": "Filtre à gasoil",
+                  "km": 40000,
+                  "cout_indicatif": "40 à 90 €"
+                }
+              ],
+              "points_forts": [
+                "Très sobre",
+                "Pièces bon marché"
+              ],
+              "points_faibles": [
+                "Coussinets de bielle",
+                "Injecteurs"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            },
+            {
+              "id": "renault-clio-3-12-16v",
+              "moteurs": [
+                "1.2 16V 75",
+                "1.2 TCe 100"
+              ],
+              "codes_moteur": [
+                "D4F",
+                "D4FT"
+              ],
+              "energie": "thermique",
+              "carburant": "essence",
+              "conseil": "a_privilegier",
+              "conseil_texte": "Le 1.2 16V est simple et durable, idéal pour un petit budget.",
+              "pannes": [
+                {
+                  "titre": "Bobine d'allumage défaillante",
+                  "km_typique": 100000,
+                  "gravite": "faible",
+                  "symptomes": "Ratés, voyant moteur.",
+                  "solution": "Remplacement de la bobine.",
+                  "cout_indicatif": "80 à 200 €"
+                },
+                {
+                  "titre": "Fuite au cache-culbuteurs",
+                  "km_typique": 120000,
+                  "gravite": "faible",
+                  "symptomes": "Traces d'huile.",
+                  "solution": "Joint.",
+                  "cout_indicatif": "100 à 250 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtre",
+                  "km": 20000,
+                  "cout_indicatif": "90 à 150 €"
+                },
+                {
+                  "titre": "Courroie de distribution et galets",
+                  "km": 120000,
+                  "cout_indicatif": "350 à 600 €"
+                }
+              ],
+              "points_forts": [
+                "Simple et fiable",
+                "Entretien bon marché"
+              ],
+              "points_faibles": [
+                "Peu puissant",
+                "Consommation sur autoroute"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "renault-clio-4",
+          "nom": "Clio IV",
+          "annees": "2012-2019",
+          "alias": [
+            "clio 4",
+            "clio iv"
+          ],
+          "motorisations": [
+            {
+              "id": "renault-clio-4-15-dci",
+              "energie": "thermique",
+              "carburant": "diesel",
+              "conseil": "a_privilegier",
+              "conseil_texte": "Diesel très sobre et répandu ; pour les gros rouleurs, avec vidanges prouvées.",
+              "moteurs": [
+                "1.5 dCi 75",
+                "1.5 dCi 90",
+                "1.5 dCi 110"
+              ],
+              "codes_moteur": [
+                "K9K"
+              ],
+              "pannes": [
+                {
+                  "titre": "Volant moteur bimasse et embrayage usés",
+                  "km_typique": 150000,
+                  "gravite": "moyenne",
+                  "symptomes": "Vibrations au démarrage et à l'arrêt, claquements au ralenti, embrayage qui patine.",
+                  "solution": "Remplacement du kit d'embrayage avec le volant moteur.",
+                  "cout_indicatif": "900 à 1 600 €"
+                },
+                {
+                  "titre": "Vanne EGR encrassée",
+                  "km_typique": 100000,
+                  "gravite": "moyenne",
+                  "symptomes": "Perte de puissance, fumée noire, voyant moteur, mode dégradé.",
+                  "solution": "Nettoyage ou remplacement de la vanne EGR.",
+                  "cout_indicatif": "200 à 600 €"
+                },
+                {
+                  "titre": "Filtre à particules colmaté (usage urbain)",
+                  "km_typique": 120000,
+                  "gravite": "moyenne",
+                  "symptomes": "Voyant FAP ou moteur, perte de puissance, ventilateur qui tourne après l'arrêt.",
+                  "solution": "Régénération sur route ou forcée à l'outil, nettoyage ou remplacement du FAP.",
+                  "cout_indicatif": "150 € (régénération) à 2 000 € (remplacement)"
+                },
+                {
+                  "titre": "Injecteurs encrassés ou fuyards",
+                  "km_typique": 150000,
+                  "gravite": "moyenne",
+                  "symptomes": "Démarrage difficile, fumée, claquement moteur, à-coups.",
+                  "solution": "Test des injecteurs (débit de retour), remplacement des injecteurs défectueux.",
+                  "cout_indicatif": "300 à 1 200 €"
+                },
+                {
+                  "titre": "Turbo fatigué",
+                  "km_typique": 180000,
+                  "gravite": "elevee",
+                  "symptomes": "Sifflement, perte de puissance, fumée bleue, consommation d'huile.",
+                  "solution": "Diagnostic du circuit de suralimentation puis remplacement du turbo si confirmé.",
+                  "cout_indicatif": "800 à 1 800 €"
+                },
+                {
+                  "titre": "Usure des coussinets de bielle (signalée surtout sur des versions plus anciennes du K9K)",
+                  "km_typique": 180000,
+                  "gravite": "elevee",
+                  "symptomes": "Claquement moteur, baisse de pression d'huile, voyant huile.",
+                  "solution": "Contrôle de la pression d'huile ; réparation lourde ou échange moteur si atteint.",
+                  "cout_indicatif": "1 500 à 4 000 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtres",
+                  "km": 20000,
+                  "cout_indicatif": "120 à 200 €"
+                },
+                {
+                  "titre": "Courroie de distribution et pompe à eau (intervalle à confirmer selon version : souvent 120 000 à 160 000 km ou âge)",
+                  "km": 120000,
+                  "cout_indicatif": "500 à 900 €"
+                },
+                {
+                  "titre": "Kit d'embrayage avec volant moteur",
+                  "km": 150000,
+                  "cout_indicatif": "900 à 1 600 €"
+                }
+              ],
+              "points_forts": [
+                "Très faible consommation",
+                "Moteur diesel très répandu, pièces faciles à trouver",
+                "Coût d'entretien raisonnable"
+              ],
+              "points_faibles": [
+                "Peu adapté aux petits trajets (FAP, EGR)",
+                "Volant moteur bimasse coûteux",
+                "Finition intérieure qui vieillit moyennement"
+              ],
+              "sources": [],
+              "statut": "a_verifier",
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-13"
+            },
+            {
+              "id": "renault-clio-4-09-tce",
+              "moteurs": [
+                "0.9 TCe 75",
+                "0.9 TCe 90"
+              ],
+              "codes_moteur": [
+                "H4Bt"
+              ],
+              "energie": "thermique",
+              "carburant": "essence",
+              "conseil": "neutre",
+              "conseil_texte": "Bon compromis en ville ; surveillez le niveau d'huile.",
+              "pannes": [
+                {
+                  "titre": "Chaîne de distribution qui s'allonge",
+                  "km_typique": 120000,
+                  "gravite": "moyenne",
+                  "symptomes": "Cliquetis à froid, voyant moteur.",
+                  "solution": "Remplacement du kit de chaîne.",
+                  "cout_indicatif": "700 à 1 300 €"
+                },
+                {
+                  "titre": "Consommation d'huile sur certains moteurs",
+                  "km_typique": 80000,
+                  "gravite": "moyenne",
+                  "symptomes": "Niveau d'huile qui baisse.",
+                  "solution": "Contrôle de consommation ; vidanges à l'huile prescrite.",
+                  "cout_indicatif": "100 à 2 000 €"
+                },
+                {
+                  "titre": "Bobine d'allumage ou bougie défaillante",
+                  "km_typique": 60000,
+                  "gravite": "faible",
+                  "symptomes": "À-coups, voyant moteur.",
+                  "solution": "Remplacement de la pièce en cause.",
+                  "cout_indicatif": "100 à 300 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtre",
+                  "km": 20000,
+                  "cout_indicatif": "100 à 170 €"
+                },
+                {
+                  "titre": "Bougies d'allumage",
+                  "km": 60000,
+                  "cout_indicatif": "80 à 180 €"
+                }
+              ],
+              "points_forts": [
+                "Agréable en ville",
+                "Entretien bon marché"
+              ],
+              "points_faibles": [
+                "Consomme plus qu'annoncé",
+                "Chaîne et huile à surveiller"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            },
+            {
+              "id": "renault-clio-4-12-tce",
+              "moteurs": [
+                "1.2 TCe 120",
+                "1.2 TCe 118 (EDC)"
+              ],
+              "codes_moteur": [
+                "H5Ft"
+              ],
+              "energie": "thermique",
+              "carburant": "essence",
+              "conseil": "a_eviter",
+              "conseil_texte": "Moteur connu pour sa consommation d'huile pouvant aller jusqu'à la casse.",
+              "pannes": [
+                {
+                  "titre": "Consommation d'huile importante (1.2 TCe H5Ft)",
+                  "km_typique": 60000,
+                  "gravite": "elevee",
+                  "symptomes": "Niveau d'huile qui baisse vite, fumée bleue, risque de casse moteur faute d'huile.",
+                  "solution": "Contrôle de consommation, mise à jour, segmentation ou moteur ; prises en charge constructeur selon les cas.",
+                  "cout_indicatif": "300 à 6 000 €"
+                },
+                {
+                  "titre": "Chaîne de distribution qui s'allonge",
+                  "km_typique": 100000,
+                  "gravite": "elevee",
+                  "symptomes": "Bruit de cliquetis au démarrage, voyant moteur.",
+                  "solution": "Remplacement du kit de chaîne.",
+                  "cout_indicatif": "800 à 1 500 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange (contrôler le niveau d'huile tous les 1 000 km)",
+                  "km": 15000,
+                  "cout_indicatif": "100 à 180 €"
+                },
+                {
+                  "titre": "Bougies d'allumage",
+                  "km": 60000,
+                  "cout_indicatif": "80 à 200 €"
+                }
+              ],
+              "points_forts": [
+                "Agréable",
+                "Boîte EDC douce"
+              ],
+              "points_faibles": [
+                "Consommation d'huile",
+                "Chaîne de distribution"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "renault-clio-5",
+          "nom": "Clio V",
+          "annees": "2019-auj.",
+          "alias": [
+            "clio 5",
+            "clio v",
+            "clio e-tech"
+          ],
+          "motorisations": [
+            {
+              "id": "renault-clio-5-10-tce",
+              "moteurs": [
+                "1.0 TCe 90",
+                "1.0 TCe 100",
+                "1.0 SCe 65",
+                "1.0 TCe 100 GPL"
+              ],
+              "codes_moteur": [
+                "H4D",
+                "HR10"
+              ],
+              "energie": "thermique",
+              "carburant": "essence",
+              "conseil": "a_privilegier",
+              "conseil_texte": "Bon choix pour un usage courant ; mises à jour à faire en concession.",
+              "pannes": [
+                {
+                  "titre": "Calage, à-coups à froid sur les premières versions (mises à jour)",
+                  "km_typique": 30000,
+                  "gravite": "faible",
+                  "symptomes": "Moteur qui cale ou broute à froid.",
+                  "solution": "Mise à jour du calculateur en concession.",
+                  "cout_indicatif": "0 à 150 €"
+                },
+                {
+                  "titre": "Fuite d'huile au joint de cache-culbuteurs",
+                  "km_typique": 90000,
+                  "gravite": "faible",
+                  "symptomes": "Traces d'huile, odeur de brûlé.",
+                  "solution": "Remplacement du joint.",
+                  "cout_indicatif": "150 à 300 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtre",
+                  "km": 20000,
+                  "cout_indicatif": "100 à 170 €"
+                },
+                {
+                  "titre": "Bougies d'allumage",
+                  "km": 60000,
+                  "cout_indicatif": "80 à 180 €"
+                }
+              ],
+              "points_forts": [
+                "Sobre",
+                "Entretien bon marché",
+                "Version GPL économique"
+              ],
+              "points_faibles": [
+                "Calages à froid sur les premières versions"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            },
+            {
+              "id": "renault-clio-5-etech",
+              "moteurs": [
+                "E-Tech hybride 140",
+                "E-Tech full hybrid 145"
+              ],
+              "codes_moteur": [],
+              "energie": "hybride",
+              "carburant": "essence",
+              "conseil": "neutre",
+              "conseil_texte": "Très sobre en ville ; boîte multimode particulière, à essayer avant d'acheter.",
+              "pannes": [
+                {
+                  "titre": "À-coups de la boîte multimode, mises à jour",
+                  "km_typique": 30000,
+                  "gravite": "faible",
+                  "symptomes": "Passages de rapports brusques, bruits.",
+                  "solution": "Mise à jour logicielle en concession.",
+                  "cout_indicatif": "0 à 200 €"
+                },
+                {
+                  "titre": "Batterie 12 V qui se décharge",
+                  "km_typique": 40000,
+                  "gravite": "faible",
+                  "symptomes": "Démarrage impossible, messages d'erreur.",
+                  "solution": "Remplacement de la batterie 12 V.",
+                  "cout_indicatif": "150 à 250 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtre",
+                  "km": 20000,
+                  "cout_indicatif": "120 à 200 €"
+                },
+                {
+                  "titre": "Contrôle du système hybride",
+                  "km": 20000,
+                  "cout_indicatif": "0 à 100 €"
+                }
+              ],
+              "points_forts": [
+                "Consommation très basse en ville",
+                "Pas de recharge à prévoir"
+              ],
+              "points_faibles": [
+                "À-coups de la boîte multimode",
+                "Électronique complexe"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            },
+            {
+              "id": "renault-clio-5-15-bluedci",
+              "moteurs": [
+                "1.5 Blue dCi 85",
+                "1.5 Blue dCi 100",
+                "1.5 Blue dCi 115"
+              ],
+              "codes_moteur": [
+                "K9K"
+              ],
+              "energie": "thermique",
+              "carburant": "diesel",
+              "conseil": "neutre",
+              "conseil_texte": "Pour les gros rouleurs seulement ; AdBlue à entretenir.",
+              "pannes": [
+                {
+                  "titre": "Vanne EGR et FAP encrassés en usage urbain",
+                  "km_typique": 100000,
+                  "gravite": "moyenne",
+                  "symptomes": "Perte de puissance, voyant moteur, mode dégradé.",
+                  "solution": "Nettoyage ou remplacement ; trajets plus longs réguliers.",
+                  "cout_indicatif": "200 à 1 500 €"
+                },
+                {
+                  "titre": "Système AdBlue défaillant",
+                  "km_typique": 80000,
+                  "gravite": "moyenne",
+                  "symptomes": "Voyant antipollution, compte à rebours.",
+                  "solution": "Diagnostic, remplacement de la pièce en cause.",
+                  "cout_indicatif": "500 à 1 500 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtres",
+                  "km": 20000,
+                  "cout_indicatif": "130 à 200 €"
+                },
+                {
+                  "titre": "Plein d'AdBlue",
+                  "km": 10000,
+                  "cout_indicatif": "10 à 30 €"
+                },
+                {
+                  "titre": "Courroie de distribution",
+                  "km": 150000,
+                  "cout_indicatif": "500 à 900 €"
+                }
+              ],
+              "points_forts": [
+                "Très sobre"
+              ],
+              "points_faibles": [
+                "AdBlue",
+                "FAP en ville"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "renault-megane",
+      "nom": "Mégane",
+      "alias": [
+        "megane"
+      ],
+      "qualites": [
+        "Confort et tenue de route",
+        "Diesels sobres",
+        "Coût d'entretien modéré"
+      ],
+      "defauts": [
+        "1.2 TCe à éviter",
+        "Carte mains libres et électronique (Mégane III)",
+        "Habitabilité arrière moyenne (coupé)"
+      ],
+      "pour_qui": "Compacte familiale pour une famille ou de gros rouleurs.",
+      "a_verifier_achat": [
+        "Consommation d'huile (TCe)",
+        "Bruits de moteur à froid (dCi)",
+        "Frein de parking électrique (selon versions)",
+        "Carte mains libres et écran"
+      ],
+      "statut": "a_verifier",
+      "sources": [],
+      "redige_par": "ia",
+      "mise_a_jour": "2026-10-14",
+      "generations": [
+        {
+          "id": "renault-megane-3",
+          "nom": "Mégane III",
+          "annees": "2008-2016",
+          "alias": [
+            "megane 3",
+            "megane iii",
+            "mégane 3"
+          ],
+          "motorisations": [
+            {
+              "id": "renault-megane-3-15-dci",
+              "moteurs": [
+                "1.5 dCi 90",
+                "1.5 dCi 110"
+              ],
+              "codes_moteur": [
+                "K9K"
+              ],
+              "energie": "thermique",
+              "carburant": "diesel",
+              "conseil": "neutre",
+              "conseil_texte": "Sobre et répandu ; vidanges prouvées indispensables.",
+              "pannes": [
+                {
+                  "titre": "Coussinets de bielle usés (versions anciennes du 1.5 dCi)",
+                  "km_typique": 150000,
+                  "gravite": "elevee",
+                  "symptomes": "Claquement métallique, voyant de pression d'huile, casse moteur.",
+                  "solution": "Remplacement des coussinets si détecté tôt ; moteur d'échange sinon. Vidanges rapprochées en prévention.",
+                  "cout_indicatif": "800 à 4 000 €"
+                },
+                {
+                  "titre": "Injecteurs fuyards ou encrassés",
+                  "km_typique": 150000,
+                  "gravite": "moyenne",
+                  "symptomes": "Démarrage difficile, fumée, claquements.",
+                  "solution": "Test et remplacement des injecteurs concernés.",
+                  "cout_indicatif": "300 à 1 200 €"
+                },
+                {
+                  "titre": "Vanne EGR et FAP encrassés en usage urbain",
+                  "km_typique": 100000,
+                  "gravite": "moyenne",
+                  "symptomes": "Perte de puissance, voyant moteur, mode dégradé.",
+                  "solution": "Nettoyage ou remplacement ; trajets plus longs réguliers.",
+                  "cout_indicatif": "200 à 1 500 €"
+                },
+                {
+                  "titre": "Volant moteur bimasse et embrayage usés",
+                  "km_typique": 150000,
+                  "gravite": "moyenne",
+                  "symptomes": "Vibrations au démarrage et à l'arrêt, claquements au ralenti, embrayage qui patine.",
+                  "solution": "Remplacement du kit d'embrayage avec le volant moteur.",
+                  "cout_indicatif": "900 à 1 600 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtres (rapprocher à 15 000 km en usage sévère)",
+                  "km": 20000,
+                  "cout_indicatif": "120 à 200 €"
+                },
+                {
+                  "titre": "Courroie de distribution et pompe à eau",
+                  "km": 120000,
+                  "cout_indicatif": "500 à 900 €"
+                },
+                {
+                  "titre": "Filtre à gasoil",
+                  "km": 40000,
+                  "cout_indicatif": "40 à 90 €"
+                }
+              ],
+              "points_forts": [
+                "Très sobre"
+              ],
+              "points_faibles": [
+                "Coussinets de bielle",
+                "Bimasse"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            },
+            {
+              "id": "renault-megane-3-16-dci",
+              "moteurs": [
+                "1.6 dCi 130"
+              ],
+              "codes_moteur": [
+                "R9M"
+              ],
+              "energie": "thermique",
+              "carburant": "diesel",
+              "conseil": "a_privilegier",
+              "conseil_texte": "Moteur à chaîne réputé plus robuste que le 1.5 dCi.",
+              "pannes": [
+                {
+                  "titre": "Vanne EGR encrassée",
+                  "km_typique": 120000,
+                  "gravite": "moyenne",
+                  "symptomes": "Perte de puissance.",
+                  "solution": "Nettoyage ou remplacement.",
+                  "cout_indicatif": "300 à 800 €"
+                },
+                {
+                  "titre": "Volant moteur bimasse",
+                  "km_typique": 160000,
+                  "gravite": "moyenne",
+                  "symptomes": "Vibrations.",
+                  "solution": "Kit embrayage avec volant.",
+                  "cout_indicatif": "1 000 à 1 700 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtres",
+                  "km": 20000,
+                  "cout_indicatif": "130 à 200 €"
+                }
+              ],
+              "points_forts": [
+                "Chaîne de distribution",
+                "Agréable"
+              ],
+              "points_faibles": [
+                "EGR et FAP",
+                "Pompe à vide"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            },
+            {
+              "id": "renault-megane-3-12-tce",
+              "moteurs": [
+                "1.2 TCe 115",
+                "1.2 TCe 130"
+              ],
+              "codes_moteur": [
+                "H5Ft"
+              ],
+              "energie": "thermique",
+              "carburant": "essence",
+              "conseil": "a_eviter",
+              "conseil_texte": "Consommation d'huile connue : à éviter.",
+              "pannes": [
+                {
+                  "titre": "Consommation d'huile importante (1.2 TCe H5Ft)",
+                  "km_typique": 60000,
+                  "gravite": "elevee",
+                  "symptomes": "Niveau d'huile qui baisse vite, fumée bleue, risque de casse moteur faute d'huile.",
+                  "solution": "Contrôle de consommation, mise à jour, segmentation ou moteur ; prises en charge constructeur selon les cas.",
+                  "cout_indicatif": "300 à 6 000 €"
+                },
+                {
+                  "titre": "Chaîne de distribution qui s'allonge",
+                  "km_typique": 100000,
+                  "gravite": "elevee",
+                  "symptomes": "Bruit de cliquetis au démarrage, voyant moteur.",
+                  "solution": "Remplacement du kit de chaîne.",
+                  "cout_indicatif": "800 à 1 500 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange (contrôler le niveau d'huile tous les 1 000 km)",
+                  "km": 15000,
+                  "cout_indicatif": "100 à 180 €"
+                },
+                {
+                  "titre": "Bougies d'allumage",
+                  "km": 60000,
+                  "cout_indicatif": "80 à 200 €"
+                }
+              ],
+              "points_forts": [
+                "Agréable"
+              ],
+              "points_faibles": [
+                "Consommation d'huile"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "renault-megane-4",
+          "nom": "Mégane IV",
+          "annees": "2016-2023",
+          "alias": [
+            "megane 4",
+            "megane iv",
+            "mégane 4"
+          ],
+          "motorisations": [
+            {
+              "id": "renault-megane-4-15-dci",
+              "moteurs": [
+                "1.5 dCi 110",
+                "1.5 Blue dCi 115"
+              ],
+              "codes_moteur": [
+                "K9K"
+              ],
+              "energie": "thermique",
+              "carburant": "diesel",
+              "conseil": "a_privilegier",
+              "conseil_texte": "Sobre ; les versions récentes ont corrigé les soucis de coussinets.",
+              "pannes": [
+                {
+                  "titre": "Coussinets de bielle usés (versions anciennes du 1.5 dCi)",
+                  "km_typique": 150000,
+                  "gravite": "elevee",
+                  "symptomes": "Claquement métallique, voyant de pression d'huile, casse moteur.",
+                  "solution": "Remplacement des coussinets si détecté tôt ; moteur d'échange sinon. Vidanges rapprochées en prévention.",
+                  "cout_indicatif": "800 à 4 000 €"
+                },
+                {
+                  "titre": "Injecteurs fuyards ou encrassés",
+                  "km_typique": 150000,
+                  "gravite": "moyenne",
+                  "symptomes": "Démarrage difficile, fumée, claquements.",
+                  "solution": "Test et remplacement des injecteurs concernés.",
+                  "cout_indicatif": "300 à 1 200 €"
+                },
+                {
+                  "titre": "Vanne EGR et FAP encrassés en usage urbain",
+                  "km_typique": 100000,
+                  "gravite": "moyenne",
+                  "symptomes": "Perte de puissance, voyant moteur, mode dégradé.",
+                  "solution": "Nettoyage ou remplacement ; trajets plus longs réguliers.",
+                  "cout_indicatif": "200 à 1 500 €"
+                },
+                {
+                  "titre": "Volant moteur bimasse et embrayage usés",
+                  "km_typique": 150000,
+                  "gravite": "moyenne",
+                  "symptomes": "Vibrations au démarrage et à l'arrêt, claquements au ralenti, embrayage qui patine.",
+                  "solution": "Remplacement du kit d'embrayage avec le volant moteur.",
+                  "cout_indicatif": "900 à 1 600 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtres (rapprocher à 15 000 km en usage sévère)",
+                  "km": 20000,
+                  "cout_indicatif": "120 à 200 €"
+                },
+                {
+                  "titre": "Courroie de distribution et pompe à eau",
+                  "km": 120000,
+                  "cout_indicatif": "500 à 900 €"
+                },
+                {
+                  "titre": "Filtre à gasoil",
+                  "km": 40000,
+                  "cout_indicatif": "40 à 90 €"
+                }
+              ],
+              "points_forts": [
+                "Très sobre"
+              ],
+              "points_faibles": [
+                "AdBlue (Blue dCi)",
+                "FAP en ville"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            },
+            {
+              "id": "renault-megane-4-13-tce",
+              "moteurs": [
+                "1.2 TCe 100 et 130 (jusqu'en 2018)",
+                "1.3 TCe 115, 140 et 160 (2018+)"
+              ],
+              "codes_moteur": [
+                "H5Ft",
+                "H5H"
+              ],
+              "energie": "thermique",
+              "carburant": "essence",
+              "conseil": "neutre",
+              "conseil_texte": "Préférez le 1.3 TCe (2018+), conçu avec Mercedes ; évitez le 1.2 TCe.",
+              "pannes": [
+                {
+                  "titre": "Consommation d'huile importante (1.2 TCe H5Ft)",
+                  "km_typique": 60000,
+                  "gravite": "elevee",
+                  "symptomes": "Niveau d'huile qui baisse vite, fumée bleue, risque de casse moteur faute d'huile.",
+                  "solution": "Contrôle de consommation, mise à jour, segmentation ou moteur ; prises en charge constructeur selon les cas.",
+                  "cout_indicatif": "300 à 6 000 €"
+                },
+                {
+                  "titre": "Filtre à particules essence encrassé (1.3 TCe)",
+                  "km_typique": 80000,
+                  "gravite": "faible",
+                  "symptomes": "Voyant moteur, perte de puissance.",
+                  "solution": "Régénération, nettoyage.",
+                  "cout_indicatif": "150 à 800 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtre",
+                  "km": 20000,
+                  "cout_indicatif": "110 à 180 €"
+                },
+                {
+                  "titre": "Bougies d'allumage",
+                  "km": 60000,
+                  "cout_indicatif": "90 à 200 €"
+                }
+              ],
+              "points_forts": [
+                "1.3 TCe agréable et plus sain"
+              ],
+              "points_faibles": [
+                "1.2 TCe : consommation d'huile"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture).",
+                "Répartition exacte des moteurs selon les années : à vérifier."
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "renault-captur",
+      "nom": "Captur",
+      "qualites": [
+        "Position haute et gabarit urbain",
+        "Banquette coulissante",
+        "Coût d'usage bas"
+      ],
+      "defauts": [
+        "1.2 TCe à éviter",
+        "Boîte EDC (double embrayage) parfois capricieuse",
+        "Plastiques durs (Captur I)"
+      ],
+      "pour_qui": "Petit SUV urbain et familial pour un couple ou une petite famille.",
+      "a_verifier_achat": [
+        "Consommation d'huile (TCe)",
+        "Fonctionnement de la boîte EDC (à-coups, patinage)",
+        "Écran multimédia",
+        "Usure des pneus"
+      ],
+      "statut": "a_verifier",
+      "sources": [],
+      "redige_par": "ia",
+      "mise_a_jour": "2026-10-14",
+      "generations": [
+        {
+          "id": "renault-captur-1",
+          "nom": "Captur I",
+          "annees": "2013-2019",
+          "alias": [
+            "captur 1",
+            "captur phase 1"
+          ],
+          "motorisations": [
+            {
+              "id": "renault-captur-1-09-tce",
+              "moteurs": [
+                "0.9 TCe 90"
+              ],
+              "codes_moteur": [
+                "H4Bt"
+              ],
+              "energie": "thermique",
+              "carburant": "essence",
+              "conseil": "neutre",
+              "conseil_texte": "Correct en ville ; un peu juste sur autoroute.",
+              "pannes": [
+                {
+                  "titre": "Chaîne de distribution qui s'allonge",
+                  "km_typique": 120000,
+                  "gravite": "moyenne",
+                  "symptomes": "Cliquetis à froid, voyant moteur.",
+                  "solution": "Remplacement du kit de chaîne.",
+                  "cout_indicatif": "700 à 1 300 €"
+                },
+                {
+                  "titre": "Consommation d'huile sur certains moteurs",
+                  "km_typique": 80000,
+                  "gravite": "moyenne",
+                  "symptomes": "Niveau d'huile qui baisse.",
+                  "solution": "Contrôle de consommation ; vidanges à l'huile prescrite.",
+                  "cout_indicatif": "100 à 2 000 €"
+                },
+                {
+                  "titre": "Bobine d'allumage ou bougie défaillante",
+                  "km_typique": 60000,
+                  "gravite": "faible",
+                  "symptomes": "À-coups, voyant moteur.",
+                  "solution": "Remplacement de la pièce en cause.",
+                  "cout_indicatif": "100 à 300 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtre",
+                  "km": 20000,
+                  "cout_indicatif": "100 à 170 €"
+                },
+                {
+                  "titre": "Bougies d'allumage",
+                  "km": 60000,
+                  "cout_indicatif": "80 à 180 €"
+                }
+              ],
+              "points_forts": [
+                "Entretien bon marché"
+              ],
+              "points_faibles": [
+                "Juste sur autoroute",
+                "Chaîne et huile à surveiller"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            },
+            {
+              "id": "renault-captur-1-12-tce",
+              "moteurs": [
+                "1.2 TCe 120 (EDC)"
+              ],
+              "codes_moteur": [
+                "H5Ft"
+              ],
+              "energie": "thermique",
+              "carburant": "essence",
+              "conseil": "a_eviter",
+              "conseil_texte": "Consommation d'huile et boîte EDC : double risque.",
+              "pannes": [
+                {
+                  "titre": "Consommation d'huile importante (1.2 TCe H5Ft)",
+                  "km_typique": 60000,
+                  "gravite": "elevee",
+                  "symptomes": "Niveau d'huile qui baisse vite, fumée bleue, risque de casse moteur faute d'huile.",
+                  "solution": "Contrôle de consommation, mise à jour, segmentation ou moteur ; prises en charge constructeur selon les cas.",
+                  "cout_indicatif": "300 à 6 000 €"
+                },
+                {
+                  "titre": "Chaîne de distribution qui s'allonge",
+                  "km_typique": 100000,
+                  "gravite": "elevee",
+                  "symptomes": "Bruit de cliquetis au démarrage, voyant moteur.",
+                  "solution": "Remplacement du kit de chaîne.",
+                  "cout_indicatif": "800 à 1 500 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange (contrôler le niveau d'huile tous les 1 000 km)",
+                  "km": 15000,
+                  "cout_indicatif": "100 à 180 €"
+                },
+                {
+                  "titre": "Bougies d'allumage",
+                  "km": 60000,
+                  "cout_indicatif": "80 à 200 €"
+                }
+              ],
+              "points_forts": [
+                "Agréable"
+              ],
+              "points_faibles": [
+                "Consommation d'huile",
+                "Boîte EDC"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            },
+            {
+              "id": "renault-captur-1-15-dci",
+              "moteurs": [
+                "1.5 dCi 90",
+                "1.5 dCi 110"
+              ],
+              "codes_moteur": [
+                "K9K"
+              ],
+              "energie": "thermique",
+              "carburant": "diesel",
+              "conseil": "a_privilegier",
+              "conseil_texte": "Le choix le plus sobre pour les gros rouleurs.",
+              "pannes": [
+                {
+                  "titre": "Coussinets de bielle usés (versions anciennes du 1.5 dCi)",
+                  "km_typique": 150000,
+                  "gravite": "elevee",
+                  "symptomes": "Claquement métallique, voyant de pression d'huile, casse moteur.",
+                  "solution": "Remplacement des coussinets si détecté tôt ; moteur d'échange sinon. Vidanges rapprochées en prévention.",
+                  "cout_indicatif": "800 à 4 000 €"
+                },
+                {
+                  "titre": "Injecteurs fuyards ou encrassés",
+                  "km_typique": 150000,
+                  "gravite": "moyenne",
+                  "symptomes": "Démarrage difficile, fumée, claquements.",
+                  "solution": "Test et remplacement des injecteurs concernés.",
+                  "cout_indicatif": "300 à 1 200 €"
+                },
+                {
+                  "titre": "Vanne EGR et FAP encrassés en usage urbain",
+                  "km_typique": 100000,
+                  "gravite": "moyenne",
+                  "symptomes": "Perte de puissance, voyant moteur, mode dégradé.",
+                  "solution": "Nettoyage ou remplacement ; trajets plus longs réguliers.",
+                  "cout_indicatif": "200 à 1 500 €"
+                },
+                {
+                  "titre": "Volant moteur bimasse et embrayage usés",
+                  "km_typique": 150000,
+                  "gravite": "moyenne",
+                  "symptomes": "Vibrations au démarrage et à l'arrêt, claquements au ralenti, embrayage qui patine.",
+                  "solution": "Remplacement du kit d'embrayage avec le volant moteur.",
+                  "cout_indicatif": "900 à 1 600 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtres (rapprocher à 15 000 km en usage sévère)",
+                  "km": 20000,
+                  "cout_indicatif": "120 à 200 €"
+                },
+                {
+                  "titre": "Courroie de distribution et pompe à eau",
+                  "km": 120000,
+                  "cout_indicatif": "500 à 900 €"
+                },
+                {
+                  "titre": "Filtre à gasoil",
+                  "km": 40000,
+                  "cout_indicatif": "40 à 90 €"
+                }
+              ],
+              "points_forts": [
+                "Très sobre"
+              ],
+              "points_faibles": [
+                "FAP, EGR",
+                "Bimasse"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "renault-captur-2",
+          "nom": "Captur II",
+          "annees": "2019-auj.",
+          "alias": [
+            "captur 2",
+            "nouveau captur",
+            "captur e-tech"
+          ],
+          "motorisations": [
+            {
+              "id": "renault-captur-2-10-tce",
+              "moteurs": [
+                "1.0 TCe 90",
+                "1.0 TCe 100 GPL",
+                "1.3 TCe 130",
+                "1.3 TCe 155"
+              ],
+              "codes_moteur": [
+                "H4D",
+                "HR10",
+                "H5H"
+              ],
+              "energie": "thermique",
+              "carburant": "essence",
+              "conseil": "a_privilegier",
+              "conseil_texte": "Bons moteurs, la version GPL est économique.",
+              "pannes": [
+                {
+                  "titre": "Calage, à-coups à froid sur les premières versions (mises à jour)",
+                  "km_typique": 30000,
+                  "gravite": "faible",
+                  "symptomes": "Moteur qui cale ou broute à froid.",
+                  "solution": "Mise à jour du calculateur en concession.",
+                  "cout_indicatif": "0 à 150 €"
+                },
+                {
+                  "titre": "Fuite d'huile au joint de cache-culbuteurs",
+                  "km_typique": 90000,
+                  "gravite": "faible",
+                  "symptomes": "Traces d'huile, odeur de brûlé.",
+                  "solution": "Remplacement du joint.",
+                  "cout_indicatif": "150 à 300 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtre",
+                  "km": 20000,
+                  "cout_indicatif": "100 à 170 €"
+                },
+                {
+                  "titre": "Bougies d'allumage",
+                  "km": 60000,
+                  "cout_indicatif": "80 à 180 €"
+                }
+              ],
+              "points_forts": [
+                "Sobre",
+                "GPL économique"
+              ],
+              "points_faibles": [
+                "Mises à jour à faire"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            },
+            {
+              "id": "renault-captur-2-etech",
+              "moteurs": [
+                "E-Tech hybride 145",
+                "E-Tech hybride rechargeable 160"
+              ],
+              "codes_moteur": [],
+              "energie": "hybride",
+              "carburant": "essence",
+              "conseil": "neutre",
+              "conseil_texte": "Très sobre en ville ; essayez la boîte multimode.",
+              "pannes": [
+                {
+                  "titre": "À-coups de la boîte multimode, mises à jour",
+                  "km_typique": 30000,
+                  "gravite": "faible",
+                  "symptomes": "Passages brusques.",
+                  "solution": "Mise à jour logicielle.",
+                  "cout_indicatif": "0 à 200 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtre",
+                  "km": 20000,
+                  "cout_indicatif": "120 à 200 €"
+                }
+              ],
+              "points_forts": [
+                "Sobre en ville"
+              ],
+              "points_faibles": [
+                "Boîte multimode particulière"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "renault-twingo",
+      "nom": "Twingo",
+      "qualites": [
+        "Très maniable",
+        "Prix d'achat et d'entretien bas",
+        "Rayon de braquage court (Twingo III)"
+      ],
+      "defauts": [
+        "Petit coffre (moteur arrière sur la Twingo III)",
+        "Insonorisation",
+        "Peu à l'aise sur autoroute"
+      ],
+      "pour_qui": "Citadine pure : ville, jeunes conducteurs, deuxième voiture.",
+      "a_verifier_achat": [
+        "Embrayage et boîte",
+        "Fuites d'huile (Twingo III, moteur arrière)",
+        "Rouille sur les anciennes Twingo II",
+        "Batterie et autonomie (Twingo Electric)"
+      ],
+      "statut": "a_verifier",
+      "sources": [],
+      "redige_par": "ia",
+      "mise_a_jour": "2026-10-14",
+      "generations": [
+        {
+          "id": "renault-twingo-2",
+          "nom": "Twingo II",
+          "annees": "2007-2014",
+          "alias": [
+            "twingo 2",
+            "twingo ii"
+          ],
+          "motorisations": [
+            {
+              "id": "renault-twingo-2-12-16v",
+              "moteurs": [
+                "1.2 60",
+                "1.2 16V 75",
+                "1.2 TCe 100"
+              ],
+              "codes_moteur": [
+                "D7F",
+                "D4F",
+                "D4FT"
+              ],
+              "energie": "thermique",
+              "carburant": "essence",
+              "conseil": "a_privilegier",
+              "conseil_texte": "Mécanique simple et économique.",
+              "pannes": [
+                {
+                  "titre": "Bobine d'allumage défaillante",
+                  "km_typique": 100000,
+                  "gravite": "faible",
+                  "symptomes": "Ratés.",
+                  "solution": "Remplacement.",
+                  "cout_indicatif": "80 à 200 €"
+                },
+                {
+                  "titre": "Embrayage usé en ville",
+                  "km_typique": 100000,
+                  "gravite": "moyenne",
+                  "symptomes": "Patinage.",
+                  "solution": "Kit d'embrayage.",
+                  "cout_indicatif": "400 à 700 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtre",
+                  "km": 20000,
+                  "cout_indicatif": "90 à 150 €"
+                },
+                {
+                  "titre": "Courroie de distribution",
+                  "km": 120000,
+                  "cout_indicatif": "350 à 550 €"
+                }
+              ],
+              "points_forts": [
+                "Simple",
+                "Pas chère à entretenir"
+              ],
+              "points_faibles": [
+                "Peu puissante"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "renault-twingo-3",
+          "nom": "Twingo III",
+          "annees": "2014-2024",
+          "alias": [
+            "twingo 3",
+            "twingo iii",
+            "twingo electric",
+            "twingo e-tech"
+          ],
+          "motorisations": [
+            {
+              "id": "renault-twingo-3-10-sce",
+              "moteurs": [
+                "1.0 SCe 70",
+                "1.0 SCe 65",
+                "0.9 TCe 90"
+              ],
+              "codes_moteur": [
+                "H4D",
+                "H4Bt"
+              ],
+              "energie": "thermique",
+              "carburant": "essence",
+              "conseil": "a_privilegier",
+              "conseil_texte": "Le 1.0 SCe est simple ; le 0.9 TCe plus agréable sur route.",
+              "pannes": [
+                {
+                  "titre": "Fuite d'huile ou de liquide (moteur arrière)",
+                  "km_typique": 80000,
+                  "gravite": "faible",
+                  "symptomes": "Traces sous l'arrière.",
+                  "solution": "Joints concernés.",
+                  "cout_indicatif": "150 à 400 €"
+                },
+                {
+                  "titre": "Bobine d'allumage ou bougie défaillante",
+                  "km_typique": 60000,
+                  "gravite": "faible",
+                  "symptomes": "À-coups, voyant moteur.",
+                  "solution": "Remplacement de la pièce en cause.",
+                  "cout_indicatif": "100 à 300 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtre",
+                  "km": 20000,
+                  "cout_indicatif": "100 à 160 €"
+                },
+                {
+                  "titre": "Bougies d'allumage",
+                  "km": 60000,
+                  "cout_indicatif": "80 à 160 €"
+                }
+              ],
+              "points_forts": [
+                "Maniable",
+                "Entretien bon marché"
+              ],
+              "points_faibles": [
+                "Accès moteur sous le coffre",
+                "Bruit"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            },
+            {
+              "id": "renault-twingo-3-electric",
+              "moteurs": [
+                "Twingo Electric (22 kWh)"
+              ],
+              "codes_moteur": [],
+              "energie": "electrique",
+              "conseil": "neutre",
+              "conseil_texte": "Pour la ville uniquement (autonomie courte).",
+              "annees_propres": "2020-2024",
+              "pannes": [
+                {
+                  "titre": "Batterie 12 V qui se décharge",
+                  "km_typique": 40000,
+                  "gravite": "faible",
+                  "symptomes": "Démarrage impossible.",
+                  "solution": "Batterie 12 V.",
+                  "cout_indicatif": "120 à 220 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Contrôle des freins et du liquide de frein (tous les 2 ans)",
+                  "km": 30000,
+                  "cout_indicatif": "50 à 120 €"
+                },
+                {
+                  "titre": "Filtre d'habitacle",
+                  "km": 15000,
+                  "cout_indicatif": "30 à 60 €"
+                },
+                {
+                  "titre": "Contrôle de la batterie de traction (état de santé)",
+                  "km": 30000,
+                  "cout_indicatif": "0 à 100 €"
+                }
+              ],
+              "points_forts": [
+                "Idéale en ville",
+                "Peu d'entretien"
+              ],
+              "points_faibles": [
+                "Autonomie courte",
+                "Pas de recharge rapide en courant continu"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "renault-scenic",
+      "nom": "Scénic",
+      "alias": [
+        "scenic",
+        "grand scenic"
+      ],
+      "qualites": [
+        "Modularité et habitabilité",
+        "Confort",
+        "Version 7 places (Grand Scénic)"
+      ],
+      "defauts": [
+        "Électronique (carte mains libres, frein de parking électrique)",
+        "1.2 TCe à éviter",
+        "Pneus de 20 pouces chers (Scénic IV)"
+      ],
+      "pour_qui": "Monospace familial pour une famille nombreuse.",
+      "a_verifier_achat": [
+        "Frein de parking électrique",
+        "Carte mains libres et électronique",
+        "Consommation d'huile (TCe)",
+        "Prix des pneus (Scénic IV)"
+      ],
+      "statut": "a_verifier",
+      "sources": [],
+      "redige_par": "ia",
+      "mise_a_jour": "2026-10-14",
+      "generations": [
+        {
+          "id": "renault-scenic-3",
+          "nom": "Scénic III",
+          "annees": "2009-2016",
+          "alias": [
+            "scenic 3",
+            "scenic iii",
+            "grand scenic 3"
+          ],
+          "motorisations": [
+            {
+              "id": "renault-scenic-3-15-dci",
+              "moteurs": [
+                "1.5 dCi 110",
+                "1.6 dCi 130",
+                "1.9 dCi 130"
+              ],
+              "codes_moteur": [
+                "K9K",
+                "R9M",
+                "F9Q"
+              ],
+              "energie": "thermique",
+              "carburant": "diesel",
+              "conseil": "neutre",
+              "conseil_texte": "Le 1.6 dCi est le plus sain ; vidanges prouvées indispensables.",
+              "pannes": [
+                {
+                  "titre": "Coussinets de bielle usés (versions anciennes du 1.5 dCi)",
+                  "km_typique": 150000,
+                  "gravite": "elevee",
+                  "symptomes": "Claquement métallique, voyant de pression d'huile, casse moteur.",
+                  "solution": "Remplacement des coussinets si détecté tôt ; moteur d'échange sinon. Vidanges rapprochées en prévention.",
+                  "cout_indicatif": "800 à 4 000 €"
+                },
+                {
+                  "titre": "Injecteurs fuyards ou encrassés",
+                  "km_typique": 150000,
+                  "gravite": "moyenne",
+                  "symptomes": "Démarrage difficile, fumée, claquements.",
+                  "solution": "Test et remplacement des injecteurs concernés.",
+                  "cout_indicatif": "300 à 1 200 €"
+                },
+                {
+                  "titre": "Vanne EGR et FAP encrassés en usage urbain",
+                  "km_typique": 100000,
+                  "gravite": "moyenne",
+                  "symptomes": "Perte de puissance, voyant moteur, mode dégradé.",
+                  "solution": "Nettoyage ou remplacement ; trajets plus longs réguliers.",
+                  "cout_indicatif": "200 à 1 500 €"
+                },
+                {
+                  "titre": "Volant moteur bimasse et embrayage usés",
+                  "km_typique": 150000,
+                  "gravite": "moyenne",
+                  "symptomes": "Vibrations au démarrage et à l'arrêt, claquements au ralenti, embrayage qui patine.",
+                  "solution": "Remplacement du kit d'embrayage avec le volant moteur.",
+                  "cout_indicatif": "900 à 1 600 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtres (rapprocher à 15 000 km en usage sévère)",
+                  "km": 20000,
+                  "cout_indicatif": "120 à 200 €"
+                },
+                {
+                  "titre": "Courroie de distribution et pompe à eau",
+                  "km": 120000,
+                  "cout_indicatif": "500 à 900 €"
+                },
+                {
+                  "titre": "Filtre à gasoil",
+                  "km": 40000,
+                  "cout_indicatif": "40 à 90 €"
+                }
+              ],
+              "points_forts": [
+                "Sobre",
+                "Familial"
+              ],
+              "points_faibles": [
+                "Bimasse",
+                "EGR, FAP"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            },
+            {
+              "id": "renault-scenic-3-12-tce",
+              "moteurs": [
+                "1.2 TCe 115",
+                "1.2 TCe 130"
+              ],
+              "codes_moteur": [
+                "H5Ft"
+              ],
+              "energie": "thermique",
+              "carburant": "essence",
+              "conseil": "a_eviter",
+              "conseil_texte": "Consommation d'huile connue.",
+              "pannes": [
+                {
+                  "titre": "Consommation d'huile importante (1.2 TCe H5Ft)",
+                  "km_typique": 60000,
+                  "gravite": "elevee",
+                  "symptomes": "Niveau d'huile qui baisse vite, fumée bleue, risque de casse moteur faute d'huile.",
+                  "solution": "Contrôle de consommation, mise à jour, segmentation ou moteur ; prises en charge constructeur selon les cas.",
+                  "cout_indicatif": "300 à 6 000 €"
+                },
+                {
+                  "titre": "Chaîne de distribution qui s'allonge",
+                  "km_typique": 100000,
+                  "gravite": "elevee",
+                  "symptomes": "Bruit de cliquetis au démarrage, voyant moteur.",
+                  "solution": "Remplacement du kit de chaîne.",
+                  "cout_indicatif": "800 à 1 500 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange (contrôler le niveau d'huile tous les 1 000 km)",
+                  "km": 15000,
+                  "cout_indicatif": "100 à 180 €"
+                },
+                {
+                  "titre": "Bougies d'allumage",
+                  "km": 60000,
+                  "cout_indicatif": "80 à 200 €"
+                }
+              ],
+              "points_forts": [
+                "Agréable"
+              ],
+              "points_faibles": [
+                "Consommation d'huile"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "renault-scenic-4",
+          "nom": "Scénic IV",
+          "annees": "2016-2022",
+          "alias": [
+            "scenic 4",
+            "scenic iv",
+            "grand scenic 4"
+          ],
+          "motorisations": [
+            {
+              "id": "renault-scenic-4-17-bluedci",
+              "moteurs": [
+                "1.5 dCi 110",
+                "1.7 Blue dCi 120",
+                "1.7 Blue dCi 150"
+              ],
+              "codes_moteur": [
+                "K9K",
+                "R9N"
+              ],
+              "energie": "thermique",
+              "carburant": "diesel",
+              "conseil": "a_privilegier",
+              "conseil_texte": "Pour les familles qui roulent beaucoup.",
+              "pannes": [
+                {
+                  "titre": "Coussinets de bielle usés (versions anciennes du 1.5 dCi)",
+                  "km_typique": 150000,
+                  "gravite": "elevee",
+                  "symptomes": "Claquement métallique, voyant de pression d'huile, casse moteur.",
+                  "solution": "Remplacement des coussinets si détecté tôt ; moteur d'échange sinon. Vidanges rapprochées en prévention.",
+                  "cout_indicatif": "800 à 4 000 €"
+                },
+                {
+                  "titre": "Injecteurs fuyards ou encrassés",
+                  "km_typique": 150000,
+                  "gravite": "moyenne",
+                  "symptomes": "Démarrage difficile, fumée, claquements.",
+                  "solution": "Test et remplacement des injecteurs concernés.",
+                  "cout_indicatif": "300 à 1 200 €"
+                },
+                {
+                  "titre": "Vanne EGR et FAP encrassés en usage urbain",
+                  "km_typique": 100000,
+                  "gravite": "moyenne",
+                  "symptomes": "Perte de puissance, voyant moteur, mode dégradé.",
+                  "solution": "Nettoyage ou remplacement ; trajets plus longs réguliers.",
+                  "cout_indicatif": "200 à 1 500 €"
+                },
+                {
+                  "titre": "Volant moteur bimasse et embrayage usés",
+                  "km_typique": 150000,
+                  "gravite": "moyenne",
+                  "symptomes": "Vibrations au démarrage et à l'arrêt, claquements au ralenti, embrayage qui patine.",
+                  "solution": "Remplacement du kit d'embrayage avec le volant moteur.",
+                  "cout_indicatif": "900 à 1 600 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtres (rapprocher à 15 000 km en usage sévère)",
+                  "km": 20000,
+                  "cout_indicatif": "120 à 200 €"
+                },
+                {
+                  "titre": "Courroie de distribution et pompe à eau",
+                  "km": 120000,
+                  "cout_indicatif": "500 à 900 €"
+                },
+                {
+                  "titre": "Filtre à gasoil",
+                  "km": 40000,
+                  "cout_indicatif": "40 à 90 €"
+                }
+              ],
+              "points_forts": [
+                "Sobre",
+                "Confort"
+              ],
+              "points_faibles": [
+                "AdBlue",
+                "Pneus chers"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            },
+            {
+              "id": "renault-scenic-4-13-tce",
+              "moteurs": [
+                "1.3 TCe 115",
+                "1.3 TCe 140",
+                "1.3 TCe 160"
+              ],
+              "codes_moteur": [
+                "H5H"
+              ],
+              "energie": "thermique",
+              "carburant": "essence",
+              "conseil": "neutre",
+              "conseil_texte": "Moteur plus sain que l'ancien 1.2 TCe.",
+              "pannes": [
+                {
+                  "titre": "Filtre à particules essence encrassé",
+                  "km_typique": 80000,
+                  "gravite": "faible",
+                  "symptomes": "Voyant moteur.",
+                  "solution": "Régénération, nettoyage.",
+                  "cout_indicatif": "150 à 800 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtre",
+                  "km": 20000,
+                  "cout_indicatif": "120 à 190 €"
+                }
+              ],
+              "points_forts": [
+                "Agréable"
+              ],
+              "points_faibles": [
+                "Consommation chargé"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "renault-kangoo",
+      "nom": "Kangoo",
+      "qualites": [
+        "Très pratique (portes coulissantes, volume)",
+        "Robuste",
+        "Entretien bon marché"
+      ],
+      "defauts": [
+        "Confort et insonorisation de véhicule utilitaire",
+        "Consommation (essence)",
+        "Rouille sur les anciens"
+      ],
+      "pour_qui": "Famille, artisan, loisirs : volume et praticité avant tout.",
+      "a_verifier_achat": [
+        "Usure de l'embrayage",
+        "Rouille (bas de caisse, arrière)",
+        "Batterie louée ou achetée (Kangoo Z.E.)",
+        "Portes coulissantes et serrures"
+      ],
+      "statut": "a_verifier",
+      "sources": [],
+      "redige_par": "ia",
+      "mise_a_jour": "2026-10-14",
+      "generations": [
+        {
+          "id": "renault-kangoo-2",
+          "nom": "Kangoo II",
+          "annees": "2008-2021",
+          "alias": [
+            "kangoo 2",
+            "kangoo ii",
+            "kangoo z.e."
+          ],
+          "motorisations": [
+            {
+              "id": "renault-kangoo-2-15-dci",
+              "moteurs": [
+                "1.5 dCi 75",
+                "1.5 dCi 90",
+                "1.5 dCi 110"
+              ],
+              "codes_moteur": [
+                "K9K"
+              ],
+              "energie": "thermique",
+              "carburant": "diesel",
+              "conseil": "a_privilegier",
+              "conseil_texte": "Le moteur le plus répandu et le plus logique pour un Kangoo.",
+              "pannes": [
+                {
+                  "titre": "Coussinets de bielle usés (versions anciennes du 1.5 dCi)",
+                  "km_typique": 150000,
+                  "gravite": "elevee",
+                  "symptomes": "Claquement métallique, voyant de pression d'huile, casse moteur.",
+                  "solution": "Remplacement des coussinets si détecté tôt ; moteur d'échange sinon. Vidanges rapprochées en prévention.",
+                  "cout_indicatif": "800 à 4 000 €"
+                },
+                {
+                  "titre": "Injecteurs fuyards ou encrassés",
+                  "km_typique": 150000,
+                  "gravite": "moyenne",
+                  "symptomes": "Démarrage difficile, fumée, claquements.",
+                  "solution": "Test et remplacement des injecteurs concernés.",
+                  "cout_indicatif": "300 à 1 200 €"
+                },
+                {
+                  "titre": "Vanne EGR et FAP encrassés en usage urbain",
+                  "km_typique": 100000,
+                  "gravite": "moyenne",
+                  "symptomes": "Perte de puissance, voyant moteur, mode dégradé.",
+                  "solution": "Nettoyage ou remplacement ; trajets plus longs réguliers.",
+                  "cout_indicatif": "200 à 1 500 €"
+                },
+                {
+                  "titre": "Volant moteur bimasse et embrayage usés",
+                  "km_typique": 150000,
+                  "gravite": "moyenne",
+                  "symptomes": "Vibrations au démarrage et à l'arrêt, claquements au ralenti, embrayage qui patine.",
+                  "solution": "Remplacement du kit d'embrayage avec le volant moteur.",
+                  "cout_indicatif": "900 à 1 600 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtres (rapprocher à 15 000 km en usage sévère)",
+                  "km": 20000,
+                  "cout_indicatif": "120 à 200 €"
+                },
+                {
+                  "titre": "Courroie de distribution et pompe à eau",
+                  "km": 120000,
+                  "cout_indicatif": "500 à 900 €"
+                },
+                {
+                  "titre": "Filtre à gasoil",
+                  "km": 40000,
+                  "cout_indicatif": "40 à 90 €"
+                }
+              ],
+              "points_forts": [
+                "Sobre",
+                "Robuste"
+              ],
+              "points_faibles": [
+                "Bimasse",
+                "FAP"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            },
+            {
+              "id": "renault-kangoo-2-16-16v",
+              "moteurs": [
+                "1.6 16V 105",
+                "1.2 TCe 115"
+              ],
+              "codes_moteur": [
+                "K4M",
+                "H5Ft"
+              ],
+              "energie": "thermique",
+              "carburant": "essence",
+              "conseil": "neutre",
+              "conseil_texte": "Le 1.6 16V est robuste mais gourmand ; évitez le 1.2 TCe.",
+              "pannes": [
+                {
+                  "titre": "Bobines d'allumage",
+                  "km_typique": 120000,
+                  "gravite": "faible",
+                  "symptomes": "Ratés.",
+                  "solution": "Remplacement.",
+                  "cout_indicatif": "100 à 300 €"
+                },
+                {
+                  "titre": "Consommation d'huile importante (1.2 TCe H5Ft)",
+                  "km_typique": 60000,
+                  "gravite": "elevee",
+                  "symptomes": "Niveau d'huile qui baisse vite, fumée bleue, risque de casse moteur faute d'huile.",
+                  "solution": "Contrôle de consommation, mise à jour, segmentation ou moteur ; prises en charge constructeur selon les cas.",
+                  "cout_indicatif": "300 à 6 000 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Vidange et filtre",
+                  "km": 20000,
+                  "cout_indicatif": "100 à 160 €"
+                },
+                {
+                  "titre": "Courroie de distribution",
+                  "km": 120000,
+                  "cout_indicatif": "400 à 650 €"
+                }
+              ],
+              "points_forts": [
+                "Simple (1.6)"
+              ],
+              "points_faibles": [
+                "Consommation",
+                "1.2 TCe : huile"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            },
+            {
+              "id": "renault-kangoo-2-ze",
+              "moteurs": [
+                "Kangoo Z.E. (22 kWh)",
+                "Kangoo Z.E. 33"
+              ],
+              "codes_moteur": [],
+              "energie": "electrique",
+              "conseil": "neutre",
+              "conseil_texte": "Pour les tournées urbaines ; vérifiez si la batterie est louée.",
+              "annees_propres": "2011-2021",
+              "pannes": [
+                {
+                  "titre": "Chargeur ou prise de charge défaillant",
+                  "km_typique": 60000,
+                  "gravite": "moyenne",
+                  "symptomes": "Charge impossible.",
+                  "solution": "Diagnostic, remplacement.",
+                  "cout_indicatif": "300 à 2 000 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Contrôle des freins et du liquide de frein (tous les 2 ans)",
+                  "km": 30000,
+                  "cout_indicatif": "50 à 120 €"
+                },
+                {
+                  "titre": "Filtre d'habitacle",
+                  "km": 15000,
+                  "cout_indicatif": "30 à 60 €"
+                },
+                {
+                  "titre": "Contrôle de la batterie de traction (état de santé)",
+                  "km": 30000,
+                  "cout_indicatif": "0 à 100 €"
+                }
+              ],
+              "points_forts": [
+                "Peu d'entretien"
+              ],
+              "points_faibles": [
+                "Autonomie courte",
+                "Batterie souvent louée (loyer mensuel)"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "renault-zoe",
+      "nom": "Zoé",
+      "alias": [
+        "zoe",
+        "zoé"
+      ],
+      "qualites": [
+        "Électrique abordable en occasion",
+        "Autonomie correcte (41 et 52 kWh)",
+        "Coût d'usage très bas"
+      ],
+      "defauts": [
+        "Batterie souvent louée (loyer mensuel)",
+        "Recharge rapide absente ou lente selon les versions",
+        "Sécurité passive en retrait (étoiles Euro NCAP basses en 2021)"
+      ],
+      "pour_qui": "Trajets quotidiens avec recharge à domicile ou au travail.",
+      "a_verifier_achat": [
+        "Batterie louée ou achetée (contrat à reprendre)",
+        "État de santé de la batterie (SOH)",
+        "Type de chargeur et recharge rapide",
+        "Fonctionnement de la climatisation"
+      ],
+      "statut": "a_verifier",
+      "sources": [],
+      "redige_par": "ia",
+      "mise_a_jour": "2026-10-14",
+      "incertitudes": [
+        "Classement Euro NCAP et dates des versions : à vérifier."
+      ],
+      "generations": [
+        {
+          "id": "renault-zoe-1",
+          "nom": "Zoé (22 et 41 kWh)",
+          "annees": "2012-2019",
+          "alias": [
+            "zoe 1",
+            "zoe phase 1",
+            "zoe 22",
+            "zoe 41",
+            "zoe ze 40"
+          ],
+          "motorisations": [
+            {
+              "id": "renault-zoe-1-22-41",
+              "moteurs": [
+                "Q210",
+                "R240",
+                "Q90",
+                "R90",
+                "R110 (41 kWh)"
+              ],
+              "codes_moteur": [],
+              "energie": "electrique",
+              "conseil": "neutre",
+              "conseil_texte": "Bon achat si la batterie est achetée (ou le loyer accepté) et en bon état ; préférez 41 kWh.",
+              "pannes": [
+                {
+                  "titre": "Chargeur embarqué (Caméléon) défaillant",
+                  "km_typique": 60000,
+                  "gravite": "moyenne",
+                  "symptomes": "Charge impossible sur certaines bornes.",
+                  "solution": "Diagnostic, remplacement d'éléments.",
+                  "cout_indicatif": "300 à 2 500 €"
+                },
+                {
+                  "titre": "Compresseur de climatisation",
+                  "km_typique": 80000,
+                  "gravite": "moyenne",
+                  "symptomes": "Plus de froid, chauffage dégradé.",
+                  "solution": "Remplacement.",
+                  "cout_indicatif": "800 à 1 500 €"
+                },
+                {
+                  "titre": "Batterie 12 V faible",
+                  "km_typique": 40000,
+                  "gravite": "faible",
+                  "symptomes": "Démarrage impossible.",
+                  "solution": "Batterie 12 V.",
+                  "cout_indicatif": "120 à 220 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Contrôle des freins et du liquide de frein (tous les 2 ans)",
+                  "km": 30000,
+                  "cout_indicatif": "50 à 120 €"
+                },
+                {
+                  "titre": "Filtre d'habitacle",
+                  "km": 15000,
+                  "cout_indicatif": "30 à 60 €"
+                },
+                {
+                  "titre": "Contrôle de la batterie de traction (état de santé)",
+                  "km": 30000,
+                  "cout_indicatif": "0 à 100 €"
+                }
+              ],
+              "points_forts": [
+                "Très bas coût d'usage",
+                "Peu d'entretien"
+              ],
+              "points_faibles": [
+                "22 kWh : autonomie courte",
+                "Batterie louée fréquente"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "renault-zoe-2",
+          "nom": "Zoé II (52 kWh)",
+          "annees": "2019-2024",
+          "alias": [
+            "zoe 2",
+            "zoe phase 2",
+            "zoe 52",
+            "zoe r110",
+            "zoe r135"
+          ],
+          "motorisations": [
+            {
+              "id": "renault-zoe-2-52",
+              "moteurs": [
+                "R110 (52 kWh)",
+                "R135 (52 kWh)"
+              ],
+              "codes_moteur": [],
+              "energie": "electrique",
+              "conseil": "a_privilegier",
+              "conseil_texte": "Version la plus aboutie ; préférez l'option de recharge rapide (CCS).",
+              "pannes": [
+                {
+                  "titre": "Batterie 12 V faible",
+                  "km_typique": 40000,
+                  "gravite": "faible",
+                  "symptomes": "Démarrage impossible.",
+                  "solution": "Batterie 12 V.",
+                  "cout_indicatif": "120 à 220 €"
+                },
+                {
+                  "titre": "Défauts de charge, mises à jour",
+                  "km_typique": 30000,
+                  "gravite": "faible",
+                  "symptomes": "Charge interrompue.",
+                  "solution": "Mise à jour.",
+                  "cout_indicatif": "0 à 300 €"
+                }
+              ],
+              "entretiens": [
+                {
+                  "titre": "Contrôle des freins et du liquide de frein (tous les 2 ans)",
+                  "km": 30000,
+                  "cout_indicatif": "50 à 120 €"
+                },
+                {
+                  "titre": "Filtre d'habitacle",
+                  "km": 15000,
+                  "cout_indicatif": "30 à 60 €"
+                },
+                {
+                  "titre": "Contrôle de la batterie de traction (état de santé)",
+                  "km": 30000,
+                  "cout_indicatif": "0 à 100 €"
+                }
+              ],
+              "points_forts": [
+                "Autonomie (environ 300 km réels)",
+                "Intérieur amélioré"
+              ],
+              "points_faibles": [
+                "Recharge rapide en option",
+                "Sécurité passive"
+              ],
+              "statut": "a_verifier",
+              "sources": [],
+              "redige_par": "ia",
+              "mise_a_jour": "2026-10-14",
+              "incertitudes": [
+                "Rédigée de mémoire, sans source : pannes, kilométrages et coûts à recouper (Observateur, Relecture)."
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
