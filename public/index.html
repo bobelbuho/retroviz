@@ -40,18 +40,14 @@ header{display:flex;flex-wrap:wrap;align-items:flex-end;gap:8px 24px;margin-bott
 .brand{font-family:var(--cond);font-weight:700;font-size:clamp(56px,11vw,92px);line-height:.85;letter-spacing:-.01em;margin:0}
 .tagline{color:var(--muted);margin:0 0 6px;max-width:34ch}
 
-.modes{display:grid;grid-template-columns:repeat(3,1fr);border:2px solid var(--ink);border-radius:10px;overflow:hidden;margin-bottom:28px}
-.mode{background:var(--surface);border:0;border-left:2px solid var(--ink);padding:14px 16px;text-align:left;cursor:pointer}
-.mode:first-child{border-left:0}
+.modes{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:var(--ink);border:2px solid var(--ink);border-radius:10px;overflow:hidden;margin-bottom:28px}
+.mode{background:var(--surface);border:0;padding:14px 16px;text-align:left;cursor:pointer}
 .mode strong{display:block;font-family:var(--cond);font-size:22px;font-weight:700;line-height:1.1}
 .mode span{display:block;font-size:14px;color:var(--muted);margin-top:2px}
 .mode[aria-selected="true"]{background:var(--ink);color:var(--bg)}
 .mode[aria-selected="true"] span{color:var(--bg);opacity:.8}
-@media (max-width:600px){
-  .modes{grid-template-columns:1fr}
-  .mode{border-left:0;border-top:2px solid var(--ink)}
-  .mode:first-child{border-top:0}
-}
+@media (max-width:800px){.modes{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:480px){.modes{grid-template-columns:1fr}}
 
 .panel[hidden]{display:none}
 .intro{margin:0 0 16px;max-width:62ch}
@@ -173,6 +169,20 @@ label.f{display:block;font-weight:600;font-size:14px;margin-bottom:4px}
 .checks input:checked + label{color:var(--muted);text-decoration:line-through}
 .caveat{font-size:15px;color:var(--muted);border-left:3px solid var(--line);padding-left:12px}
 
+/* Garage */
+.vehrow{display:flex;gap:8px;flex-wrap:wrap}
+.vehrow .field{flex:1 1 260px}
+.vehrow select.field{flex:0 1 220px}
+.cars{list-style:none;margin:0 0 16px;padding:0;display:grid;gap:12px}
+.car{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+.car h3{font-family:var(--cond);font-size:24px;font-weight:700;margin:0;line-height:1.1}
+.car .sub{color:var(--muted);margin:2px 0 10px}
+.car .fiche{font-size:15px;margin:0 0 12px;padding:8px 12px;border-radius:8px;background:var(--sunk)}
+.car .fiche .link{background:none;border:0;padding:0;color:var(--accent);text-decoration:underline;cursor:pointer;font-size:15px}
+.car .rowbtns .btn{padding:8px 14px;font-size:15px}
+.empty{background:var(--surface);border:1.5px dashed var(--line);border-radius:12px;padding:18px;margin:0 0 16px}
+.form .formbtns{grid-column:1/-1;display:flex;gap:10px;flex-wrap:wrap}
+
 /* Compte */
 .acct{margin-left:auto;align-self:flex-start;display:flex;align-items:center;gap:10px;font-size:15px}
 .acct .who{color:var(--muted);max-width:24ch;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -243,6 +253,7 @@ footer{margin-top:40px;font-size:14px;color:var(--muted);border-top:1px solid va
     <button class="mode" role="tab" data-mode="particulier" aria-selected="true"><strong>J'ai une panne</strong><span>Pour tous : comprendre et savoir quoi faire</span></button>
     <button class="mode" role="tab" data-mode="pro" aria-selected="false"><strong>Diagnostic pro</strong><span>Pour les mécaniciens : codes défaut, mesures</span></button>
     <button class="mode" role="tab" data-mode="achat" aria-selected="false"><strong>J'achète une voiture</strong><span>Pour tous : qualités, défauts, pannes à venir</span></button>
+    <button class="mode" role="tab" data-mode="garage" aria-selected="false"><strong>Mon garage</strong><span>Vos voitures, reliées aux fiches Rétroviz</span></button>
   </div>
 
   <p class="notice" id="notice" hidden></p>
@@ -252,7 +263,10 @@ footer{margin-top:40px;font-size:14px;color:var(--muted);border-top:1px solid va
     <p class="intro" id="chatIntro"></p>
     <div class="veh">
       <label class="f" for="vehicle">Votre véhicule</label>
-      <input class="field" id="vehicle" placeholder="Ex. Peugeot 308 1.2 PureTech 130, 2017, 98 000 km">
+      <div class="vehrow">
+        <input class="field" id="vehicle" placeholder="Ex. Peugeot 308 1.2 PureTech 130, 2017, 98 000 km">
+        <select class="field" id="vehPick" aria-label="Choisir une voiture de mon garage" hidden></select>
+      </div>
       <p class="hint">Facultatif, mais les réponses sont bien plus précises avec.</p>
     </div>
     <div class="examples" id="examples"></div>
@@ -296,6 +310,28 @@ footer{margin-top:40px;font-size:14px;color:var(--muted);border-top:1px solid va
       <p class="hint full" id="achatMsg" style="margin:0"></p>
     </form>
     <div class="report" id="report" hidden></div>
+  </section>
+
+  <!-- Mon garage -->
+  <section class="panel" id="garagePanel" hidden>
+    <p class="intro">Enregistrez vos voitures une fois pour toutes. Quand Rétroviz a une fiche pour le modèle et le moteur, elle est reliée à la voiture et sert en priorité dans les réponses.</p>
+    <div id="garageOut"><p class="empty">Créez un compte ou connectez-vous pour enregistrer vos voitures.</p>
+      <button class="btn" type="button" id="garageLogin">Se connecter ou créer un compte</button></div>
+    <div id="garageIn" hidden>
+      <ul class="cars" id="cars"></ul>
+      <button class="btn" type="button" id="carAdd">Ajouter une voiture</button>
+      <form class="form" id="carForm" novalidate hidden style="margin-top:16px">
+        <div class="s2"><label class="f" for="g_surnom">Surnom</label><input class="field" id="g_surnom" maxlength="40" placeholder="La voiture de tous les jours"></div>
+        <div><label class="f" for="g_marque">Marque *</label><input class="field" id="g_marque" maxlength="40" required placeholder="Renault"></div>
+        <div><label class="f" for="g_modele">Modèle *</label><input class="field" id="g_modele" maxlength="60" required placeholder="Clio IV"></div>
+        <div class="s2"><label class="f" for="g_moteur">Motorisation</label><input class="field" id="g_moteur" maxlength="80" placeholder="1.5 dCi 90" aria-describedby="g_moteur_hint"><p class="hint" id="g_moteur_hint">Indiquée sur la carte grise (rubrique D.2) ou le carnet. Elle permet de relier la bonne fiche.</p></div>
+        <div><label class="f" for="g_annee">Année</label><input class="field" id="g_annee" inputmode="numeric" maxlength="4" placeholder="2016"></div>
+        <div><label class="f" for="g_boite">Boîte</label>
+          <select class="field" id="g_boite"><option value="">Je ne sais pas</option><option value="manuelle">Manuelle</option><option value="automatique">Automatique</option></select></div>
+        <p class="hint full" id="carMsg" style="margin:0" role="alert"></p>
+        <div class="formbtns"><button class="btn" type="submit" id="carSave">Enregistrer</button><button class="btn ghost" type="button" id="carCancel">Annuler</button></div>
+      </form>
+    </div>
   </section>
 
   <footer>Rétroviz donne des pistes, pas un diagnostic certifié : ses informations peuvent être incomplètes ou inexactes. Au moindre doute sur les freins, la direction, un voyant rouge ou une odeur de carburant, arrêtez-vous et contactez un professionnel.</footer>
@@ -440,8 +476,9 @@ function setMode(m){
   if(busy && ctl) ctl.abort();
   mode = m;
   document.querySelectorAll(".mode").forEach(b => b.setAttribute("aria-selected", String(b.dataset.mode===m)));
-  const chat = m !== "achat";
-  $("#chatPanel").hidden = !chat; $("#achatPanel").hidden = chat;
+  const chat = !!MODES[m];
+  $("#chatPanel").hidden = !chat; $("#achatPanel").hidden = m !== "achat"; $("#garagePanel").hidden = m !== "garage";
+  if(m === "garage") renderGarage();
   if(chat){
     $("#chatIntro").textContent = MODES[m].intro;
     $("#input").placeholder = MODES[m].placeholder;
@@ -558,7 +595,7 @@ function setBusy(b){
 async function send(given){
   const fromForm = typeof given === "string";
   const text = (fromForm ? given : $("#input").value).trim();
-  if(!text || busy || mode==="achat") return;
+  if(!text || busy || !MODES[mode]) return;
   const sample = await samplePromise;
   if(!sample){ showNotice("Le serveur ne répond pas. Lancez-le avec npm start."); return; }
   showNotice("");
@@ -774,11 +811,11 @@ $("#authForm").addEventListener("submit", async e => {
   $("#au_submit").disabled = false;
   if(!r.ok){ $("#au_err").textContent = r.error; return; }
   user = r.user; $("#au_pass").value = ""; $("#au_err").textContent = "";
-  renderAcct(); $("#acctDlg").close();
+  renderAcct(); $("#acctDlg").close(); loadGarage();
 });
 $("#me_logout").addEventListener("click", async () => {
   await api("POST", "/api/auth/logout", {});
-  user = null; setSignup(false); renderAcct(); $("#acctDlg").close();
+  user = null; setSignup(false); renderAcct(); $("#acctDlg").close(); loadGarage();
 });
 $("#delForm").addEventListener("submit", async e => {
   e.preventDefault();
@@ -787,10 +824,90 @@ $("#delForm").addEventListener("submit", async e => {
   const r = await api("DELETE", "/api/account", {password});
   if(!r.ok){ $("#del_err").textContent = r.error; return; }
   $("#del_pass").value = ""; $("#del_err").textContent = ""; $("#delForm").closest("details").open = false;
-  user = null; setSignup(false); renderAcct(); $("#acctDlg").close();
+  user = null; setSignup(false); renderAcct(); $("#acctDlg").close(); loadGarage();
   showNotice("Votre compte et ses données ont été supprimés.");
 });
-api("GET", "/api/auth/me").then(r => { if(r.ok){ user = r.user; renderAcct(); } });
+api("GET", "/api/auth/me").then(r => { if(r.ok){ user = r.user; renderAcct(); loadGarage(); } });
+
+/* ---------- mon garage ---------- */
+let cars = [], editing = null; // editing : id de la voiture modifiée, "new" pour un ajout, null sinon
+const STATUT = s => s === "verifie" ? "vérifiée" : "à vérifier";
+async function loadGarage(){
+  cars = [];
+  if(user){ const r = await api("GET", "/api/garage"); if(r.ok) cars = r.vehicules; }
+  editing = null; renderGarage();
+}
+function ficheHTML(c){
+  if(c.fiche) return `Fiche Rétroviz : <strong>${esc(c.fiche.label)}</strong> (${STATUT(c.fiche.statut)}). <button class="link" type="button" data-act="refuse">Ce n'est pas ma voiture</button>`;
+  if(c.ficheRefusee) return `Fiche Rétroviz écartée à votre demande. <button class="link" type="button" data-act="relink">Chercher à nouveau une fiche</button>`;
+  return "Pas encore de fiche Rétroviz pour ce modèle et ce moteur : l'assistant répondra avec ses connaissances générales.";
+}
+function renderGarage(){
+  $("#garageOut").hidden = !!user; $("#garageIn").hidden = !user;
+  $("#cars").innerHTML = cars.length ? cars.map(c => `<li class="car" data-id="${c.id}">
+      <h3>${esc(c.surnom || c.marque+" "+c.modele)}</h3>
+      <p class="sub">${esc(c.designation)}</p>
+      <p class="fiche">${ficheHTML(c)}</p>
+      <div class="rowbtns"><button class="btn" type="button" data-act="ask">Poser une question</button><button class="btn ghost" type="button" data-act="edit">Modifier</button><button class="btn ghost" type="button" data-act="del">Supprimer</button></div>
+    </li>`).join("") : `<li class="empty">Votre garage est vide. Ajoutez votre première voiture.</li>`;
+  $("#carForm").hidden = editing === null; $("#carAdd").hidden = editing !== null;
+  /* Sélecteur « Mes voitures » à côté du champ « Votre véhicule ». */
+  $("#vehPick").hidden = !cars.length;
+  $("#vehPick").innerHTML = `<option value="">Mes voitures…</option>` + cars.map(c => `<option value="${c.id}">${esc(c.surnom || c.marque+" "+c.modele)}</option>`).join("");
+}
+const carById = id => cars.find(c => c.id === +id);
+const carPayload = c => ({surnom:c.surnom, marque:c.marque, modele:c.modele, motorisation:c.motorisation, annee:c.annee, boite:c.boite});
+function openCarForm(c){
+  editing = c ? c.id : "new";
+  $("#g_surnom").value = c?.surnom || ""; $("#g_marque").value = c?.marque || ""; $("#g_modele").value = c?.modele || "";
+  $("#g_moteur").value = c?.motorisation || ""; $("#g_annee").value = c?.annee || ""; $("#g_boite").value = c?.boite || "";
+  $("#carMsg").textContent = "";
+  renderGarage(); $("#g_marque").focus();
+}
+async function saveCar(id, body){
+  const r = await api(id ? "PUT" : "POST", id ? `/api/garage/${id}` : "/api/garage", body);
+  if(!r.ok) return r.error;
+  if(id) cars = cars.map(c => c.id === id ? r.vehicule : c); else cars.push(r.vehicule);
+  editing = null; renderGarage();
+  return null;
+}
+$("#garageLogin").addEventListener("click", () => { renderAcct(); $("#acctDlg").showModal(); $("#au_email").focus(); });
+$("#carAdd").addEventListener("click", () => openCarForm(null));
+$("#carCancel").addEventListener("click", () => { editing = null; renderGarage(); $("#carAdd").focus(); });
+$("#carForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  const v = id => $("#"+id).value.trim();
+  if(!v("g_marque") || !v("g_modele")){ $("#carMsg").textContent = "Indiquez au moins la marque et le modèle."; return; }
+  const id = editing === "new" ? null : editing;
+  const prev = id ? carById(id) : null;
+  $("#carSave").disabled = true;
+  const err = await saveCar(id, {surnom:v("g_surnom"), marque:v("g_marque"), modele:v("g_modele"), motorisation:v("g_moteur"),
+    annee:v("g_annee"), boite:v("g_boite"), ficheRefusee: !!prev?.ficheRefusee});
+  $("#carSave").disabled = false;
+  $("#carMsg").textContent = err || "";
+});
+$("#cars").addEventListener("click", async e => {
+  const b = e.target.closest("[data-act]"); if(!b) return;
+  const c = carById(b.closest(".car").dataset.id); if(!c) return;
+  const act = b.dataset.act;
+  if(act === "ask"){
+    $("#vehicle").value = c.designation; $("#vehPick").value = "";
+    setMode("particulier"); $("#input").focus();
+  }else if(act === "edit") openCarForm(c);
+  else if(act === "del"){
+    if(!confirm(`Supprimer « ${c.surnom || c.marque+" "+c.modele} » de votre garage ?`)) return;
+    const r = await api("DELETE", `/api/garage/${c.id}`);
+    if(!r.ok){ showNotice(r.error); return; }
+    cars = cars.filter(x => x.id !== c.id); if(editing === c.id) editing = null; renderGarage();
+  }else if(act === "refuse" || act === "relink"){
+    const err = await saveCar(c.id, {...carPayload(c), ficheRefusee: act === "refuse"});
+    if(err) showNotice(err);
+  }
+});
+$("#vehPick").addEventListener("change", e => {
+  const c = carById(e.target.value); if(c) $("#vehicle").value = c.designation;
+  e.target.value = "";
+});
 
 setMode("particulier");
 })();

@@ -2,7 +2,7 @@
 
 > Regardez dans le rétro, roulez l'esprit tranquille.
 
-Assistant automobile avec trois modes : **J'ai une panne** (particuliers), **Diagnostic pro** (mécaniciens) et **J'achète une voiture** (analyse d'une occasion : qualités, défauts, pannes à venir selon le kilométrage).
+Assistant automobile avec trois modes : **J'ai une panne** (particuliers), **Diagnostic pro** (mécaniciens) et **J'achète une voiture** (analyse d'une occasion : qualités, défauts, pannes à venir selon le kilométrage). Avec un compte, **Mon garage** garde vos voitures.
 
 ## Structure
 
@@ -12,7 +12,8 @@ retroviz/
 ├── server.js           ← le serveur qui appelle l'API Claude
 ├── knowledge.js        ← la recherche dans la base de connaissances
 ├── auth.js             ← les comptes (inscription, connexion, export, suppression)
-├── db.js               ← la base SQLite des comptes
+├── garage.js           ← « Mon garage » : les voitures de chaque compte
+├── db.js               ← la base SQLite (comptes, garages)
 ├── storage/            ← le fichier de la base des comptes (créé au démarrage, jamais publié)
 ├── data/               ← la base de connaissances (fiches JSON + mode d'emploi)
 │   ├── obd.json
@@ -71,6 +72,15 @@ Les comptes sont facultatifs : l'assistant reste utilisable sans compte. Le bout
 - En production (`NODE_ENV=production`, derrière HTTPS), le cookie est en plus marqué `Secure`.
 - Routes : `POST /api/auth/signup`, `POST /api/auth/login`, `POST /api/auth/logout`, `GET /api/auth/me`, `GET /api/account/export`, `DELETE /api/account`.
 
+## Mon garage
+
+L'onglet « Mon garage » (compte requis) enregistre les voitures de l'utilisateur : surnom, marque, modèle, motorisation, année, boîte. 30 voitures au plus par compte.
+
+- **Fiche reliée** : à chaque enregistrement, le serveur cherche une fiche de `data/vehicules.json`. Il ne la relie que si le modèle **et** le moteur correspondent, et si l'année tombe dans la période de la fiche (une fiche fausse est pire que pas de fiche). L'utilisateur peut écarter une fiche (« Ce n'est pas ma voiture ») ou en chercher une à nouveau.
+- **Poser une question** : remplit le champ « Votre véhicule » avec la désignation de la voiture et ouvre « J'ai une panne ». Le menu « Mes voitures… » à côté de ce champ fait la même chose depuis les modes de discussion.
+- Les voitures sont incluses dans l'export des données et effacées avec le compte.
+- Routes (connexion requise) : `GET /api/garage`, `POST /api/garage`, `PUT /api/garage/:id`, `DELETE /api/garage/:id`.
+
 ## Où modifier quoi
 
 - Le comportement de l'IA (ton, structure des réponses, règles de sécurité) : les textes `rules` et `SAFETY` dans `public/index.html`.
@@ -81,4 +91,5 @@ Les comptes sont facultatifs : l'assistant reste utilisable sans compte. Le bout
 - La consigne donnée à l'IA sur l'usage des fiches : la constante `KB_RULES` dans `server.js`.
 - La recherche (scores, taille maximale du contexte `MAX_CONTEXT`) : `knowledge.js`. Lancez `npm test` après toute modification.
 - Les comptes (longueur minimale du mot de passe, durée de session, blocage après échecs) : les constantes en haut de `auth.js`. Lancez `npm test` après toute modification.
+- Le garage (nombre maximal de voitures, champs, règle de rattachement à une fiche `matchFiche`) : `garage.js`. Lancez `npm test` après toute modification.
 - Les couleurs : les variables `--bg`, `--ink`, `--accent`… en haut du `<style>`.

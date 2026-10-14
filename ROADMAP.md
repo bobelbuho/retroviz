@@ -3,7 +3,7 @@
 ## Phase 1 : comptes et garage (en cours)
 
 - ✅ Comptes utilisateurs (e-mail + mot de passe), conformes au RGPD : export et suppression des données.
-- Garage virtuel : mes voitures, reliées si possible à une fiche de la base Rétroviz.
+- ✅ Garage virtuel : mes voitures, reliées si possible à une fiche de la base Rétroviz.
 - Relevés de kilométrage et moyenne de km par mois.
 - Carnet d'entretien, avec photo ou PDF de facture.
 - Rappels : contrôle technique, assurance, vidange, pneus hiver.

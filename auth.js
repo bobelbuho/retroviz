@@ -61,9 +61,26 @@ function setSessionCookie(req, res, token, maxAgeSec) {
 
 const sha256 = s => crypto.createHash("sha256").update(s).digest("hex");
 
+/* ---------- middlewares partagés ---------- */
+// Protection CSRF : les requêtes qui modifient quelque chose doivent venir de ce site, et les POST être en JSON
+// (un formulaire d'un autre site ne peut envoyer que GET ou POST ; PUT et DELETE passent par une vérification CORS).
+export function sameSiteJson(req, res, next) {
+  if (req.method === "GET") return next();
+  const origin = req.headers.origin;
+  const sameSite = () => { try { return new URL(origin).host === req.headers.host; } catch { return false; } };
+  if ((req.method === "POST" && !req.is("application/json")) || (origin && !sameSite())) {
+    return res.status(403).json({ code: "forbidden", error: "Requête refusée." });
+  }
+  next();
+}
+
+export const needUser = (req, res, next) =>
+  req.user ? next() : res.status(401).json({ code: "not_logged_in", error: "Connectez-vous pour continuer." });
+
 /* ---------- routeur ---------- */
 // Monte /api/auth/* et /api/account/* ; req.user est rempli pour toutes les routes de l'application.
-export function createAuth(db, { now = () => Date.now() } = {}) {
+// exportData(userId) ajoute à l'export RGPD les données des autres modules (garage…).
+export function createAuth(db, { now = () => Date.now(), exportData = () => ({}) } = {}) {
   const q = {
     userByEmail: db.prepare("SELECT * FROM users WHERE email = ?"),
     userById: db.prepare("SELECT id, email, created_at FROM users WHERE id = ?"),
@@ -113,19 +130,7 @@ export function createAuth(db, { now = () => Date.now() } = {}) {
     next();
   });
 
-  // Protection CSRF : les requêtes qui modifient quelque chose doivent être en JSON et venir de ce site.
-  router.use(["/api/auth", "/api/account"], (req, res, next) => {
-    if (req.method === "GET") return next();
-    const origin = req.headers.origin;
-    const sameSite = () => { try { return new URL(origin).host === req.headers.host; } catch { return false; } };
-    if (!req.is("application/json") || (origin && !sameSite())) {
-      return res.status(403).json({ code: "forbidden", error: "Requête refusée." });
-    }
-    next();
-  });
-
-  const needUser = (req, res, next) =>
-    req.user ? next() : res.status(401).json({ code: "not_logged_in", error: "Connectez-vous pour continuer." });
+  router.use(["/api/auth", "/api/account"], sameSiteJson);
 
   router.post("/api/auth/signup", async (req, res) => {
     const email = normalizeEmail(req.body?.email);
@@ -173,6 +178,7 @@ export function createAuth(db, { now = () => Date.now() } = {}) {
       exportedAt: iso(now()),
       account: publicUser(req.user),
       sessions: q.sessionsOf.all(req.user.id, iso(now())).map(s => ({ createdAt: s.created_at, expiresAt: s.expires_at })),
+      ...exportData(req.user.id),
     };
     res.setHeader("Cache-Control", "no-store");
     res.setHeader("Content-Disposition", `attachment; filename="retroviz-mes-donnees-${data.exportedAt.slice(0, 10)}.json"`);

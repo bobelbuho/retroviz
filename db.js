@@ -20,6 +20,21 @@ CREATE TABLE IF NOT EXISTS sessions (
   expires_at TEXT NOT NULL
 );
 CREATE INDEX IF NOT EXISTS sessions_user ON sessions(user_id);
+CREATE TABLE IF NOT EXISTS vehicles (
+  id            INTEGER PRIMARY KEY,
+  user_id       INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  surnom        TEXT NOT NULL DEFAULT '',
+  marque        TEXT NOT NULL,
+  modele        TEXT NOT NULL,
+  motorisation  TEXT NOT NULL DEFAULT '',
+  annee         INTEGER,
+  boite         TEXT NOT NULL DEFAULT '',
+  fiche_id      TEXT,                       -- fiche de data/vehicules.json reliée, ou NULL
+  fiche_refusee INTEGER NOT NULL DEFAULT 0, -- 1 : l'utilisateur a dit « ce n'est pas ma voiture »
+  created_at    TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now')),
+  updated_at    TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now'))
+);
+CREATE INDEX IF NOT EXISTS vehicles_user ON vehicles(user_id);
 `;
 
 // Ouvre (et crée si besoin) la base. ":memory:" pour les tests.

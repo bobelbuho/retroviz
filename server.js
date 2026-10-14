@@ -6,6 +6,7 @@ import Anthropic from "@anthropic-ai/sdk";
 import { loadKnowledge, buildContext } from "./knowledge.js";
 import { openDb } from "./db.js";
 import { createAuth } from "./auth.js";
+import { createGarage } from "./garage.js";
 
 const PORT = process.env.PORT || 3000;
 const MODEL = process.env.MODEL || "claude-sonnet-5-5";
@@ -21,13 +22,15 @@ console.log(`📚 Base Rétroviz : ${kb.vehicules.length} fiche(s) véhicule, ${
 
 const KB_RULES = `Voici des fiches de la base Rétroviz. Utilise-les en priorité. Les fiches "à vérifier" peuvent contenir des erreurs : dis-le si tu t'appuies dessus. Si la base ne couvre pas la question, dis-le et réponds avec tes connaissances générales en le signalant.`;
 
-// Comptes utilisateurs (fichier storage/retroviz.db par défaut, variable DB_PATH pour le changer).
+// Comptes et garages (fichier storage/retroviz.db par défaut, variable DB_PATH pour le changer).
 const db = openDb();
+const garage = createGarage(db, kb);
 
 const client = new Anthropic(); // lit ANTHROPIC_API_KEY dans l'environnement
 const app = express();
 app.use(express.json({ limit: "1mb" }));
-app.use(createAuth(db));
+app.use(createAuth(db, { exportData: garage.exportFor }));
+app.use(garage);
 app.use(express.static("public"));
 
 // Nettoie la conversation : rôles valides, texte non vide, tours consécutifs du même rôle fusionnés.
