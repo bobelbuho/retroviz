@@ -9,7 +9,9 @@
    - limite de dépense mensuelle dans la console Anthropic.
 2. **Réinitialisation du mot de passe** par e-mail, avec un service d'envoi hébergé en Europe. Ce service servira aussi aux rappels et à la vérification de l'adresse.
 3. **Hébergement en Europe avec HTTPS** (Scaleway ou OVH) : `NODE_ENV=production`, configuration du proxy, sauvegardes de la base et des factures.
-4. **Essai réel** de l'assistant et de la valeur indicative avec la clé API.
+4. **Essais réels avec la clé API** (en attente : pas encore de clé dans `.env`) :
+   - l'assistant (les trois modes) et la valeur indicative ;
+   - le pilote de l'Observateur avec recherche web et extraction sur Clio IV, 208 I et Golf 7 (`npm run observer -- --pilote`, avec `OBSERVER_BUDGET_EUR` défini), puis relecture d'un échantillon des propositions avant de lancer les 30 modèles.
 5. **Courte notice pour les testeurs** : ce qui est stocké, version d'essai, fiches et estimations à vérifier, comment faire un retour.
 6. **Fiches des voitures des testeurs** dans la base Rétroviz.
 7. **Journal des erreurs et suivi du nombre d'appels à l'IA**, pour surveiller les coûts.
@@ -18,7 +20,7 @@
 
 - ✅ Voyants du tableau de bord (fiches et icônes).
 - ✅ L'Observateur : recherche, extraction, recoupement et propositions d'amélioration de la base, validées dans la page « Relecture ».
-  - Pilote avec recherche web sur Clio IV, 208 I et Golf 7 : en attente de la clé API (.env).
+  - Pilote avec recherche web : voir « À faire avant toute mise en ligne », point 4.
 - Marques et modèles : les 30 modèles d'occasion les plus courants en France.
 - Comparateur, glossaire, guide des prix.
 
