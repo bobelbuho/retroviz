@@ -152,6 +152,9 @@ const MIGRATIONS = {
     photo_key: "TEXT",           // photo de la voiture : clé dans storage.js (nom aléatoire), ou NULL
     photo_type: "TEXT",          // jpg, png ou webp, d'après le contenu
     photo_maj: "TEXT",           // date de la photo (pour le cache du navigateur)
+    energie: "TEXT",             // thermique, hybride, hybride_rechargeable, electrique (vide : déduite de la motorisation)
+    badge_obtenu: "INTEGER NOT NULL DEFAULT 0", // badge « Voiture bien suivie » au dernier calcul
+    badge_change_le: "TEXT",     // date du dernier gain ou de la dernière perte du badge
   },
   users: {
     stats_consent: "INTEGER NOT NULL DEFAULT 0", // 1 : accepte que son carnet serve aux statistiques anonymes

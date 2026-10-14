@@ -16,6 +16,7 @@ import { createLocalStorage } from "./storage.js";
 import { createRappels } from "./rappels.js";
 import { createValeur, anthropicEstimator } from "./valeur.js";
 import { createVie } from "./vie.js";
+import { createBadge } from "./badge.js";
 
 const PORT = process.env.PORT || 3000;
 const MODEL = process.env.MODEL || "claude-sonnet-5-5";
@@ -39,7 +40,8 @@ const rappels = createRappels(db, kb);
 const client = new Anthropic(); // lit ANTHROPIC_API_KEY dans l'environnement
 // Valeur indicative : même modèle que l'assistant ; désactivée sans clé API.
 const valeur = createValeur(db, { estimate: process.env.ANTHROPIC_API_KEY ? anthropicEstimator(client, MODEL) : null });
-const garage = createGarage(db, kb, { carnet, rappels, valeur, storage: fichiers });
+const badge = createBadge(db, { rappels });
+const garage = createGarage(db, kb, { carnet, rappels, valeur, storage: fichiers, badge });
 // Suppression du compte : factures et photos effacées du stockage.
 const beforeDeleteUser = uid => { const a = carnet.beforeDeleteUser(uid), b = garage.beforeDeleteUser(uid); return async () => { await a(); await b(); }; };
 // Relecture des fiches : réservée aux adresses de ADMIN_EMAILS (séparées par des virgules).
@@ -67,6 +69,7 @@ app.use(carnet);
 app.use(rappels);
 app.use(valeur);
 app.use(createVie(db));
+app.use(badge);
 app.use(relecture);
 app.use(propositions);
 app.use(retours);

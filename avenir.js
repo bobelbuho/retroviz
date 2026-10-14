@@ -2,6 +2,7 @@
 // entretiens d'une voiture, calculés à partir de sa fiche Rétroviz, de son carnet et de ses relevés.
 // computeAvenir est une fonction pure (aucune base de données) : c'est elle que les tests vérifient.
 import { normalize } from "./knowledge.js";
+import { aDesVidanges } from "./energie.js";
 
 export const BIENTOT_JOURS = 30;
 export const BIENTOT_KM = 1000;
@@ -127,7 +128,9 @@ export function computeAvenir({ vehicle, fiche = null, releves = [], entretiens 
     items.push(item({ cle: "assurance", categorie: "rappel", titre: "Échéance de l'assurance", texte: "Renouvelée chaque année. C'est le moment de comparer les offres.", note: null, fait: null, aCompleter: null }, { ...ctx, date: due }));
   }
 
-  /* Vidange : intervalle en km et en mois ; la prochaine part de la dernière vidange du carnet. */
+  /* Vidange : intervalle en km et en mois ; la prochaine part de la dernière vidange du carnet.
+     Pas de vidange pour une voiture électrique (les hybrides, elles, ont un moteur thermique). */
+  if (aDesVidanges(vehicle)) {
   const ficheVidange = (fiche?.entretiens || []).find(f => kindOf(f.titre).type === "vidange");
   const intervalle = {
     km: vehicle.vidange_km || ficheVidange?.km || VIDANGE_DEFAUT.km,
@@ -147,6 +150,7 @@ export function computeAvenir({ vehicle, fiche = null, releves = [], entretiens 
   } else {
     items.push(item({ cle: "vidange", categorie: "rappel", titre: "Vidange", texte: `${intervalleTxt} Notez votre dernière vidange dans le carnet pour calculer la prochaine.`, note: null, fait: faitVidange, intervalle, aCompleter: "carnet" },
       { ...ctx, statutForce: "inconnu" }));
+  }
   }
 
   /* Pneus hiver : monter avant le 1er novembre, démonter après le 31 mars. */

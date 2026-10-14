@@ -4,6 +4,7 @@ import { findVehicle, vehicleLabel } from "./knowledge.js";
 import { needUser, sameSiteJson } from "./auth.js";
 import { cleanReleve, cleanDate, cleanAnyDate, incoherence, stats, kmText, MAX_RELEVES } from "./kilometrage.js";
 import { detectType, FILE_TYPES, MAX_FILE_SIZE } from "./storage.js";
+import { ENERGIES, energieDe } from "./energie.js";
 
 export const MAX_VEHICLES = 30;
 const BOITES = ["manuelle", "automatique"];
@@ -72,6 +73,8 @@ export function cleanVehicle(body, thisYear = new Date().getFullYear()) {
   const ak = int(b.achatKm, 0, 2_000_000, "Kilométrage à l'achat");
   if (ak.error) return { error: ak.error };
   data.achatKm = ak.value;
+  data.energie = typeof b.energie === "string" && ENERGIES.includes(b.energie) ? b.energie : null;
+  if (!empty(b.energie) && !data.energie) return { error: "Énergie : thermique, hybride, hybride rechargeable ou électrique." };
   return { data };
 }
 
@@ -100,17 +103,18 @@ export const designation = (v, km = null) =>
 // rappels (facultatif) : module rappels.js, pour le résumé « À venir » de chaque voiture.
 // valeur (facultatif) : module valeur.js, pour la dernière estimation et l'export.
 // storage (facultatif) : module storage.js, pour la photo de la voiture.
-export function createGarage(db, kb, { carnet = null, rappels = null, valeur = null, storage = null, log = console.error } = {}) {
+// badge (facultatif) : module badge.js, pour l'état du badge « Voiture bien suivie » sur la carte.
+export function createGarage(db, kb, { carnet = null, rappels = null, valeur = null, storage = null, badge = null, log = console.error } = {}) {
   const q = {
     list: db.prepare("SELECT * FROM vehicles WHERE user_id = ? ORDER BY created_at, id"),
     get: db.prepare("SELECT * FROM vehicles WHERE id = ? AND user_id = ?"),
     count: db.prepare("SELECT COUNT(*) AS n FROM vehicles WHERE user_id = ?"),
     insert: db.prepare(`INSERT INTO vehicles (user_id, surnom, marque, modele, motorisation, annee, boite, fiche_id, fiche_refusee,
-                          mise_en_circulation, assurance_echeance, pneus_hiver, vidange_km, vidange_mois, dernier_ct, achat_date, achat_km)
-                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`),
+                          mise_en_circulation, assurance_echeance, pneus_hiver, vidange_km, vidange_mois, dernier_ct, achat_date, achat_km, energie)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`),
     update: db.prepare(`UPDATE vehicles SET surnom = ?, marque = ?, modele = ?, motorisation = ?, annee = ?, boite = ?,
                         fiche_id = ?, fiche_refusee = ?, mise_en_circulation = ?, assurance_echeance = ?, pneus_hiver = ?,
-                        vidange_km = ?, vidange_mois = ?, dernier_ct = ?, achat_date = ?, achat_km = ?,
+                        vidange_km = ?, vidange_mois = ?, dernier_ct = ?, achat_date = ?, achat_km = ?, energie = ?,
                         updated_at = strftime('%Y-%m-%dT%H:%M:%fZ', 'now')
                         WHERE id = ? AND user_id = ?`),
     remove: db.prepare("DELETE FROM vehicles WHERE id = ? AND user_id = ?"),
@@ -134,6 +138,7 @@ export function createGarage(db, kb, { carnet = null, rappels = null, valeur = n
       miseEnCirculation: row.mise_en_circulation, assuranceEcheance: row.assurance_echeance, pneusHiver: !!row.pneus_hiver,
       vidangeKm: row.vidange_km, vidangeMois: row.vidange_mois, dernierCt: row.dernier_ct,
       achatDate: row.achat_date, achatKm: row.achat_km,
+      energie: row.energie, energieEffective: energieDe(row),
       photo: row.photo_key ? { url: `/api/garage/${row.id}/photo?v=${encodeURIComponent(row.photo_maj || "")}` } : null,
       fiche: fiche ? { id: fiche.id, label: vehicleLabel(fiche), statut: fiche.statut === "verifie" ? "verifie" : "a_verifier" } : null,
       ficheRefusee: !!row.fiche_refusee,
@@ -141,13 +146,14 @@ export function createGarage(db, kb, { carnet = null, rappels = null, valeur = n
       ...(carnet && { carnet: carnet.summary(row.id) }),
       ...(rappels && { avenir: rappels.summary(row) }),
       ...(valeur && { valeur: valeur.latest(row.id) }),
+      ...(badge && { badge: (b => ({ obtenu: b.obtenu, manquants: b.manquants, perduLe: b.perduLe }))(badge.pour(row)) }),
       designation: designation(row, kilometrage.dernier?.km ?? null),
       createdAt: row.created_at, updatedAt: row.updated_at,
     };
   };
   const ficheFor = d => (d.ficheRefusee ? null : matchFiche(d, kb));
   const params = d => [d.surnom, d.marque, d.modele, d.motorisation, d.annee, d.boite, ficheFor(d), d.ficheRefusee ? 1 : 0,
-    d.miseEnCirculation, d.assuranceEcheance, d.pneusHiver ? 1 : 0, d.vidangeKm, d.vidangeMois, d.dernierCt, d.achatDate, d.achatKm];
+    d.miseEnCirculation, d.assuranceEcheance, d.pneusHiver ? 1 : 0, d.vidangeKm, d.vidangeMois, d.dernierCt, d.achatDate, d.achatKm, d.energie];
   // Supprime des fichiers sans faire échouer la requête (un fichier orphelin vaut mieux qu'une erreur).
   const removeFiles = async keys => { for (const k of keys) { try { await storage?.remove(k); } catch (e) { log("Suppression de photo impossible :", k, e.message); } } };
   const notFound = res => res.status(404).json({ code: "not_found", error: "Voiture introuvable dans votre garage." });

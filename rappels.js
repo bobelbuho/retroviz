@@ -77,6 +77,7 @@ export function createRappels(db, kb, { now = today } = {}) {
   });
 
   // Pour la carte de la voiture : le plus urgent et le nombre d'éléments en retard.
+  router.forVehicle = forVehicle;
   router.summary = row => {
     const r = forVehicle(row);
     return { plusUrgent: r.plusUrgent, enRetard: r.enRetard, aCompleter: r.items.filter(it => it.statut === "inconnu").length };

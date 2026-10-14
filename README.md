@@ -21,6 +21,8 @@ retroviz/
 ├── rappels.js          ← routes « À venir » et rappels libres
 ├── valeur.js           ← valeur indicative estimée par l'IA, historique
 ├── vie.js              ← page de vie d'une voiture : frise, étapes marquantes, chiffres clés
+├── badge.js            ← badge « Voiture bien suivie » : critères et seuils
+├── energie.js          ← énergie d'une voiture (thermique, hybride, électrique)
 ├── relecture.js        ← page « Relecture » (administrateurs) : corriger et valider les fiches
 ├── fiabilite.js        ← règles de fiabilité des fiches, partagées par les tests et la Relecture
 ├── propositions.js     ← propositions d'amélioration de la base (Observateur, signalements)
@@ -99,6 +101,18 @@ Les comptes sont facultatifs : l'assistant reste utilisable sans compte. Le bout
 - **Étapes marquantes** : paliers de kilométrage franchis avec vous (50 000, 100 000 km…), anniversaires (« 1 an avec vous »).
 - **Chiffres clés**, depuis l'achat (date et kilométrage d'achat facultatifs, sinon depuis l'ajout au garage) : km parcourus, total dépensé en entretien, coût d'entretien par km et par mois.
 - Routes : `GET /api/garage/:id/vie` ; photo : `PUT`, `GET` et `DELETE /api/garage/:id/photo`.
+
+## Badge « Voiture bien suivie »
+
+Affiché en tête de « Sa vie », et en pastille sur la carte de la voiture. Il repose sur les informations saisies par le propriétaire, et l'écran le dit toujours. Les 5 critères sont listés, cochés ou non, avec ce qu'il faut faire pour chaque critère manquant (« plus que 2 critères »).
+
+1. **Historique** : au moins 12 mois depuis la plus ancienne date connue (achat, premier relevé ou premier entretien, y compris l'historique reçu d'un ancien propriétaire).
+2. **Relevés réguliers** : au moins 3 relevés sur les 12 derniers mois, jamais plus de 6 mois sans relevé, jusqu'à aujourd'hui. Les kilométrages des entretiens comptent.
+3. **Vidanges à temps** (thermiques et hybrides) : au moins une vidange notée, et un écart entre les 2 dernières vidanges qui ne dépasse pas l'intervalle prévu de plus de 10 % (en km et en mois). Pour une **voiture électrique**, ce critère est remplacé par « entretiens de la fiche faits à temps ».
+4. **Rien en retard** dans « À venir » : contrôle technique, vidange, entretiens de la fiche. Les rappels libres ne comptent pas.
+5. **Preuves** : au moins 2 entretiens, et un score de preuve d'au moins 75 % (entretien avec facture = 1 point, sans facture = 0,5).
+
+Si la voiture perd le badge, l'écran indique la date, les critères en cause et comment le récupérer. L'énergie de la voiture (champ « Énergie », sinon déduite de la motorisation) décide du critère vidange ; une voiture électrique n'a pas non plus de vidange dans « À venir ». Route : `GET /api/garage/:id/badge`. Seuils : `SEUILS` dans `badge.js`.
 
 ## Mon garage
 
