@@ -844,7 +844,7 @@ dialog.dlg.large{width:min(920px,calc(100vw - 2 * var(--gutter)));padding:var(--
     </div>
     <div id="marquesListe">
       <h2 class="sect" style="margin:0 0 var(--sp-2);font-size:var(--fs-xl)">Marques et modèles</h2>
-      <p class="intro">Les 30 modèles d'occasion les plus courants en France : générations, motorisations à privilégier ou à éviter, pannes connues et points à vérifier à l'achat. Fiches en cours de vérification.</p>
+      <p class="intro">Les 30 modèles d'occasion les plus courants en France : générations, motorisations, points de vigilance et points à vérifier à l'achat. Fiches en cours de vérification : pas de verdict « à privilégier » ou « à éviter » avant leur vérification.</p>
       <label class="sr" for="mSearch">Rechercher un modèle</label>
       <input class="field" id="mSearch" type="search" placeholder="Rechercher : Clio, 308, Golf…" autocomplete="off" style="margin:0 0 var(--sp-4)">
       <ul class="mgrid" id="mGrid"></ul>
@@ -2256,9 +2256,10 @@ async function renderComparer(){
     ${ligne("Pour qui ?", m => esc(m.modele.pour_qui))}
     ${ligne("Qualités", m => ul(m.modele.qualites))}
     ${ligne("Défauts", m => ul(m.modele.defauts))}
-    ${ligne("À privilégier", m => ul(motos(m).filter(v => v.conseil === "a_privilegier").map(v => `${v.gen} : ${v.moteurs.slice(0, 2).join(", ")}`)))}
-    ${ligne("À éviter", m => ul(motos(m).filter(v => v.conseil === "a_eviter").map(v => `${v.gen} : ${v.moteurs.slice(0, 2).join(", ")}`)))}
-    ${ligne("Pannes graves connues", m => ul(graves(m)))}
+    ${mods.some(m => motos(m).some(v => v.conseil)) ? `${ligne("À privilégier", m => ul(motos(m).filter(v => v.conseil === "a_privilegier").map(v => `${v.gen} : ${v.moteurs.slice(0, 2).join(", ")}`)))}
+    ${ligne("À éviter", m => ul(motos(m).filter(v => v.conseil === "a_eviter").map(v => `${v.gen} : ${v.moteurs.slice(0, 2).join(", ")}`)))}`
+      : ligne("Conseil d'achat", () => `<span class="hint">Pas de verdict tant que les fiches ne sont pas vérifiées</span>`)}
+    ${ligne("Points de vigilance (pannes graves)", m => ul(graves(m)))}
     ${ligne("Coût d'entretien de la marque", m => esc(COUT_TXT[m.marque.cout_entretien]))}
     ${ligne("Avis des propriétaires", avisTxt)}
     ${ligne("À vérifier à l'achat", m => ul(m.modele.a_verifier_achat))}
@@ -2297,10 +2298,11 @@ async function ouvrirModele(id){
 }
 const listeHTML = l => `<ul>${l.map(x => `<li>${esc(x)}</li>`).join("")}</ul>`;
 function motoHTML(v){
-  const pannes = v.pannes?.length ? `<h4>Pannes connues</h4><ul>${v.pannes.map(p => `<li class="panneli"><strong>${esc(p.titre)}</strong>${p.km_typique ? `, vers ${fmtNum(p.km_typique)} km` : ""}${p.gravite ? ` (gravité ${esc(GRAV_TXT[p.gravite] || p.gravite)})` : ""}${p.cout_indicatif ? ` : ${esc(p.cout_indicatif)}` : ""}.${p.symptomes ? `<br><span class="hint">Signes : ${esc(p.symptomes)}</span>` : ""}</li>`).join("")}</ul>` : "";
+  const pannes = v.pannes?.length ? `<h4>${v.conseil ? "Pannes connues" : "Points de vigilance"}</h4><ul>${v.pannes.map(p => `<li class="panneli"><strong>${esc(p.titre)}</strong>${p.km_typique ? `, vers ${fmtNum(p.km_typique)} km` : ""}${p.gravite ? ` (gravité ${esc(GRAV_TXT[p.gravite] || p.gravite)})` : ""}${p.cout_indicatif ? ` : ${esc(p.cout_indicatif)}` : ""}.${p.symptomes ? `<br><span class="hint">Signes : ${esc(p.symptomes)}</span>` : ""}</li>`).join("")}</ul>` : "";
   const ent = v.entretiens?.length ? `<h4>Entretiens</h4><ul>${v.entretiens.map(e => `<li>${esc(e.titre)}${e.km ? ` : tous les ${fmtNum(e.km)} km` : ""}${e.cout_indicatif ? ` (${esc(e.cout_indicatif)})` : ""}</li>`).join("")}</ul>` : "";
-  return `<details class="moto"><summary><span>${esc(v.moteurs.join(", "))}</span><span class="conseil ${esc(v.conseil || "neutre")}">${esc(CONSEIL_TXT[v.conseil] || "Correct")}</span></summary>
-    <p style="margin:var(--sp-2) 0 0">${esc(v.conseil_texte || "")}</p>
+  // Verdict seulement pour une fiche vérifiée avec source (le serveur ne l'envoie pas sinon).
+  return `<details class="moto"><summary><span>${esc(v.moteurs.join(", "))}</span>${v.conseil ? `<span class="conseil ${esc(v.conseil)}">${esc(CONSEIL_TXT[v.conseil])}</span>` : ""}</summary>
+    ${v.conseil_texte ? `<p style="margin:var(--sp-2) 0 0">${esc(v.conseil_texte)}</p>` : ""}
     <p class="hint">${[v.carburant, ENERGIE_TXT[v.energie] && v.energie !== "thermique" && ENERGIE_TXT[v.energie], v.annees, v.codes_moteur?.length && "codes moteur " + v.codes_moteur.join(", ")].filter(Boolean).map(esc).join(" · ")}</p>
     <div class="deux" style="margin:0">${v.points_forts?.length ? `<div><h4>Points forts</h4>${listeHTML(v.points_forts)}</div>` : ""}${v.points_faibles?.length ? `<div><h4>Points faibles</h4>${listeHTML(v.points_faibles)}</div>` : ""}</div>
     ${pannes}${ent}${v.statut !== "verifie" ? `<p class="hint">Fiche en cours de vérification.</p>` : ""}</details>`;
@@ -2445,12 +2447,12 @@ async function openAvis(id){
 const moisTxt = n => n >= 24 ? `${Math.floor(n / 12)} ans` : n >= 12 ? `${Math.floor(n / 12)} an${n >= 24 ? "s" : ""}${n % 12 ? ` et ${n % 12} mois` : ""}` : `${n} mois`;
 /* Un avis : jamais l'identité de l'auteur ; durée de possession, kilomètres, date, badge. */
 function avisCarteHTML(a, {signaler = true, auteur = false} = {}){
-  const ctx = [`Propriétaire depuis ${moisTxt(a.possessionMois)}`, a.kmParcourus != null && `${fmtNum(a.kmParcourus)} km parcourus`, a.kmActuel != null && `${fmtNum(a.kmActuel)} km au compteur`].filter(Boolean).join(" · ");
+  const ctx = [a.kmParcourus != null && `${fmtNum(a.kmParcourus)} km parcourus`, a.kmActuel != null && `${fmtNum(a.kmActuel)} km au compteur`].filter(Boolean).join(" · ");
   const pannes = a.pannes.length ? `<h4>Pannes rencontrées</h4><ul style="margin:var(--sp-1) 0 0;padding-left:var(--sp-5);font-size:var(--fs-sm)">${a.pannes.map(p => `<li>${esc(p.piece)}${p.km != null ? ` à ${fmtNum(p.km)} km` : ""}${p.cout != null ? `, ${fmtEur0(p.cout)}` : ""}</li>`).join("")}</ul>` : "";
   return `<article class="avcarte" data-aid="${a.id}">
-    <div class="rowbtns" style="justify-content:space-between"><span class="verif"><span aria-hidden="true">✓</span>Propriétaire vérifié par son garage Rétroviz</span>
+    <div class="rowbtns" style="justify-content:space-between"><span class="verif">Possède cette voiture dans son garage Rétroviz depuis ${esc(moisTxt(a.garageMois ?? a.possessionMois))}</span>
       <span class="hint" style="margin:0">Avis du ${esc(fmtShort(a.publieLe))}${a.modifieLe ? `, modifié le ${esc(fmtShort(a.modifieLe))}` : ""}</span></div>
-    <p class="ctx">${esc(a.voiture)}<br>${esc(ctx)}</p>
+    <p class="ctx">${esc(a.voiture)}${ctx ? `<br>${esc(ctx)}` : ""}</p>
     <ul class="avnotes">${Object.entries(NOTES_AV).map(([k, t]) => `<li>${esc(t)} : <strong>${a.notes[k]}/5</strong></li>`).join("")}</ul>
     <p style="font-weight:var(--fw-semibold)">${a.recommande ? "Je la recommande" : "Je ne la recommande pas"}</p>
     ${a.pointsForts ? `<h4>Points forts</h4><p>${esc(a.pointsForts)}</p>` : ""}${a.pointsFaibles ? `<h4>Points faibles</h4><p>${esc(a.pointsFaibles)}</p>` : ""}

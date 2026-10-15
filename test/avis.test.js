@@ -110,7 +110,8 @@ describe("API des avis", () => {
     assert.equal(r.modele.nombre, 4);
     assert.equal(r.modele.synthese, null);
     assert.ok(!JSON.stringify(r).includes("proprio"));
-    assert.equal(r.modele.avis[0].verifie, true);
+    assert.ok(Number.isInteger(r.modele.avis[0].garageMois) && r.modele.avis[0].garageMois >= 3);
+    assert.ok(!("verifie" in r.modele.avis[0]), "jamais « vérifié »");
     const c = await user("proprio9@exemple.fr");
     await c("PUT", `/api/garage/${await voiture(c, { modele: "5008", motorisation: "2.0 BlueHDi 150" })}/avis`, avisValide());
     r = await (await fetch(`${base}/api/avis?marque=Peugeot&modele=5008&motorisation=1.6 BlueHDi 120`)).json();

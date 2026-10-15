@@ -172,9 +172,10 @@ export function createAvis(db, { kb, isAdmin = () => false, now = today } = {}) 
     const depuis = [String(v.created_at).slice(0, 10), q.dernierTransfert.get(v.id).d].filter(Boolean).sort().at(-1);
     return { depuis, ...eligibilite({ depuis, relevesPropres: q.relevesPropres.get(v.id).n, aujourdhui: now() }) };
   }
-  // Ce qui est affiché avec l'avis : durée de possession, km parcourus et au compteur. Jamais l'identité.
+  // Ce qui est affiché avec l'avis : depuis combien de mois la voiture est dans ce garage Rétroviz, km parcourus et au compteur.
+  // Jamais l'identité, et jamais « vérifié » : Rétroviz ne contrôle pas la carte grise.
   function contexte(v, e) {
-    const debut = v.achat_date && v.achat_date >= e.depuis ? v.achat_date : e.depuis;
+    const debut = e.depuis;
     const k = q.kms.get(v.id), kmActuel = q.kmMax.get(v.id).km ?? null;
     const kmDebut = v.achat_km ?? k.mini;
     return { possession_mois: Math.max(0, Math.floor(jours(debut, now()) / MOIS)), km_parcourus: kmActuel != null && kmDebut != null ? Math.max(0, kmActuel - kmDebut) : null, km_actuel: kmActuel };
@@ -186,7 +187,7 @@ export function createAvis(db, { kb, isAdmin = () => false, now = today } = {}) 
     id: a.id, voiture: a.voiture, notes: JSON.parse(a.notes), pannes: JSON.parse(a.pannes), pointsForts: a.points_forts, pointsFaibles: a.points_faibles,
     recommande: !!a.recommande, commentaire: a.commentaire, possessionMois: a.possession_mois, kmParcourus: a.km_parcourus, kmActuel: a.km_actuel,
     publieLe: a.cree_le.slice(0, 10), modifieLe: a.modifie_le.slice(0, 10) !== a.cree_le.slice(0, 10) ? a.modifie_le.slice(0, 10) : null,
-    verifie: true, // publié depuis un garage Rétroviz qui remplissait les conditions (voir CONDITIONS)
+    garageMois: a.possession_mois, // mois dans le garage Rétroviz de l'auteur, au moment de l'avis
   });
   const pourAuteur = a => ({ ...publicAvis(a), statut: a.statut, motifMasque: a.motif_masque ? MOTIFS_MASQUAGE[a.motif_masque] || a.motif_masque : null, masqueLe: a.masque_le });
   function bloc(list) {

@@ -197,7 +197,7 @@ CREATE TABLE IF NOT EXISTS avis (
   points_faibles   TEXT NOT NULL DEFAULT '',
   recommande       INTEGER NOT NULL,
   commentaire      TEXT NOT NULL DEFAULT '',
-  possession_mois  INTEGER,               -- au moment de la publication ou de la dernière modification
+  possession_mois  INTEGER,               -- mois dans le garage Rétroviz, au moment de la publication ou de la dernière modification
   km_parcourus     INTEGER,
   km_actuel        INTEGER,
   cree_le          TEXT NOT NULL,

@@ -3,7 +3,14 @@ import express from "express";
 
 // Champs internes d'une fiche motorisation qui n'ont pas à être montrés.
 const INTERNES = ["revisions", "marque_id", "modele_id", "generation_id", "alias", "alias_generation", "verifie_par"];
-const propre = v => Object.fromEntries(Object.entries(v).filter(([k]) => !INTERNES.includes(k)));
+// Verdict d'achat (« à privilégier », « à éviter ») : seulement pour une fiche vérifiée avec au moins une source.
+// Sinon, ni verdict ni texte de conseil : l'écran présente les pannes comme des « points de vigilance ».
+export const verdictPublie = v => v.statut === "verifie" && Array.isArray(v.sources) && v.sources.length > 0;
+const propre = v => {
+  const o = Object.fromEntries(Object.entries(v).filter(([k]) => !INTERNES.includes(k)));
+  if (!verdictPublie(v)) { o.conseil = null; o.conseil_texte = null; }
+  return o;
+};
 
 export function createCatalogue(kb) {
   const router = express.Router();

@@ -83,7 +83,7 @@
 
 - Vérification de l'adresse e-mail à l'inscription (lien de confirmation).
 - Rappels par e-mail (contrôle technique, vidange, assurance…), une fois l'adresse vérifiée.
-- **Relecture juridique des avis et du dossier partagé** : la page « Comment fonctionnent les avis » (articles L111-7-2 et D111-16 à D111-19 du Code de la consommation), la mention « Propriétaire vérifié par son garage Rétroviz » (aucune preuve de propriété n'est contrôlée : risque de pratique trompeuse au sens de l'article L121-4), la procédure de signalement et de motivation (règlement européen sur les services numériques, articles 16 et 17), les obligations d'hébergeur (LCEN) et la durée de publication de 5 ans.
+- **Relecture juridique des avis et du dossier partagé** : la page « Comment fonctionnent les avis » (articles L111-7-2 et D111-16 à D111-19 du Code de la consommation), la mention « Possède cette voiture dans son garage Rétroviz depuis X mois » (remplace « Propriétaire vérifié », jugée trompeuse faute de contrôle de la carte grise, article L121-4), la procédure de signalement et de motivation (règlement européen sur les services numériques, articles 16 et 17), les obligations d'hébergeur (LCEN) et la durée de publication de 5 ans.
 - Masquage des factures au clavier (aujourd'hui à la souris ou au doigt seulement).
 - Ne plus révéler si une adresse est déjà inscrite : l'inscription affiche le même message dans tous les cas, et un e-mail prévient le titulaire de l'adresse.
 
