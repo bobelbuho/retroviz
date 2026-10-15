@@ -21,6 +21,10 @@ export function createCatalogue(kb) {
     })) });
   });
 
+  // Glossaire et guide des prix : publics.
+  router.get("/api/glossaire", (req, res) => { pub(res); res.json({ termes: kb.glossaire || [] }); });
+  router.get("/api/prix", (req, res) => { pub(res); res.json({ interventions: kb.prix || [] }); });
+
   // Un modèle complet : sa marque, ses générations et leurs motorisations.
   router.get("/api/modeles/:id", (req, res) => {
     const mo = kb.modeles.find(x => x.id === req.params.id);

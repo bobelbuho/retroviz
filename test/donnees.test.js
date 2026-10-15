@@ -8,7 +8,7 @@ import { COLLECTIONS, problemesFiche, serialiser, ZONES, ENERGIES_PIECES } from 
 import { lireMarques, aplatir, serialiserMarque } from "../marques.js";
 
 // Fichiers de fiches et champ servant d'identifiant. Ajouter ici chaque nouveau fichier de data/.
-export const FICHIERS = { "obd.json": "code", "voyants.json": "id", "pieces.json": "id" };
+export const FICHIERS = { "obd.json": "code", "voyants.json": "id", "pieces.json": "id", "glossaire.json": "id", "prix.json": "id" };
 
 const lire = f => JSON.parse(fs.readFileSync(path.join(DATA_DIR, f), "utf8"));
 
@@ -101,4 +101,22 @@ test("pieces.json : chaque zone a des pièces pour chaque énergie (sauf l'écha
   }
   assert.ok(!pieces.some(p => p.zone === "echappement-depollution" && p.energies.includes("electrique")), "pas d'échappement sur une électrique");
   for (const p of pieces) for (const v of p.voyants) assert.ok(voyants.has(v), `${p.id} : voyant inconnu ${v}`);
+});
+
+test("glossaire.json : 80 à 100 termes, sans doublon de mot ; pièces et prix ne citent que des termes existants", () => {
+  const g = lire("glossaire.json"), ids = new Set(g.map(x => x.id));
+  assert.ok(g.length >= 80 && g.length <= 100, `${g.length} termes`);
+  const mots = new Map();
+  for (const x of g) for (const m of [x.terme, ...x.variantes]) {
+    const k = m.toLowerCase();
+    assert.ok(!mots.has(k) || mots.get(k) === x.id, `« ${m} » défini deux fois (${mots.get(k)} et ${x.id})`);
+    mots.set(k, x.id);
+  }
+  for (const f of ["pieces.json", "prix.json"]) for (const x of lire(f)) for (const t of x.glossaire) assert.ok(ids.has(t), `${f} › ${x.id} : terme inconnu ${t}`);
+});
+
+test("prix.json : la concession n'est jamais moins chère que le garage indépendant", () => {
+  for (const x of lire("prix.json")) {
+    assert.ok(x.concession[0] >= x.independant[0] && x.concession[1] >= x.independant[1], x.id);
+  }
 });

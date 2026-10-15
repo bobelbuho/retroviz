@@ -13,6 +13,8 @@ export const COLLECTIONS = {
   marques: { stockage: "marques", cle: "id", titre: f => f.nom, format: "indente" },
   modeles: { stockage: "marques", cle: "id", titre: f => f.nom, format: "indente" },
   pieces: { fichier: "pieces.json", cle: "id", titre: f => f.nom, format: "indente" },
+  glossaire: { fichier: "glossaire.json", cle: "id", titre: f => f.terme, format: "ligne" },
+  prix: { fichier: "prix.json", cle: "id", titre: f => f.intervention, format: "ligne" },
 };
 // Zones du schéma interactif (l'ordre est celui de l'affichage).
 export const ZONES = ["moteur", "transmission", "freins", "direction-suspension", "electricite", "echappement-depollution", "pneus", "carrosserie"];
@@ -63,6 +65,18 @@ export function problemesFiche(collection, f) {
     for (const k of ["pannes", "entretiens", "points_forts", "points_faibles"]) if (f[k] !== undefined && !Array.isArray(f[k])) p.push(`${k} : liste`);
     if (f.energie !== undefined && !ENERGIES_PIECES.includes(f.energie)) p.push("energie invalide");
     if (f.conseil !== undefined && !CONSEILS.includes(f.conseil)) p.push(`conseil : ${CONSEILS.join(", ")}`);
+  }
+  if (collection === "glossaire") {
+    for (const k of ["terme", "definition", "categorie"]) if (typeof f[k] !== "string" || !f[k].trim()) p.push(`${k} manquant`);
+    if (!Array.isArray(f.variantes)) p.push("variantes : liste");
+    if (typeof f.definition === "string" && f.definition.length > 400) p.push("definition : 400 caractères au plus (une ou deux phrases)");
+  }
+  if (collection === "prix") {
+    for (const k of ["intervention", "categorie", "comprend"]) if (typeof f[k] !== "string" || !f[k].trim()) p.push(`${k} manquant`);
+    const fourchette = x => Array.isArray(x) && x.length === 2 && x.every(Number.isFinite) && x[0] <= x[1];
+    if (!fourchette(f.independant)) p.push("independant : [minimum, maximum] en euros");
+    if (!fourchette(f.concession)) p.push("concession : [minimum, maximum] en euros");
+    if (!Array.isArray(f.glossaire)) p.push("glossaire : liste");
   }
   if (collection === "marques") {
     for (const k of ["nom", "pays", "image", "reseau", "cout_entretien_texte"]) if (typeof f[k] !== "string" || !f[k].trim()) p.push(`${k} manquant`);

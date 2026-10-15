@@ -9,6 +9,7 @@ Assistant automobile avec trois modes : **J'ai une panne** (particuliers), **Dia
 ```
 retroviz/
 ├── public/index.html   ← l'interface (HTML, CSS, JavaScript)
+├── public/glossaire.js ← soulignement des termes du glossaire et fenêtre de définition
 ├── public/schema-dessin.js ← dessins SVG du schéma (vue d'ensemble et 8 zones)
 ├── public/avis.html    ← « Comment fonctionnent les avis » (informations exigées par le Code de la consommation)
 ├── public/dossier.html ← page publique d'un dossier partagé (lecture seule, non indexée)
@@ -47,6 +48,8 @@ retroviz/
 │   ├── obd.json
 │   ├── marques/        ← un fichier par marque : modèles, générations, motorisations
 │   ├── voyants.json
+│   ├── glossaire.json  ← 96 termes définis simplement, soulignés dans les réponses et les fiches
+│   ├── prix.json       ← guide des prix : 42 interventions, garage indépendant et concession
 │   ├── pieces.json     ← pièces du schéma (rôle, usure, durée de vie, prix, voyants, mots du glossaire)
 │   ├── sources.json    ← registre des sources de l'Observateur
 │   └── README.md
@@ -137,9 +140,17 @@ Onglet « Partager ou vendre » de la page d'une voiture. **Tout ce qui peut ide
 - **Confiance** : chaque entrée affiche « avec facture » ou « déclaré » ; « saisi le … » si elle a été ajoutée plus de 30 jours après sa date ; « modifié le … » si elle a été modifiée alors que sa date et sa saisie avaient plus de 30 jours (table `modifications` : anciennes et nouvelles valeurs pour date, km, type, coût ; pour la description et le garage, seulement le fait qu'ils ont changé, jamais l'ancien texte ; suppressions comptées). Le dossier résume : « 3 entretiens saisis après coup, dont 2 avec facture », et met en avant le **kilométrage suivi sans interruption** (jamais plus de 6 mois sans kilométrage connu), y compris d'un propriétaire à l'autre.
 - **RGPD** : l'export de l'acheteur contient l'historique reçu et les dates de changement de propriétaire ; supprimer le compte du vendeur ne touche pas une voiture déjà transférée.
 
-## Marques et modèles
+## Guides : marques et modèles, comparateur, prix, glossaire
 
-Lien « Modèles » du menu. Les 30 modèles d'occasion les plus courants en France (13 marques), avec recherche (y compris « golf 7 », « clio 4 »). Pour chaque modèle : qualités, défauts, pour qui, points à vérifier à l'achat, puis chaque génération et ses motorisations (conseil « à privilégier », « correct » ou « à éviter », points forts et faibles, pannes connues, entretiens), les avis des propriétaires et la marque (image, coût d'entretien relatif, réseau et pièces en France). Deux boutons : « Analyser une occasion de ce modèle » (« J'achète une voiture » pré-rempli) et « Ajouter à mon garage » (formulaire pré-rempli). Toutes ces fiches sont rédigées de mémoire et « à vérifier ». Routes : `GET /api/marques`, `GET /api/modeles/:id`.
+Lien « Guides » du menu, quatre onglets.
+
+- **Comparer** : 2 ou 3 modèles côte à côte (générations, pour qui, qualités, défauts, motorisations à privilégier ou à éviter, pannes graves connues, coût d'entretien de la marque, avis, points à vérifier). Sur mobile, le tableau défile dans son cadre.
+- **Guide des prix** (`data/prix.json`) : 42 interventions courantes, fourchettes TTC pièces et main-d'œuvre en garage indépendant et en concession, avec ce qui est compris et la fréquence. Un test vérifie que la concession n'est jamais moins chère.
+- **Glossaire** (`data/glossaire.json`) : 96 termes. Dans les réponses de l'assistant (une fois la réponse terminée), le rapport d'achat, les fiches de modèles, de pièces, de voyants, les prix et le comparateur, la première occurrence de chaque terme est soulignée en pointillés ; un clic ou Entrée affiche la définition (Échap pour fermer) et mène au glossaire complet. Les liens, boutons et titres ne sont pas soulignés. Les mots cités par les pièces et les prix doivent exister dans le glossaire (test).
+- Glossaire et prix suivent les règles de fiabilité et se corrigent dans la Relecture (collections « Glossaire » et « Prix »).
+
+### Marques et modèles
+ Les 30 modèles d'occasion les plus courants en France (13 marques), avec recherche (y compris « golf 7 », « clio 4 »). Pour chaque modèle : qualités, défauts, pour qui, points à vérifier à l'achat, puis chaque génération et ses motorisations (conseil « à privilégier », « correct » ou « à éviter », points forts et faibles, pannes connues, entretiens), les avis des propriétaires et la marque (image, coût d'entretien relatif, réseau et pièces en France). Deux boutons : « Analyser une occasion de ce modèle » (« J'achète une voiture » pré-rempli) et « Ajouter à mon garage » (formulaire pré-rempli). Toutes ces fiches sont rédigées de mémoire et « à vérifier ». Routes : `GET /api/marques`, `GET /api/modeles/:id`.
 
 ## Schéma interactif
 

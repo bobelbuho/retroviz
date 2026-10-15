@@ -36,7 +36,9 @@ export function loadKnowledge(dir = DATA_DIR, log = console.warn) {
   }
   const voyants = readList(path.join(dir, "voyants.json"), log, { optional: true }).filter(v => v && v.id && v.nom);
   const pieces = readList(path.join(dir, "pieces.json"), log, { optional: true }).filter(p => p && p.id && p.nom && p.zone);
-  return { vehicules, codes, voyants, pieces, marques: plat?.marques || [], modeles: plat?.modeles || [] };
+  const glossaire = readList(path.join(dir, "glossaire.json"), log, { optional: true }).filter(g => g && g.id && g.terme && g.definition);
+  const prix = readList(path.join(dir, "prix.json"), log, { optional: true }).filter(p => p && p.id && p.intervention);
+  return { vehicules, codes, voyants, pieces, glossaire, prix, marques: plat?.marques || [], modeles: plat?.modeles || [] };
 }
 
 // Recharge la base en place (après une correction dans la Relecture) : les modules qui gardent une
@@ -47,7 +49,7 @@ export function reloadKnowledge(kb, dir = DATA_DIR, log = console.warn) {
   kb.codes.clear();
   for (const [k, v] of fresh.codes) kb.codes.set(k, v);
   kb.voyants.splice(0, kb.voyants.length, ...fresh.voyants);
-  for (const k of ["pieces", "marques", "modeles"]) { if (kb[k]) kb[k].splice(0, kb[k].length, ...fresh[k]); else kb[k] = fresh[k]; }
+  for (const k of ["pieces", "glossaire", "prix", "marques", "modeles"]) { if (kb[k]) kb[k].splice(0, kb[k].length, ...fresh[k]); else kb[k] = fresh[k]; }
   return kb;
 }
 

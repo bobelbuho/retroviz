@@ -464,6 +464,38 @@ dialog.dlg::backdrop{background:var(--overlay)}
 
 footer{margin-top:var(--sp-7);font-size:var(--fs-xs);color:var(--muted);padding-top:var(--sp-4);border-top:1px solid var(--line)}
 @media (prefers-reduced-motion: reduce){.item.flash{animation:none}}
+/* glossaire */
+.gloss{display:inline;background:none;border:0;padding:0;margin:0;font:inherit;color:inherit;text-decoration:underline dotted var(--primary);text-decoration-thickness:2px;text-underline-offset:3px;cursor:help;border-radius:2px}
+.gloss:hover{color:var(--primary)}
+.gloss[aria-expanded="true"]{background:var(--soft)}
+.glosspop{position:absolute;z-index:60;background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:var(--r-md);box-shadow:0 8px 32px rgb(0 0 0 / .18);padding:var(--sp-3) var(--sp-4);font-size:var(--fs-sm);line-height:var(--lh)}
+.glosspop strong{color:var(--primary);font-size:var(--fs-md)}
+.glosspop p{margin:var(--sp-1) 0 var(--sp-2)}
+.glosspop small{display:block;color:var(--muted);margin-top:var(--sp-1)}
+.glosspied{display:flex;justify-content:space-between;gap:var(--sp-3)}
+.glossliste{margin:0;display:grid;gap:var(--sp-3)}
+.glossliste > div{background:var(--surface);border-radius:var(--r-md);padding:var(--sp-3) var(--sp-4);box-shadow:var(--shadow)}
+.glossliste dt{font-weight:var(--fw-bold);color:var(--primary)}
+.glossliste dd{margin:var(--sp-1) 0 0}
+.glossliste .var{color:var(--muted);font-size:var(--fs-xs)}
+.glossliste > div:target, .glossliste > div.cible{outline:3px solid var(--primary)}
+/* guide des prix */
+.prixl{list-style:none;margin:0 0 var(--sp-5);padding:0;display:grid;gap:var(--sp-2)}
+.prixl li{background:var(--surface);border-radius:var(--r-md);padding:var(--sp-3) var(--sp-4);box-shadow:var(--shadow);display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:var(--sp-1) var(--sp-4);align-items:baseline}
+.prixl .nom{font-weight:var(--fw-semibold)}
+.prixl .nom small{display:block;font-weight:var(--fw-regular);color:var(--muted);font-size:var(--fs-xs)}
+.prixl .val{font-variant-numeric:tabular-nums;white-space:nowrap;text-align:right}
+.prixl .val span{display:block;color:var(--muted);font-size:var(--fs-xs)}
+.prixl .plus{grid-column:1/-1;font-size:var(--fs-sm);color:var(--muted)}
+@media (max-width:520px){.prixl li{grid-template-columns:1fr 1fr}.prixl .nom{grid-column:1/-1}.prixl .val{text-align:left}}
+/* comparateur */
+.cmpchoix{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:var(--sp-3);margin:0 0 var(--sp-4)}
+.tablewrap{overflow-x:auto;border-radius:var(--r-lg);box-shadow:var(--shadow);background:var(--surface)}
+.cmp{border-collapse:collapse;width:100%;min-width:560px;font-size:var(--fs-sm)}
+.cmp th,.cmp td{padding:var(--sp-2) var(--sp-3);border-bottom:1px solid var(--line);vertical-align:top;text-align:left}
+.cmp thead th{font-size:var(--fs-md);color:var(--primary);background:var(--soft)}
+.cmp tbody th{position:sticky;left:0;background:var(--surface);width:130px;color:var(--muted);font-weight:var(--fw-semibold)}
+.cmp ul{margin:0;padding-left:var(--sp-4)}
 /* marques et modèles */
 .mgrid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:var(--sp-3)}
 .mcarte{background:var(--surface);border-radius:var(--r-lg);padding:var(--sp-4) var(--sp-5);box-shadow:var(--shadow)}
@@ -614,7 +646,7 @@ dialog.dlg.large{width:min(920px,calc(100vw - 2 * var(--gutter)));padding:var(--
     </div>
     <nav class="nav" aria-label="Mon espace">
       <button class="navlink" type="button" id="voyantsBtn" data-mode="voyants">Voyants</button>
-      <button class="navlink" type="button" id="marquesBtn" data-mode="marques">Modèles</button>
+      <button class="navlink" type="button" id="marquesBtn" data-mode="marques">Guides</button>
       <button class="navlink" type="button" id="garageBtn" data-mode="garage"><span class="long">Mon garage</span><span class="court">Garage</span></button>
       <button class="navlink" type="button" id="relectureBtn" data-mode="relecture" hidden>Relecture</button>
       <div class="acct" id="acct"><button class="navlink" type="button" id="acctBtn"><span class="long">Se connecter</span><span class="court">Connexion</span></button></div>
@@ -750,7 +782,7 @@ dialog.dlg.large{width:min(920px,calc(100vw - 2 * var(--gutter)));padding:var(--
       <div id="rListe">
         <div class="rfilters">
           <label class="sr" for="rCol">Collection</label>
-          <select class="field" id="rCol"><option value="">Toutes les collections</option><option value="voyants">Voyants</option><option value="obd">Codes OBD</option><option value="marques">Marques</option><option value="modeles">Modèles</option><option value="vehicules">Motorisations</option><option value="pieces">Pièces</option></select>
+          <select class="field" id="rCol"><option value="">Toutes les collections</option><option value="voyants">Voyants</option><option value="obd">Codes OBD</option><option value="marques">Marques</option><option value="modeles">Modèles</option><option value="vehicules">Motorisations</option><option value="pieces">Pièces</option><option value="glossaire">Glossaire</option><option value="prix">Prix</option></select>
           <label class="sr" for="rStatut">Statut</label>
           <select class="field" id="rStatut"><option value="a_verifier">À vérifier</option><option value="verifie">Vérifiées</option><option value="">Tous les statuts</option></select>
           <label class="sr" for="rQ">Rechercher</label>
@@ -785,6 +817,31 @@ dialog.dlg.large{width:min(920px,calc(100vw - 2 * var(--gutter)));padding:var(--
 
   <!-- Marques et modèles -->
   <section class="panel" id="marquesPanel" hidden>
+    <div class="tabs" role="tablist" aria-label="Guides">
+      <button type="button" role="tab" data-gtab="modeles" aria-selected="true">Marques et modèles</button>
+      <button type="button" role="tab" data-gtab="comparer" aria-selected="false">Comparer</button>
+      <button type="button" role="tab" data-gtab="prix" aria-selected="false">Guide des prix</button>
+      <button type="button" role="tab" data-gtab="glossaire" aria-selected="false">Glossaire</button>
+    </div>
+    <div id="gComparer" hidden>
+      <p class="intro">Choisissez 2 ou 3 modèles pour les comparer côte à côte.</p>
+      <div class="cmpchoix"><div><label class="f" for="cmp1">Modèle 1</label><select class="field" id="cmp1"></select></div>
+        <div><label class="f" for="cmp2">Modèle 2</label><select class="field" id="cmp2"></select></div>
+        <div><label class="f" for="cmp3">Modèle 3 (facultatif)</label><select class="field" id="cmp3"></select></div></div>
+      <div id="cmpOut" aria-live="polite"></div>
+    </div>
+    <div id="gPrix" hidden>
+      <p class="intro">Prix indicatifs TTC, pièces et main-d'œuvre, pour une citadine ou une compacte courante. Les écarts entre garages et régions sont grands : demandez toujours un devis. Prix en cours de vérification.</p>
+      <label class="sr" for="pSearch">Rechercher une intervention</label>
+      <input class="field" id="pSearch" type="search" placeholder="Rechercher : embrayage, vidange, pneus…" autocomplete="off" style="margin:0 0 var(--sp-4)">
+      <div id="prixOut"></div>
+    </div>
+    <div id="gGlossaire" hidden>
+      <p class="intro">Les mots de la voiture, expliqués simplement. Ils sont soulignés en pointillés dans les réponses de Rétroviz et dans les fiches : touchez-les pour voir leur définition.</p>
+      <label class="sr" for="gSearch">Rechercher un mot</label>
+      <input class="field" id="gSearch" type="search" placeholder="Rechercher : FAP, bimasse, AdBlue…" autocomplete="off" style="margin:0 0 var(--sp-4)">
+      <dl class="glossliste" id="glossOut"></dl>
+    </div>
     <div id="marquesListe">
       <h2 class="sect" style="margin:0 0 var(--sp-2);font-size:var(--fs-xl)">Marques et modèles</h2>
       <p class="intro">Les 30 modèles d'occasion les plus courants en France : générations, motorisations à privilégier ou à éviter, pannes connues et points à vérifier à l'achat. Fiches en cours de vérification.</p>
@@ -969,6 +1026,7 @@ dialog.dlg.large{width:min(920px,calc(100vw - 2 * var(--gutter)));padding:var(--
 
 <script src="/dossier-rendu.js"></script>
 <script src="/schema-dessin.js"></script>
+<script src="/glossaire.js"></script>
 <script>
 (function(){
 const $ = s => document.querySelector(s);
@@ -1098,7 +1156,7 @@ function setMode(m){
   $("#chatPanel").hidden = !chat; $("#achatPanel").hidden = m !== "achat"; $("#garagePanel").hidden = m !== "garage";
   $("#voyantsPanel").hidden = m !== "voyants";
   $("#marquesPanel").hidden = m !== "marques";
-  if(m === "marques") openMarques();
+  if(m === "marques"){ if(gTab === "modeles") openMarques(); else setGTab(gTab); }
   $("#relecturePanel").hidden = m !== "relecture";
   if(m === "relecture") openRelecture();
   if(m === "voyants"){ voyantOuvert = null; renderVoyants(); }
@@ -1146,6 +1204,7 @@ function renderThread(){
   $("#thread").innerHTML = list.map(t => t.role==="user"
     ? `<div class="msg-user">${esc(t.content)}</div>`
     : `<div class="msg-ai">${aiHTML(t)}</div>`).join("");
+  $("#thread").querySelectorAll(".msg-ai .md").forEach(el => Glossaire.marquer(el));
   $("#examples").hidden = list.length > 0;
   $("#resetBtn").hidden = list.length === 0 || busy;
   $("#help").hidden = mode !== "particulier";
@@ -1270,6 +1329,7 @@ $("#proForm").addEventListener("submit", e => {
 function updateLast(msg){
   const nodes = $("#thread").querySelectorAll(".msg-ai");
   const last = nodes[nodes.length-1]; if(last) last.innerHTML = aiHTML(msg);
+  if(last && msg.done) last.querySelectorAll(".md").forEach(el => Glossaire.marquer(el));
 }
 function setBusy(b){
   busy=b; $("#sendBtn").hidden=b; $("#stopBtn").hidden=!b; $("#achatBtn").disabled=b;
@@ -1432,6 +1492,7 @@ function renderReport(d, car, sources){
     $("#vehicle").value = `${d.vehicule || car.marque+" "+car.modele}${car.annee?", "+car.annee:""}, ${fmtKm(cur)}`;
     setMode("particulier"); $("#input").placeholder = "Ex. le vendeur dit que la distribution est faite, que dois-je vérifier ?"; $("#input").focus();
   });
+  Glossaire.marquer(rep);
   $("#newCar").addEventListener("click", () => { rep.hidden=true; rep.innerHTML=""; window.scrollTo({top:0}); $("#a_marque").focus(); });
 }
 
@@ -2127,6 +2188,85 @@ document.addEventListener("submit", async e => {
   else { const rr = await api("GET", `/api/garage/${vid}/releves`); if(rr.ok){ kmData[vid] = rr.releves; renderGarage(); } }
 });
 
+/* ---------- guides : onglets, comparateur, prix, glossaire ---------- */
+let gTab = "modeles", prixData = null;
+api("GET", "/api/glossaire").then(r => { if(r.ok){ Glossaire.charger(r.termes); renderThread(); } });
+function setGTab(t){
+  gTab = t;
+  document.querySelectorAll("[data-gtab]").forEach(b => b.setAttribute("aria-selected", String(b.dataset.gtab === t)));
+  $("#gComparer").hidden = t !== "comparer"; $("#gPrix").hidden = t !== "prix"; $("#gGlossaire").hidden = t !== "glossaire";
+  if(t !== "modeles"){ $("#marquesListe").hidden = true; $("#mFiche").hidden = true; } else openMarques();
+  if(t === "comparer") renderComparer();
+  if(t === "prix") renderPrix();
+  if(t === "glossaire") renderGlossaire();
+}
+document.querySelectorAll("[data-gtab]").forEach(b => b.addEventListener("click", () => setGTab(b.dataset.gtab)));
+const fourchette = ([a, b]) => `${fmtNum(a)} à ${fmtNum(b)} €`;
+const CAT_PRIX = {entretien:"Entretien courant", freins:"Freins", pneus:"Pneus", suspension:"Suspension et direction", transmission:"Embrayage et transmission", moteur:"Moteur", electricite:"Électricité", depollution:"Dépollution", carrosserie:"Carrosserie et vitrage"};
+async function renderPrix(){
+  if(!prixData){ const r = await api("GET", "/api/prix"); if(!r.ok){ $("#prixOut").innerHTML = `<p class="notice">${esc(r.error)}</p>`; return; } prixData = r.interventions; }
+  const q = plain($("#pSearch").value.trim());
+  const liste = prixData.filter(x => !q || plain(`${x.intervention} ${x.comprend} ${x.note || ""}`).includes(q));
+  const parCat = Object.keys(CAT_PRIX).map(c => [c, liste.filter(x => x.categorie === c)]).filter(([, l]) => l.length);
+  $("#prixOut").innerHTML = parCat.length ? parCat.map(([c, l]) => `<h3 class="sect" style="margin:var(--sp-4) 0 var(--sp-2)">${esc(CAT_PRIX[c])}</h3><ul class="prixl">${l.map(x => `<li>
+      <div class="nom">${esc(x.intervention)}<small>${esc(x.comprend)}${x.frequence ? ` · ${esc(x.frequence)}` : ""}</small></div>
+      <div class="val">${fourchette(x.independant)}<span>garage indépendant</span></div><div class="val">${fourchette(x.concession)}<span>concession</span></div>
+      ${x.note ? `<div class="plus">${esc(x.note)}</div>` : ""}</li>`).join("")}</ul>`).join("")
+    : `<p class="empty">Aucune intervention ne correspond.</p>`;
+  Glossaire.marquer($("#prixOut"));
+}
+$("#pSearch").addEventListener("input", renderPrix);
+function renderGlossaire(cible = null){
+  const q = plain($("#gSearch").value.trim());
+  const liste = Glossaire.termes().filter(t => !q || plain([t.terme, ...t.variantes, t.definition].join(" ")).includes(q)).sort((a, b) => a.terme.localeCompare(b.terme, "fr"));
+  $("#glossOut").innerHTML = liste.length ? liste.map(t => `<div id="g-${esc(t.id)}" class="${t.id === cible ? "cible" : ""}"><dt>${esc(t.terme)}</dt>${t.variantes.length ? `<dd class="var">Aussi : ${esc(t.variantes.join(", "))}</dd>` : ""}<dd>${esc(t.definition)}</dd></div>`).join("")
+    : `<p class="empty">Aucun mot ne correspond.</p>`;
+}
+$("#gSearch").addEventListener("input", () => renderGlossaire());
+window.addEventListener("glossaire:tout", e => {
+  setMode("marques"); setGTab("glossaire"); $("#gSearch").value = ""; renderGlossaire(e.detail);
+  const el = document.getElementById("g-" + e.detail); if(el){ el.scrollIntoView({block:"center"}); el.setAttribute("tabindex", "-1"); el.focus(); }
+});
+/* Comparateur : 2 ou 3 modèles côte à côte. */
+const cmpCache = new Map();
+async function modeleComplet(id){
+  if(cmpCache.has(id)) return cmpCache.get(id);
+  const r = await api("GET", `/api/modeles/${encodeURIComponent(id)}`);
+  if(!r.ok) return null;
+  const av = await api("GET", `/api/avis?${new URLSearchParams({marque:r.marque.nom, modele:r.modele.nom})}`);
+  const x = {...r, avis: av.ok ? av.modele : null};
+  cmpCache.set(id, x); return x;
+}
+async function renderComparer(){
+  if(!marquesData){ const r = await api("GET", "/api/marques"); if(!r.ok) return; marquesData = r.marques; }
+  const opts = vide => `<option value="">${vide}</option>` + marquesData.map(m => `<optgroup label="${esc(m.nom)}">${m.modeles.map(mo => `<option value="${esc(mo.id)}">${esc(m.nom)} ${esc(mo.nom)}</option>`).join("")}</optgroup>`).join("");
+  for(const [i, v] of [["cmp1", "Choisir…"], ["cmp2", "Choisir…"], ["cmp3", "Aucun"]]){ const el = $("#" + i); if(!el.options.length){ el.innerHTML = opts(v); } }
+  const ids = ["cmp1", "cmp2", "cmp3"].map(i => $("#" + i).value).filter(Boolean);
+  if(ids.length < 2){ $("#cmpOut").innerHTML = `<p class="hint">Choisissez au moins deux modèles.</p>`; return; }
+  $("#cmpOut").innerHTML = `<p class="hint">Chargement…</p>`;
+  const mods = (await Promise.all(ids.map(modeleComplet))).filter(Boolean);
+  const motos = mo => mo.modele.generations.flatMap(g => g.motorisations.map(v => ({...v, gen:g.nom})));
+  const ul = l => l.length ? `<ul>${l.map(x => `<li>${esc(x)}</li>`).join("")}</ul>` : `<span class="hint">—</span>`;
+  const ligne = (titre, f) => `<tr><th scope="row">${esc(titre)}</th>${mods.map(m => `<td>${f(m)}</td>`).join("")}</tr>`;
+  const graves = m => [...new Set(motos(m).flatMap(v => (v.pannes || []).filter(p => p.gravite === "elevee").map(p => p.titre)))].slice(0, 4);
+  const avisTxt = m => !m.avis?.nombre ? `<span class="hint">Pas encore d'avis</span>` : m.avis.synthese
+    ? `${m.avis.synthese.recommandent} % le recommandent, fiabilité ${String(m.avis.synthese.moyennes.fiabilite).replace(".", ",")}/5 (${m.avis.nombre} avis)` : `${m.avis.nombre} avis (moyennes à partir de 5)`;
+  $("#cmpOut").innerHTML = `<div class="tablewrap" tabindex="0" aria-label="Tableau de comparaison, défilable"><table class="cmp"><thead><tr><th scope="col"><span class="sr">Critère</span></th>${mods.map(m => `<th scope="col">${esc(m.marque.nom)} ${esc(m.modele.nom)}</th>`).join("")}</tr></thead><tbody>
+    ${ligne("Générations", m => esc(m.modele.generations.map(g => `${g.nom} (${g.annees})`).join(", ")))}
+    ${ligne("Pour qui ?", m => esc(m.modele.pour_qui))}
+    ${ligne("Qualités", m => ul(m.modele.qualites))}
+    ${ligne("Défauts", m => ul(m.modele.defauts))}
+    ${ligne("À privilégier", m => ul(motos(m).filter(v => v.conseil === "a_privilegier").map(v => `${v.gen} : ${v.moteurs.slice(0, 2).join(", ")}`)))}
+    ${ligne("À éviter", m => ul(motos(m).filter(v => v.conseil === "a_eviter").map(v => `${v.gen} : ${v.moteurs.slice(0, 2).join(", ")}`)))}
+    ${ligne("Pannes graves connues", m => ul(graves(m)))}
+    ${ligne("Coût d'entretien de la marque", m => esc(COUT_TXT[m.marque.cout_entretien]))}
+    ${ligne("Avis des propriétaires", avisTxt)}
+    ${ligne("À vérifier à l'achat", m => ul(m.modele.a_verifier_achat))}
+  </tbody></table></div><p class="hint">Fiches rédigées par Rétroviz et en cours de vérification.</p>`;
+  Glossaire.marquer($("#cmpOut"));
+}
+["cmp1", "cmp2", "cmp3"].forEach(i => $("#" + i).addEventListener("change", renderComparer));
+
 /* ---------- marques et modèles ---------- */
 let marquesData = null, modeleOuvert = null;
 const CONSEIL_TXT = {a_privilegier:"À privilégier", neutre:"Correct", a_eviter:"À éviter"};
@@ -2137,6 +2277,7 @@ async function openMarques(){
   renderMarques();
 }
 function renderMarques(){
+  if(gTab !== "modeles") return;
   $("#marquesListe").hidden = !!modeleOuvert; $("#mFiche").hidden = !modeleOuvert;
   if(modeleOuvert) return;
   const q = plain($("#mSearch").value.trim());
@@ -2179,6 +2320,7 @@ function renderModele(){
     <div class="deux"><div class="bloc"><h3>Image générale</h3><p style="margin:0">${esc(m.image)}</p></div>
       <div class="bloc"><h3>Coût d'entretien : ${esc(COUT_TXT[m.cout_entretien])}</h3><p style="margin:0">${esc(m.cout_entretien_texte)}</p><h3 style="margin-top:var(--sp-3)">Réseau et pièces en France</h3><p style="margin:0">${esc(m.reseau)}</p></div></div>
     <p class="hint">Fiches rédigées par Rétroviz et en cours de vérification : elles peuvent contenir des erreurs. ${esc((mo.incertitudes || []).join(" "))}</p>`;
+  Glossaire.marquer($("#mFiche"));
 }
 $("#mSearch").addEventListener("input", renderMarques);
 $("#mGrid").addEventListener("click", e => { const b = e.target.closest("[data-modele]"); if(b) ouvrirModele(b.dataset.modele); });
@@ -2232,6 +2374,7 @@ function renderSchema(){
     <ol class="pliste" aria-label="Pièces : ${esc(z.nom)}">${liste.map(p => `<li><button type="button" data-pbtn="${p.id}" aria-current="${p.id === schemaPiece}"><span class="num ${p.alerte === "grave" ? "grave" : p.alerte ? "alerte" : ""}" aria-hidden="true">${p.n}</span><span class="nom">${esc(p.nom)}</span>${p.alerte ? `<small>à surveiller</small>` : ""}</button></li>`).join("")}</ol>
     <div id="pfiche" aria-live="polite">${schemaPiece ? pieceFicheHTML(z, schemaPiece) : `<p class="hint" style="margin-top:var(--sp-3)">Choisissez une pièce sur le schéma ou dans la liste.</p>`}</div>`;
   document.querySelectorAll(`.sch-piece[data-piece="${schemaPiece}"]`).forEach(g => g.classList.add("choisie"));
+  Glossaire.marquer($("#pfiche"));
 }
 function pieceFicheHTML(z, id){
   const k = pieceKb(id), p = z.pieces.find(x => x.id === id), niv = niveauPiece(p);
@@ -2248,7 +2391,7 @@ function pieceFicheHTML(z, id){
     <h4>Prix indicatif</h4><p style="margin:0">${esc(k.prix)}</p><p class="hint">Fourchette indicative, pièces et main-d'œuvre, en garage indépendant ; plus cher en concession.</p>
     ${k.note ? `<p class="avert" style="margin-top:var(--sp-3)">${esc(k.note)}</p>` : ""}
     ${vl.length ? `<h4>Voyants liés</h4><div class="vlies">${vl.map(v => `<button type="button" data-voyant="${esc(v.id)}">${vIcon(v)}${esc(v.nom)}</button>`).join("")}</div>` : ""}
-    ${k.glossaire.length ? `<h4>Mots à connaître</h4><p style="margin:0">${k.glossaire.map(t => esc(t.replace(/-/g, " "))).join(" · ")}</p>` : ""}
+    ${k.glossaire.length ? `<h4>Mots à connaître</h4><p style="margin:0" class="sans-glossaire">${k.glossaire.map(t => Glossaire.terme(t)).filter(Boolean).map(t => `<button type="button" class="gloss" data-g="${esc(t.id)}" aria-expanded="false">${esc(t.terme)}</button>`).join(" · ")}</p>` : ""}
     <h4>Dans votre carnet</h4>${p.carnet.length ? `<ul>${p.carnet.slice(0, 5).map(e => `<li>${esc(e.typeLabel)} le ${esc(fmtShort(e.date))}${e.km != null ? `, ${fmtNum(e.km)} km` : ""}</li>`).join("")}</ul>` : `<p class="hint" style="margin:0">Aucune entrée liée à cette pièce.</p>`}
     ${k.incertitudes?.length ? `<p class="hint" style="margin-top:var(--sp-3)">À savoir : ${esc(k.incertitudes.join(" "))}</p>` : ""}
     <div class="rowbtns" style="margin-top:var(--sp-4)"><button class="btn" type="button" data-souci="${esc(id)}">J'ai un souci ici</button></div></article>`;
@@ -2713,7 +2856,7 @@ $("#vehPick").addEventListener("change", e => {
 });
 
 /* ---------- relecture (administrateur) ---------- */
-const COL_NOM = {voyants:"Voyants", obd:"Codes OBD", marques:"Marques", modeles:"Modèles", vehicules:"Motorisations", pieces:"Pièces"};
+const COL_NOM = {voyants:"Voyants", obd:"Codes OBD", marques:"Marques", modeles:"Modèles", vehicules:"Motorisations", pieces:"Pièces", glossaire:"Glossaire", prix:"Prix"};
 let rTab = "tableau", rFiche = null; // fiche ouverte : {collection, id, fiche}
 function setRTab(t){
   rTab = t;
@@ -2905,6 +3048,7 @@ function renderVoyantFiche(v){
     <div class="sect"><h3>Ce que ça peut coûter</h3><p style="margin:0">${esc(v.cout)}</p><p class="hint">Prix indicatifs, qui varient selon le modèle et le garage.</p></div>
     ${v.incertitudes?.length ? `<p class="sect caveat">À savoir : ${esc(v.incertitudes.join(" "))}</p>` : ""}
     <div class="rowbtns"><button class="btn" type="button" id="vJai">J'ai ce voyant</button></div>`;
+  Glossaire.marquer($("#voyantFiche"));
 }
 $("#vSearch").addEventListener("input", renderVoyants);
 document.querySelector(".vfilters").addEventListener("click", e => {
