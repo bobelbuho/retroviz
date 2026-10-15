@@ -51,6 +51,12 @@ export function reloadKnowledge(kb, dir = DATA_DIR, log = console.warn) {
   return kb;
 }
 
+// Période d'une fiche : « 2012-2019 » ou « 2019-auj. » (génération encore produite). Renvoie [début, fin] ou null.
+export function periode(annees) {
+  const m = String(annees || "").match(/(\d{4})\D+(\d{4}|auj)/);
+  return m ? [+m[1], m[2] === "auj" ? new Date().getFullYear() + 1 : +m[2]] : null;
+}
+
 let defaultKb = null;
 const kbOrDefault = kb => kb || (defaultKb ??= loadKnowledge());
 
@@ -106,27 +112,34 @@ export function findVehicle(text, kb, max = 2) {
     // Une cylindrée indiquée qui ne correspond à aucun moteur de la fiche : autre motorisation, on écarte.
     const own = new Set(moteurs.flatMap(m => [...displacements(m)]));
     if (asked.size && own.size && ![...asked].some(d => own.has(d))) continue;
+    // Une cylindrée demandée écarte aussi les électriques (« 208 2.0 HDi » n'est pas une e-208).
+    if (asked.size && !own.size && v.energie === "electrique") continue;
 
     let score = 0;
     if (has(t, v.marque)) score += 2;
     if (modelHit) score += 6;
     // Génération nommée (« Golf VII », « golf 7 ») : départage les générations d'un même modèle.
-    if ((v.alias_generation ?? v.alias ?? []).some(a => has(t, a)) || has(t, v.generation)) score += 2;
+    const generationNommee = (v.alias_generation ?? v.alias ?? []).some(a => has(t, a)) || has(t, v.generation);
+    if (generationNommee) score += 2;
     if (engineHit) score += 4;
-    const span = String(v.annees || "").match(/(\d{4})\D+(\d{4})/);
-    if (span && years.length) score += years.some(y => y >= +span[1] && y <= +span[2]) ? 1 : -4;
+    const span = periode(v.annees);
+    if (span && years.length) score += years.some(y => y >= span[0] && y <= span[1]) ? 1 : -4;
 
     const correspondance = modelHit ? (engineHit ? "modele_moteur" : "modele") : "moteur";
-    const dansPeriode = span && years.length ? years.some(y => y >= +span[1] && y <= +span[2]) : null;
-    if (score > 0) results.push({ fiche: v, score, correspondance, dansPeriode });
+    const dansPeriode = span && years.length ? years.some(y => y >= span[0] && y <= span[1]) : null;
+    if (score > 0) results.push({ fiche: v, score, correspondance, dansPeriode, generationNommee });
   }
 
   // Si le modèle est reconnu, on ne garde pas les fiches d'autres modèles qui partagent seulement le moteur
   // (« Golf 1.9 TDI » ne doit pas renvoyer l'Audi A3 1.9 TDI).
   let garde = modeleVu ? results.filter(r => r.correspondance !== "moteur") : results;
+  // Génération nommée (« Clio IV ») : elle prime sur l'année, les autres générations sont écartées.
+  if (garde.some(r => r.generationNommee && r.correspondance !== "moteur")) garde = garde.filter(r => r.generationNommee || r.correspondance === "moteur");
+  // Modèle et moteur reconnus : les autres moteurs du même modèle sont écartés.
+  if (garde.some(r => r.correspondance === "modele_moteur")) garde = garde.filter(r => r.correspondance === "modele_moteur");
   // Une année qui tombe dans la période d'une génération écarte les générations hors période.
   if (garde.some(r => r.dansPeriode === true)) garde = garde.filter(r => r.dansPeriode !== false);
-  return garde.sort((a, b) => b.score - a.score).slice(0, max).map(({ dansPeriode, ...r }) => r);
+  return garde.sort((a, b) => b.score - a.score).slice(0, max).map(({ dansPeriode, generationNommee, ...r }) => r);
 }
 
 /* ---------- codes OBD ---------- */

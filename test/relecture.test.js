@@ -9,12 +9,14 @@ import { openDb } from "../db.js";
 import { createAuth } from "../auth.js";
 import { createRelecture, parseAdmins } from "../relecture.js";
 import { loadKnowledge, findVoyants, DATA_DIR } from "../knowledge.js";
+import { lireMarques, aplatir } from "../marques.js";
 
 const PASSWORD = "un mot de passe solide";
 let server, base, dir, kb;
 before(async () => {
   dir = fs.mkdtempSync(path.join(os.tmpdir(), "retroviz-data-"));
-  for (const f of ["voyants.json", "obd.json", "vehicules.json"]) fs.copyFileSync(path.join(DATA_DIR, f), path.join(dir, f));
+  for (const f of ["voyants.json", "obd.json"]) fs.copyFileSync(path.join(DATA_DIR, f), path.join(dir, f));
+  fs.cpSync(path.join(DATA_DIR, "marques"), path.join(dir, "marques"), { recursive: true });
   kb = loadKnowledge(dir);
   const db = openDb(":memory:");
   const relecture = createRelecture({ dataDir: dir, kb, admins: parseAdmins("Admin@Exemple.fr, autre@exemple.fr"), now: () => "2026-10-15" });
@@ -65,7 +67,8 @@ describe("fiches", () => {
 
   test("liste filtrable par collection, statut et mot", async () => {
     const all = (await admin("GET", "/api/admin/fiches")).body.fiches;
-    assert.equal(all.length, 69 + 113 + 5);
+    const plat = aplatir(lireMarques(DATA_DIR));
+    assert.equal(all.length, 69 + 113 + plat.marques.length + plat.modeles.length + plat.vehicules.length); // voyants, codes OBD, marques, modèles, motorisations
     const huile = (await admin("GET", "/api/admin/fiches?collection=voyants&q=huile")).body.fiches;
     assert.deepEqual(huile.map(f => f.id).sort(), ["niveau-huile", "pression-huile"]);
     assert.equal((await admin("GET", "/api/admin/fiches?statut=verifie")).body.fiches.length, 0);

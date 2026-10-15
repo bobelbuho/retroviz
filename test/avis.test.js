@@ -103,23 +103,23 @@ describe("API des avis", () => {
     const ids = [];
     for (let i = 0; i < SEUIL_SYNTHESE - 1; i++) {
       const c = await user(`proprio${i}@exemple.fr`);
-      ids.push(await voiture(c, { modele: "3008", motorisation: "1.6 BlueHDi 120" }));
+      ids.push(await voiture(c, { modele: "5008", motorisation: "1.6 BlueHDi 120" }));
       await c("PUT", `/api/garage/${ids.at(-1)}/avis`, avisValide({ pannes: [{ piece: "Vanne EGR", km: 80000 + i * 1000, cout: 400 }] }));
     }
-    let r = await (await fetch(`${base}/api/avis?marque=Peugeot&modele=3008&motorisation=1.6 BlueHDi 120`)).json();
+    let r = await (await fetch(`${base}/api/avis?marque=Peugeot&modele=5008&motorisation=1.6 BlueHDi 120`)).json();
     assert.equal(r.modele.nombre, 4);
     assert.equal(r.modele.synthese, null);
     assert.ok(!JSON.stringify(r).includes("proprio"));
     assert.equal(r.modele.avis[0].verifie, true);
     const c = await user("proprio9@exemple.fr");
-    await c("PUT", `/api/garage/${await voiture(c, { modele: "3008", motorisation: "2.0 BlueHDi 150" })}/avis`, avisValide());
-    r = await (await fetch(`${base}/api/avis?marque=Peugeot&modele=3008&motorisation=1.6 BlueHDi 120`)).json();
+    await c("PUT", `/api/garage/${await voiture(c, { modele: "5008", motorisation: "2.0 BlueHDi 150" })}/avis`, avisValide());
+    r = await (await fetch(`${base}/api/avis?marque=Peugeot&modele=5008&motorisation=1.6 BlueHDi 120`)).json();
     assert.equal(r.motorisation.nombre, 4);
     assert.equal(r.modele.nombre, 5);
     assert.equal(r.modele.synthese.pannes[0].piece, "Vanne EGR");
     assert.equal(r.modele.synthese.pannes[0].nombre, 4);
     // Faits pour l'Observateur : une seule source « propriétaires ».
-    const faits = avis.faitsPourObservateur({ marque: "Peugeot", modele: "3008" });
+    const faits = avis.faitsPourObservateur({ marque: "Peugeot", modele: "5008" });
     assert.equal(faits.length, 1);
     assert.equal(faits[0].typeSource, "proprietaires");
     assert.match(faits[0].contenu, /citée par 4 propriétaires sur 5 avis/);

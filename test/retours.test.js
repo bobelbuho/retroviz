@@ -15,12 +15,14 @@ import { createPropositions, appliquer } from "../propositions.js";
 import { createRetours, anonymiser, SEUIL_STATS } from "../retours.js";
 import { createChat } from "../chat.js";
 import { loadKnowledge, DATA_DIR } from "../knowledge.js";
+import { lireMarques, aplatir } from "../marques.js";
 
 const PASSWORD = "un mot de passe solide";
 let server, base, db, dir, kb, propositions;
 before(async () => {
   dir = fs.mkdtempSync(path.join(os.tmpdir(), "retroviz-retours-"));
-  for (const f of ["voyants.json", "obd.json", "vehicules.json"]) fs.copyFileSync(path.join(DATA_DIR, f), path.join(dir, f));
+  for (const f of ["voyants.json", "obd.json"]) fs.copyFileSync(path.join(DATA_DIR, f), path.join(dir, f));
+  fs.cpSync(path.join(DATA_DIR, "marques"), path.join(dir, "marques"), { recursive: true });
   fs.mkdirSync(path.join(dir, "uploads"));
   kb = loadKnowledge(dir);
   db = openDb(":memory:");
@@ -104,10 +106,10 @@ describe("questions sans fiche", () => {
   test("notées sans le texte de la question ; regroupées pour l'Observateur", async () => {
     const anonyme = await user(), admin = await user("admin@exemple.fr");
     const ask = (vehicule, question) => anonyme("POST", "/api/chat", { mode: "particulier", vehicule, messages: [{ role: "user", content: question }] });
-    await ask("Toyota Yaris 1.0 VVT-i 2015", "bruit bizarre en tournant, mon numéro 0612345678");
-    await ask("toyota yaris 1.0 vvt-i 2015", "et P1234 ?");
+    await ask("Lada Niva 1.7 2015", "bruit bizarre en tournant, mon numéro 0612345678");
+    await ask("lada niva 1.7 2015", "et P1234 ?");
     await ask("Renault Clio IV 1.5 dCi 90", "bruit au freinage"); // fiche existante : pas notée
-    await ask("Toyota Yaris 1.0 VVT-i", "même voiture, sans l'année");
+    await ask("Lada Niva 1.7", "même voiture, sans l'année");
     const lignes = db.prepare("SELECT * FROM questions_sans_fiche").all();
     assert.equal(lignes.length, 3);
     assert.ok(lignes.every(l => !JSON.stringify(l).includes("bruit") && !JSON.stringify(l).includes("0612")));
@@ -166,7 +168,7 @@ describe("propositions", () => {
     assert.equal(propositions.creer({ origine: "observateur", type: "ajout", collection: "vehicules", cibleId: "renault-clio-4-15-dci", champ: "pannes", valeur: panne, resume: "doublon", sources: src }), null);
     const r = await admin("POST", `/api/admin/propositions/${id}/accepter`, { valeur: { ...panne, km_typique: 140000 } });
     assert.equal(r.status, 200);
-    const fiche = JSON.parse(fs.readFileSync(path.join(dir, "vehicules.json"), "utf8")).find(v => v.id === "renault-clio-4-15-dci");
+    const fiche = aplatir(lireMarques(dir)).vehicules.find(v => v.id === "renault-clio-4-15-dci");
     assert.equal(fiche.pannes.at(-1).km_typique, 140000, "valeur modifiée dans la Relecture");
     assert.ok(fiche.sources.includes("https://exemple.fr/article"));
     assert.equal(fiche.statut, "a_verifier", "jamais vérifiée automatiquement");

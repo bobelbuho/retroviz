@@ -18,8 +18,11 @@ export const PILOTE = ["Renault Clio IV", "Peugeot 208 I", "Volkswagen Golf VII"
 const NHTSA_MARQUES = { volkswagen: "volkswagen", toyota: "toyota", ford: "ford", bmw: "bmw", mercedes: "mercedes-benz", audi: "audi", fiat: "fiat", mini: "mini", volvo: "volvo", hyundai: "hyundai", kia: "kia", nissan: "nissan", honda: "honda", mazda: "mazda", skoda: null, peugeot: null, renault: null, citroen: null, dacia: null, opel: null };
 
 // Fiches de la base pour une cible (« Clio IV », « Peugeot 208 I »…).
+// Une génération nommée (« Clio IV ») écarte les autres générations du modèle : on garde les fiches les mieux classées.
 export function fichesDeCible(kb, cible) {
-  return findVehicle(cible, kb, 20).filter(r => r.correspondance !== "moteur").map(r => r.fiche);
+  const r = findVehicle(cible, kb, 50).filter(x => x.correspondance !== "moteur");
+  const max = Math.max(...r.map(x => x.score));
+  return r.filter(x => x.score === max).map(x => x.fiche);
 }
 
 // Années à interroger pour une période « 2012-2019 » : début, milieu, fin (suffisant pour les rappels).

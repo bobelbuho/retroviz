@@ -86,7 +86,7 @@ const dernier = list => [...list].sort((a, b) => b.date.localeCompare(a.date))[0
 
 /* ---------- calcul principal ---------- */
 // vehicle : { mise_en_circulation, assurance_echeance, pneus_hiver, vidange_km, vidange_mois }
-// fiche : fiche de data/vehicules.json reliée, ou null. releves : [{date, km}]. entretiens : lignes du carnet.
+// fiche : fiche de motorisation reliée (data/marques/, vue à plat), ou null. releves : [{date, km}]. entretiens : lignes du carnet.
 // kilometrage : { dernier, moyenneMensuelle }. rappels : rappels libres [{id, titre, date, km}].
 export function computeAvenir({ vehicle, fiche = null, releves = [], entretiens = [], kilometrage = {}, rappels = [], today }) {
   const kmNow = kmAujourdhui(kilometrage, today);

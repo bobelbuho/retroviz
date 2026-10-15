@@ -56,8 +56,8 @@ describe("findVehicle", () => {
   });
 
   test("une année hors période baisse le score", () => {
-    const ok = findVehicle("208 1.2 puretech 2016", kb)[0].score;
-    const out = findVehicle("208 1.2 puretech 2022", kb)[0].score;
+    const ok = findVehicle("sandero 0.9 tce 2016", kb)[0].score; // Sandero II (2012-2020)
+    const out = findVehicle("sandero 0.9 tce 2024", kb)[0].score; // aucune génération 0.9 TCe en 2024
     assert.ok(out < ok);
   });
 

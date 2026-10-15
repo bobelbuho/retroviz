@@ -71,14 +71,19 @@ describe("lien avec une fiche Rétroviz", () => {
     assert.equal(matchFiche({ marque: "Peugeot", modele: "208", motorisation: "1.2 puretech 110" }, kb), "peugeot-208-1-12-puretech");
   });
   test("moteur inconnu ou absent : pas de fiche", () => {
-    assert.equal(matchFiche({ marque: "Peugeot", modele: "208", motorisation: "1.6 BlueHDi" }, kb), null);
+    assert.equal(matchFiche({ marque: "Peugeot", modele: "208", motorisation: "1.4 HDi" }, kb), null);
     assert.equal(matchFiche({ marque: "Peugeot", modele: "208", motorisation: "" }, kb), null);
   });
   test("année hors de la période de la fiche : pas de fiche", () => {
     assert.equal(matchFiche({ ...CLIO, annee: 2008 }, kb), null);
   });
+  test("l'année choisit la génération : Golf 1.6 TDI de 2010 ou de 2015", () => {
+    assert.equal(matchFiche({ marque: "Volkswagen", modele: "Golf", motorisation: "1.6 TDI 105", annee: 2010 }, kb), "volkswagen-golf-6-16-tdi");
+    assert.equal(matchFiche({ marque: "Volkswagen", modele: "Golf", motorisation: "1.6 TDI 105", annee: 2015 }, kb), "volkswagen-golf-7-16-tdi");
+    assert.equal(matchFiche({ marque: "Peugeot", modele: "208", motorisation: "1.2 PureTech 100", annee: 2021 }, kb), "peugeot-208-2-12-puretech");
+  });
   test("autre modèle avec le même moteur : pas de fiche", () => {
-    assert.equal(matchFiche({ marque: "Peugeot", modele: "308", motorisation: "1.2 PureTech 130" }, kb), null);
+    assert.equal(matchFiche({ marque: "Peugeot", modele: "5008", motorisation: "1.2 PureTech 130" }, kb), null); // 5008 absente de la base
   });
 });
 

@@ -1,6 +1,6 @@
 // Mon garage : les voitures de l'utilisateur, reliées si possible à une fiche de la base Rétroviz.
 import express from "express";
-import { findVehicle, vehicleLabel } from "./knowledge.js";
+import { findVehicle, vehicleLabel, periode } from "./knowledge.js";
 import { needUser, sameSiteJson } from "./auth.js";
 import { cleanReleve, cleanDate, cleanAnyDate, incoherence, stats, kmText, MAX_RELEVES, today } from "./kilometrage.js";
 import { saisiLe, estAncienne } from "./historique.js";
@@ -86,11 +86,12 @@ export const TYPES_PHOTO = ["jpg", "png", "webp"];
 // On ne relie que si le modèle ET le moteur correspondent, et que l'année tombe dans la période de la fiche :
 // une fiche fausse est pire que pas de fiche.
 export function matchFiche(v, kb) {
-  const text = [v.marque, v.modele, v.motorisation].filter(Boolean).join(" ");
+  // L'année aide à choisir la bonne génération (Golf VI ou VII pour un 1.6 TDI).
+  const text = [v.marque, v.modele, v.motorisation, v.annee].filter(Boolean).join(" ");
   const best = findVehicle(text, kb, 1)[0];
   if (!best || best.correspondance !== "modele_moteur") return null;
-  const span = String(best.fiche.annees || "").match(/(\d{4})\D+(\d{4})/);
-  if (v.annee && span && (v.annee < +span[1] || v.annee > +span[2])) return null;
+  const span = periode(best.fiche.annees);
+  if (v.annee && span && (v.annee < span[0] || v.annee > span[1])) return null;
   return best.fiche.id;
 }
 

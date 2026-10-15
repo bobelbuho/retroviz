@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS vehicles (
   motorisation  TEXT NOT NULL DEFAULT '',
   annee         INTEGER,
   boite         TEXT NOT NULL DEFAULT '',
-  fiche_id      TEXT,                       -- fiche de data/vehicules.json reliée, ou NULL
+  fiche_id      TEXT,                       -- fiche de motorisation reliée (data/marques/), ou NULL
   fiche_refusee INTEGER NOT NULL DEFAULT 0, -- 1 : l'utilisateur a dit « ce n'est pas ma voiture »
   created_at    TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now')),
   updated_at    TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now'))

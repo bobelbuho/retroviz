@@ -5,9 +5,10 @@ import fs from "node:fs";
 import path from "node:path";
 import { DATA_DIR } from "../knowledge.js";
 import { COLLECTIONS, problemesFiche, serialiser, ZONES, ENERGIES_PIECES } from "../fiabilite.js";
+import { lireMarques, aplatir, serialiserMarque } from "../marques.js";
 
 // Fichiers de fiches et champ servant d'identifiant. Ajouter ici chaque nouveau fichier de data/.
-export const FICHIERS = { "obd.json": "code", "vehicules.json": "id", "voyants.json": "id", "pieces.json": "id" };
+export const FICHIERS = { "obd.json": "code", "voyants.json": "id", "pieces.json": "id" };
 
 const lire = f => JSON.parse(fs.readFileSync(path.join(DATA_DIR, f), "utf8"));
 
@@ -59,7 +60,31 @@ test("voyants.json : champs complets, couleurs et urgence valides, icônes SVG s
   }
 });
 
-for (const [collection, def] of Object.entries(COLLECTIONS)) {
+// Marques, modèles et motorisations : un fichier par marque dans data/marques/, chacun au format écrit par la Relecture.
+test("data/marques : règles partagées avec la Relecture, format stable, identifiants uniques", () => {
+  const marques = lireMarques(DATA_DIR);
+  assert.ok(marques?.length >= 13, "13 marques au moins");
+  for (const m of marques) {
+    const brut = fs.readFileSync(path.join(DATA_DIR, "marques", `${m.id}.json`), "utf8");
+    assert.equal(brut, serialiserMarque(m), `${m.id}.json : format`);
+  }
+  const plat = aplatir(marques);
+  assert.equal(plat.modeles.length, 30, "30 modèles");
+  for (const c of ["marques", "modeles", "vehicules"]) {
+    const vus = new Set();
+    for (const f of plat[c]) {
+      assert.deepEqual(problemesFiche(c, f), [], `${c} › ${f.id}`);
+      assert.ok(!vus.has(f.id), `${c} › ${f.id} : identifiant en double`);
+      vus.add(f.id);
+    }
+  }
+  // Les 5 fiches d'origine gardent leur identifiant (garages déjà reliés).
+  for (const id of ["peugeot-208-1-12-puretech", "renault-clio-4-15-dci", "volkswagen-golf-7-16-tdi", "dacia-sandero-2-09-tce", "citroen-c3-3-12-puretech"]) {
+    assert.ok(plat.vehicules.some(v => v.id === id), id);
+  }
+});
+
+for (const [collection, def] of Object.entries(COLLECTIONS).filter(([, d]) => d.fichier)) {
   test(`${def.fichier} : règles partagées avec la Relecture, format d'écriture stable`, () => {
     const brut = fs.readFileSync(path.join(DATA_DIR, def.fichier), "utf8");
     const fiches = JSON.parse(brut);

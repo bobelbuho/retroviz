@@ -81,54 +81,59 @@ Un tableau d'objets :
 - `statut`, `sources`, `redige_par` et `mise_a_jour` suivent les règles de fiabilité ci-dessus.
 - Seuls les codes **génériques** (normalisés, identiques pour toutes les marques) ont leur place ici. Les codes constructeur (souvent P1xxx) n'ont pas le même sens selon la marque.
 
-## `vehicules.json` : fiches véhicule
+## `marques/` : marques, modèles, générations et motorisations
 
-Un tableau d'objets, un par véhicule **et** motorisation :
+Un fichier par marque (`marques/peugeot.json`…), organisé ainsi : **marque › modèles › générations › motorisations**.
 
 ```json
 {
-  "id": "peugeot-208-1-12-puretech",
-  "marque": "Peugeot",
-  "modele": "208",
-  "generation": "208 I",
-  "alias": ["208 1", "208 phase 1"],
-  "annees": "2012-2019",
-  "moteurs": ["1.2 PureTech 82", "1.2 PureTech 110"],
-  "codes_moteur": ["EB2F", "EB2DT"],
-  "pannes": [
-    { "titre": "…", "km_typique": 80000, "gravite": "elevee", "symptomes": "…", "solution": "…", "cout_indicatif": "800 à 1 500 €" }
-  ],
-  "entretiens": [{ "titre": "Courroie de distribution", "km": 100000, "cout_indicatif": "700 à 1 200 €" }],
-  "points_forts": ["…"],
-  "points_faibles": ["…"],
-  "sources": [],
-  "statut": "a_verifier",
-  "redige_par": "ia",
-  "mise_a_jour": "2026-10-13"
+  "id": "peugeot", "nom": "Peugeot", "pays": "France",
+  "image": "…", "cout_entretien": "moyen", "cout_entretien_texte": "…", "reseau": "…",
+  "statut": "a_verifier", "sources": [], "redige_par": "ia", "mise_a_jour": "2026-10-14",
+  "modeles": [{
+    "id": "peugeot-208", "nom": "208",
+    "qualites": ["…"], "defauts": ["…"], "pour_qui": "…", "a_verifier_achat": ["…"],
+    "statut": "a_verifier", "sources": [], "redige_par": "ia", "mise_a_jour": "2026-10-14",
+    "generations": [{
+      "id": "peugeot-208-1", "nom": "208 I", "annees": "2012-2019", "alias": ["208 1", "208 phase 1"],
+      "motorisations": [{
+        "id": "peugeot-208-1-12-puretech",
+        "moteurs": ["1.2 PureTech 82", "1.2 PureTech 110"], "codes_moteur": ["EB2F", "EB2DT"],
+        "energie": "thermique", "carburant": "essence",
+        "conseil": "neutre", "conseil_texte": "Bon moteur si l'entretien est prouvé.",
+        "pannes": [{ "titre": "…", "km_typique": 80000, "gravite": "elevee", "symptomes": "…", "solution": "…", "cout_indicatif": "800 à 1 500 €" }],
+        "entretiens": [{ "titre": "Courroie de distribution", "km": 100000, "cout_indicatif": "700 à 1 200 €" }],
+        "points_forts": ["…"], "points_faibles": ["…"],
+        "statut": "a_verifier", "sources": [], "redige_par": "ia", "mise_a_jour": "2026-10-13"
+      }]
+    }]
+  }]
 }
 ```
 
+Le reste de l'application (assistant, garage, « À venir », schéma, Observateur) voit chaque **motorisation** comme une fiche « à plat », avec `marque`, `modele`, `generation`, `annees` et `alias` hérités de sa génération et de son modèle (`marques.js`). Les identifiants des motorisations ne changent jamais : ce sont eux que retiennent les voitures des garages. La Relecture présente trois collections : **Marques**, **Modèles** (avec leurs générations) et **Motorisations**.
+
 | Champ | Rôle |
 |---|---|
-| `id` | Identifiant unique, en minuscules avec des tirets. Il apparaît dans les sources. |
-| `marque`, `modele` | Utilisés pour retrouver la fiche (« 208 », « Clio », « Golf »…). |
-| `generation`, `alias` | Autres façons d'écrire le modèle (« Clio 4 », « Clio IV », « Golf 7 »). `alias` est facultatif. |
-| `annees` | Période au format `AAAA-AAAA`. Une année demandée hors période fait baisser le score. |
-| `moteurs` | Motorisations, au format « cylindrée nom puissance » (ex. `1.5 dCi 90`). La recherche reconnaît aussi la version sans puissance (« 1.5 dCi »). Une cylindrée différente dans la question (ex. « 1.6 HDi » pour une fiche 1.2) écarte la fiche. |
-| `codes_moteur` | Codes moteur constructeur (K9K, EA288…), reconnus dans les questions. |
+| `id` | Identifiant unique, en minuscules avec des tirets. |
+| `cout_entretien` (marque) | `faible`, `moyen` ou `eleve`, expliqué par `cout_entretien_texte`. |
+| `alias` (modèle) | Autres noms du modèle (« vw golf »). Ils aident à reconnaître le modèle mais ne désignent pas une génération. |
+| `generations[].annees` | `AAAA-AAAA`, ou `AAAA-auj.` pour une génération encore produite. |
+| `generations[].alias` | Autres noms de la génération (« Clio 4 », « golf 7 ») : ils départagent les générations. |
+| `annees_propres` (motorisation) | Facultatif : période de la motorisation si elle diffère de celle de la génération. |
+| `moteurs` | Au format « cylindrée nom puissance » (ex. `1.5 dCi 90`). Une cylindrée différente dans la question écarte la fiche ; une cylindrée demandée écarte aussi les électriques. |
+| `energie`, `carburant` | `thermique`, `hybride`, `hybride_rechargeable` ou `electrique` ; `essence` ou `diesel`. |
+| `conseil` | `a_privilegier`, `neutre` ou `a_eviter`, expliqué par `conseil_texte`. |
 | `pannes[].gravite` | `faible`, `moyenne` ou `elevee`. |
-| `km_typique`, `km` | Nombres entiers, sans espace (ex. `120000`). |
-| `statut` | `a_verifier` ou `verifie`. |
-| `mise_a_jour` | Date de la dernière modification, au format `AAAA-MM-JJ`. |
 
 ### Comment la recherche fonctionne
 
-Le texte (champ « Votre véhicule », ou le message si ce champ est vide) est mis en minuscules, sans accents. « 1,2 » devient « 1.2 » et « pure tech » équivaut à « puretech ». Une fiche est retenue si le **modèle** ou le **moteur** correspond. Au plus 2 fiches sont envoyées. Si le modèle exact est trouvé, les fiches d'autres modèles qui partagent seulement le moteur sont écartées. Sinon, ces fiches sont envoyées avec la mention « même moteur », et l'IA est priée de n'en utiliser que les informations moteur.
+Le texte (champ « Votre véhicule », ou le message si ce champ est vide) est mis en minuscules, sans accents. « 1,2 » devient « 1.2 » et « pure tech » équivaut à « puretech ». Une fiche est retenue si le **modèle** ou le **moteur** correspond. Au plus 2 fiches sont envoyées. Si le modèle est reconnu, les fiches d'autres modèles qui partagent seulement le moteur sont écartées ; si le moteur l'est aussi, les autres moteurs du même modèle aussi. Une génération nommée (« Clio IV ») écarte les autres générations ; sinon, une année qui tombe dans la période d'une génération écarte les générations hors période. Sinon, ces fiches sont envoyées avec la mention « même moteur », et l'IA est priée de n'en utiliser que les informations moteur.
 
 ## Ajouter une fiche
 
-1. Copiez une fiche existante dans `vehicules.json` et collez-la à la fin du tableau (attention aux virgules entre les objets).
-2. Changez l'`id` (il doit être unique), puis tous les champs.
+1. Dans le fichier de la marque (`marques/…json`), copiez une motorisation existante et collez-la dans la bonne génération (attention aux virgules entre les objets).
+2. Changez l'`id` (il doit être unique, et ne plus jamais changer ensuite), puis tous les champs.
 3. Laissez `"statut": "a_verifier"` tant que les informations ne sont pas recoupées.
 4. Mettez la date du jour dans `mise_a_jour`.
 5. Lancez `npm test`, puis relancez le serveur.

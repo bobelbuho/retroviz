@@ -14,6 +14,7 @@ import { passage } from "../observateur/index.js";
 import { problemesFiche } from "../fiabilite.js";
 import { openDb } from "../db.js";
 import { loadKnowledge, DATA_DIR } from "../knowledge.js";
+import { lireMarques, aplatir } from "../marques.js";
 import { createRelecture } from "../relecture.js";
 import { createPropositions } from "../propositions.js";
 
@@ -218,7 +219,8 @@ describe("un passage complet (faux sites, fausse IA)", () => {
   };
   function monter() {
     const dir = fs.mkdtempSync(path.join(os.tmpdir(), "retroviz-obs-"));
-    for (const f of ["voyants.json", "obd.json", "vehicules.json", "sources.json"]) fs.copyFileSync(path.join(DATA_DIR, f), path.join(dir, f));
+    for (const f of ["voyants.json", "obd.json", "sources.json"]) fs.copyFileSync(path.join(DATA_DIR, f), path.join(dir, f));
+    fs.cpSync(path.join(DATA_DIR, "marques"), path.join(dir, "marques"), { recursive: true });
     const kb = loadKnowledge(dir), db = openDb(":memory:");
     const relecture = createRelecture({ dataDir: dir, kb, now: () => "2026-10-15" });
     return { dir, kb, db, relecture, propositions: createPropositions(db, relecture) };
@@ -231,10 +233,10 @@ describe("un passage complet (faux sites, fausse IA)", () => {
     const deps = { db, kb, web: fauxWeb, ia: fausseIA, relecture, propositions, budget, sources: SOURCES, model: "claude-sonnet-5-5", today: () => "2026-10-15" };
     const b = await passage("Renault Clio IV", deps);
     assert.equal(b.statut, "termine");
-    assert.equal(b.rappels, 1, "Clio IV explicite : ajouté automatiquement");
+    assert.equal(b.rappels, 3, "Clio IV explicite : ajouté automatiquement à ses 3 motorisations");
     assert.equal(b.refusees, 1, "page refusée comptée");
     assert.equal(b.coutEur, 0);
-    const fiche = JSON.parse(fs.readFileSync(path.join(dir, "vehicules.json"), "utf8")).find(f => f.id === "renault-clio-4-15-dci");
+    const fiche = aplatir(lireMarques(dir)).vehicules.find(f => f.id === "renault-clio-4-15-dci");
     assert.deepEqual(fiche.rappels.map(r => [r.source, r.mention, r.url]), [["RappelConso", "source officielle", "https://rappel.conso.gouv.fr/fiche-rappel/1/rapex"]]);
     assert.equal(fiche.statut, "a_verifier");
     const props = db.prepare("SELECT type, champ, resume, confiance, nb_sources FROM propositions").all();
@@ -255,11 +257,11 @@ describe("un passage complet (faux sites, fausse IA)", () => {
 
   test("simulation : rien n'est écrit ; budget atteint : arrêt propre", async () => {
     const { dir, kb, db, relecture, propositions } = monter();
-    const avant = fs.readFileSync(path.join(dir, "vehicules.json"), "utf8");
+    const avant = fs.readFileSync(path.join(dir, "marques", "renault.json"), "utf8");
     const deps = { db, kb, web: fauxWeb, ia: fausseIA, relecture, propositions, budget: createBudget({ budgetEur: 5, depenseDuMois: () => 0 }), sources: SOURCES, model: "claude-sonnet-5-5", today: () => "2026-10-15" };
     const s = await passage("Renault Clio IV", deps, { simulation: true });
     assert.ok(s.propositions > 0 && s.exemples.length > 0);
-    assert.equal(fs.readFileSync(path.join(dir, "vehicules.json"), "utf8"), avant);
+    assert.equal(fs.readFileSync(path.join(dir, "marques", "renault.json"), "utf8"), avant);
     assert.equal(db.prepare("SELECT COUNT(*) AS n FROM propositions").get().n, 0);
     const iaChere = { ...fausseIA, rechercher: async () => { throw new BudgetAtteint("budget mensuel atteint"); } };
     const b = await passage("Renault Clio IV", { ...deps, ia: iaChere }, { officiels: false });

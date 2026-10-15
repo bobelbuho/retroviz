@@ -89,12 +89,13 @@ header{display:flex;align-items:center;justify-content:space-between;gap:var(--s
 .logo svg{flex:none;width:40px;height:40px}
 .brand{font-size:var(--fs-brand);font-weight:var(--fw-bold);line-height:1;letter-spacing:-.01em;margin:0;color:var(--primary)}
 .tagline{color:var(--muted);margin:2px 0 0;font-size:var(--fs-sm);line-height:var(--lh-tight)}
-.nav{display:flex;align-items:center;gap:var(--sp-1)}
+.nav{display:flex;align-items:center;gap:var(--sp-1);flex-wrap:wrap}
 .navlink{display:inline-flex;align-items:center;min-height:var(--tap);background:transparent;border:0;border-radius:var(--r-pill);padding:0 var(--sp-4);font-weight:var(--fw-semibold);font-size:var(--fs-sm);color:var(--primary);cursor:pointer}
 .navlink:hover{background:var(--soft)}
 .navlink[aria-current="page"]{background:var(--soft)}
 .acct{display:flex}
-@media (max-width:420px){.tagline{display:none}.navlink{padding:0 var(--sp-3)}.nav{margin-left:calc(-1 * var(--sp-3))}}
+.navlink .court{display:none}
+@media (max-width:420px){.tagline{display:none}.navlink{padding:0 var(--sp-3)}.nav{margin-left:calc(-1 * var(--sp-3))}.navlink .long{display:none}.navlink .court{display:inline}}
 
 /* ---------- les trois modes ---------- */
 .modes{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--sp-2);margin-bottom:var(--sp-6)}
@@ -463,6 +464,33 @@ dialog.dlg::backdrop{background:var(--overlay)}
 
 footer{margin-top:var(--sp-7);font-size:var(--fs-xs);color:var(--muted);padding-top:var(--sp-4);border-top:1px solid var(--line)}
 @media (prefers-reduced-motion: reduce){.item.flash{animation:none}}
+/* marques et modèles */
+.mgrid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:var(--sp-3)}
+.mcarte{background:var(--surface);border-radius:var(--r-lg);padding:var(--sp-4) var(--sp-5);box-shadow:var(--shadow)}
+.mcarte h3{margin:0;font-size:var(--fs-lg)}
+.mcarte .pays{color:var(--muted);font-size:var(--fs-sm);margin:0 0 var(--sp-2)}
+.mcarte ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:var(--sp-2)}
+.mcarte li button{background:var(--soft);border:0;border-radius:var(--r-pill);padding:var(--sp-1) var(--sp-3);min-height:36px;color:var(--primary);font-weight:var(--fw-semibold);cursor:pointer}
+.mcarte li button:hover{background:var(--soft-hover)}
+.mfiche h2{font-size:var(--fs-2xl);margin:0;line-height:var(--lh-tight)}
+.mfiche h2:focus{outline:none}
+.mfiche .sous{color:var(--muted);margin:var(--sp-1) 0 var(--sp-4)}
+.mfiche .deux{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:var(--sp-3);margin:0 0 var(--sp-4)}
+.mfiche .bloc{background:var(--surface);border-radius:var(--r-lg);padding:var(--sp-4) var(--sp-5);box-shadow:var(--shadow)}
+.mfiche .bloc h3{margin:0 0 var(--sp-2);font-size:var(--fs-md);color:var(--primary)}
+.mfiche .bloc ul{margin:0;padding-left:var(--sp-5)}
+.mfiche .gen{margin:var(--sp-6) 0 var(--sp-3);font-size:var(--fs-xl);color:var(--primary)}
+.moto{background:var(--surface);border-radius:var(--r-lg);padding:var(--sp-4) var(--sp-5);box-shadow:var(--shadow);margin:0 0 var(--sp-3)}
+.moto summary{cursor:pointer;display:flex;flex-wrap:wrap;gap:var(--sp-2);align-items:center;font-weight:var(--fw-bold);list-style:none}
+.moto summary::-webkit-details-marker{display:none}
+.moto summary::after{content:"▾";margin-left:auto;color:var(--muted)}
+.moto[open] summary::after{content:"▴"}
+.moto h4{margin:var(--sp-3) 0 var(--sp-1);font-size:var(--fs-sm);color:var(--primary)}
+.moto ul{margin:0;padding-left:var(--sp-5);font-size:var(--fs-sm)}
+.conseil{display:inline-flex;align-items:center;gap:6px;padding:2px var(--sp-3);border-radius:var(--r-pill);font-size:var(--fs-xs);font-weight:var(--fw-bold);background:var(--soft);color:var(--muted)}
+.conseil.a_privilegier{background:color-mix(in srgb,var(--green) 14%,var(--surface));color:var(--green-ink)}
+.conseil.a_eviter{background:color-mix(in srgb,var(--red) 12%,var(--surface));color:var(--red-ink)}
+.panneli{margin:0 0 var(--sp-1)}
 /* schéma interactif */
 .sch{width:100%;height:auto;display:block;background:var(--surface);border-radius:var(--r-lg);box-shadow:var(--shadow)}
 .sch .sch-zone > *, .sch .sch-piece > :not(.sch-repere){fill:var(--soft);stroke:var(--primary);stroke-width:2;transition:fill .15s}
@@ -586,9 +614,10 @@ dialog.dlg.large{width:min(920px,calc(100vw - 2 * var(--gutter)));padding:var(--
     </div>
     <nav class="nav" aria-label="Mon espace">
       <button class="navlink" type="button" id="voyantsBtn" data-mode="voyants">Voyants</button>
-      <button class="navlink" type="button" id="garageBtn" data-mode="garage">Mon garage</button>
+      <button class="navlink" type="button" id="marquesBtn" data-mode="marques">Modèles</button>
+      <button class="navlink" type="button" id="garageBtn" data-mode="garage"><span class="long">Mon garage</span><span class="court">Garage</span></button>
       <button class="navlink" type="button" id="relectureBtn" data-mode="relecture" hidden>Relecture</button>
-      <div class="acct" id="acct"><button class="navlink" type="button" id="acctBtn">Se connecter</button></div>
+      <div class="acct" id="acct"><button class="navlink" type="button" id="acctBtn"><span class="long">Se connecter</span><span class="court">Connexion</span></button></div>
     </nav>
   </header>
 
@@ -721,7 +750,7 @@ dialog.dlg.large{width:min(920px,calc(100vw - 2 * var(--gutter)));padding:var(--
       <div id="rListe">
         <div class="rfilters">
           <label class="sr" for="rCol">Collection</label>
-          <select class="field" id="rCol"><option value="">Toutes les collections</option><option value="voyants">Voyants</option><option value="obd">Codes OBD</option><option value="vehicules">Véhicules</option><option value="pieces">Pièces</option></select>
+          <select class="field" id="rCol"><option value="">Toutes les collections</option><option value="voyants">Voyants</option><option value="obd">Codes OBD</option><option value="marques">Marques</option><option value="modeles">Modèles</option><option value="vehicules">Motorisations</option><option value="pieces">Pièces</option></select>
           <label class="sr" for="rStatut">Statut</label>
           <select class="field" id="rStatut"><option value="a_verifier">À vérifier</option><option value="verifie">Vérifiées</option><option value="">Tous les statuts</option></select>
           <label class="sr" for="rQ">Rechercher</label>
@@ -752,6 +781,18 @@ dialog.dlg.large{width:min(920px,calc(100vw - 2 * var(--gutter)));padding:var(--
       <ul class="vgrid" id="vGrid"></ul>
     </div>
     <div id="voyantFiche" class="vfiche" hidden></div>
+  </section>
+
+  <!-- Marques et modèles -->
+  <section class="panel" id="marquesPanel" hidden>
+    <div id="marquesListe">
+      <h2 class="sect" style="margin:0 0 var(--sp-2);font-size:var(--fs-xl)">Marques et modèles</h2>
+      <p class="intro">Les 30 modèles d'occasion les plus courants en France : générations, motorisations à privilégier ou à éviter, pannes connues et points à vérifier à l'achat. Fiches en cours de vérification.</p>
+      <label class="sr" for="mSearch">Rechercher un modèle</label>
+      <input class="field" id="mSearch" type="search" placeholder="Rechercher : Clio, 308, Golf…" autocomplete="off" style="margin:0 0 var(--sp-4)">
+      <ul class="mgrid" id="mGrid"></ul>
+    </div>
+    <div id="mFiche" class="mfiche" hidden></div>
   </section>
 
   <!-- Mon garage -->
@@ -1056,6 +1097,8 @@ function setMode(m){
   const chat = !!MODES[m];
   $("#chatPanel").hidden = !chat; $("#achatPanel").hidden = m !== "achat"; $("#garagePanel").hidden = m !== "garage";
   $("#voyantsPanel").hidden = m !== "voyants";
+  $("#marquesPanel").hidden = m !== "marques";
+  if(m === "marques") openMarques();
   $("#relecturePanel").hidden = m !== "relecture";
   if(m === "relecture") openRelecture();
   if(m === "voyants"){ voyantOuvert = null; renderVoyants(); }
@@ -1404,7 +1447,7 @@ async function api(method, url, body){
 function renderAcct(){
   $("#relectureBtn").hidden = !user?.admin;
   if(!user?.admin && mode === "relecture") setMode("particulier");
-  $("#acct").innerHTML = `<button class="navlink" type="button" id="acctBtn" ${user ? `title="${esc(user.email)}"` : ""}>${user ? "Mon compte" : "Se connecter"}</button>`;
+  $("#acct").innerHTML = `<button class="navlink" type="button" id="acctBtn" ${user ? `title="${esc(user.email)}"` : ""}>${user ? `<span class="long">Mon compte</span><span class="court">Compte</span>` : `<span class="long">Se connecter</span><span class="court">Connexion</span>`}</button>`;
   $("#authView").hidden = !!user; $("#meView").hidden = !user;
   if(user) $("#me_stats").checked = !!user.statsConsent;
   if(user) $("#me_avisBox").open = false;
@@ -2084,6 +2127,75 @@ document.addEventListener("submit", async e => {
   else { const rr = await api("GET", `/api/garage/${vid}/releves`); if(rr.ok){ kmData[vid] = rr.releves; renderGarage(); } }
 });
 
+/* ---------- marques et modèles ---------- */
+let marquesData = null, modeleOuvert = null;
+const CONSEIL_TXT = {a_privilegier:"À privilégier", neutre:"Correct", a_eviter:"À éviter"};
+const COUT_TXT = {faible:"faible", moyen:"moyen", eleve:"élevé"};
+const GRAV_TXT = {elevee:"grave", moyenne:"moyenne", faible:"faible"};
+async function openMarques(){
+  if(!marquesData){ const r = await api("GET", "/api/marques"); if(!r.ok){ $("#mGrid").innerHTML = `<li class="empty">${esc(r.error)}</li>`; return; } marquesData = r.marques; }
+  renderMarques();
+}
+function renderMarques(){
+  $("#marquesListe").hidden = !!modeleOuvert; $("#mFiche").hidden = !modeleOuvert;
+  if(modeleOuvert) return;
+  const q = plain($("#mSearch").value.trim());
+  const ok = (m, mo) => !q || plain([m.nom, mo.nom, ...mo.alias, ...mo.generations.flatMap(g => [g.nom, ...g.alias])].join(" ")).includes(q);
+  const cartes = marquesData.map(m => ({m, modeles:m.modeles.filter(mo => ok(m, mo))})).filter(x => x.modeles.length);
+  $("#mGrid").innerHTML = cartes.length ? cartes.map(({m, modeles}) => `<li class="mcarte"><h3>${esc(m.nom)}</h3><p class="pays">${esc(m.pays)} · entretien ${esc(COUT_TXT[m.cout_entretien])}</p>
+    <ul>${modeles.map(mo => `<li><button type="button" data-modele="${esc(mo.id)}">${esc(mo.nom)}</button></li>`).join("")}</ul></li>`).join("")
+    : `<li class="empty" style="grid-column:1/-1">Aucun modèle ne correspond. La base couvre pour l'instant les 30 modèles d'occasion les plus courants.</li>`;
+}
+async function ouvrirModele(id){
+  const r = await api("GET", `/api/modeles/${encodeURIComponent(id)}`);
+  if(!r.ok){ showNotice(r.error); return; }
+  modeleOuvert = r; renderMarques(); renderModele();
+  window.scrollTo({top:0}); $("#mTitre").focus();
+  const av = await api("GET", `/api/avis?${new URLSearchParams({marque:r.marque.nom, modele:r.modele.nom})}`);
+  if(av.ok && modeleOuvert === r) $("#mAvis").innerHTML = av.modele.nombre ? avisBlocHTML(av.modele, `${r.marque.nom} ${r.modele.nom}`, av.seuil) : `<p class="hint">Pas encore d'avis de propriétaires pour ce modèle.</p>`;
+}
+const listeHTML = l => `<ul>${l.map(x => `<li>${esc(x)}</li>`).join("")}</ul>`;
+function motoHTML(v){
+  const pannes = v.pannes?.length ? `<h4>Pannes connues</h4><ul>${v.pannes.map(p => `<li class="panneli"><strong>${esc(p.titre)}</strong>${p.km_typique ? `, vers ${fmtNum(p.km_typique)} km` : ""}${p.gravite ? ` (gravité ${esc(GRAV_TXT[p.gravite] || p.gravite)})` : ""}${p.cout_indicatif ? ` : ${esc(p.cout_indicatif)}` : ""}.${p.symptomes ? `<br><span class="hint">Signes : ${esc(p.symptomes)}</span>` : ""}</li>`).join("")}</ul>` : "";
+  const ent = v.entretiens?.length ? `<h4>Entretiens</h4><ul>${v.entretiens.map(e => `<li>${esc(e.titre)}${e.km ? ` : tous les ${fmtNum(e.km)} km` : ""}${e.cout_indicatif ? ` (${esc(e.cout_indicatif)})` : ""}</li>`).join("")}</ul>` : "";
+  return `<details class="moto"><summary><span>${esc(v.moteurs.join(", "))}</span><span class="conseil ${esc(v.conseil || "neutre")}">${esc(CONSEIL_TXT[v.conseil] || "Correct")}</span></summary>
+    <p style="margin:var(--sp-2) 0 0">${esc(v.conseil_texte || "")}</p>
+    <p class="hint">${[v.carburant, ENERGIE_TXT[v.energie] && v.energie !== "thermique" && ENERGIE_TXT[v.energie], v.annees, v.codes_moteur?.length && "codes moteur " + v.codes_moteur.join(", ")].filter(Boolean).map(esc).join(" · ")}</p>
+    <div class="deux" style="margin:0">${v.points_forts?.length ? `<div><h4>Points forts</h4>${listeHTML(v.points_forts)}</div>` : ""}${v.points_faibles?.length ? `<div><h4>Points faibles</h4>${listeHTML(v.points_faibles)}</div>` : ""}</div>
+    ${pannes}${ent}${v.statut !== "verifie" ? `<p class="hint">Fiche en cours de vérification.</p>` : ""}</details>`;
+}
+function renderModele(){
+  const {marque:m, modele:mo} = modeleOuvert;
+  const gens = mo.generations.map(g => `<h3 class="gen">${esc(g.nom)} <small class="hint" style="font-size:var(--fs-sm)">${esc(g.annees.replace("auj.", "aujourd'hui"))}</small></h3>${g.motorisations.map(motoHTML).join("")}`).join("");
+  $("#mFiche").innerHTML = `<button class="btn ghost small back" type="button" id="mBack">← Toutes les marques</button>
+    <h2 id="mTitre" tabindex="-1">${esc(m.nom)} ${esc(mo.nom)}</h2>
+    <p class="sous">${esc(mo.generations.map(g => `${g.nom} (${g.annees.replace("auj.", "auj.")})`).join(" · "))}${mo.statut !== "verifie" ? " · fiche en cours de vérification" : ""}</p>
+    <div class="rowbtns" style="margin:0 0 var(--sp-5)"><button class="btn" type="button" id="mAnalyser">Analyser une occasion de ce modèle</button><button class="btn soft" type="button" id="mGarage">Ajouter à mon garage</button></div>
+    <div class="deux"><div class="bloc"><h3>Qualités</h3>${listeHTML(mo.qualites)}</div><div class="bloc"><h3>Défauts</h3>${listeHTML(mo.defauts)}</div></div>
+    <div class="deux"><div class="bloc"><h3>Pour qui ?</h3><p style="margin:0">${esc(mo.pour_qui)}</p></div><div class="bloc"><h3>À vérifier à l'achat</h3>${listeHTML(mo.a_verifier_achat)}</div></div>
+    ${gens}
+    <h3 class="gen">Avis des propriétaires</h3><div id="mAvis"><p class="hint">Chargement des avis…</p></div>
+    <h3 class="gen">La marque ${esc(m.nom)}</h3>
+    <div class="deux"><div class="bloc"><h3>Image générale</h3><p style="margin:0">${esc(m.image)}</p></div>
+      <div class="bloc"><h3>Coût d'entretien : ${esc(COUT_TXT[m.cout_entretien])}</h3><p style="margin:0">${esc(m.cout_entretien_texte)}</p><h3 style="margin-top:var(--sp-3)">Réseau et pièces en France</h3><p style="margin:0">${esc(m.reseau)}</p></div></div>
+    <p class="hint">Fiches rédigées par Rétroviz et en cours de vérification : elles peuvent contenir des erreurs. ${esc((mo.incertitudes || []).join(" "))}</p>`;
+}
+$("#mSearch").addEventListener("input", renderMarques);
+$("#mGrid").addEventListener("click", e => { const b = e.target.closest("[data-modele]"); if(b) ouvrirModele(b.dataset.modele); });
+$("#mFiche").addEventListener("click", e => {
+  const {marque:m, modele:mo} = modeleOuvert || {};
+  if(e.target.closest("#mBack")){ const id = mo.id; modeleOuvert = null; renderMarques(); document.querySelector(`[data-modele="${id}"]`)?.focus(); return; }
+  if(e.target.closest("#mAnalyser")){
+    /* « J'achète une voiture », marque et modèle pré-remplis. */
+    setMode("achat"); $("#a_marque").value = m.nom; $("#a_modele").value = mo.nom; window.scrollTo({top:0}); $("#a_annee").focus(); return;
+  }
+  if(e.target.closest("#mGarage")){
+    if(!user){ renderAcct(); $("#acctDlg").showModal(); $("#au_email").focus(); return; }
+    setMode("garage"); voitureOf = null; carnetOf = null; avenirOf = null; valeurOf = null;
+    openCarForm(null); $("#g_marque").value = m.nom; $("#g_modele").value = mo.nom; $("#g_moteur").focus();
+  }
+});
+
 /* ---------- schéma interactif ---------- */
 let schemaOf = null, schemaData = null, piecesKb = null, schemaZone = null, schemaPiece = null;
 const ENERGIE_TXT = {thermique:"essence ou diesel", hybride:"hybride", hybride_rechargeable:"hybride rechargeable", electrique:"électrique"};
@@ -2601,7 +2713,7 @@ $("#vehPick").addEventListener("change", e => {
 });
 
 /* ---------- relecture (administrateur) ---------- */
-const COL_NOM = {voyants:"Voyants", obd:"Codes OBD", vehicules:"Véhicules", pieces:"Pièces"};
+const COL_NOM = {voyants:"Voyants", obd:"Codes OBD", marques:"Marques", modeles:"Modèles", vehicules:"Motorisations", pieces:"Pièces"};
 let rTab = "tableau", rFiche = null; // fiche ouverte : {collection, id, fiche}
 function setRTab(t){
   rTab = t;

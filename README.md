@@ -28,6 +28,8 @@ retroviz/
 ├── badge.js            ← badge « Voiture bien suivie » : critères et seuils
 ├── energie.js          ← énergie d'une voiture (thermique, hybride, électrique)
 ├── transfert.js        ← dossier partageable, transfert au nouveau propriétaire, notes sur l'historique reçu
+├── marques.js          ← stockage par marque (data/marques/) et vue « à plat » des motorisations
+├── catalogue.js        ← « Marques et modèles » : lecture publique des marques et modèles
 ├── schema.js           ← schéma interactif : pièces de la voiture reliées à sa fiche, « À venir » et son carnet
 ├── avis.js             ← avis de propriétaires : conditions, filtre, synthèse, signalements, modération
 ├── historique.js       ← confiance de l'historique : « saisi le », « modifié le », continuité du kilométrage
@@ -43,7 +45,7 @@ retroviz/
 ├── storage/            ← la base (retroviz.db) et les factures (uploads/), créés au démarrage, jamais publiés
 ├── data/               ← la base de connaissances (fiches JSON + mode d'emploi)
 │   ├── obd.json
-│   ├── vehicules.json
+│   ├── marques/        ← un fichier par marque : modèles, générations, motorisations
 │   ├── voyants.json
 │   ├── pieces.json     ← pièces du schéma (rôle, usure, durée de vie, prix, voyants, mots du glossaire)
 │   ├── sources.json    ← registre des sources de l'Observateur
@@ -83,7 +85,7 @@ Pendant que vous modifiez le code, `npm run dev` relance le serveur automatiquem
 Avant chaque réponse, le serveur cherche dans le dossier `data/` les fiches qui correspondent au véhicule et aux codes défaut cités dans le message. Le véhicule vient du champ « Votre véhicule », du formulaire d'achat ou, à défaut, du message lui-même. Les fiches trouvées sont envoyées à l'IA comme **source prioritaire**, avec la consigne de signaler quand elle s'appuie sur une fiche « à vérifier ».
 
 - `data/obd.json` : codes défaut OBD-II génériques (libellé, causes fréquentes, vérifications).
-- `data/vehicules.json` : fiches par véhicule et motorisation (pannes connues avec leur kilométrage, entretiens, points forts et faibles).
+- `data/marques/` : un fichier par marque (13 marques, les 30 modèles d'occasion les plus courants, 121 motorisations) ; pour chaque motorisation, pannes connues avec leur kilométrage, entretiens, points forts et faibles, conseil d'achat. Voir `data/README.md`.
 - Chaque fiche a un statut : **à vérifier** (rédigée sans source, peut contenir des erreurs) ou **vérifiée** (au moins une source indiquée). Toutes les fiches livrées au départ sont à vérifier.
 - Sous chaque réponse, une ligne indique les fiches utilisées, par exemple « Sources : base Rétroviz – Peugeot 208 1.2 PureTech (à vérifier), code P0300 (à vérifier) », ou « Sources : connaissances générales de l'IA ».
 - `GET /api/codes/P0300` renvoie la fiche d'un code, en JSON.
@@ -135,6 +137,10 @@ Onglet « Partager ou vendre » de la page d'une voiture. **Tout ce qui peut ide
 - **Confiance** : chaque entrée affiche « avec facture » ou « déclaré » ; « saisi le … » si elle a été ajoutée plus de 30 jours après sa date ; « modifié le … » si elle a été modifiée alors que sa date et sa saisie avaient plus de 30 jours (table `modifications` : anciennes et nouvelles valeurs pour date, km, type, coût ; pour la description et le garage, seulement le fait qu'ils ont changé, jamais l'ancien texte ; suppressions comptées). Le dossier résume : « 3 entretiens saisis après coup, dont 2 avec facture », et met en avant le **kilométrage suivi sans interruption** (jamais plus de 6 mois sans kilométrage connu), y compris d'un propriétaire à l'autre.
 - **RGPD** : l'export de l'acheteur contient l'historique reçu et les dates de changement de propriétaire ; supprimer le compte du vendeur ne touche pas une voiture déjà transférée.
 
+## Marques et modèles
+
+Lien « Modèles » du menu. Les 30 modèles d'occasion les plus courants en France (13 marques), avec recherche (y compris « golf 7 », « clio 4 »). Pour chaque modèle : qualités, défauts, pour qui, points à vérifier à l'achat, puis chaque génération et ses motorisations (conseil « à privilégier », « correct » ou « à éviter », points forts et faibles, pannes connues, entretiens), les avis des propriétaires et la marque (image, coût d'entretien relatif, réseau et pièces en France). Deux boutons : « Analyser une occasion de ce modèle » (« J'achète une voiture » pré-rempli) et « Ajouter à mon garage » (formulaire pré-rempli). Toutes ces fiches sont rédigées de mémoire et « à vérifier ». Routes : `GET /api/marques`, `GET /api/modeles/:id`.
+
 ## Schéma interactif
 
 Onglet « Schéma » de la page d'une voiture. Une vue de profil dessinée en SVG avec 8 zones (moteur, transmission, freins, direction et suspension, électricité, échappement et dépollution, pneus, carrosserie) ; un clic ouvre le schéma détaillé de la zone, avec ses pièces numérotées.
@@ -162,7 +168,7 @@ Onglet « Avis » de la page d'une voiture.
 
 « Mon garage », en haut à droite (compte requis), enregistre les voitures de l'utilisateur : surnom, marque, modèle, motorisation, année, boîte. 30 voitures au plus par compte.
 
-- **Fiche reliée** : à chaque enregistrement, le serveur cherche une fiche de `data/vehicules.json`. Il ne la relie que si le modèle **et** le moteur correspondent, et si l'année tombe dans la période de la fiche (une fiche fausse est pire que pas de fiche). L'utilisateur peut écarter une fiche (« Ce n'est pas ma voiture ») ou en chercher une à nouveau.
+- **Fiche reliée** : à chaque enregistrement, le serveur cherche une fiche de motorisation dans `data/marques/` (l'année aide à choisir la génération). Il ne la relie que si le modèle **et** le moteur correspondent, et si l'année tombe dans la période de la fiche (une fiche fausse est pire que pas de fiche). L'utilisateur peut écarter une fiche (« Ce n'est pas ma voiture ») ou en chercher une à nouveau.
 - **Poser une question** : remplit le champ « Votre véhicule » avec la désignation de la voiture et ouvre « J'ai une panne ». Le menu « Mes voitures… » à côté de ce champ fait la même chose depuis les modes de discussion.
 - Les voitures, leurs relevés, entretiens, rappels libres et estimations de valeur sont inclus dans l'export des données et effacés avec le compte.
 - **Kilométrage** : chaque voiture a ses relevés (date et kilométrage). Le « Kilométrage actuel » saisi à l'ajout devient le premier relevé. Un relevé à la même date remplace le précédent. Un relevé incohérent est refusé : un compteur ne recule pas. La **moyenne de km par mois** est calculée entre le premier et le dernier relevé, s'ils sont espacés d'au moins 30 jours. Le dernier kilométrage est ajouté à la désignation envoyée à l'assistant.
@@ -269,7 +275,7 @@ Depuis la carte d'une voiture, « Estimer la valeur » demande à l'IA une fourc
 - Les symptômes proposés en pastilles dans « J'ai une panne » : la constante `HELP` dans `public/index.html`. Chaque catégorie est une liste de textes ; ajoutez un `*` à la fin d'un texte pour le marquer comme dangereux (il affiche alors l'encadré rouge « arrêtez-vous dès que possible »).
 - La fiche rapide du mode « Diagnostic pro » : le formulaire `proForm` (HTML) et le message qu'il construit (partie « fiche rapide pro » du script).
 - L'analyse d'achat : la variable `prompt` dans la partie « achat » de `public/index.html`.
-- Les fiches de la base de connaissances : `data/vehicules.json` et `data/obd.json` (mode d'emploi dans `data/README.md`).
+- Les fiches de la base de connaissances : `data/marques/`, `data/obd.json`, `data/voyants.json`, `data/pieces.json` (mode d'emploi dans `data/README.md`).
 - La consigne donnée à l'IA sur l'usage des fiches : la constante `REGLES_BASE` dans `prompts.js`.
 - La recherche (scores, taille maximale du contexte `MAX_CONTEXT`) : `knowledge.js`. Lancez `npm test` après toute modification.
 - Les comptes (longueur minimale du mot de passe, durée de session, blocage après échecs) : les constantes en haut de `auth.js`. Lancez `npm test` après toute modification.
